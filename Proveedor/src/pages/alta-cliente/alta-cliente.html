@@ -1,0 +1,35 @@
+<ion-content>
+
+  <h1 text-center>Alta de Comercio</h1>
+  <h2 text-center>Datos de Comercial</h2>
+<form [formGroup]="credencialesForm">
+  <ion-item>
+    <ion-label floating>C.U.I.T / C.U.I.L.</ion-label>
+    <ion-input [formControl]="credencialesForm.controls['cuil']" type="text" placeholder="20-11111111-1" class="floating-with-placeholder"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Razon social</ion-label>
+    <ion-input [formControl]="credencialesForm.controls['razonSocial']" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Personeria</ion-label>
+    <ion-select [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)">
+      <ion-option *ngFor="let item of tiposPersoneria" [value]="item.orden">{{item.tipoPersoneria}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Actividad Principal - Proveedor de...</ion-label>
+    <ion-select [formControl]="credencialesForm.controls['actividadPrincipal']" type="text" (ionChange)="onActividadesPrincipalesClienteChange($event)">
+      <ion-option *ngFor="let item1 of actividadesPrincipalesComercio" [value]="item1.orden">{{item1.nombre}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <br>
+
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button round block (click)="onSingin()" [disabled]="!credencialesForm.valid">Cargar Domicilio</button>
+    </ion-col>
+  </ion-row>
+
+</form>
+</ion-content>

@@ -1,0 +1,55 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-refresher (ionRefresh) ="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <ion-list>
+        <ion-item>
+          <h1> </h1>
+          <h1 text-center padding>Zing</h1>
+          <h2 text-center>Comercio</h2>
+        </ion-item>
+      </ion-list>
+      <form (ngSubmit)="getLogin()">
+        <ion-item item-center>
+          <ion-label floating>Usuario</ion-label>
+          <ion-input type="text" [(ngModel)]="newLogin.nombreUsuario" name="usuario"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="newLogin.clave" name="password"></ion-input>
+        </ion-item>
+        <div><br><br><br><br><br><br></div>
+          <ion-row>
+                <ion-col width-50 style="text-align: center">
+                  <button ion-button round>Login</button>
+             </ion-col>               
+          </ion-row>
+        
+      </form>
+ <br>
+  <ion-list>
+    <div>
+      <ion-row>
+        <ion-col style="text-align: center">
+          <button ion-button clear >Olvidé mi Clave</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button clear (click)='goCreateCliente()' >Crear nueva cuenta</button>
+          </ion-col>
+        </ion-row>
+    </div>   
+  </ion-list>
+  
+</ion-content>

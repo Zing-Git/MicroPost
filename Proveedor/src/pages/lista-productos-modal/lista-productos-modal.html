@@ -1,0 +1,65 @@
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      Carrito de Productos
+    </ion-card-header>
+    <ion-card>
+      <ion-item>
+        <ion-label floating>Categoria</ion-label>
+        <ion-select type="text" (ionChange)="onCategoriasChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
+          <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria">{{categoria}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-label floating>Sub-Categoria</ion-label>
+        <ion-select type="text" (ionChange)="onSubCategoriasChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
+          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria">{{subcategoria}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-card>
+  </ion-card>
+  <ion-card *ngIf="showListProducto">
+    <ion-card-header>
+      Productos
+    </ion-card-header>
+    <ion-scroll scrollY="true">
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of arrayProductos;">
+        <ion-item>
+          <ion-icon name="cart" item-start></ion-icon>
+          <h2>{{item.nombreProducto}}</h2>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="success" (click)="seleccionarProducto(item)">
+            <ion-icon name="add-circle"> Agregar</ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    </ion-scroll>
+  </ion-card>
+  <ion-card>
+    <ion-item>
+      <button ion-button color="danger" clear (click)='volver()' item-first>Cancelar</button>
+
+    </ion-item>
+
+  </ion-card>
+</ion-content>
+<!--<ion-content>
+    <ion-card>
+        <ion-list>
+          <button ion-item *ngFor="let item of arrayCategorias" (click)="openSubcategoriasPage(item)" icon-start>
+            <ion-icon name="arrow-back" item-start></ion-icon>
+            {{ item }}
+          </button>
+        </ion-list>
+      </ion-card>
+      <ion-card>
+        <button ion-button color="secondary" clear (click)='volver()'>Cancelar</button>
+      </ion-card>
+  
+</ion-content>-->

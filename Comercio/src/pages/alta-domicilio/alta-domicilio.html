@@ -1,0 +1,44 @@
+<ion-header>
+    <h1></h1>
+
+</ion-header>
+<ion-content has-header="true" padding="true">
+    <h1 text-center>Alta de Comercio</h1>
+    <h2 text-center>Datos de Domicilio</h2>
+    <form>
+        <ion-item>
+            <ion-label floating>Provincia</ion-label>
+            <ion-select [formControl]="domicilioForm.controls['provincia']" type="text" (ionChange)="onProvinciaChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
+                <ion-option *ngFor="let fProv of provincias" [value]="fProv.iso_31662">{{fProv.provincia}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Localidad</ion-label>
+            <ion-select [formControl]="domicilioForm.controls['localidad']" type="text" (ionChange)="onLocalidadChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
+                <ion-option *ngFor="let fLoc of localidades" [value]="fLoc">{{fLoc}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Barrio</ion-label>
+            <ion-input [formControl]="domicilioForm.controls['barrio']" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Calle</ion-label>
+            <ion-input [formControl]="domicilioForm.controls['calle']" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Número</ion-label>
+            <ion-input [formControl]="domicilioForm.controls['numeroCasa']" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Código Postal</ion-label>
+            <ion-input [formControl]="domicilioForm.controls['codigoPostal']" type="text"></ion-input>
+        </ion-item>
+
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button block color="secondary" (click)="onSingin()" [disabled]="!domicilioForm.valid">Crear Usuario</button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

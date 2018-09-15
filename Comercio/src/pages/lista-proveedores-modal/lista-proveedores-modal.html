@@ -1,0 +1,17 @@
+<ion-content>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let proveedor of proveedoresViewModel; let i=index">
+      <ion-item>
+          <ion-icon name="person" item-start></ion-icon>
+          <h2>{{proveedor.entidad.razonSocial}}</h2>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="success" (click)="cargarProveedor(proveedor)">
+          <ion-icon name="person-add"> Agregar</ion-icon>
+        </button>
+      </ion-item-options>
+      
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
