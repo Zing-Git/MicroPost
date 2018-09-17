@@ -19,7 +19,9 @@ import { ComercioProvider } from '../providers/comercio/comercio';
 import { ListaProveedoresPage } from '../pages/lista-proveedores/lista-proveedores';
 import { ListaProveedoresModalPage } from '../pages/lista-proveedores-modal/lista-proveedores-modal';
 import { ListaProductosModalPage } from '../pages/lista-productos-modal/lista-productos-modal';
+import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -31,12 +33,14 @@ import { ListaProductosModalPage } from '../pages/lista-productos-modal/lista-pr
     AltaLoginPage,
     AltaClientePage, 
     ListaProveedoresPage,
-    ListaProductosModalPage
+    ListaProductosModalPage,
+    ConfiguracionInicialPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +52,8 @@ import { ListaProductosModalPage } from '../pages/lista-productos-modal/lista-pr
     AltaLoginPage,
     AltaClientePage,
     ListaProveedoresPage,
-    ListaProductosModalPage
+    ListaProductosModalPage,
+    ConfiguracionInicialPage
   ],
   providers: [
     StatusBar,

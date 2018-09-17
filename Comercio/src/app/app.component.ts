@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
+import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any = LoginPage;
+
+  @ViewChild(Nav) nav: Nav;
+  
+  pages : Array<{title: string, component: any}>;
+  username = '';
+
+  datosComercio: any[];
 
   constructor(platform: Platform, 
               statusBar: StatusBar, 
@@ -20,10 +28,16 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      this.pages = [
+        {title: 'Configuracion', component: ConfiguracionInicialPage}
+      ];
     });
     
   }
 
- 
+  openPage(page) {
+    this.nav.setRoot(page.component);
+  }
 }
 

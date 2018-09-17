@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { envirotment as ENV} from '../../environments/environments';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -15,8 +16,8 @@ const cudOptionsHtml = {
 @Injectable()
 export class AuxiliarProvider {
 
-  public urlBase = 'https://zpos.herokuapp.com';
-  public urlPostGetCombos = this.urlBase + '/conf/combos/';
+  private urlBase = ENV.BASE_URL;
+  private urlPostGetCombos = this.urlBase + '/conf/combos/';
 
   constructor(public http: HttpClient) {
    

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from  'rxjs/Observable';
+import { envirotment as ENV} from '../../environments/environments';
 import  'rxjs/add/operator/catch';
 import  'rxjs/add/operator/map';
 
@@ -17,7 +18,7 @@ const cudOptionsHtml = {
 @Injectable()
 export class ProveedorProvider {
 
-  private urlBase = 'https://zpos.herokuapp.com';
+  private urlBase = ENV.BASE_URL;
   private urlPostGetProveedoresDeRed = this.urlBase + '/proveedor/listar_todos/';
   private urlPostGetProveedores =  this.urlBase + '/proveedor/listar_todos/';
   private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';

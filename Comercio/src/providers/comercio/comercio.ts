@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Comercio } from '../../modelo/comercio';
 import { Observable } from  'rxjs/Observable';
+import { envirotment as ENV} from '../../environments/environments';
 import  'rxjs/add/operator/catch';
 import  'rxjs/add/operator/map';
 
@@ -11,7 +12,7 @@ const cudOptions = {
 
 @Injectable()
 export class ComercioProvider {
-  private urlBase = 'https://zpos.herokuapp.com';
+  private urlBase = ENV.BASE_URL;
   private urlPostComercio = this.urlBase + '/comercio/nuevo/';
   
   constructor(public http: HttpClient) {}

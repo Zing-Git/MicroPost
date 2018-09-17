@@ -88,11 +88,10 @@ export class AltaDomicilioPage {
       this.localidades = element.localidad
     });
     this.provinciaName = prov[0].provincia;
-    //console.log(this.provinciaName);
+    
   }
 
   onLocalidadChange(localidad: string):void{
-    //console.log(ctxt);
     this.localidadName = localidad;
   }
 
