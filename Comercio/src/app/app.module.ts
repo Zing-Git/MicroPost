@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -22,6 +22,13 @@ import { ListaProductosModalPage } from '../pages/lista-productos-modal/lista-pr
 import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import { LocationSelectPage } from '../pages/location-select/location-select';
+import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
+import { GoogleMaps } from '@ionic-native/google-maps';
+declare module 'google-maps';
 
 @NgModule({
   declarations: [
@@ -34,7 +41,8 @@ import { IonicStorageModule } from '@ionic/storage';
     AltaClientePage, 
     ListaProveedoresPage,
     ListaProductosModalPage,
-    ConfiguracionInicialPage
+    ConfiguracionInicialPage,
+    LocationSelectPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +61,8 @@ import { IonicStorageModule } from '@ionic/storage';
     AltaClientePage,
     ListaProveedoresPage,
     ListaProductosModalPage,
-    ConfiguracionInicialPage
+    ConfiguracionInicialPage,
+    LocationSelectPage
   ],
   providers: [
     StatusBar,
@@ -62,7 +71,12 @@ import { IonicStorageModule } from '@ionic/storage';
     AuxiliarProvider,
     ProveedorProvider,
     LoginProvider,
-    ComercioProvider
+    ComercioProvider,
+    ConnectivityServiceProvider,
+    GoogleMapsProvider,
+    Network,
+    Geolocation,
+    GoogleMaps
   ]
 })
 export class AppModule {}
