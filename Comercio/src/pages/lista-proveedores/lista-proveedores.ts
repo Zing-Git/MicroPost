@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Proveedor } from '../../modelo/proveedor';
 import { ProveedorProvider } from '../../providers/proveedor/proveedor';
-import { ListaProveedoresModalPage } from '../lista-proveedores-modal/lista-proveedores-modal';
+import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import Swal from 'sweetalert2';
-import { ListaProductosModalPage } from '../lista-productos-modal/lista-productos-modal';
+import { ListaProductosModalPage } from '../lista-proveedores/modal/lista-productos-modal/lista-productos-modal';
 
 @IonicPage()
 @Component({
@@ -18,13 +18,13 @@ export class ListaProveedoresPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private proveedorService: ProveedorProvider,    
+    private proveedorService: ProveedorProvider,
     public modalCtrl: ModalController) {
     this.proveedoresViewModel = new Array();
 
     this.datosComercio = navParams.get('data');
     this.cargarListaDeProveedores();
-    
+
   }
 
   ionViewDidLoad() {
@@ -32,11 +32,16 @@ export class ListaProveedoresPage {
 
   }
 
-  cargarListaDeProveedores(){
-    this.datosComercio.forEach(x => {
-      this.proveedoresViewModel = x.proveedores;
-     
-    })
+  cargarListaDeProveedores() {
+    if (typeof this.datosComercio === 'undefined') {
+      this.productosViewModel = new Array();
+    } else {
+      this.datosComercio.forEach(x => {
+        this.proveedoresViewModel = x.proveedores;
+
+      });
+    }
+
   }
 
   //por si solo no deberia funcionar
@@ -47,11 +52,11 @@ export class ListaProveedoresPage {
 
   }
 
-  mostrarProductosModal(proveedor: any){
+  mostrarProductosModal(proveedor: any) {
     console.log('id del proveedor');
-    console.log(proveedor._id);    
+    console.log(proveedor._id);
 
-    const modal = this.modalCtrl.create(ListaProductosModalPage, {data: proveedor._id});
+    const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor._id });
     modal.present();
   }
 
@@ -59,7 +64,7 @@ export class ListaProveedoresPage {
 
   }
 
-  
+
 
   cargarProveedor(index: number) {
 
@@ -67,7 +72,7 @@ export class ListaProveedoresPage {
 
   mostrarProveedoresModal() {
 
-    const modal = this.modalCtrl.create(ListaProveedoresModalPage, {data: this.datosComercio});
+    const modal = this.modalCtrl.create(ListaProveedoresModalPage);
     modal.present();
 
   }
@@ -111,8 +116,8 @@ export class ListaProveedoresPage {
         //  'Your imaginary file has been deleted.',
         //  'success'
         //)
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal(
           'Cancelled',

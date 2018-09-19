@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
+import { ListaProveedoresModalPage } from '../pages/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
+import { ListaProveedoresPage } from '../pages/lista-proveedores/lista-proveedores';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,7 +32,9 @@ export class MyApp {
       splashScreen.hide();
 
       this.pages = [
-        {title: 'Configuracion', component: ConfiguracionInicialPage}
+        {title: 'Configuracion', component: ConfiguracionInicialPage},
+        {title: 'Proveedoresde la red', component: ListaProveedoresPage},
+        {title: 'Proveedores Todos', component: ListaProveedoresModalPage}
       ];
     });
     

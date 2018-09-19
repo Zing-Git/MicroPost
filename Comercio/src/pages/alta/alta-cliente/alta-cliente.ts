@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Provincia } from '../../modelo/provincia';
-import { ActividadesPrincipalesComercio } from '../../modelo/actividadesPrincipalesComercio';
-import { TiposPersoneria } from '../../modelo/tiposPersoneria';
-import { Comercio } from '../../modelo/comercio';
-import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
-import { Entidad } from '../../modelo/entidad';
+import { Provincia } from '../../../modelo/provincia';
+import { ActividadesPrincipalesComercio } from '../../../modelo/actividadesPrincipalesComercio';
+import { TiposPersoneria } from '../../../modelo/tiposPersoneria';
+import { Comercio } from '../../../modelo/comercio';
+import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
+import { Entidad } from '../../../modelo/entidad';
 import { AltaDomicilioPage } from '../alta-domicilio/alta-domicilio';
 
 /**

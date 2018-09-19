@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Provincia } from '../../modelo/provincia';
-import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
-import { Domicilio } from '../../modelo/domicilio';
+import { Provincia } from '../../../modelo/provincia';
+import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
+import { Domicilio } from '../../../modelo/domicilio';
 import { AltaLoginPage } from '../alta-login/alta-login';
-import { Comercio } from '../../modelo/comercio';
+import { Comercio } from '../../../modelo/comercio';
 /**
  * Generated class for the AltaDomicilioPage page.
  *

@@ -25,7 +25,7 @@
       <ion-item>
         <ion-label floating>Sub-Categoria</ion-label>
         <ion-select type="text" (ionChange)="onSubCategoriasChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
-          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria">{{subcategoria}}</ion-option>
+          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isenabled">{{subcategoria}}</ion-option>
         </ion-select>
       </ion-item>
 
@@ -54,7 +54,7 @@
   <ion-card>
     <ion-item>
       <button ion-button color="danger" clear (click)='volver()' item-first>Cancelar</button>
-
+      <button ion-button color="primary" clear (click)='pedirProducto()' item-first>Enviar</button>
     </ion-item>
 
   </ion-card>

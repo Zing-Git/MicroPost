@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, animate } from '@angular/core';
 import { NavController, Refresher, AlertController } from 'ionic-angular';
 import Swal from 'sweetalert2';
 
 import { LoginModel } from '../../modelo/login';
 import { LoginProvider } from '../../providers/login/login';
-import { AltaClientePage } from '../alta-cliente/alta-cliente';
+import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { Storage } from '@ionic/storage';
-import { envirotment as ENV} from '../../environments/environments';
+import { envirotment as ENV } from '../../environments/environments';
+import { ListaPedidoProveedorPage } from '../lista-pedido-proveedor/lista-pedido-proveedor';
+import { Comercio } from '../../modelo/comercio';
+import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
 
 @Component({
   selector: 'page-login',
@@ -15,14 +18,17 @@ import { envirotment as ENV} from '../../environments/environments';
 })
 export class LoginPage {
 
+  esPedidoDe: string = 'Otro';
   newLogin: LoginModel;
   usuarioLogin: any;   //get token and _id
-  datosComercio: any[];
+  datosComercio: any;
+  idComercio : string;
+  idProveedor : string;
   public readyToLogin: boolean;
   //private secureStorage: SecureStorage;
 
   constructor(private navCtrl: NavController,
-    private login: LoginProvider, 
+    private login: LoginProvider,
     private alertCtrl: AlertController,
     private storage: Storage) {
     this.newLogin = new LoginModel();
@@ -34,19 +40,45 @@ export class LoginPage {
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
-        this.datosComercio = result['comercioDB'];
+      
         this.usuarioLogin = result['usuario'];
         
-        if (typeof this.usuarioLogin === 'undefined') {          
+        if (typeof this.usuarioLogin === 'undefined') {
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
         } else {
-          
-          this.almacenarValoresImportantes();         
 
-          this.navCtrl.setRoot(ConfiguracionInicialPage, { data: this.datosComercio }, {
-            animate: true
+          this.datosComercio = result['comercioDB'];
+          this.datosComercio.forEach(element => {          
+            this.idComercio = element.entidad._id;
           });
-         /* this.navCtrl.setRoot(MenuPage);*/
+
+          console.log(this.datosComercio);
+
+          this.almacenarValoresImportantes();
+          //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
+          
+          switch (this.esPedidoDe) {
+            case "Proveedor":{
+                  this.navCtrl.setRoot(ListaPedidoProveedorPage,{
+                    animate: true});
+              break;
+            }
+            case "Cliente":
+            case "Otro":{
+              this.navCtrl.setRoot(ListaProveedoresPage,{data: this.datosComercio});
+              break;
+            }
+              
+              break;
+
+            default:
+            Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
+            this.navCtrl.setRoot(ConfiguracionInicialPage, { data: this.datosComercio }, {
+              animate: true
+            });
+            /* this.navCtrl.setRoot(MenuPage);*/
+          }
+         
         }
 
       }, err => {
@@ -86,11 +118,13 @@ export class LoginPage {
     alert.present();
   }
 
-  almacenarValoresImportantes(){
+  almacenarValoresImportantes() {
     this.storage.set('id', this.usuarioLogin._id);
     this.storage.set('token', this.usuarioLogin.token);
+    this.storage.set('idComercio', this.idComercio);
+    this.storage.set('idProveedor', this.idProveedor);
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
-    
+
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/

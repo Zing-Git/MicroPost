@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController, NavController, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Usuario } from '../../modelo/usuario';
-import { Persona } from '../../modelo/persona';
-import { ProveedorProvider } from '../../providers/proveedor/proveedor';
-import { LoginPage } from '../login/login';
-import { Comercio } from '../../modelo/comercio';
-import { ComercioProvider } from '../../providers/comercio/comercio';
+import { Usuario } from '../../../modelo/usuario';
+import { Persona } from '../../../modelo/persona';
+
+import { LoginPage } from '../../login/login';
+import { Comercio } from '../../../modelo/comercio';
+import { ComercioProvider } from '../../../providers/comercio/comercio';
 
 @IonicPage()
 @Component({

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProveedorProvider } from '../../providers/proveedor/proveedor';
+import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
+import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2';
 
 @IonicPage()
@@ -12,42 +13,56 @@ export class ListaProveedoresModalPage {
 
   proveedoresViewModel: any[];
   proveedores: any[];
-  clienteViewModel: any[];
-  clienteId: string;
+  idComercio: string;
   
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              private proveedorService: ProveedorProvider ) {
+              private proveedorService: ProveedorProvider,
+              private storage: Storage ) {
                 this.proveedoresViewModel = new Array();
-
-                this.clienteViewModel = navParams.get('data');
-                this.clienteViewModel.forEach(x=>{
-                  this.clienteId = x._id;
-                })
+               
   }
 
   ionViewDidLoad() {
-    this.cargarProveedores();
+    this.cargarInicial();
   }
 
-  cargarProveedores() {
+  cargarInicial() {
     this.proveedorService.postGetProveedores().subscribe(result => {
       this.proveedoresViewModel = result['proveedorDB'];
       
     });
 
+    this.storage.get('idComercio').then((val) => {
+      this.idComercio = val;
+    });
+
+
   }
 
-  cargarProveedor(proveedor: any){
+  async cargarProveedor(proveedor: any){
     console.log(proveedor._id);
+
     let peticion:{
       comercio: string,
       proveedor: string,
       text: string
     }
+   
+
+    var {value: text} = await Swal({
+      input: 'textarea',
+      inputPlaceholder: 'Enviar mensaje al proveedor...',
+      showCancelButton: true
+    })
+    
+    if(typeof text === 'undefined'){
+      text : 'Podrias unirte a mi red de proveedores?. Gracias.';
+    }
+
     peticion.proveedor = proveedor._id;
-    peticion.comercio= this.clienteId;
-    peticion.text = 'Ejemplo de carga';
+    peticion.comercio= this.idComercio;
+    peticion.text = text;
 
     this.proveedorService.postEnviarInvitacion(peticion).subscribe(result =>{
       if(result.ok === true){
@@ -63,7 +78,7 @@ export class ListaProveedoresModalPage {
           'error'
         );
       }
-    })
+    });
    
   }
 
