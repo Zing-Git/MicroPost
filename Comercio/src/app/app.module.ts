@@ -30,7 +30,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { ListaPedidoProveedorPage } from '../pages/lista-pedido-proveedor/lista-pedido-proveedor';
 import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/pedido-modal';
-declare module 'google-maps';
+//declare module 'google-maps';
 
 @NgModule({
   declarations: [
