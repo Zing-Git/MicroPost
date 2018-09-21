@@ -7,7 +7,7 @@ import { envirotment as ENV} from '../../environments/environments';
 import { HTTP, HTTPResponse } from '@ionic-native/http';
 //import { RequestOptions } from '@angular/http';
 
-declare module 'google-maps';
+//declare module 'google-maps';
 
 var headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Origin' , '*');
