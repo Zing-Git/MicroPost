@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
-import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+//import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
@@ -27,7 +27,7 @@ export class LocationSelectPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public zone: NgZone, public maps: GoogleMapsProvider,
+    //public zone: NgZone, public maps: GoogleMapsProvider,
     public platform: Platform, public geolocation: Geolocation,
     public viewCtrl: ViewController) {
     this.searchDisabled = true;
@@ -39,13 +39,13 @@ export class LocationSelectPage {
   }
 
   loadMap(): void {
-    let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
+    /*let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
 
       this.autocompleteService = new google.maps.places.AutocompleteService();
      
       this.searchDisabled = false;
 
-    });
+    });*/
   }
 
   selectPlace(place) {
@@ -58,10 +58,10 @@ export class LocationSelectPage {
       name: place.name
     };
 
-    this.placesService = new google.maps.places.PlacesService(this.maps.map);
+   /*  this.placesService = new google.maps.places.PlacesService(this.maps.map);
     this.placesService.getDetails({ placeId: place.place_id }, (details) => {
 
-      this.zone.run(() => {
+     this.zone.run(() => {
 
         location.name = details.name;
         location.lat = details.geometry.location.lat();
@@ -75,7 +75,7 @@ export class LocationSelectPage {
       });
 
     });
-
+*/
   }
 
   searchPlace() {

@@ -22,8 +22,8 @@ import { ListaProductosModalPage } from '../pages/lista-proveedores/modal/lista-
 import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
-import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+//import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+//import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { LocationSelectPage } from '../pages/location-select/location-select';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -78,8 +78,8 @@ declare module 'google-maps';
     ProveedorProvider,
     LoginProvider,
     ComercioProvider,
-    ConnectivityServiceProvider,
-    GoogleMapsProvider,
+   // ConnectivityServiceProvider,
+   // GoogleMapsProvider,
     Network,
     Geolocation,
     GoogleMaps
