@@ -68,9 +68,6 @@ export class LoginPage {
               this.navCtrl.setRoot(ListaProveedoresPage,{data: this.datosComercio});
               break;
             }
-              
-              break;
-
             default:
             Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
             this.navCtrl.setRoot(ConfiguracionInicialPage, { data: this.datosComercio }, {

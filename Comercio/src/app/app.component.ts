@@ -34,7 +34,8 @@ export class MyApp {
       this.pages = [
         {title: 'Configuracion', component: ConfiguracionInicialPage},
         {title: 'Proveedoresde la red', component: ListaProveedoresPage},
-        {title: 'Proveedores Todos', component: ListaProveedoresModalPage}
+        {title: 'Listado de Proveedores', component: ListaProveedoresModalPage},
+        {title: 'Salir', component: LoginPage}
       ];
     });
     

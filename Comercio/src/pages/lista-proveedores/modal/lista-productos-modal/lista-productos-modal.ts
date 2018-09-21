@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import Swal from 'sweetalert2';
+import { PedidoModalPage } from '../pedido-modal/pedido-modal';
+import { Pedido } from '../../../../modelo/pedido';
+
+import { envirotment as ENV } from '../../../../environments/environments';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-lista-productos-modal',
@@ -9,9 +14,9 @@ import Swal from 'sweetalert2';
 })
 export class ListaProductosModalPage {
 
-  isenabled:boolean=false;
+  isenabled: boolean = false;
   productosViewModel: any[];
-  proveedorId: string;
+  proveedor: any;
   proveedorNombre: string;
   productoCategorias: any[] = new Array();
   categoria: string;
@@ -21,14 +26,17 @@ export class ListaProductosModalPage {
   arraySubcategorias: any[] = new Array();
   showListProducto: boolean = false;
   arrayProductos: any[] = new Array();
+  tipoEntrega: any;
 
-  pedido: any[];
+  pedido: Pedido;
   productosPedidos: any[] = new Array();
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private proveedorService: ProveedorProvider) {
-    this.proveedorId = navParams.get('data');
+    private proveedorService: ProveedorProvider,
+    private modalCtrl: ModalController,
+    private storage: Storage) {
+    this.proveedor = navParams.get('data');
     this.cargarListaProductos();
   }
 
@@ -40,7 +48,7 @@ export class ListaProductosModalPage {
     this.isenabled = false;
     this.showListProducto = false;
 
-    this.proveedorService.postGetProductosPorIdProveedor(this.proveedorId).subscribe(result => {
+    this.proveedorService.postGetProductosPorIdProveedor(this.proveedor._id).subscribe(result => {
       this.productosViewModel = result['productos'];
       if (typeof this.productosViewModel === 'undefined') {
         Swal(
@@ -67,8 +75,28 @@ export class ListaProductosModalPage {
     }
 
   }
-  pedirProducto(producto: any) {
+  pedirProducto() {
+    this.pedido = new Pedido();
+    this.storage.get('token').then((val) => {
+      this.pedido.token = val
+    });
+    this.storage.get('idComercio').then((val) => {
+      this.pedido.comercio = val
+    });
+    this.pedido.proveedor = this.proveedor._id;
+    this.tipoEntrega = ' ';
+    if (typeof this.proveedor.tipoEntrega != 'undefined') {
+      this.proveedor.tiposEntrega.forEach(x => {
+        this.tipoEntrega = this.tipoEntrega + ', ' + x;
+      })
+    }
 
+    this.pedido.tipoEntrega = this.tipoEntrega;
+    this.pedido.comentario = 'Pedido realizado';
+    this.pedido.productos = this.productosPedidos;
+
+    console.log(this.pedido);
+    //TODO Aqui debo llamar al servicio y realizar algun otro control para no enviar vacio
   }
 
   crearArray(arreglo: string[]): any[] {
@@ -84,6 +112,8 @@ export class ListaProductosModalPage {
   }
 
   onCategoriasChange(ctxt: string): void {
+    this.productoSubCategorias.length = 0;
+
     this.isenabled = true;
     this.categoria = '';
     this.categoria = ctxt;
@@ -97,31 +127,50 @@ export class ListaProductosModalPage {
 
   onSubCategoriasChange(ctxt: string): void {
     this.showListProducto = true;
+    this.arrayProductos.length = 0;
 
     this.productosViewModel.forEach(x => {
       if (x.subcategoria === ctxt && x.categoria === this.categoria) {
         this.arrayProductos.push(x);
       }
     });
-    
+
   }
 
   seleccionarProducto(producto: any) {
-    //debo mostrar varios datos a cargar para armar pedido
-    //mejor va a quedar en un modal, cantidad y combo
+    let nuevoProducto: any;
+    let modal = this.modalCtrl.create(PedidoModalPage, { data: producto });
 
-    this.productosPedidos.push({
-      _id: producto._id,
-      unidadMedida: "UNIDAD",
-      cantidad: 2
-    })
-    Swal(
-      'EN hora buena!',
-      'Se agrego el producto:  ' + producto.nombreProducto,
-      'success'
-    );
+    modal.present();
 
-    //this.cargarListaProductos();
-    this.volver();
+    modal.onDidDismiss((location) => {
+
+      nuevoProducto = location;
+      this.productosPedidos.push({
+        _id: nuevoProducto._id,
+        unidadMedida: nuevoProducto.unidadMedida,
+        cantidad: nuevoProducto.cantidad
+      })
+
+      console.log('Productos Pedidos');
+      console.log(this.productosPedidos);
+    });
+
+    this.cargarListaProductos();
+
+  }
+
+  buscarCateSubCat(index) {
+    this.showListProducto = true;
+    console.log(index);
+    const val = index.target.value;
+
+    if (val && val.trim() != '') {
+
+      this.arrayProductos = this.productosViewModel.filter((x) => {
+        return (x.nombreProducto.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+
+    }
   }
 }

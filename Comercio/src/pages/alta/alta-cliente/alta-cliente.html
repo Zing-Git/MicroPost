@@ -23,13 +23,13 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Personeria</ion-label>
-    <ion-select [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)">
+    <ion-select [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)" interface="popover">
       <ion-option *ngFor="let item of tiposPersoneria" [value]="item.orden">{{item.tipoPersoneria}}</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Actividad Principal - Proveedor de...</ion-label>
-    <ion-select [formControl]="credencialesForm.controls['actividadPrincipal']" type="text" (ionChange)="onActividadesPrincipalesClienteChange($event)">
+    <ion-select [formControl]="credencialesForm.controls['actividadPrincipal']" type="text" (ionChange)="onActividadesPrincipalesClienteChange($event)" interface="popover">
       <ion-option *ngFor="let item1 of actividadesPrincipalesComercio" [value]="item1.orden">{{item1.nombre}}</ion-option>
     </ion-select>
   </ion-item>

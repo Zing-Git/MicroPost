@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class ListaProveedoresModalPage {
 
-  proveedoresViewModel: any[];
+  proveedoresViewModel: any[] = new Array();
   proveedores: any[];
   idComercio: string;
   
@@ -19,17 +19,18 @@ export class ListaProveedoresModalPage {
               public navParams: NavParams,
               private proveedorService: ProveedorProvider,
               private storage: Storage ) {
-                this.proveedoresViewModel = new Array();
+                //this.proveedoresViewModel = new Array();
                
   }
 
   ionViewDidLoad() {
     this.cargarInicial();
+    console.log(this.proveedoresViewModel);
   }
 
   cargarInicial() {
     this.proveedorService.postGetProveedores().subscribe(result => {
-      this.proveedoresViewModel = result['proveedorDB'];
+      this.proveedoresViewModel = result['proveedores'];
       
     });
 
@@ -56,9 +57,9 @@ export class ListaProveedoresModalPage {
       showCancelButton: true
     })
     
-    if(typeof text === 'undefined'){
+    /*if(typeof text === 'undefined'){
       text : 'Podrias unirte a mi red de proveedores?. Gracias.';
-    }
+    }*/
 
     peticion.proveedor = proveedor._id;
     peticion.comercio= this.idComercio;

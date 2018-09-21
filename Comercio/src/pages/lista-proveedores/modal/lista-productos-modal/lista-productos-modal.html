@@ -1,31 +1,38 @@
 <ion-header>
   <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Carrito</ion-title>
   </ion-navbar>
- 
+
 </ion-header>
 
 <ion-content>
+
   <ion-card>
     <ion-card-header>
       Carrito de Productos
     </ion-card-header>
     <ion-card>
+      <ion-searchbar animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+    </ion-card>
+    <ion-card>
       <ion-item>
         <ion-label floating>Categoria</ion-label>
-        <ion-select type="text" (ionChange)="onCategoriasChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
-          <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria">{{categoria}}</ion-option>
+        <ion-select type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+          interface="popover">
+          <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)">{{categoria}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-card>
     <ion-card>
       <ion-item>
         <ion-label floating>Sub-Categoria</ion-label>
-        <ion-select type="text" (ionChange)="onSubCategoriasChange($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100">
-          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isenabled">{{subcategoria}}</ion-option>
+        <ion-select type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+          interface="popover">
+          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isenabled"
+            (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
         </ion-select>
       </ion-item>
 
@@ -36,25 +43,26 @@
       Productos
     </ion-card-header>
     <ion-scroll scrollY="true">
-    <ion-list>
-      <ion-item-sliding *ngFor="let item of arrayProductos;">
-        <ion-item>
-          <ion-icon name="cart" item-start></ion-icon>
-          <h2>{{item.nombreProducto}}</h2>
-        </ion-item>
-        <ion-item-options side="left">
-          <button ion-button color="success" (click)="seleccionarProducto(item)">
-            <ion-icon name="add-circle"> Agregar</ion-icon>
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of arrayProductos;">
+          <ion-item>
+            <ion-icon name="cart" item-start></ion-icon>
+            <h2>{{item.nombreProducto}}</h2>
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button color="success" (click)="seleccionarProducto(item)">
+              <ion-icon name="add-circle"> Agregar</ion-icon>
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
     </ion-scroll>
   </ion-card>
   <ion-card>
     <ion-item>
       <button ion-button color="danger" clear (click)='volver()' item-first>Cancelar</button>
-      <button ion-button color="primary" clear (click)='pedirProducto()' item-first>Enviar</button>
+      <button ion-button round outline  (click)='pedirProducto()' item-first>
+          <ion-icon name="cart"></ion-icon>Enviar</button>
     </ion-item>
 
   </ion-card>

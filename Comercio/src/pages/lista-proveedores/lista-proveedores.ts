@@ -56,7 +56,7 @@ export class ListaProveedoresPage {
     console.log('id del proveedor');
     console.log(proveedor._id);
 
-    const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor._id });
+    const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor });
     modal.present();
   }
 
