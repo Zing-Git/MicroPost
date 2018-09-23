@@ -86,7 +86,7 @@ export class ListaPedidoProveedorPage {
     this.pedidos.forEach(x => {
       console.log('dentro del arreglo');
       console.log(x);
-      this.obtenerProductosDeProveedor(x.proveedor._id);  //cargo this.Productos
+      //this.obtenerProductosDeProveedor(x.proveedor._id);  //cargo this.Productos
       //this.obtenerMontoTotalDeProveedor(x.proveedor._id);
 
       this.pedidosViewModel.push({
@@ -94,8 +94,8 @@ export class ListaPedidoProveedorPage {
         idPedido: x._id,
         proveedor: {
           _id: x.proveedor._id,
-          entidad: x.proveedor.entidad,
-          nombre: this.obtenerNombreDeProveedor(x.proveedor.entidad)
+          entidad: x.proveedor.entidad//,
+          //nombre: this.obtenerNombreDeProveedor(x.proveedor.entidad)
         },
         comercio: x.comercio,
         tipoEntrega: x.tipoEntrega,
@@ -110,7 +110,7 @@ export class ListaPedidoProveedorPage {
       });
 
     })
-    //console.log(pedidosViewModel);
+    console.log(this.pedidosViewModel);
   }
 
   obtenerNombreDeProveedor(idEntidad: string): string {
