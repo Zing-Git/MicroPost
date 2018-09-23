@@ -1,4 +1,4 @@
-import { Component, animate } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, Refresher, AlertController } from 'ionic-angular';
 import Swal from 'sweetalert2';
 
@@ -9,7 +9,6 @@ import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
 import { ListaPedidoProveedorPage } from '../lista-pedido-proveedor/lista-pedido-proveedor';
-import { Comercio } from '../../modelo/comercio';
 import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
 
 @Component({
@@ -18,7 +17,7 @@ import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
 })
 export class LoginPage {
 
-  esPedidoDe: string = 'Otro';
+  esPedidoDe: string = 'Cliente';
   newLogin: LoginModel;
   usuarioLogin: any;   //get token and _id
   datosComercio: any;
@@ -52,8 +51,6 @@ export class LoginPage {
             this.idComercio = element.entidad._id;
           });
 
-          console.log(this.datosComercio);
-
           this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
           
@@ -63,9 +60,13 @@ export class LoginPage {
                     animate: true});
               break;
             }
+            case "Cliente": {
+              this.navCtrl.setRoot(ListaPedidoProveedorPage, {animate: true});
+              break;
+            }
             case "Cliente":
             case "Otro":{
-              this.navCtrl.setRoot(ListaProveedoresPage,{data: this.datosComercio});
+              this.navCtrl.setRoot(ListaProveedoresPage,{animate: true});
               break;
             }
             default:
@@ -90,7 +91,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    
   }
 
   doRefresh(refresher: Refresher) {
@@ -116,12 +117,16 @@ export class LoginPage {
   }
 
   almacenarValoresImportantes() {
-    this.storage.set('id', this.usuarioLogin._id);
+    this.storage.set('id', this.usuarioLogin._id);  
     this.storage.set('token', this.usuarioLogin.token);
     this.storage.set('idComercio', this.idComercio);
-    this.storage.set('idProveedor', this.idProveedor);
+    
+    this.storage.set('comercio', JSON.stringify(this.datosComercio));
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
-
+    ENV.ID_USUARIO = this.usuarioLogin._id;
+    ENV.COMERCIO = this.idComercio;
+    ENV.TOKEN = this.usuarioLogin.token;
+    ENV.COMERCIO_LOGIN = JSON.stringify(this.datosComercio);
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/

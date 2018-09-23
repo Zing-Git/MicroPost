@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar>
@@ -10,26 +9,28 @@
 
 <ion-content padding>
 
-    <form  [formGroup]="nuevoProductoForm" (ngSubmit)="dismiss()">
-      <ion-card>
-         <ion-item item-center>
-          <ion-label floating>Cantidad</ion-label>
-          <ion-input formControlName="cantidad" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Unidad de Medida</ion-label>
-            <ion-select type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
-              interface="popover">
-              <ion-option *ngFor="let unidad of producto.unidadesMedida" [value]="unidad" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
-            </ion-select>
-          </ion-item>
-      </ion-card>
-       <ion-card>
-        <ion-row>
-          <ion-col text-center>
-              <button ion-button block color="secondary" [disabled]="!nuevoProductoForm.valid">Cargar Pedido</button>
-          </ion-col>
+  <form [formGroup]="nuevoProductoForm" (ngSubmit)="dismiss()">
+    <ion-card>
+      <ion-item>
+        <ion-label floating>Unidad de Medida</ion-label>
+        <ion-select type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+          interface="popover">
+          <ion-option *ngFor="let unidad of producto.unidadesMedida" [value]="unidad" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item item-center>
+        <ion-label floating>Cantidad</ion-label>
+        <ion-input formControlName="cantidad" type="text"></ion-input>
+      </ion-item>
+
+    </ion-card>
+    <ion-card>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button block color="secondary" [disabled]="!nuevoProductoForm.valid">Cargar Pedido</button>
+        </ion-col>
       </ion-row>
-       </ion-card>
-</form>
+    </ion-card>
+  </form>
 </ion-content>

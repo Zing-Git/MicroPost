@@ -1,8 +1,8 @@
 {
-  "name": "MicroPost",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "aun nada",
+  "name": "Micro Post Coemrcio",
+  "version": "0.0.15",
+  "author": "BinTech",
+  "homepage": "www.bin-tech.net",
   "private": true,
   "scripts": {
     "start": "ionic-app-scripts serve",
@@ -57,7 +57,7 @@
     "@types/googlemaps": "^3.30.13",
     "typescript": "~2.6.2"
   },
-  "description": "Aplicacion para el comercio que ser quien va a trabajar con el proveedor",
+  "description": "Aplicacion que permite conectar Comerciantes con Proveedores de productos varios",
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},

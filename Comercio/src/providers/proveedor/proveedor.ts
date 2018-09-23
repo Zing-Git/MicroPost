@@ -20,7 +20,7 @@ export class ProveedorProvider {
 
   private urlBase = ENV.BASE_URL;
   private urlPostGetProveedoresDeRed = this.urlBase + '/proveedor/listar_todos/';
-  private urlPostGetProveedores =  this.urlBase + '/proveedor/listar_todos/';
+  private urlPostGetProveedoresDeComercio =  this.urlBase + '/proveedor/listar_todos/';
   private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
   private urlGetProductosPorIdProveedor = this.urlBase + '/proveedor/obtener_productos/';
 
@@ -28,12 +28,14 @@ export class ProveedorProvider {
     
   }
 
+  //lista TODOS los proveedores 
   postGetProveedorDeRed(): Observable<any[]> {    
     return this.http.post<any[]>(this.urlPostGetProveedoresDeRed, cudOptions);
   }
 
-  postGetProveedores():Observable<any[]>{
-    return this.http.get<any[]>(this.urlPostGetProveedores, cudOptions);
+  postGetProveedoresDeComercio(idComercio: string):Observable<any[]>{
+    const url= this.urlPostGetProveedoresDeComercio + '?idComercio=' + idComercio;
+    return this.http.get<any[]>(url, cudOptions);
   }
 
   postEnviarInvitacion(peticion: any): Observable<any>{

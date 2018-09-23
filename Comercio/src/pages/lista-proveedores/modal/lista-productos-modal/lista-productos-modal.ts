@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import Swal from 'sweetalert2';
 import { PedidoModalPage } from '../pedido-modal/pedido-modal';
 import { Pedido } from '../../../../modelo/pedido';
 
-import { envirotment as ENV } from '../../../../environments/environments';
 import { Storage } from '@ionic/storage';
+import { ComercioProvider } from '../../../../providers/comercio/comercio';
+import { CarritoPage } from '../carrito/carrito';
 
 @Component({
   selector: 'page-lista-productos-modal',
@@ -33,15 +34,22 @@ export class ListaProductosModalPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    private viewCtrl: ViewController,
     private proveedorService: ProveedorProvider,
+    private comercioService: ComercioProvider,
     private modalCtrl: ModalController,
     private storage: Storage) {
+
     this.proveedor = navParams.get('data');
+
+    this.storage.get('pedido').then((val) =>{
+      if(val != null && val != undefined){
+        this.pedido = JSON.parse(val);
+      }else{
+        this.pedido = new Pedido();
+      }
+    })
     this.cargarListaProductos();
-  }
-
-  ionViewDidLoad() {
-
   }
 
   cargarListaProductos() {
@@ -75,29 +83,7 @@ export class ListaProductosModalPage {
     }
 
   }
-  pedirProducto() {
-    this.pedido = new Pedido();
-    this.storage.get('token').then((val) => {
-      this.pedido.token = val
-    });
-    this.storage.get('idComercio').then((val) => {
-      this.pedido.comercio = val
-    });
-    this.pedido.proveedor = this.proveedor._id;
-    this.tipoEntrega = ' ';
-    if (typeof this.proveedor.tipoEntrega != 'undefined') {
-      this.proveedor.tiposEntrega.forEach(x => {
-        this.tipoEntrega = this.tipoEntrega + ', ' + x;
-      })
-    }
-
-    this.pedido.tipoEntrega = this.tipoEntrega;
-    this.pedido.comentario = 'Pedido realizado';
-    this.pedido.productos = this.productosPedidos;
-
-    console.log(this.pedido);
-    //TODO Aqui debo llamar al servicio y realizar algun otro control para no enviar vacio
-  }
+ 
 
   crearArray(arreglo: string[]): any[] {
 
@@ -138,6 +124,7 @@ export class ListaProductosModalPage {
   }
 
   seleccionarProducto(producto: any) {
+
     let nuevoProducto: any;
     let modal = this.modalCtrl.create(PedidoModalPage, { data: producto });
 
@@ -149,7 +136,8 @@ export class ListaProductosModalPage {
       this.productosPedidos.push({
         _id: nuevoProducto._id,
         unidadMedida: nuevoProducto.unidadMedida,
-        cantidad: nuevoProducto.cantidad
+        cantidad: nuevoProducto.cantidad,
+        nombreProducto: nuevoProducto.nombreProducto
       })
 
       console.log('Productos Pedidos');
@@ -162,7 +150,6 @@ export class ListaProductosModalPage {
 
   buscarCateSubCat(index) {
     this.showListProducto = true;
-    console.log(index);
     const val = index.target.value;
 
     if (val && val.trim() != '') {
@@ -173,4 +160,42 @@ export class ListaProductosModalPage {
 
     }
   }
+
+  pedirProducto() {
+    
+    this.storage.get('token').then((val) => {
+      this.pedido.token = val
+    });
+    this.storage.get('idComercio').then((val) => {
+      this.pedido.comercio = val
+    });
+    this.pedido.proveedor = this.proveedor._id;
+    this.tipoEntrega = ' ';
+    if (typeof this.proveedor.tipoEntrega != 'undefined') {
+      this.proveedor.tiposEntrega.forEach(x => {
+        this.tipoEntrega = this.tipoEntrega + ', ' + x;
+      })
+    }
+
+    this.pedido.tipoEntrega = this.tipoEntrega;
+    this.pedido.comentario = 'Pedido realizado';
+    this.pedido.productos = this.productosPedidos;
+
+    console.log(this.pedido);
+    //TODO Aqui debo llamar al servicio y realizar algun otro control para no enviar vacio
+
+    this.enviarPedido();
+    //this.mostrarCarrito();
+  }
+
+  enviarPedido(){
+    this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
+    this.viewCtrl.dismiss();
+    let modal = this.modalCtrl.create(CarritoPage, { data: this.pedido });
+    modal.present();
+  }
+  
+  ionViewDidLoad() { }
+
+
 }

@@ -9,10 +9,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PedidoModalPage {
 
-
   producto: any;
   nuevoProductoForm: FormGroup;
   nuevoProducto: any;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private viewCtrl: ViewController,
@@ -26,7 +26,8 @@ export class PedidoModalPage {
     this.nuevoProducto = {
       _id:' ',
       cantidad : 0,
-      unidadMedida : ''
+      unidadMedida : '',
+      nombreProducto: ''
     };
   }
 
@@ -38,6 +39,7 @@ export class PedidoModalPage {
     console.log('dentro del modal al hacer save');
 
     this.nuevoProducto._id = this.producto._id;
+    this.nuevoProducto.nombreProducto = this.producto.nombreProducto;
     this.nuevoProducto.cantidad = this.nuevoProductoForm.controls['cantidad'].value;
     console.log(this.nuevoProducto);
     this.viewCtrl.dismiss(this.nuevoProducto);

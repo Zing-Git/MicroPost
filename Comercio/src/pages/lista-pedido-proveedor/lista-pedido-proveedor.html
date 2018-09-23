@@ -39,15 +39,15 @@
         <ion-item color="gray">
           <ion-row>
             <ion-col>Fecha</ion-col>
-            <ion-col>Pedido</ion-col>
             <ion-col>Proveedor</ion-col>
+            <ion-col>Monto</ion-col>
           </ion-row>
         </ion-item>
-        <ion-item color="primary" *ngFor="let pedido of pedidosViewModel">
+        <ion-item color="primary" *ngFor="let pedido of pedidos">
           <ion-row>
-            <ion-col>{{pedido.fechaPedido}}</ion-col>
-            <ion-col>{{pedido.numeroPedido}}</ion-col>
-            <ion-col>{{pedido.nombreProveedor}}</ion-col>
+            <ion-col>{{pedido.fechaAlta}}</ion-col>
+            <ion-col>{{pedido.proveedor.nombre}}</ion-col>
+            <ion-col>{{pedido.montoTotal}}</ion-col>
           </ion-row>
         </ion-item>
       </ion-scroll>

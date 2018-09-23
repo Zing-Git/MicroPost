@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-title> </ion-title>
+</ion-header>
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+     Pedido
+    </ion-card-header>
+
+    <ion-card>
+      <div class="row header">
+        <div class="col">Nombre</div>
+        <div class="col">Cantidad</div>
+        <div class="col">Medida</div>
+
+        <div class="col"></div>
+      </div>
+      <div class="row" *ngFor="let producto of pedido.productos;">
+        <div class="col">{{producto.nombreProducto}}</div>
+        <div class="col">{{producto.cantidad}}</div>
+        <div class="col">{{producto.unidadMedida}}</div>
+
+        <div class="col">
+          <button ion-button round outline (click)='sacarProducto(producto)' item-first>
+            <ion-icon name="trash" color="red"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+
+
+
+    </ion-card>
+
+    <ion-card>
+      <ion-item>
+        <button ion-button color="danger" clear (click)='volver()' item-first>Cancelar</button>
+        <button ion-button round outline (click)='pedirProducto()' item-first>
+          <ion-icon name="cart"></ion-icon>Enviar
+        </button>
+      </ion-item>
+    </ion-card>
+
+  </ion-card>
+</ion-content>

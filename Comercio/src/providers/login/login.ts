@@ -43,6 +43,6 @@ export class LoginProvider {
     };
     
     return this.http.post<any[]>(this.urlPostGetLogin, parametros, cudOptions);
-    //return this.COREHttp.post(this.urlPostGetLogin, parametros, cudOptions);
+    
   }
 }

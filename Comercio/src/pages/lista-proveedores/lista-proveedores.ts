@@ -5,6 +5,8 @@ import { ProveedorProvider } from '../../providers/proveedor/proveedor';
 import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import Swal from 'sweetalert2';
 import { ListaProductosModalPage } from '../lista-proveedores/modal/lista-productos-modal/lista-productos-modal';
+import { Storage } from '@ionic/storage';
+import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 
 @IonicPage()
 @Component({
@@ -18,88 +20,37 @@ export class ListaProveedoresPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private proveedorService: ProveedorProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public storage: Storage) {
+
     this.proveedoresViewModel = new Array();
 
-    this.datosComercio = navParams.get('data');
-    this.cargarListaDeProveedores();
+    this.storage.get('comercio').then((val) => {
+      if (val != null && val != undefined) {
+        this.datosComercio = JSON.parse(val);
+  
+        this.cargarListaDeProveedores();
+      }
+    })
 
   }
 
-  ionViewDidLoad() {
-    //this.cargarProveedoresDeRed();
-
-  }
-
+  //obtiene los proveedores que pertenecena al comercio
   cargarListaDeProveedores() {
-    if (typeof this.datosComercio === 'undefined') {
-      this.productosViewModel = new Array();
-    } else {
-      this.datosComercio.forEach(x => {
-        this.proveedoresViewModel = x.proveedores;
-
-      });
-    }
-
-  }
-
-  //por si solo no deberia funcionar
-  cargarProveedoresDeRed() {
-    this.proveedorService.postGetProveedorDeRed().subscribe(result => {
-      this.proveedoresViewModel = result;
+    this.datosComercio.forEach(x => {
+      this.proveedoresViewModel = x.proveedores;
     });
-
   }
 
+  //clic desde vista
   mostrarProductosModal(proveedor: any) {
-    console.log('id del proveedor');
-    console.log(proveedor._id);
 
     const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor });
     modal.present();
   }
 
-  borrarProveedor(index: number) {
-
-  }
-
-
-
-  cargarProveedor(index: number) {
-
-  }
-
-  mostrarProveedoresModal() {
-
-    const modal = this.modalCtrl.create(ListaProveedoresModalPage);
-    modal.present();
-
-  }
-
   //si no tiene proveedores de red, entonces le damos la opcion de cargar su lista
   presentConfirm() {
-    /* no se borra porque no se sabe si sweet alert2 funciona en iOs.
-    let alert = this.alertCtrl.create({
-      title: 'Confirmar ',
-      message: 'Quieres agregar proveedores?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Ok',
-          handler: () => {
-            this.mostrarProveedores();
-          }
-        }
-      ]
-    });
-    alert.present();*/
 
     Swal({
       title: 'Confirmar',
@@ -111,21 +62,28 @@ export class ListaProveedoresPage {
     }).then((result) => {
       if (result.value) {
         this.mostrarProveedoresModal();
-        //Swal(
-        //  'Deleted!',
-        //  'Your imaginary file has been deleted.',
-        //  'success'
-        //)
-        // For more information about handling dismissals please visit
+   
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal(
           'Cancelled',
-          'Your imaginary file is safe :)',
+          'Todo Ok, Gracias',
           'error'
         )
+        this.navCtrl.setRoot(ConfiguracionInicialPage);
       }
     })
   }
 
+  mostrarProveedoresModal() {
+    const modal = this.modalCtrl.create(ListaProveedoresModalPage);
+    modal.present();
+  }
+
+  
+  ionViewDidLoad() {  }
+
+  borrarProveedor(index: number) {  }
+
+  cargarProveedor(index: number) {  }
 }

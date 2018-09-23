@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
-import { Storage } from '@ionic/storage';
+import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
 
 @IonicPage()
@@ -17,9 +17,8 @@ export class ListaProveedoresModalPage {
   
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              private proveedorService: ProveedorProvider,
-              private storage: Storage ) {
-                //this.proveedoresViewModel = new Array();
+              private proveedorService: ProveedorProvider) {
+              
                
   }
 
@@ -29,15 +28,12 @@ export class ListaProveedoresModalPage {
   }
 
   cargarInicial() {
-    this.proveedorService.postGetProveedores().subscribe(result => {
+    this.proveedorService.postGetProveedorDeRed().subscribe(result => {
       this.proveedoresViewModel = result['proveedores'];
       
     });
 
-    this.storage.get('idComercio').then((val) => {
-      this.idComercio = val;
-    });
-
+    this.idComercio = ENV.COMERCIO;
 
   }
 

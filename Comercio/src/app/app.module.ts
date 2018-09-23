@@ -30,6 +30,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { ListaPedidoProveedorPage } from '../pages/lista-pedido-proveedor/lista-pedido-proveedor';
 import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/pedido-modal';
+import { CarritoPage } from '../pages/lista-proveedores/modal/carrito/carrito';
+import { ProductoProvider } from '../providers/producto/producto';
 //declare module 'google-maps';
 
 @NgModule({
@@ -46,7 +48,8 @@ import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/p
     ConfiguracionInicialPage,
     LocationSelectPage,
     ListaPedidoProveedorPage,
-    PedidoModalPage
+    PedidoModalPage,
+    CarritoPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/p
     ConfiguracionInicialPage,
     LocationSelectPage,
     ListaPedidoProveedorPage,
-    PedidoModalPage
+    PedidoModalPage,
+    CarritoPage
   ],
   providers: [
     StatusBar,
@@ -82,7 +86,8 @@ import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/p
    // GoogleMapsProvider,
     Network,
     Geolocation,
-    GoogleMaps
+    GoogleMaps,
+    ProductoProvider
   ]
 })
 export class AppModule {}

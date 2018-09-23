@@ -7,6 +7,7 @@ import { LoginPage } from '../pages/login/login';
 import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 import { ListaProveedoresModalPage } from '../pages/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import { ListaProveedoresPage } from '../pages/lista-proveedores/lista-proveedores';
+import { ListaPedidoProveedorPage } from '../pages/lista-pedido-proveedor/lista-pedido-proveedor';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,6 +36,7 @@ export class MyApp {
         {title: 'Configuracion', component: ConfiguracionInicialPage},
         {title: 'Proveedoresde la red', component: ListaProveedoresPage},
         {title: 'Listado de Proveedores', component: ListaProveedoresModalPage},
+        {title: 'Lista de Pedidos a Proveedores', component: ListaPedidoProveedorPage},
         {title: 'Salir', component: LoginPage}
       ];
     });

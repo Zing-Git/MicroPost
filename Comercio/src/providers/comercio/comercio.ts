@@ -5,7 +5,6 @@ import { Observable } from  'rxjs/Observable';
 import { envirotment as ENV} from '../../environments/environments';
 import  'rxjs/add/operator/catch';
 import  'rxjs/add/operator/map';
-import { observableToBeFn } from 'rxjs/testing/TestScheduler';
 import { Pedido } from '../../modelo/pedido';
 
 const cudOptions = {
@@ -27,12 +26,12 @@ export class ComercioProvider {
   }
 
   getPedidoAProveedor(idComercio: string): Observable<any[]> {
-    const url = this.urlConsultaPedidoComercio + '?idComercio=' + idComercio; 
-    return this.http.get<any[]>(url, cudOptions);
+    const url = this.urlConsultaPedidoComercio + '?idComercio=' + idComercio;     
+    return this.http.get<any>(url, cudOptions);
   }
 
-  postPedidoProveedor(pedido: Pedido): Observable<any[]>{
+  postPedidoProveedor(pedido: Pedido): Observable<any>{
     const newSession = Object.assign({}, pedido);
-    return this.http.post<any[]>(this.urlPostPedidoProveedor, newSession, cudOptions);
+    return this.http.post<any>(this.urlPostPedidoProveedor, newSession, cudOptions);
   }
 }
