@@ -28,10 +28,10 @@ import { LocationSelectPage } from '../pages/location-select/location-select';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
-import { ListaPedidoProveedorPage } from '../pages/lista-pedido-proveedor/lista-pedido-proveedor';
 import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/pedido-modal';
 import { CarritoPage } from '../pages/lista-proveedores/modal/carrito/carrito';
 import { ProductoProvider } from '../providers/producto/producto';
+import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 //declare module 'google-maps';
 
 @NgModule({
@@ -47,9 +47,9 @@ import { ProductoProvider } from '../providers/producto/producto';
     ListaProductosModalPage,
     ConfiguracionInicialPage,
     LocationSelectPage,
-    ListaPedidoProveedorPage,
     PedidoModalPage,
-    CarritoPage
+    CarritoPage,
+    ListaPedidoComercioPage
   ],
   imports: [
     BrowserModule,
@@ -70,9 +70,9 @@ import { ProductoProvider } from '../providers/producto/producto';
     ListaProductosModalPage,
     ConfiguracionInicialPage,
     LocationSelectPage,
-    ListaPedidoProveedorPage,
     PedidoModalPage,
-    CarritoPage
+    CarritoPage,
+    ListaPedidoComercioPage
   ],
   providers: [
     StatusBar,

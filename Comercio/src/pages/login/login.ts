@@ -8,8 +8,8 @@ import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
-import { ListaPedidoProveedorPage } from '../lista-pedido-proveedor/lista-pedido-proveedor';
 import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
+import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 
 @Component({
   selector: 'page-login',
@@ -56,12 +56,12 @@ export class LoginPage {
           
           switch (this.esPedidoDe) {
             case "Proveedor":{
-                  this.navCtrl.setRoot(ListaPedidoProveedorPage,{
+                  this.navCtrl.setRoot(ListaPedidoComercioPage,{
                     animate: true});
               break;
             }
             case "Cliente": {
-              this.navCtrl.setRoot(ListaPedidoProveedorPage, {animate: true});
+              this.navCtrl.setRoot(ListaPedidoComercioPage, {animate: true});
               break;
             }
             case "Cliente":

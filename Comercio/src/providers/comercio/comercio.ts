@@ -26,7 +26,7 @@ export class ComercioProvider {
   }
 
   getPedidoAProveedor(idComercio: string): Observable<any[]> {
-    const url = this.urlConsultaPedidoComercio + '?idComercio=' + idComercio;     
+    const url = this.urlConsultaPedidoComercio + '?idComercio=' + idComercio;    
     return this.http.get<any>(url, cudOptions);
   }
 
