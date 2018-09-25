@@ -34,4 +34,14 @@ export class ComercioProvider {
     const newSession = Object.assign({}, pedido);
     return this.http.post<any>(this.urlPostPedidoProveedor, newSession, cudOptions);
   }
+
+  promiseGetPedidoAProveedor(idComercio: string){
+    return new Promise((resolve,reject) =>{
+      setTimeout(()=>{
+        const url = this.urlConsultaPedidoComercio + '?idComercio=' + idComercio; 
+        const result = this.http.get<any>(url, cudOptions);
+        resolve({data: result})
+      },2000);
+    })
+  }
 }
