@@ -50,22 +50,12 @@ export class ListaPedidoComercioPage {
 
       this.pedidos = result['pedidos'];
 
-      
+
       let productos: any[];
       let producto: any;
-      let montoTotal: string = '0';
+      let montoTotal: number;
       this.pedidos.forEach(x => {
-
-        this.storage.ready().then(() => {
-          this.storage.set('pedidos', JSON.stringify(x.detallePedido));
-        });
-        
-
-        this.obtenerMontototalDePedido(x.proveedor._id);
-        this.storage.get('montoTotal').then(
-          val => montoTotal = val
-        )
-
+       
         this.pedidosViewModel.push({
           activo: x.activo,
           idPedido: x._id,
@@ -82,12 +72,14 @@ export class ListaPedidoComercioPage {
           comentario: x.comentario,
           fechaAlta: x.fechaAlta,
           productos: this.productos,
-          montoTotal: montoTotal.toString(),
+          montoTotal: x.montoTotal.toString(),  //aqui hermano va a mandar el total
           detallePedido: x.detallePedido
         });
 
+        console.log(this.pedidosViewModel);
+
       })
-      console.log(this.pedidosViewModel);
+
     })
   }
 
@@ -101,50 +93,58 @@ export class ListaPedidoComercioPage {
     return razonSocial;
   }
 
-  obtenerMontototalDePedido(idProveedor: string) {
 
-    let productos = new Array();
-    let pedidos: any = new Array();
-    let montoTotal: number = 0;
-
-    this.productoServices.getProductosDeProveedor(idProveedor).subscribe(result => {
-
-      console.log('en el detalle pedido')
-      console.log('productos')
-      productos = result['productos'];
-      console.log(productos);
-      this.getPedidos();
-      console.log('detalle del pedido');
-      console.log(this.detallePedido);
-      this.detallePedido.forEach(x => {
-        let pedido = productos.find(prod => prod._id === x.producto);
-        montoTotal = montoTotal + pedido.precioSugerido
-      })
-
-      console.log('el monto total')
-      console.log(montoTotal)
-      this.storage.set('montoTotal', montoTotal);
-      /* this.storage.get('comercio').then((val) => {
-      if (val != null && val != undefined) {
-        this.datosComercio = JSON.parse(val);
-  
-        this.cargarListaDeProveedores();
-      }
-    }) */
-
-    })
-    return productos;
-
-  }
-
-  async getPedidos(){
+  async getPedidos() {
 
     await this.storage.get('pedidos').then(
       val => this.detallePedido = JSON.parse(val)
     );
   }
 
-  async setPedidos(){
+  async setPedidos() {
 
   }
+
+  obtenerMontototal(idProveedor: string, idPedido: string) {
+    let montoTotal: number;
+
+    return new Promise(function(resolve, reject){
+      this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
+
+        this.pedidos = result['pedidos'];
+        let producto: any;
+
+        this.pedidos.forEach(x => {
+
+          if (x._id === idPedido) {
+
+            this.montoTotal = 0;
+            x.detallePedido.forEach(detalle => {
+
+              this.productoServices.getProductosDeProveedor(idProveedor).subscribe(result2 => {
+                //console.log(detalle.producto);
+                producto = result2['productos'].find(p => p._id === detalle.producto);
+               // console.log(montoTotal + '  +  ' + producto.precioSugerido);
+                if (producto != undefined) {
+                  this.montoTotal = this.montoTotal + producto.precioSugerido;
+                }
+
+              });
+            })
+
+          } else {
+            //no hace nada
+          }
+
+        })
+      })
+      resolve(montoTotal);
+      reject(0);
+    })
+
+  }
+
+
+
+
 }
