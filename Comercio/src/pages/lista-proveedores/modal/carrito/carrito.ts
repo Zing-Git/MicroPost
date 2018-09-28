@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pedido } from '../../../../modelo/pedido';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
 import Swal from 'sweetalert2';
-import { ListaProveedoresPage } from '../../lista-proveedores';
-import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'page-carrito',
@@ -21,19 +19,20 @@ export class CarritoPage {
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
-        private viewCtrl: ViewController,
         public formBuilder: FormBuilder,
-        private comercioService: ComercioProvider,
-        private storage: Storage) {
+        private comercioService: ComercioProvider
+        ) {
 
         this.pedido = navParams.get('data');
-        this.storage.get('pedido').then((val)=>{
+        /*this.storage.get('pedido').then((val)=>{
             if(val != null && val != undefined){
                 this.pedido = JSON.parse(val);
             }else{
                 this.pedido =  new Pedido();
             }
-        })
+        })*/
+        console.log('en el carrito');
+        console.log(this.pedido);
     }
 
     ionViewDidLoad() { }
@@ -66,7 +65,7 @@ export class CarritoPage {
                         result.message,
                         'success'
                     )
-                    this.navCtrl.setRoot(ListaProveedoresPage, {animate : true});
+                   this.navCtrl.pop();
                 } else {
                     Swal(
                         'Advertencia',

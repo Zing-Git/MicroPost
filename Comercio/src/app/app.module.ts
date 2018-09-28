@@ -32,6 +32,7 @@ import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/p
 import { CarritoPage } from '../pages/lista-proveedores/modal/carrito/carrito';
 import { ProductoProvider } from '../providers/producto/producto';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
+import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detalle-pedido-comercio/detalle-pedido-comercio';
 //declare module 'google-maps';
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-c
     LocationSelectPage,
     PedidoModalPage,
     CarritoPage,
-    ListaPedidoComercioPage
+    ListaPedidoComercioPage,
+    DetallePedidoComercioPage
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-c
     LocationSelectPage,
     PedidoModalPage,
     CarritoPage,
-    ListaPedidoComercioPage
+    ListaPedidoComercioPage,
+    DetallePedidoComercioPage
   ],
   providers: [
     StatusBar,
@@ -82,8 +85,6 @@ import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-c
     ProveedorProvider,
     LoginProvider,
     ComercioProvider,
-   // ConnectivityServiceProvider,
-   // GoogleMapsProvider,
     Network,
     Geolocation,
     GoogleMaps,

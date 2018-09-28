@@ -6,7 +6,6 @@ import { PedidoModalPage } from '../pedido-modal/pedido-modal';
 import { Pedido } from '../../../../modelo/pedido';
 
 import { Storage } from '@ionic/storage';
-import { ComercioProvider } from '../../../../providers/comercio/comercio';
 import { CarritoPage } from '../carrito/carrito';
 
 @Component({
@@ -36,16 +35,15 @@ export class ListaProductosModalPage {
     public navParams: NavParams,
     private viewCtrl: ViewController,
     private proveedorService: ProveedorProvider,
-    private comercioService: ComercioProvider,
     private modalCtrl: ModalController,
     private storage: Storage) {
 
     this.proveedor = navParams.get('data');
 
-    this.storage.get('pedido').then((val) =>{
-      if(val != null && val != undefined){
+    this.storage.get('pedido').then((val) => {
+      if (val != null && val != undefined) {
         this.pedido = JSON.parse(val);
-      }else{
+      } else {
         this.pedido = new Pedido();
       }
     })
@@ -83,7 +81,6 @@ export class ListaProductosModalPage {
     }
 
   }
- 
 
   crearArray(arreglo: string[]): any[] {
 
@@ -162,7 +159,7 @@ export class ListaProductosModalPage {
   }
 
   pedirProducto() {
-    
+
     this.storage.get('token').then((val) => {
       this.pedido.token = val
     });
@@ -188,13 +185,13 @@ export class ListaProductosModalPage {
     //this.mostrarCarrito();
   }
 
-  enviarPedido(){
+  enviarPedido() {
     this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
     this.viewCtrl.dismiss();
     let modal = this.modalCtrl.create(CarritoPage, { data: this.pedido });
     modal.present();
   }
-  
+
   ionViewDidLoad() { }
 
 

@@ -28,12 +28,13 @@ export class ListaProveedoresModalPage {
   }
 
   cargarInicial() {
+    this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedorDeRed().subscribe(result => {
       this.proveedoresViewModel = result['proveedores'];
       
     });
 
-    this.idComercio = ENV.COMERCIO;
+    
 
   }
 

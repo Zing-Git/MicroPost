@@ -36,12 +36,11 @@ export class PedidoModalPage {
   }
 
   dismiss() {
-    console.log('dentro del modal al hacer save');
-
+    
     this.nuevoProducto._id = this.producto._id;
     this.nuevoProducto.nombreProducto = this.producto.nombreProducto;
     this.nuevoProducto.cantidad = this.nuevoProductoForm.controls['cantidad'].value;
-    console.log(this.nuevoProducto);
+    
     this.viewCtrl.dismiss(this.nuevoProducto);
   
   }

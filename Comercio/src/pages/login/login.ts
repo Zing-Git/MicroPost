@@ -48,7 +48,7 @@ export class LoginPage {
 
           this.datosComercio = result['comercioDB'];
           this.datosComercio.forEach(element => {          
-            this.idComercio = element.entidad._id;
+            this.idComercio = element._id;
           });
 
           this.almacenarValoresImportantes();
@@ -64,7 +64,6 @@ export class LoginPage {
               this.navCtrl.setRoot(ListaPedidoComercioPage, {animate: true});
               break;
             }
-            case "Cliente":
             case "Otro":{
               this.navCtrl.setRoot(ListaProveedoresPage,{animate: true});
               break;
@@ -122,13 +121,15 @@ export class LoginPage {
     this.storage.set('idComercio', this.idComercio);
     
     this.storage.set('comercio', JSON.stringify(this.datosComercio));
+
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
     ENV.ID_USUARIO = this.usuarioLogin._id;
-    ENV.COMERCIO = this.idComercio;
+    ENV.COMERCIO_ID = this.idComercio;
     ENV.TOKEN = this.usuarioLogin.token;
     ENV.COMERCIO_LOGIN = JSON.stringify(this.datosComercio);
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
+    
   }
 }

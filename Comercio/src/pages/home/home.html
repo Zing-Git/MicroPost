@@ -1,11 +1,37 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Home
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
- 
+  <ion-card>
+    <ion-card-header>
+      Micro Post Comercio
+    </ion-card-header>
+
+    <ion-list>
+      <button ion-button full>
+        <ion-icon name="start" item-left  (onclick)="goPageConfiguracionInicial()"></ion-icon>
+         Configuracion
+      </button>
+
+      <button ion-button full>
+        <ion-icon name="start" item-left  (onclick)="goPageProveedores()"></ion-icon>
+         Lista de Proveedores
+      </button>
+
+      <button ion-button full>
+        <ion-icon name="start"  (onclick)="goPageProveedoresRed()"></ion-icon>
+         Proveedores de Red
+      </button>
+
+      <button ion-button full>
+        <ion-icon name="start" item-left (onclick)="goPageListaPedidos()"></ion-icon>
+         Pedidos
+      </button>
+    </ion-list>
+  </ion-card>
 </ion-content>

@@ -3,7 +3,7 @@ export var envirotment = {
     BASE_URL: 'http://18.217.143.92:3000',
     NOMBRE_USUARIO: '',
     ID_USUARIO:'',
-    COMERCIO: '',
+    COMERCIO_ID: '',
     PROVEEDOR:'',
     TOKEN:'',
     COMERCIO_LOGIN:'',
