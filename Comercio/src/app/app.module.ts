@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, Platform } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -24,10 +24,7 @@ import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configu
 import { IonicStorageModule } from '@ionic/storage';
 //import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 //import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
-import { LocationSelectPage } from '../pages/location-select/location-select';
-import { Network } from '@ionic-native/network';
-import { Geolocation } from '@ionic-native/geolocation';
-import { GoogleMaps } from '@ionic-native/google-maps';
+
 import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/pedido-modal';
 import { CarritoPage } from '../pages/lista-proveedores/modal/carrito/carrito';
 import { ProductoProvider } from '../providers/producto/producto';
@@ -47,7 +44,6 @@ import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detall
     ListaProveedoresPage,
     ListaProductosModalPage,
     ConfiguracionInicialPage,
-    LocationSelectPage,
     PedidoModalPage,
     CarritoPage,
     ListaPedidoComercioPage,
@@ -71,7 +67,6 @@ import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detall
     ListaProveedoresPage,
     ListaProductosModalPage,
     ConfiguracionInicialPage,
-    LocationSelectPage,
     PedidoModalPage,
     CarritoPage,
     ListaPedidoComercioPage,
@@ -85,9 +80,6 @@ import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detall
     ProveedorProvider,
     LoginProvider,
     ComercioProvider,
-    Network,
-    Geolocation,
-    GoogleMaps,
     ProductoProvider
   ]
 })

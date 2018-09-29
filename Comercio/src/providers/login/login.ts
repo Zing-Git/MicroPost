@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { LoginModel } from '../../modelo/login';
 import { envirotment as ENV} from '../../environments/environments';
 
-import { HTTP, HTTPResponse } from '@ionic-native/http';
 //import { RequestOptions } from '@angular/http';
 
 //declare module 'google-maps';

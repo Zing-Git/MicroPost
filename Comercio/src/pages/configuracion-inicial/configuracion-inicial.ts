@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Provincia } from '../../modelo/provincia';
 import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
 import { Comercio } from '../../modelo/comercio';
-import { LocationSelectPage } from '../location-select/location-select';
 
 @IonicPage()
 @Component({

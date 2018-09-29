@@ -29,7 +29,7 @@ export class ListaProveedoresModalPage {
 
   cargarInicial() {
     this.idComercio = ENV.COMERCIO_ID;
-    this.proveedorService.postGetProveedorDeRed().subscribe(result => {
+    this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(result => {
       this.proveedoresViewModel = result['proveedores'];
       
     });
