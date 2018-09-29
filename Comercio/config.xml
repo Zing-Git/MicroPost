@@ -86,4 +86,11 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
+    <engine name="android" spec="~5.1.1" />
+    <plugin name="cordova-plugin-googlemaps" spec="~2.4.6">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyBhqbZ6UTpqDljzcvF-4fLAGbgA0DwxS4M" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyBhqbZ6UTpqDljzcvF-4fLAGbgA0DwxS4M" />
+        <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
+        <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
+    </plugin>
 </widget>
