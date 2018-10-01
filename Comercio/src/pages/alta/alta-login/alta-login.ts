@@ -55,7 +55,6 @@ export class AltaLoginPage {
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
       this.clienteViewModel.usuarios = usuarios;
-      let mensaje: string = '';
       this.guardarCliente();
       
      /*  let miModal = this.modalCtrl.create(mensaje);

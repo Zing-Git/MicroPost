@@ -6,12 +6,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { Domicilio } from '../../../modelo/domicilio';
 import { AltaLoginPage } from '../alta-login/alta-login';
 import { Comercio } from '../../../modelo/comercio';
-/**
- * Generated class for the AltaDomicilioPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import Swal from 'sweetalert2';
 
 @IonicPage()
 @Component({
@@ -65,7 +60,7 @@ export class AltaDomicilioPage {
     
     console.log(this.clienteViewModel);   // control de alta de domicilio
 
-    this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+    this.presentConfirm();
   }
 
   cargarControlesCombos() {
@@ -93,6 +88,30 @@ export class AltaDomicilioPage {
 
   onLocalidadChange(localidad: string):void{
     this.localidadName = localidad;
+  }
+
+  presentConfirm() {
+
+    Swal({
+      title: 'Bien hecho!',
+      text: 'para terminar tu registro solo falta cargar los datos para ingresar a la aplicación',
+      type: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'Si, continuar!',
+      cancelButtonText: 'no, gracias'
+    }).then((result) => {
+      if (result.value) {
+        this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal(
+          'Canelado',
+          'Todo Ok, Gracias',
+          'error'
+        )
+        this.navCtrl.pop();  
+      }
+    })
   }
 
 }

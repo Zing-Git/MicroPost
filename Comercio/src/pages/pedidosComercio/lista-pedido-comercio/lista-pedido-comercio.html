@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Pedidos de Clientes</ion-title>
+    <ion-title>Pedidos a Proveedores</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -22,19 +22,24 @@
   </ion-card>
   <ion-card>
     <ion-card-header text-center>
-      Listado de Pedidos
+      Listado de Pedidos 
     </ion-card-header>
     <ion-card-content>
       <ion-scroll style="height: 300px" scrollY="true">
-        <ion-list *ngFor="let item of pedidos" >
-          <ion-item >
-            <ion-avatar item-start>
-              <button ion-button small (click)='visualizarDatosPedido(item)'><ion-icon name="eye"></ion-icon> Ver</button>
+        <ion-list *ngFor="let item of pedidos">
+          <ion-item>
+            <ion-avatar item-end>
+              <button ion-button small (click)='visualizarDatosPedido(item)'>
+                <ion-icon name="eye"> Ver</ion-icon>
+              </button>
             </ion-avatar>
-            <h2><strong> Proveedor </strong>{{item.proveedor.entidad.razonSocial}}</h2>
-            <h3><strong> Fecha de Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy H:mm'}}</h3>
+            <h2><strong> Proveedor </strong> {{item.proveedor.entidad.razonSocial}}</h2>
+            <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
+            <h4><strong> Hora Entrega </strong> {{item.fechaEntrega | date: 'hh:mm'}}</h4>
             <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
+            <ion-item-divider></ion-item-divider>
           </ion-item>
+
         </ion-list>
       </ion-scroll>
     </ion-card-content>

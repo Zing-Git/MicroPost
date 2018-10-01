@@ -10,8 +10,8 @@
 
 <ion-content>
 
-  <h1 text-center>Alta de Comercio</h1>
-  <h2 text-center>Datos de Comercio</h2>
+  <h1 text-center>Registro de Comercio</h1>
+
 <form [formGroup]="credencialesForm">
   <ion-item>
     <ion-label floating>C.U.I.T / C.U.I.L.</ion-label>
@@ -23,15 +23,19 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Personeria</ion-label>
-    <ion-select [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)" interface="popover">
-      <ion-option *ngFor="let item of tiposPersoneria" [value]="item.orden">{{item.tipoPersoneria}}</ion-option>
+    <ion-select [(ngModel)]="itemPersoneriaSelected" [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)" interface="popover">
+      <ion-option *ngFor="let item of tiposPersoneria; let idx = index" [value]="+(item.orden)" [selected]="itemPersoneriaSelected" select-text="itemPersoneriaSelected">{{item.tipoPersoneria}}</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label>Actividad Principal - Proveedor de...</ion-label>
-    <ion-select [formControl]="credencialesForm.controls['actividadPrincipal']" type="text" (ionChange)="onActividadesPrincipalesClienteChange($event)" interface="popover">
-      <ion-option *ngFor="let item1 of actividadesPrincipalesComercio" [value]="item1.orden">{{item1.nombre}}</ion-option>
+    <ion-label>Actividad Principal</ion-label>
+    <ion-select [(ngModel)]="itemActividadSelected" [formControl]="credencialesForm.controls['actividadPrincipal']" type="text" (ionChange)="onActividadesPrincipalesClienteChange($event)" interface="popover">
+      <ion-option *ngFor="let item1 of actividadesPrincipalesComercio" [value]="+(item1.orden)" [selected]="itemActividadSelected">{{item1.nombre}}</ion-option>
     </ion-select>
+  </ion-item>
+  <ion-item [hidden]="!value">
+    <ion-label floating >Ingrese Actividad</ion-label>
+    <ion-input [formControl]="credencialesForm.controls['actividadPrincipalOtro']" type="text"></ion-input>
   </ion-item>
   <br>
 

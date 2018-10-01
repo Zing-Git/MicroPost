@@ -24,7 +24,7 @@ export class DetallePedidoComercioPage {
       this.pedidoForm = this.formBuilder.group({
         nombreProveedor: [this.pedido.proveedor.entidad.razonSocial],
         tipoEntrega: [this.pedido.tipoEntrega],
-        montoTotal: [this.pedido.totalPedido],
+        montoTotal: ['$ ' + this.pedido.totalPedido  || "number:'1.2-2'" ],
         fechaEntrega: [this.pedido.fechaEntrega],
         cantidadProducto: [this.cantidadProductos]
       });

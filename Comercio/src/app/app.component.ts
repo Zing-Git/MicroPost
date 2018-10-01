@@ -13,18 +13,18 @@ import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-c
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage: any = LoginPage;
 
   @ViewChild(Nav) nav: Nav;
-  
-  pages : Array<{title: string, component: any}>;
+
+  pages: Array<{ title: string, component: any }>;
   username = '';
 
   datosComercio: any[];
 
-  constructor(platform: Platform, 
-              statusBar: StatusBar, 
-              splashScreen: SplashScreen) {
+  constructor(platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -33,14 +33,14 @@ export class MyApp {
       splashScreen.hide();
 
       this.pages = [
-        {title: 'Configuracion', component: ConfiguracionInicialPage},
-        {title: 'Proveedoresde la red', component: ListaProveedoresPage},
-        {title: 'Listado de Proveedores', component: ListaProveedoresModalPage},
-        {title: 'Lista de Pedidos a Proveedores', component: ListaPedidoComercioPage},
-        {title: 'Salir', component: LoginPage}
+        { title: 'Pedidos a mi proveedores', component: ListaPedidoComercioPage },
+        { title: 'Mis proveedores', component: ListaProveedoresPage },
+        { title: 'Proveedores de MicroPOS', component: ListaProveedoresModalPage },
+        { title: 'Configuracion', component: ConfiguracionInicialPage },
+        { title: 'Salir', component: LoginPage }
       ];
     });
-    
+
   }
 
   openPage(page) {

@@ -21,10 +21,13 @@ export class LoginPage {
   newLogin: LoginModel;
   usuarioLogin: any;   //get token and _id
   datosComercio: any;
-  idComercio : string;
-  idProveedor : string;
+  idComercio: string;
+  idProveedor: string;
   public readyToLogin: boolean;
   //private secureStorage: SecureStorage;
+
+  public type = 'password';
+  public showPass = false;
 
   constructor(private navCtrl: NavController,
     private login: LoginProvider,
@@ -39,43 +42,44 @@ export class LoginPage {
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
-      
+
         this.usuarioLogin = result['usuario'];
-        
+
         if (typeof this.usuarioLogin === 'undefined') {
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
         } else {
 
           this.datosComercio = result['comercioDB'];
-          this.datosComercio.forEach(element => {          
+          this.datosComercio.forEach(element => {
             this.idComercio = element._id;
           });
 
           this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
-          
+
           switch (this.esPedidoDe) {
-            case "Proveedor":{
-                  this.navCtrl.setRoot(ListaPedidoComercioPage,{
-                    animate: true});
+            case "Proveedor": {
+              this.navCtrl.setRoot(ListaPedidoComercioPage, {
+                animate: true
+              });
               break;
             }
             case "Cliente": {
-              this.navCtrl.setRoot(ListaPedidoComercioPage, {animate: true});
+              this.navCtrl.setRoot(ListaPedidoComercioPage, { animate: true });
               break;
             }
-            case "Otro":{
-              this.navCtrl.setRoot(ListaProveedoresPage,{animate: true});
+            case "Otro": {
+              this.navCtrl.setRoot(ListaProveedoresPage, { animate: true });
               break;
             }
             default:
-            Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
-            this.navCtrl.setRoot(ConfiguracionInicialPage, { data: this.datosComercio }, {
-              animate: true
-            });
+              Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
+              this.navCtrl.setRoot(ConfiguracionInicialPage, { data: this.datosComercio }, {
+                animate: true
+              });
             /* this.navCtrl.setRoot(MenuPage);*/
           }
-         
+
         }
 
       }, err => {
@@ -90,16 +94,16 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    
+
   }
 
-  doRefresh(refresher: Refresher) {
+  /*doRefresh(refresher: Refresher) {
     setTimeout(() => {
       console.log("Termino el refhresh");
       this.newLogin = new LoginModel();
       refresher.complete();
     }, 1500);
-  }
+  }*/
 
   presentAlert() {
     let alert = this.alertCtrl.create({
@@ -116,10 +120,10 @@ export class LoginPage {
   }
 
   almacenarValoresImportantes() {
-    this.storage.set('id', this.usuarioLogin._id);  
+    this.storage.set('id', this.usuarioLogin._id);
     this.storage.set('token', this.usuarioLogin.token);
     this.storage.set('idComercio', this.idComercio);
-    
+
     this.storage.set('comercio', JSON.stringify(this.datosComercio));
 
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
@@ -130,6 +134,16 @@ export class LoginPage {
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
-    
+
+  }
+
+  showPassword(){
+    this.showPass = !this.showPass;
+ 
+    if(this.showPass){
+      this.type = 'text';
+    } else {
+      this.type = 'password';
+    }
   }
 }
