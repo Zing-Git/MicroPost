@@ -20,11 +20,6 @@ const cudOptions = {
 };
 
 
-    
-const cudOptionsXWWForm = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded'})
-};
-
 @Injectable()
 export class LoginProvider {
   

@@ -34,7 +34,8 @@ export class MyApp {
 
       this.pages = [
         { title: 'Pedidos a mi proveedores', component: ListaPedidoComercioPage },
-        { title: 'Mis proveedores', component: ListaProveedoresPage },
+        { title: 'Nuevo Pedido', component: ListaProveedoresPage },
+        //{ title: 'Mis proveedores', component: ListaProveedoresPage },
         { title: 'Proveedores de MicroPOS', component: ListaProveedoresModalPage },
         { title: 'Configuracion', component: ConfiguracionInicialPage },
         { title: 'Salir', component: LoginPage }

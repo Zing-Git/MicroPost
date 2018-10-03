@@ -21,22 +21,19 @@
         <div class="col">{{producto.unidadMedida}}</div>
 
         <div class="col">
-          <button ion-button round outline (click)='sacarProducto(producto)' item-first>
+          <button ion-button round block  (click)='sacarProducto(producto)' item-first>
             <ion-icon name="trash" color="red"></ion-icon>
           </button>
         </div>
       </div>
 
-
-
-
     </ion-card>
 
     <ion-card>
       <ion-item>
-        <button ion-button color="danger" clear (click)='volver()' item-first>Cancelar</button>
-        <button ion-button round outline (click)='pedirProducto()' item-first>
-          <ion-icon name="cart"></ion-icon>Enviar
+        <button ion-button round color="danger" (click)='volver()' item-first>Volver</button>
+        <button ion-button round (click)='pedirProducto()' item-end>
+          <ion-icon name="cart"> Enviar</ion-icon>
         </button>
       </ion-item>
     </ion-card>

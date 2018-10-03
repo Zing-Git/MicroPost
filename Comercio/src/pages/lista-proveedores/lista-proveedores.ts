@@ -37,10 +37,15 @@ export class ListaProveedoresPage {
   }
 
   //clic desde vista
-  mostrarProductosModal(proveedor: any) {
+  mostrarProductosModal(ctxt: string) {
+    let proveedor= this.proveedoresViewModel.find(x => x.entidad._id === ctxt);
+    console.log(proveedor);
+    //llamar a pagina y no a modal
+    
+    this.navCtrl.push(ListaProductosModalPage, { data: proveedor });
 
-    const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor });
-    modal.present();
+      //const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor });
+    //modal.present();
   }
 
   //si no tiene proveedores de red, entonces le damos la opcion de cargar su lista
@@ -76,10 +81,11 @@ export class ListaProveedoresPage {
 
   
   ionViewDidLoad() {  
-
+    //this.productosViewModel.length = 0;
   }
 
   borrarProveedor(index: number) {  }
 
   cargarProveedor(index: number) {  }
+
 }

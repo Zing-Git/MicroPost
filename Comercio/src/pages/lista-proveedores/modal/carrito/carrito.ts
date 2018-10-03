@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pedido } from '../../../../modelo/pedido';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
+import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,7 +24,7 @@ export class CarritoPage {
         private comercioService: ComercioProvider
         ) {
 
-        this.pedido = navParams.get('data');
+        this.pedido = JSON.parse(ENV.CARRITO);   //navParams.get('data');
         /*this.storage.get('pedido').then((val)=>{
             if(val != null && val != undefined){
                 this.pedido = JSON.parse(val);
@@ -47,7 +48,10 @@ export class CarritoPage {
     }
 
     pedirProducto() {
-        this.pedido.productos.forEach(x => {
+
+        ENV.CARRITO = JSON.stringify(this.pedido);  //primero almaceno
+
+        this.pedido.productos.forEach(x => {        //luego elaboro
             this.arrayProductosviewModel.push({
                 _id : x._id,
                 cantidad : x.cantidad,
@@ -56,29 +60,55 @@ export class CarritoPage {
         })
         this.pedido.productos = this.arrayProductosviewModel;
         
-        this.comercioService.postPedidoProveedor(this.pedido).subscribe(result => {
-            console.log(result);
-            if (typeof result != 'undefined') {
-                if (result.ok) {
-                    Swal(
-                        'Felicidades',
-                        result.message,
-                        'success'
-                    )
-                   this.navCtrl.pop();
-                } else {
-                    Swal(
-                        'Advertencia',
-                        result.message,
-                        'error'
-                    )
-                }
+        Swal({
+            title: 'CARRITO!',
+            text: 'Desea enviar el Pedido?',
+            type: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Si, ENVIAR!',
+            cancelButtonText: 'No, Cancelar'
+          }).then((result) => {
+            if (result.value) {
+
+                this.comercioService.postPedidoProveedor(this.pedido).subscribe(result => {
+                    console.log(result);
+                    if (typeof result != 'undefined') {
+                        if (result.ok) {
+                            Swal(
+                                'Felicidades',
+                                result.message,
+                                'success'
+                            )
+                           this.navCtrl.pop();
+                        } else {
+                            Swal(
+                                'Advertencia',
+                                result.message,
+                                'error'
+                            )
+                        }
+                    }
+                })
+              //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+              // https://sweetalert2.github.io/#handling-dismissals
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                
+              Swal(
+                'Canelado',
+                'Todo Ok, Gracias',
+                'error'
+              )
+              
+              this.navCtrl.pop(); 
             }
-        })
+          })
+
+       
     }
 
 
     volver() {
+        //Swal.close;
         this.navCtrl.pop();
     }
 

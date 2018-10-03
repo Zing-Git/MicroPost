@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController, IonicPage } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import Swal from 'sweetalert2';
 import { PedidoModalPage } from '../pedido-modal/pedido-modal';
 import { Pedido } from '../../../../modelo/pedido';
-
+import { envirotment as ENV } from '../../../../environments/environments';
 import { Storage } from '@ionic/storage';
 import { CarritoPage } from '../carrito/carrito';
+import { ListaProveedoresPage } from '../../lista-proveedores';
 
+@IonicPage()
 @Component({
   selector: 'page-lista-productos-modal',
   templateUrl: 'lista-productos-modal.html',
 })
 export class ListaProductosModalPage {
 
-  isenabled: boolean = false;
+  isEnabledSubCategoria: boolean = false;
+  isEnabledCategoria: boolean = true;
   productosViewModel: any[];
   proveedor: any;
   proveedorNombre: string;
@@ -30,7 +33,7 @@ export class ListaProductosModalPage {
 
   pedido: Pedido;
   productosPedidos: any[] = new Array();
-
+  
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private viewCtrl: ViewController,
@@ -40,18 +43,23 @@ export class ListaProductosModalPage {
 
     this.proveedor = navParams.get('data');
 
-    this.storage.get('pedido').then((val) => {
+    if(ENV.CARRITO != ' '){
+      this.pedido = JSON.parse(ENV.CARRITO);
+    }else{
+      this.pedido = new Pedido();
+    }
+    /*this.storage.get('pedido').then((val) => {
       if (val != null && val != undefined) {
         this.pedido = JSON.parse(val);
       } else {
         this.pedido = new Pedido();
       }
-    })
+    })*/
     this.cargarListaProductos();
   }
 
   cargarListaProductos() {
-    this.isenabled = false;
+    this.isEnabledSubCategoria = false;
     this.showListProducto = false;
 
     this.proveedorService.postGetProductosPorIdProveedor(this.proveedor._id).subscribe(result => {
@@ -70,6 +78,7 @@ export class ListaProductosModalPage {
 
   iniciarArrayCategorias() {
     this.productoCategorias = new Array();
+    this.arrayCategorias.length = 0;
 
     if (typeof this.productosViewModel != 'undefined') {
       this.productosViewModel.forEach(x => {
@@ -80,6 +89,7 @@ export class ListaProductosModalPage {
       this.arrayProductos.length = 0;
     }
 
+    ENV.PEDIDO = JSON.stringify(this.productosPedidos);
   }
 
   crearArray(arreglo: string[]): any[] {
@@ -91,13 +101,13 @@ export class ListaProductosModalPage {
   }
 
   volver() {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(ListaProveedoresPage);
   }
 
   onCategoriasChange(ctxt: string): void {
     this.productoSubCategorias.length = 0;
 
-    this.isenabled = true;
+    this.isEnabledSubCategoria = true;
     this.categoria = '';
     this.categoria = ctxt;
     this.productosViewModel.forEach(x => {
@@ -117,7 +127,7 @@ export class ListaProductosModalPage {
         this.arrayProductos.push(x);
       }
     });
-
+    this.categoria = ' ';
   }
 
   seleccionarProducto(producto: any) {
@@ -128,17 +138,25 @@ export class ListaProductosModalPage {
     modal.present();
 
     modal.onDidDismiss((location) => {
+      //cargar en envirotment el listado de pedidos
+      
+      if (location) {
 
-      nuevoProducto = location;
-      this.productosPedidos.push({
-        _id: nuevoProducto._id,
-        unidadMedida: nuevoProducto.unidadMedida,
-        cantidad: nuevoProducto.cantidad,
-        nombreProducto: nuevoProducto.nombreProducto
-      })
+        this.productosPedidos = JSON.parse(ENV.PEDIDO);
 
-      console.log('Productos Pedidos');
-      console.log(this.productosPedidos);
+        nuevoProducto = location;
+        this.productosPedidos.push({
+          _id: nuevoProducto._id,
+          unidadMedida: nuevoProducto.unidadMedida,
+          cantidad: nuevoProducto.cantidad,
+          nombreProducto: nuevoProducto.nombreProducto
+        })
+
+        ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //aqui almaceno la variable
+        console.log('Productos Pedidos');
+        console.log(this.productosPedidos);
+      }
+
     });
 
     this.cargarListaProductos();
@@ -146,6 +164,8 @@ export class ListaProductosModalPage {
   }
 
   buscarCateSubCat(index) {
+    this.isEnabledCategoria = false;
+    this.isEnabledSubCategoria = false;
     this.showListProducto = true;
     const val = index.target.value;
 
@@ -158,7 +178,7 @@ export class ListaProductosModalPage {
     }
   }
 
-  pedirProducto() {
+  pedirProducto() {     //Visualizar en un modal el carrito
 
     this.storage.get('token').then((val) => {
       this.pedido.token = val
@@ -178,7 +198,7 @@ export class ListaProductosModalPage {
     this.pedido.comentario = 'Pedido realizado';
     this.pedido.productos = this.productosPedidos;
 
-    console.log(this.pedido);
+    //console.log(this.pedido);
     //TODO Aqui debo llamar al servicio y realizar algun otro control para no enviar vacio
 
     this.enviarPedido();
@@ -186,10 +206,13 @@ export class ListaProductosModalPage {
   }
 
   enviarPedido() {
-    this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
-    this.viewCtrl.dismiss();
-    let modal = this.modalCtrl.create(CarritoPage, { data: this.pedido });
+    //this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
+    ENV.CARRITO = JSON.stringify(this.pedido);
+    //this.viewCtrl.dismiss();
+    let modal = this.modalCtrl.create(CarritoPage);
     modal.present();
+
+   // modal.onDidDismiss((location) => {});
   }
 
   ionViewDidLoad() { }
