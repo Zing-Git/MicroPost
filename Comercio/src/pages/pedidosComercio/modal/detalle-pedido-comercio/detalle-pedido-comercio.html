@@ -18,27 +18,27 @@
 
         <ion-item>
           <ion-label floating>Proveedor</ion-label>
-          <ion-input [formControl]="pedidoForm.controls['nombreProveedor']" type="text" disabled="true"></ion-input>
+          <ion-input [formControl]="pedidoForm.controls['nombreProveedor']" type="text" ></ion-input>
         </ion-item>
 
 
         <ion-item>
           <ion-label floating>Tipo de Entrega</ion-label>
-          <ion-input [formControl]="pedidoForm.controls['tipoEntrega']" type="text" disabled="true"></ion-input>
+          <ion-input [formControl]="pedidoForm.controls['tipoEntrega']" type="text" ></ion-input>
         </ion-item>
 
 
 
         <ion-item>
           <ion-label floating>Monto Total</ion-label>
-          <ion-input [formControl]="pedidoForm.controls['montoTotal']" type="text" disabled="true"></ion-input>
+          <ion-input [formControl]="pedidoForm.controls['montoTotal']" type="text" ></ion-input>
         </ion-item>
 
 
 
         <ion-item>
           <ion-label floating>Fecha de Entrega</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY hh:mm" [formControl]="pedidoForm.controls['fechaEntrega']" disabled="true"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY hh:mm" [formControl]="pedidoForm.controls['fechaEntrega']"></ion-datetime>
         </ion-item>
 
 
@@ -98,7 +98,7 @@
   </div>
   <ion-card>
     <ion-item>
-      <button ion-button color="danger" clear (click)='volver()' item-end>Volver</button>
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;"><ion-icon>Volver</ion-icon></button>
     </ion-item>
 
   </ion-card>

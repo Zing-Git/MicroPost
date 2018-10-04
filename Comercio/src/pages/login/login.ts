@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Refresher, AlertController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import Swal from 'sweetalert2';
 
 import { LoginModel } from '../../modelo/login';
@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
 import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
+import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
 
 @Component({
   selector: 'page-login',
@@ -22,7 +23,7 @@ export class LoginPage {
   usuarioLogin: any;   //get token and _id
   datosComercio: any;
   idComercio: string;
-  idProveedor: string;
+  
   public readyToLogin: boolean;
   //private secureStorage: SecureStorage;
 
@@ -32,13 +33,15 @@ export class LoginPage {
   constructor(private navCtrl: NavController,
     private login: LoginProvider,
     private alertCtrl: AlertController,
-    private storage: Storage) {
+    private storage: Storage,
+    private auxiliar: AuxiliarProvider) {
     this.newLogin = new LoginModel();
 
   }
 
-  getLogin() {
 
+  getLogin() {
+    this.auxiliar.presentLoading();
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {

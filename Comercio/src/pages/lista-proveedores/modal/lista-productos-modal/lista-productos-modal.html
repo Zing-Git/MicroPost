@@ -6,7 +6,7 @@
 
   <ion-card>
     <ion-card-header>
-      Listado de Productos - Seleccione Producto
+      Listado de Productos
     </ion-card-header>
     <ion-card>
       <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
@@ -56,8 +56,8 @@
 
   <ion-card>
     <ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first>Cancelar</button>
-      <button ion-button round (click)='pedirProducto()' item-end>
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;"><ion-icon>Cancelar</ion-icon></button>
+      <button ion-button round (click)='pedirProducto()' item-end style="width:150px;">
         <ion-icon name="cart"> Ver Pedido</ion-icon> 
       </button>
     </ion-item>

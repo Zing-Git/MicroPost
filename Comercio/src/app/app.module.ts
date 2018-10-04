@@ -30,6 +30,7 @@ import { CarritoPage } from '../pages/lista-proveedores/modal/carrito/carrito';
 import { ProductoProvider } from '../providers/producto/producto';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detalle-pedido-comercio/detalle-pedido-comercio';
+import { DecimalPipe } from '@angular/common';
 //declare module 'google-maps';
 
 @NgModule({
@@ -80,7 +81,8 @@ import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detall
     ProveedorProvider,
     LoginProvider,
     ComercioProvider,
-    ProductoProvider
+    ProductoProvider,
+    DecimalPipe
   ]
 })
 export class AppModule {}

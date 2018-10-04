@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 
 @Component({
   selector: 'page-detalle-pedido-comercio',
@@ -13,7 +14,7 @@ export class DetallePedidoComercioPage {
   cantidadProductos : number = 0;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private auxiliar: AuxiliarProvider) {
 
     this.pedido = navParams.get('data');
     if (this.pedido != undefined) {
@@ -22,11 +23,11 @@ export class DetallePedidoComercioPage {
       })
       console.log(this.pedido);
       this.pedidoForm = this.formBuilder.group({
-        nombreProveedor: [this.pedido.proveedor.entidad.razonSocial],
-        tipoEntrega: [this.pedido.tipoEntrega],
-        montoTotal: ['$ ' + this.pedido.totalPedido  || "number:'1.2-2'" ],
-        fechaEntrega: [this.pedido.fechaEntrega],
-        cantidadProducto: [this.cantidadProductos]
+        nombreProveedor: [{value: this.pedido.proveedor.entidad.razonSocial, disabled: true}],
+        tipoEntrega: [{value: this.pedido.tipoEntrega, disabled: true}],
+        montoTotal: [{value: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido), disabled: true }],   //aqui probando
+        fechaEntrega: [{value: this.pedido.fechaEntrega, disabled: true}],
+        cantidadProducto: [{value: this.cantidadProductos, disabled: true}]
       });
     }
 
