@@ -1,0 +1,116 @@
+<ion-content padding>
+
+  <div padding>
+    <ion-segment [(ngModel)]="inicial">
+      <ion-segment-button value="encabezado">
+        <strong>Mi Pedido</strong>
+      </ion-segment-button>
+      <ion-segment-button value="detalle">
+        <strong>Detalle Pedido</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div [ngSwitch]="inicial">
+    <form *ngSwitchCase="'encabezado'">
+      <ion-card>
+
+        <ion-item>
+          <ion-label floating>Comercio</ion-label>
+          <ion-input [formControl]="pedidoForm.controls['nombreComercio']" type="text"></ion-input>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label floating>Tipo de Entrega</ion-label>
+          <ion-input [formControl]="pedidoForm.controls['tipoEntrega']" type="text"></ion-input>
+        </ion-item>
+
+
+
+        <ion-item>
+          <ion-label floating>Monto Total</ion-label>
+          <ion-input [formControl]="pedidoForm.controls['montoTotal']" type="text"></ion-input>
+        </ion-item>
+
+
+
+        <ion-item>
+          <ion-label floating>Fecha de Entrega</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY hh:mm" [formControl]="pedidoForm.controls['fechaEntrega']"></ion-datetime>
+        </ion-item>
+
+
+      </ion-card>
+    </form>
+
+
+    <form *ngSwitchCase="'detalle'">
+
+      <ion-card>
+        <!--<ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating>Cantidad de Productos</ion-label>
+              <ion-input [formControl]="pedidoForm.controls['cantidadProducto']" type="text" disabled></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label floating>Monto Total</ion-label>
+              <ion-input [formControl]="pedidoForm.controls['montoTotal']" type="text" disabled></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>-->
+      </ion-card>
+
+
+      <ion-scroll style="height: 300px" scrollY="true">
+
+        <ion-list *ngFor="let item of pedido.detallePedido">
+          <ion-item>
+
+            <ion-avatar item-start>
+              <button ion-button small>
+                <ion-icon name="pricetag"></ion-icon>
+              </button>
+            </ion-avatar>
+            <h3><strong> Producto </strong>{{item.producto.nombreProducto}}</h3>
+            <h3><strong> Unidad </strong> {{item.unidadMedida}}</h3>
+            <h3><strong> Cant. </strong> {{item.cantidadPedido}}</h3>
+
+
+            <ion-item-divider></ion-item-divider>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+
+
+
+
+    </form>
+
+
+  </div>
+  <ion-card>
+    
+    <ion-item>
+      <button ion-button round color="primary" (click)='aceptar()' full [class.hide]="!checkStatus">
+        <ion-icon>Aceptar Pedido</ion-icon>
+      </button>
+      <button ion-button round color="danger" (click)='rechazar()' full [class.hide]="checkStatus">
+        <ion-icon>Rechazar Pedido</ion-icon>
+      </button>
+    </ion-item>
+    <ion-item>
+      <button ion-button round color="secundary" (click)='volver()' full>
+        <ion-icon>Volver</ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

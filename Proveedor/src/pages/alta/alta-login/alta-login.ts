@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController, NavController, ModalController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Usuario } from '../../modelo/usuario';
-import { Persona } from '../../modelo/persona';
-import { ProveedorProvider } from '../../providers/proveedor/proveedor';
-import { LoginPage } from '../login/login';
-import { Comercio } from '../../modelo/comercio';
-import { ComercioProvider } from '../../providers/comercio/comercio';
+import { Usuario } from '../../../modelo/usuario';
+import { Persona } from '../../../modelo/persona';
+import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
+import { LoginPage } from '../../login/login';
+import { Comercio } from '../../../modelo/comercio';
 
 @IonicPage()
 @Component({
@@ -24,7 +23,7 @@ export class AltaLoginPage {
   constructor(public navParams: NavParams,
     public viewCtrl: ViewController,
     private formBuilder: FormBuilder,
-    private comercioService: ComercioProvider,
+    private proveedorServices: ProveedorProvider,
     public navCtrl: NavController,
     public modalCtrl: ModalController) {
 
@@ -55,7 +54,7 @@ export class AltaLoginPage {
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
       this.clienteViewModel.usuarios = usuarios;
-      let mensaje: string = '';
+      
       this.guardarCliente();
       
      /*  let miModal = this.modalCtrl.create(mensaje);
@@ -72,7 +71,7 @@ export class AltaLoginPage {
   }
 
   guardarCliente() {
-    this.comercioService.postComercio(this.clienteViewModel).subscribe(result => {
+    this.proveedorServices.postProveedor(this.clienteViewModel).subscribe(result => {
       let respuesta = result;
       console.log('respuesta del server: ' + respuesta);
       this.isCorrect = true;

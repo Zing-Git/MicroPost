@@ -4,6 +4,7 @@ import { Comercio } from '../../modelo/comercio';
 import { Observable } from  'rxjs/Observable';
 import  'rxjs/add/operator/catch';
 import  'rxjs/add/operator/map';
+import { envirotment as ENV} from '../../environments/environment';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -11,7 +12,7 @@ const cudOptions = {
 
 @Injectable()
 export class ComercioProvider {
-  private urlBase = 'https://zpos.herokuapp.com';
+  private urlBase = ENV.BASE_URL;
   private urlPostComercio = this.urlBase + '/comercio/nuevo/';
   
   constructor(public http: HttpClient) {}

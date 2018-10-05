@@ -58,7 +58,7 @@ export class LoginPage {
           loader.dismiss();
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
         } else {
-          loader.dismiss();
+          
           this.datosComercio = result['comercioDB'];
           this.datosComercio.forEach(element => {
             this.idComercio = element._id;
@@ -66,7 +66,7 @@ export class LoginPage {
 
           this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
-
+          loader.dismiss();
           switch (this.esPedidoDe) {
             case "Proveedor": {
               this.navCtrl.setRoot(ListaPedidoComercioPage, {

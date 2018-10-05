@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, Refresher, AlertController } from 'ionic-angular';
+import { NavController, Refresher, AlertController, LoadingController } from 'ionic-angular';
 import Swal from 'sweetalert2';
-
+import { Storage } from '@ionic/storage';
+import { envirotment as ENV } from '../../environments/environment';
 import { LoginModel } from '../../modelo/login';
-<<<<<<< HEAD
-import { AltaProveedorPage } from '../alta-proveedor/alta-proveedor';
 import { LoginProvider } from '../../providers/login/login';
-import Swal from 'sweetalert2';
-=======
-import { LoginProvider } from '../../providers/login/login';
-import { AltaClientePage } from '../alta-cliente/alta-cliente';
-import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
->>>>>>> 9745dd4bdf334a3b6758c6d24ea8f3687846c43f
+import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
+import { ListadoPedidoPage } from '../pedido/listado-pedido/listado-pedido';
 
 @Component({
   selector: 'page-login',
@@ -24,58 +19,52 @@ export class LoginPage {
     _id: string,
     token: string
   };
-<<<<<<< HEAD
-  
-  constructor(private navCtrl: NavController,
-    private login : LoginProvider        ) {
-=======
-  datosComercio: any[];
+  datosProveedor: any;
   public readyToLogin: boolean;
-  //private secureStorage: SecureStorage;
+  idProveedor: string;
+  public type = 'password';
+  public showPass = false;
 
   constructor(private navCtrl: NavController,
-    private login: LoginProvider, private alertCtrl: AlertController) {
->>>>>>> 9745dd4bdf334a3b6758c6d24ea8f3687846c43f
+    private login: LoginProvider, 
+    private alertCtrl: AlertController,
+    public storage: Storage,
+    public loadingCtrl: LoadingController) {
     this.newLogin = new LoginModel();
 
   }
 
   getLogin() {
 
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos..."
+     
+    });
+    loader.present();
+
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
 
-<<<<<<< HEAD
-    if((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario)  &&(typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)){
-      
-=======
->>>>>>> 9745dd4bdf334a3b6758c6d24ea8f3687846c43f
       this.login.getLogin(this.newLogin).subscribe(result => {
-        this.datosComercio = result['comercioDB'];
-        this.usuarioLogin = result['usuario'];
-<<<<<<< HEAD
-               
-=======
         
->>>>>>> 9745dd4bdf334a3b6758c6d24ea8f3687846c43f
+        this.usuarioLogin = result['usuario'];
+        
         if (typeof this.usuarioLogin === 'undefined') {
-          //this.presentAlert(); 
+          loader.dismiss();
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
         } else {
-<<<<<<< HEAD
-          console.log(this.usuarioLogin.token);
-          this.navCtrl.setRoot(HomePage, {
-            animate: true
+
+          this.datosProveedor = result['proveedorDB'];
+          this.datosProveedor.forEach(element => {
+            this.idProveedor = element._id;
+
           });
-        }
-        //this.navCtrl.push(HomePage);
-=======
-          //console.log(this.usuarioLogin.token);
-          this.navCtrl.setRoot(ListaProveedoresPage, { data: this.datosComercio }, {
+          this.almacenarValoresImportantes();
+          loader.dismiss();
+          this.navCtrl.setRoot(ListadoPedidoPage, {
             animate: true
           });
         }
 
->>>>>>> 9745dd4bdf334a3b6758c6d24ea8f3687846c43f
       }, err => {
         Swal('Atención', 'Ocurrio un problema inesperado', 'error')
       });
@@ -87,9 +76,7 @@ export class LoginPage {
     this.navCtrl.push(AltaClientePage);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
+  ionViewDidLoad() {  }
 
   doRefresh(refresher: Refresher) {
     setTimeout(() => {
@@ -112,4 +99,34 @@ export class LoginPage {
     });
     alert.present();
   }
+
+  almacenarValoresImportantes() {
+    this.storage.set('id', this.usuarioLogin._id);
+    this.storage.set('token', this.usuarioLogin.token);
+    this.storage.set('idProveedor', this.idProveedor);
+
+    //this.storage.set('proveedor', JSON.stringify(this.datosProveedor));
+
+    ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
+    ENV.ID_USUARIO = this.usuarioLogin._id;
+    ENV.PROVEEDOR_ID = this.idProveedor;
+    ENV.TOKEN = this.usuarioLogin.token;
+    ENV.PROVEEDOR_LOGIN = JSON.stringify(this.datosProveedor);
+    /*this.storage.get('token').then((val) => {
+      console.log('Your id is', val);
+    });*/
+    
+
+  }
+
+  showPassword(){
+    this.showPass = !this.showPass;
+ 
+    if(this.showPass){
+      this.type = 'text';
+    } else {
+      this.type = 'password';
+    }
+  }
+  
 }

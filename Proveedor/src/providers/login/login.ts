@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginModel } from '../../modelo/login';
+import { envirotment as ENV} from '../../environments/environment';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -10,18 +11,15 @@ const cudOptions = {
 @Injectable()
 export class LoginProvider {
 
-  public urlBase = 'https://zpos.herokuapp.com';
-  public urlPostGetLogin = this.urlBase + '/comercio/ingresar/';
+  public urlBase = ENV.BASE_URL;
+  public urlPostGetLogin = this.urlBase + '/proveedor/ingresar/';
 
   constructor(public http: HttpClient) {
    
   }
 
   getLogin(loginModel: LoginModel): Observable<any[]>{
-<<<<<<< HEAD
-=======
     
->>>>>>> 9745dd4bdf334a3b6758c6d24ea8f3687846c43f
     const parametros= {
       nombreUsuario: loginModel.nombreUsuario,
       clave: loginModel.clave
