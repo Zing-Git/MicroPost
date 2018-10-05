@@ -8,6 +8,7 @@ import { envirotment as ENV } from '../../../../environments/environments';
 import { Storage } from '@ionic/storage';
 import { CarritoPage } from '../carrito/carrito';
 import { ListaProveedoresPage } from '../../lista-proveedores';
+import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 
 @IonicPage()
 @Component({
@@ -33,22 +34,24 @@ export class ListaProductosModalPage {
 
   pedido: Pedido;
   productosPedidos: any[] = new Array();
-  
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private viewCtrl: ViewController,
     private proveedorService: ProveedorProvider,
     private modalCtrl: ModalController,
-    private storage: Storage) {
+    private storage: Storage,
+    private auxiliar: AuxiliarProvider) {
 
     this.proveedor = navParams.get('data');
-
-    if(ENV.CARRITO != ' '){
+      this.pedido = new Pedido();
+    /*if (ENV.CARRITO != ' ') {
       this.pedido = JSON.parse(ENV.CARRITO);
-    }else{
+      console.log('en constructor ListaProductos');
+      console.log(this.pedido);
+    } else {
       this.pedido = new Pedido();
     }
-    /*this.storage.get('pedido').then((val) => {
+    this.storage.get('pedido').then((val) => {
       if (val != null && val != undefined) {
         this.pedido = JSON.parse(val);
       } else {
@@ -84,21 +87,15 @@ export class ListaProductosModalPage {
       this.productosViewModel.forEach(x => {
         this.productoCategorias.push(x.categoria);
       });
-      this.arrayCategorias = this.crearArray(this.productoCategorias);
+      this.arrayCategorias = this.auxiliar.crearArray(this.productoCategorias);
       this.arraySubcategorias.length = 0;
       this.arrayProductos.length = 0;
     }
 
-    ENV.PEDIDO = JSON.stringify(this.productosPedidos);
+    ENV.PEDIDO = JSON.stringify(this.productosPedidos);  //aqui esta en blanco
   }
 
-  crearArray(arreglo: string[]): any[] {
-
-    let clon: any[] = JSON.parse(JSON.stringify(arreglo));
-    let nuevoArreglo = Array.from(new Set(clon.map((item: any) => item)))
-
-    return nuevoArreglo;
-  }
+  
 
   volver() {
     this.navCtrl.setRoot(ListaProveedoresPage);
@@ -115,7 +112,7 @@ export class ListaProductosModalPage {
         this.productoSubCategorias.push(x.subcategoria);
       }
     });
-    this.arraySubcategorias = this.crearArray(this.productoSubCategorias);
+    this.arraySubcategorias = this.auxiliar.crearArray(this.productoSubCategorias);
   }
 
   onSubCategoriasChange(ctxt: string): void {
@@ -139,12 +136,12 @@ export class ListaProductosModalPage {
 
     modal.onDidDismiss((location) => {
       //cargar en envirotment el listado de pedidos
-      
-      if (location) {
 
-        this.productosPedidos = JSON.parse(ENV.PEDIDO);
+      if (location.cantidad > 0) {
 
-        nuevoProducto = location;
+        this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
+
+        nuevoProducto = location;                         //segundo agrego el nuevo producto
         this.productosPedidos.push({
           _id: nuevoProducto._id,
           unidadMedida: nuevoProducto.unidadMedida,
@@ -152,9 +149,9 @@ export class ListaProductosModalPage {
           nombreProducto: nuevoProducto.nombreProducto
         })
 
-        ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //aqui almaceno la variable
-        console.log('Productos Pedidos');
-        console.log(this.productosPedidos);
+        ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //tercero aqui almaceno la lista de productos
+        //console.log('Productos Pedidos');
+        //console.log(this.productosPedidos);
       }
 
     });
@@ -207,12 +204,23 @@ export class ListaProductosModalPage {
 
   enviarPedido() {
     //this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
-    ENV.CARRITO = JSON.stringify(this.pedido);
-    //this.viewCtrl.dismiss();
-    let modal = this.modalCtrl.create(CarritoPage);
-    modal.present();
+    if (this.pedido != null) {
+      //ENV.CARRITO = JSON.stringify(this.pedido);
+      //this.viewCtrl.dismiss();
+      let modal = this.modalCtrl.create(CarritoPage, {data: this.pedido});
+      modal.present();
 
-   // modal.onDidDismiss((location) => {});
+      modal.onDidDismiss((location) => {
+
+        //ENV.CARRITO = JSON.stringify(location);
+        this.pedido = location;
+        console.log('estoy regresando de carrito');
+        console.log(this.pedido);
+      });
+    }
+
+
+    // modal.onDidDismiss((location) => {});
   }
 
   ionViewDidLoad() { }

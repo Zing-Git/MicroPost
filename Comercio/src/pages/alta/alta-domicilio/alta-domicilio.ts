@@ -64,8 +64,10 @@ export class AltaDomicilioPage {
   }
 
   cargarControlesCombos() {
-    this.auxiliar.postGetCombos().subscribe(result => {    
+    this.auxiliar.postGetCombos().subscribe(result => { 
+         
       this.provincias = result['respuesta'].provincias;       
+      
     });
 
   }

@@ -9,13 +9,13 @@
 
 <ion-content padding>
 
-  <form [formGroup]="nuevoProductoForm" (ngSubmit)="dismiss()">
+  <form [formGroup]="nuevoProductoForm" >
     <ion-card>
       <ion-item>
         <ion-label floating>Unidad de Medida</ion-label>
-        <ion-select type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+        <ion-select formControlName="unidadMedida" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
           interface="popover">
-          <ion-option *ngFor="let unidad of producto.unidadesMedida" [value]="unidad" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
+          <ion-option *ngFor="let unidad of producto.unidadesMedida" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
         </ion-select>
       </ion-item>
 
@@ -25,12 +25,14 @@
       </ion-item>
 
     </ion-card>
+    
     <ion-card>
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button block color="secondary" [disabled]="!nuevoProductoForm.valid">Cargar Pedido</button>
-        </ion-col>
-      </ion-row>
+      <ion-item>
+        <button ion-button round color="danger" (click)='volver1()' item-first style="width:130px;"><ion-icon>Volver</ion-icon></button>
+        <button ion-button round (click)="dismiss()"  item-end [disabled]="!nuevoProductoForm.valid" style="width:130px;">
+          <ion-icon name="cart" > Cargar Pedido</ion-icon>
+        </button>
+      </ion-item>
     </ion-card>
   </form>
 </ion-content>

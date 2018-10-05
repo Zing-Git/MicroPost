@@ -81,4 +81,8 @@ export class AltaLoginPage {
     });
   }
 
+  mensajeLuegoCrear(){
+    console.log('aqui crear el popup de exito o fracaso');
+  }
+
 }

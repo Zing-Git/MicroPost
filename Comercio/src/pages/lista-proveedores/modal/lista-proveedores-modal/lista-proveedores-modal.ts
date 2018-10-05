@@ -24,7 +24,7 @@ export class ListaProveedoresModalPage {
 
   ionViewDidLoad() {
     this.cargarInicial();
-    console.log(this.proveedoresViewModel);
+    
   }
 
   cargarInicial() {

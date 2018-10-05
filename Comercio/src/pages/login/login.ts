@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import Swal from 'sweetalert2';
 
 import { LoginModel } from '../../modelo/login';
@@ -34,14 +34,20 @@ export class LoginPage {
     private login: LoginProvider,
     private alertCtrl: AlertController,
     private storage: Storage,
-    private auxiliar: AuxiliarProvider) {
+    private auxiliar: AuxiliarProvider, private loadingCtrl: LoadingController) {
     this.newLogin = new LoginModel();
 
   }
 
 
   getLogin() {
-    this.auxiliar.presentLoading();
+    //this.auxiliar.presentLoading();
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos..."
+     
+    });
+    loader.present();
+    
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
@@ -49,9 +55,10 @@ export class LoginPage {
         this.usuarioLogin = result['usuario'];
 
         if (typeof this.usuarioLogin === 'undefined') {
+          loader.dismiss();
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
         } else {
-
+          loader.dismiss();
           this.datosComercio = result['comercioDB'];
           this.datosComercio.forEach(element => {
             this.idComercio = element._id;

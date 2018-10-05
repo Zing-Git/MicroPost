@@ -4,10 +4,28 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-     Pedido
+      Pedido
     </ion-card-header>
-
     <ion-card>
+      <ion-scroll style="height: 300px" scrollY="true">
+
+        <ion-list *ngFor="let producto of pedido.productos;">
+          <ion-item>
+
+            <ion-avatar item-start>
+              <button ion-button small (click)='sacarProducto(producto)' item-first>
+                <ion-icon name="trash"></ion-icon>
+              </button>
+            </ion-avatar>
+            <h3><strong> Producto </strong>{{producto.nombreProducto}}</h3>
+            <h3><strong> Unidad </strong> {{producto.unidadMedida}}</h3>
+            <h3><strong> Cant. </strong> {{producto.cantidad}}</h3>
+            <ion-item-divider></ion-item-divider>
+          </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </ion-card>
+    <!--<ion-card>
       <div class="row header">
         <div class="col">Nombre</div>
         <div class="col">Cantidad</div>
@@ -27,12 +45,14 @@
         </div>
       </div>
 
-    </ion-card>
+    </ion-card>-->
 
     <ion-card>
       <ion-item>
-        <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;"><ion-icon>Volver</ion-icon></button>
-        <button ion-button round (click)='pedirProducto()' item-end>
+        <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
+          <ion-icon>Volver</ion-icon>
+        </button>
+        <button ion-button round (click)='pedirProducto()' item-end style="width:100px;">
           <ion-icon name="cart"> Enviar</ion-icon>
         </button>
       </ion-item>
