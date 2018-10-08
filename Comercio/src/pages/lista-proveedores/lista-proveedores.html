@@ -14,8 +14,8 @@
   <ion-card-header>Seleccione al Proveedor</ion-card-header>
   <ion-item>
     <ion-label floating>Proveedor</ion-label>
-    <ion-select type="text" (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
-        <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id">{{fProv.entidad.razonSocial}}</ion-option>
+    <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
+        <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id" >{{fProv.entidad.razonSocial}}</ion-option>
     </ion-select>
 </ion-item>
 </ion-card>

@@ -147,6 +147,20 @@ export class LoginPage {
 
   }
 
+  limpiarValoresPorDefecto(){
+    this.storage.set('id', ' ');
+    this.storage.set('token', ' ');
+    this.storage.set('idComercio', ' ');
+
+    this.storage.set('comercio', ' ');
+
+    ENV.NOMBRE_USUARIO = ' ';
+    ENV.ID_USUARIO = ' ';
+    ENV.COMERCIO_ID = ' ';
+    ENV.TOKEN = ' ';
+    ENV.COMERCIO_LOGIN = ' ';
+  }
+
   showPassword(){
     this.showPass = !this.showPass;
  

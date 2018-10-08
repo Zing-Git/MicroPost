@@ -1,0 +1,135 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Pedidos</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content 
+    pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div padding>
+    <ion-segment [(ngModel)]="inicial">
+      <ion-segment-button value="informado" [class.hide]="estadoInformado">
+        <strong>Informados</strong>
+      </ion-segment-button>
+      <ion-segment-button value="aprobado" [class.hide]="estadoAceptado">
+        <strong>Aprobados</strong>
+      </ion-segment-button>
+      <ion-segment-button value="rechazado" [class.hide]="estadoRechazado">
+        <strong>Rechazados</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div [ngSwitch]="inicial">
+
+    <form *ngSwitchCase="'informado'" [class.hide]="estadoInformado">
+
+      <ion-card>
+        <ion-card-header text-center>
+
+        </ion-card-header>
+
+        <ion-scroll style="height:400px" scrollY="true">
+          <ion-list *ngFor="let item of pedidosInformados">
+            <ion-item>
+
+              <button ion-button small item-end (click)='verDetalle(item)'>
+                <ion-icon name="eye"> Ver</ion-icon>
+              </button>
+
+              <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
+              <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
+              <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
+              <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
+              <ion-item-divider></ion-item-divider>
+            </ion-item>
+
+          </ion-list>
+        </ion-scroll>
+
+      </ion-card>
+    </form>
+
+
+    <form *ngSwitchCase="'aprobado'" [class.hide]="estadoAceptado">
+
+      <ion-card>
+        <ion-card-header text-center>
+
+        </ion-card-header>
+
+        <ion-scroll style="height:400px" scrollY="true">
+          <ion-list *ngFor="let item of pedidosAceptados">
+            <ion-item>
+
+              <button ion-button small item-end (click)='verDetalle(item)'>
+                <ion-icon name="eye"> Ver</ion-icon>
+              </button>
+
+              <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
+              <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
+              <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
+              <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
+              <ion-item-divider></ion-item-divider>
+            </ion-item>
+
+          </ion-list>
+        </ion-scroll>
+
+      </ion-card>
+
+    </form>
+
+    <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado">
+
+      <ion-card>
+        <ion-card-header text-center>
+
+        </ion-card-header>
+
+        <ion-scroll style="height:400px" scrollY="true">
+          <ion-list *ngFor="let item of pedidosRechazados">
+            <ion-item>
+
+              <button ion-button small item-end (click)='verDetalle(item)'>
+                <ion-icon name="eye"> Ver</ion-icon>
+              </button>
+
+              <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
+              <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
+              <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
+              <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
+              <ion-item-divider></ion-item-divider>
+            </ion-item>
+
+          </ion-list>
+        </ion-scroll>
+
+      </ion-card>
+
+    </form>
+
+
+  </div>
+  <!--<ion-card> 
+      <ion-item>
+        <button ion-button round color="secundary" (click)='volver()' full>
+          <ion-icon>Volver</ion-icon>
+        </button>
+      </ion-item>
+    </ion-card>-->
+
+</ion-content>

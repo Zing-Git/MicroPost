@@ -17,22 +17,27 @@ export class CarritoPage {
 
     carritoForm: FormGroup;
     pedido: Pedido;
-
+    fechaEntrega: string = new Date().toISOString();
+    fechaMinima: Date = new Date();
+    comentario: string = ' ';
     productosViewModel: any[];
     arrayProductosviewModel: any[] = new Array();
-    //nuevoArrayProductos: any[];
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public formBuilder: FormBuilder,
         private comercioService: ComercioProvider,
-        private auxiliar: AuxiliarProvider, private viewCtrl: ViewController
+        private viewCtrl: ViewController
     ) {
 
         this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
         //this.nuevoArrayProductos = this.auxiliar.crearArray(this.pedido.productos);
         console.log('en el carrito');
         console.log(this.pedido);
+
+        this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
+        this.fechaEntrega = this.fechaMinima.toISOString();
+    
     }
 
     ionViewDidLoad() { }
@@ -44,17 +49,10 @@ export class CarritoPage {
         if (index > -1) {
             this.pedido.productos.splice(index, 1);
         }
-        console.log(this.pedido.productos);
-        //this.pedido.productos = this.nuevoArrayProductos;
-
-        //ENV.CARRITO = JSON.stringify(this.pedido);
-        //console.log(ENV.CARRITO);
+       
     }
 
     pedirProducto() {
-
-        //ENV.CARRITO = JSON.stringify(this.pedido);             //primero almaceno el pedido
-        //ENV.PEDIDO = JSON.stringify(this.pedido.productos);    //segundo actualizo el listado de productos en caso de haber actualizado
 
         if (this.pedido.productos.length > 0) {
 
@@ -66,7 +64,8 @@ export class CarritoPage {
                 })
             })
             this.pedido.productos = this.arrayProductosviewModel;
-
+            this.pedido.fechaEntrega = this.fechaEntrega;
+            this.pedido.comentario = this.comentario;
             Swal({
                 title: 'CARRITO!',
                 text: 'Desea enviar el Pedido?',
@@ -86,8 +85,8 @@ export class CarritoPage {
                                     result.message,
                                     'success'
                                 )
-                                this.navCtrl.push(ListaProveedoresPage);
-                                //this.navCtrl.pop();
+                                this.navCtrl.setRoot(ListaProveedoresPage);
+                               
                             } else {
                                 Swal(
                                     'Advertencia',
@@ -110,8 +109,8 @@ export class CarritoPage {
                     this.viewCtrl.dismiss(this.pedido);
                 }
             })
-            
-        }else{
+
+        } else {
             console.log(this.pedido.productos);
         }
     }

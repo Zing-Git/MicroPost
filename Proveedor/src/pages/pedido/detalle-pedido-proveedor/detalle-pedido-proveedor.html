@@ -97,12 +97,14 @@
 
   </div>
   <ion-card>
-    
+
     <ion-item>
-      <button ion-button round color="primary" (click)='aceptar()' full [class.hide]="!checkStatus">
+      <button ion-button round color="primary" (click)='aceptar()' full [class.hide]="checkAceptar">
         <ion-icon>Aceptar Pedido</ion-icon>
       </button>
-      <button ion-button round color="danger" (click)='rechazar()' full [class.hide]="checkStatus">
+    </ion-item>
+    <ion-item>
+      <button ion-button round color="danger" (click)='rechazar()' full [class.hide]="checkRechazar">
         <ion-icon>Rechazar Pedido</ion-icon>
       </button>
     </ion-item>

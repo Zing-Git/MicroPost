@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { Proveedor } from '../../modelo/proveedor';
 import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import Swal from 'sweetalert2';
@@ -21,12 +21,16 @@ export class ListaProveedoresPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
-    public storage: Storage) {
+    public storage: Storage,
+    public events: Events) {
 
+     
     this.proveedoresViewModel = new Array();
     
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.cargarListaDeProveedores();
+
+
   }
 
   //obtiene los proveedores que pertenecena al comercio
@@ -39,8 +43,6 @@ export class ListaProveedoresPage {
   //clic desde vista
   mostrarProductosModal(ctxt: string) {
     let proveedor= this.proveedoresViewModel.find(x => x.entidad._id === ctxt);
-    console.log(proveedor);
-    //llamar a pagina y no a modal
     
     this.navCtrl.push(ListaProductosModalPage, { data: proveedor });
 

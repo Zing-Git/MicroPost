@@ -21,6 +21,8 @@ import { ComercioProvider } from '../providers/comercio/comercio';
 import { ListadoPedidoPage } from '../pages/pedido/listado-pedido/listado-pedido';
 import { DetallePedidoProveedorPage } from '../pages/pedido/detalle-pedido-proveedor/detalle-pedido-proveedor';
 import { DecimalPipe } from '@angular/common'; 
+import { ListadoPedidosFiltradosPage } from '../pages/pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
+import { PedidoProvider } from '../providers/pedido/pedido';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { DecimalPipe } from '@angular/common';
     AltaLoginPage,
     AltaClientePage, 
     ListadoPedidoPage,
-    DetallePedidoProveedorPage
+    DetallePedidoProveedorPage,
+    ListadoPedidosFiltradosPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { DecimalPipe } from '@angular/common';
     AltaLoginPage,
     AltaClientePage,
     ListadoPedidoPage,
-    DetallePedidoProveedorPage
+    DetallePedidoProveedorPage,
+    ListadoPedidosFiltradosPage
   ],
   providers: [
     StatusBar,
@@ -59,7 +63,8 @@ import { DecimalPipe } from '@angular/common';
     LoginProvider,
     ComercioProvider,
     AuxiliarProvider,
-    DecimalPipe
+    DecimalPipe,
+    PedidoProvider
   ]
 })
 export class AppModule {}

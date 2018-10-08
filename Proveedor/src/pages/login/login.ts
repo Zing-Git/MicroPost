@@ -6,7 +6,8 @@ import { envirotment as ENV } from '../../environments/environment';
 import { LoginModel } from '../../modelo/login';
 import { LoginProvider } from '../../providers/login/login';
 import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
-import { ListadoPedidoPage } from '../pedido/listado-pedido/listado-pedido';
+import { ListadoPedidosFiltradosPage } from '../pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-login',
@@ -26,10 +27,13 @@ export class LoginPage {
   public showPass = false;
 
   constructor(private navCtrl: NavController,
-    private login: LoginProvider, 
+    private login: LoginProvider,
     private alertCtrl: AlertController,
     public storage: Storage,
     public loadingCtrl: LoadingController) {
+    this.limpiarValoresPorDefecto();
+
+      console.log(ENV);
     this.newLogin = new LoginModel();
 
   }
@@ -38,16 +42,16 @@ export class LoginPage {
 
     const loader = this.loadingCtrl.create({
       content: "Por favor Espere unos segundos..."
-     
+
     });
     loader.present();
 
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
-        
+
         this.usuarioLogin = result['usuario'];
-        
+
         if (typeof this.usuarioLogin === 'undefined') {
           loader.dismiss();
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
@@ -60,12 +64,13 @@ export class LoginPage {
           });
           this.almacenarValoresImportantes();
           loader.dismiss();
-          this.navCtrl.setRoot(ListadoPedidoPage, {
+          this.navCtrl.setRoot(HomePage, {
             animate: true
           });
         }
 
       }, err => {
+        loader.dismiss();
         Swal('Atención', 'Ocurrio un problema inesperado', 'error')
       });
     }
@@ -76,7 +81,7 @@ export class LoginPage {
     this.navCtrl.push(AltaClientePage);
   }
 
-  ionViewDidLoad() {  }
+  ionViewDidLoad() { }
 
   doRefresh(refresher: Refresher) {
     setTimeout(() => {
@@ -115,18 +120,32 @@ export class LoginPage {
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
-    
+
 
   }
 
-  showPassword(){
+  limpiarValoresPorDefecto() {
+    this.storage.set('id', ' ');
+    this.storage.set('token', ' ');
+    this.storage.set('idProveedor', ' ');
+
+    //this.storage.set('proveedor', JSON.stringify(this.datosProveedor));
+
+    ENV.NOMBRE_USUARIO = ' ';
+    ENV.ID_USUARIO = ' ';
+    ENV.PROVEEDOR_ID = ' ';
+    ENV.TOKEN = ' ';
+    ENV.PROVEEDOR_LOGIN = ' ';
+  }
+
+  showPassword() {
     this.showPass = !this.showPass;
- 
-    if(this.showPass){
+
+    if (this.showPass) {
       this.type = 'text';
     } else {
       this.type = 'password';
     }
   }
-  
+
 }

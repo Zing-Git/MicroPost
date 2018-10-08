@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController, IonicPage } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController, IonicPage, LoadingController } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import Swal from 'sweetalert2';
 import { PedidoModalPage } from '../pedido-modal/pedido-modal';
@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { CarritoPage } from '../carrito/carrito';
 import { ListaProveedoresPage } from '../../lista-proveedores';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
+import { Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -40,30 +41,44 @@ export class ListaProductosModalPage {
     private proveedorService: ProveedorProvider,
     private modalCtrl: ModalController,
     private storage: Storage,
-    private auxiliar: AuxiliarProvider) {
+    private auxiliar: AuxiliarProvider,
+    private loadingCtrl: LoadingController,
+    public events: Events) {
+
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos...",
+      duration: 3000
+    });
+    loader.present();
 
     this.proveedor = navParams.get('data');
-      this.pedido = new Pedido();
-    /*if (ENV.CARRITO != ' ') {
-      this.pedido = JSON.parse(ENV.CARRITO);
-      console.log('en constructor ListaProductos');
-      console.log(this.pedido);
-    } else {
-      this.pedido = new Pedido();
-    }
-    this.storage.get('pedido').then((val) => {
-      if (val != null && val != undefined) {
-        this.pedido = JSON.parse(val);
-      } else {
-        this.pedido = new Pedido();
-      }
-    })*/
+    this.pedido = new Pedido();
+
     this.cargarListaProductos();
+
   }
 
   cargarListaProductos() {
+
     this.isEnabledSubCategoria = false;
     this.showListProducto = false;
+
+
+    /* this.proveedorService.load(this.proveedor._id).then(data => {
+      this.productosViewModel = data['productos'];
+
+      if (typeof this.productosViewModel === 'undefined') {
+        Swal(
+          'Advertencia',
+          'El proveedor no tiene productos)',
+          'error'
+        )
+      } else {
+        this.iniciarArrayCategorias();
+      }
+
+    });*/
+
 
     this.proveedorService.postGetProductosPorIdProveedor(this.proveedor._id).subscribe(result => {
       this.productosViewModel = result['productos'];
@@ -77,25 +92,32 @@ export class ListaProductosModalPage {
         this.iniciarArrayCategorias();
       }
     });
+
+
   }
 
   iniciarArrayCategorias() {
+
+
     this.productoCategorias = new Array();
     this.arrayCategorias.length = 0;
 
     if (typeof this.productosViewModel != 'undefined') {
+
       this.productosViewModel.forEach(x => {
         this.productoCategorias.push(x.categoria);
       });
       this.arrayCategorias = this.auxiliar.crearArray(this.productoCategorias);
       this.arraySubcategorias.length = 0;
       this.arrayProductos.length = 0;
+
     }
 
     ENV.PEDIDO = JSON.stringify(this.productosPedidos);  //aqui esta en blanco
+
   }
 
-  
+
 
   volver() {
     this.navCtrl.setRoot(ListaProveedoresPage);
@@ -203,19 +225,24 @@ export class ListaProductosModalPage {
   }
 
   enviarPedido() {
+    
     //this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
     if (this.pedido != null) {
       //ENV.CARRITO = JSON.stringify(this.pedido);
       //this.viewCtrl.dismiss();
-      let modal = this.modalCtrl.create(CarritoPage, {data: this.pedido});
+      let modal = this.modalCtrl.create(CarritoPage, { data: this.pedido });
       modal.present();
 
       modal.onDidDismiss((location) => {
 
-        //ENV.CARRITO = JSON.stringify(location);
-        this.pedido = location;
-        console.log('estoy regresando de carrito');
-        console.log(this.pedido);
+        if (location != null) {
+          this.pedido = location;
+        } else {
+          this.events.publish('reloadPage1');
+
+          this.navCtrl.pop();
+        }
+
       });
     }
 

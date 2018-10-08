@@ -3,9 +3,28 @@
 </ion-header>
 <ion-content padding>
   <ion-card>
-    <ion-card-header>
+    <ion-card-header text-center>
       Pedido
     </ion-card-header>
+    <ion-card>
+      
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Seleccione Fecha</ion-label>
+          <ion-datetime 
+          cancelText="Cancelar" 
+          doneText="Ok" 
+          displayFormat="DD/MM/YYYY" 
+          pickerFormat="YYYY MM DD" 
+          [(ngModel)]="fechaEntrega"
+          
+          ></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <p>Fecha seleccionada es {{fechaEntrega.substr(0,10)}}</p>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
     <ion-card>
       <ion-scroll style="height: 300px" scrollY="true">
 
@@ -24,29 +43,16 @@
           </ion-item>
         </ion-list>
       </ion-scroll>
+     
     </ion-card>
-    <!--<ion-card>
-      <div class="row header">
-        <div class="col">Nombre</div>
-        <div class="col">Cantidad</div>
-        <div class="col">Medida</div>
-
-        <div class="col"></div>
-      </div>
-      <div class="row" *ngFor="let producto of pedido.productos;">
-        <div class="col">{{producto.nombreProducto}}</div>
-        <div class="col">{{producto.cantidad}}</div>
-        <div class="col">{{producto.unidadMedida}}</div>
-
-        <div class="col">
-          <button ion-button round block  (click)='sacarProducto(producto)' item-first>
-            <ion-icon name="trash" color="red"></ion-icon>
-          </button>
-        </div>
-      </div>
-
-    </ion-card>-->
-
+    <ion-card>
+      <ion-card-header> <h3>Comentario</h3></ion-card-header> 
+       <ion-item>
+          <ion-textarea placeholder="'Ingrese Comentario...'" [(ngModel)]="comentario"></ion-textarea>
+       </ion-item>    
+       
+      
+    </ion-card>
     <ion-card>
       <ion-item>
         <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
+import Swal from 'sweetalert2';
+import { PedidoProvider } from '../../../providers/pedido/pedido';
+import { ListadoPedidosFiltradosPage } from '../listado-pedidos-filtrados/listado-pedidos-filtrados';
 
 @IonicPage()
 @Component({
@@ -14,19 +17,24 @@ export class DetallePedidoProveedorPage {
   inicial: string = 'encabezado';
   pedidoForm: FormGroup;
   cantidadProductos: number = 0;
-  checkStatus: boolean = false;
+  checkAceptar: boolean = false;
+  checkRechazar: boolean = false;
+  idPedido: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public auxiliar: AuxiliarProvider) {
+    public auxiliar: AuxiliarProvider,
+    public pedidoServices: PedidoProvider,
+    public viewCtrl: ViewController,
+    public loadingCtrl: LoadingController) {
 
     this.pedido = navParams.get('data');
     if (this.pedido != undefined) {
       this.pedido.detallePedido.forEach(x => {
         this.cantidadProductos = this.cantidadProductos + 1;
       })
-      console.log(this.pedido);
+      
       this.pedidoForm = this.formBuilder.group({
         nombreComercio: [{ value: this.pedido.comercio.entidad.razonSocial, disabled: true }],
         tipoEntrega: [{ value: this.pedido.tipoEntrega, disabled: true }],
@@ -34,6 +42,31 @@ export class DetallePedidoProveedorPage {
         fechaEntrega: [{ value: this.pedido.fechaEntrega, disabled: true }],
         cantidadProducto: [{ value: this.cantidadProductos, disabled: true }]
       });
+
+      if (this.pedido.estadoPedido === 'PEDIDO INFORMADO') {
+        this.checkAceptar = false;
+        this.checkRechazar = false;
+      } else {
+        if (this.pedido.estadoPedido === 'RECHAZADO' && this.pedido.estadoTerminal) {
+          this.checkAceptar = true;
+          this.checkRechazar = true;
+        } else {
+          if (this.pedido.estadoPedido === 'RECHAZADO' && !this.pedido.estadoTerminal) {
+            this.checkAceptar = false;
+            this.checkRechazar = true;
+          } else {
+            if (this.pedido.estadoPedido === 'ACEPTADO' && this.pedido.estadoTerminal) {
+              this.checkAceptar = true;
+              this.checkRechazar = true;
+            } else {
+              if (this.pedido.estadoPedido === 'ACEPTADO' && !this.pedido.estadoTerminal) {
+                this.checkAceptar = true;
+                this.checkRechazar = false;
+              }
+            }
+          }
+        }
+      }
     }
 
   }
@@ -46,11 +79,119 @@ export class DetallePedidoProveedorPage {
     this.navCtrl.pop();
   }
 
-  aceptar(): void{
-    this.checkStatus = false;
+
+  rechazar(): void {
+    //this.checkStatus = true;
+
+    Swal({
+      
+      text: 'Seleccione una opcion de Pedido?',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, RECHAZAR!',
+      confirmButtonColor: 'primary',
+      cancelButtonColor: 'danger',
+      cancelButtonText: 'No, Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        this.pedidoServices.postRechazarPedido(this.pedido.idPedido).subscribe(result => {
+         
+          if (typeof result != 'undefined') {
+
+            if (result.ok) {
+              Swal(
+                'Felicidades',
+                result.message,
+                'success'
+              );
+              const loader = this.loadingCtrl.create({
+                content: "Actualizando Informacion, aguarde unos segundos...",
+                duration: 3000
+              });
+              loader.present();
+              this.viewCtrl.dismiss();
+            } else {
+              Swal(
+                'Advertencia',
+                result.message,
+                'error'
+              )
+            }
+          } else {
+            Swal(
+              'Advertencia',
+              'Ocurrio un problema, vuelva a Intentar!',
+              'error'
+            )
+          }
+        })
+        //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+        Swal(
+          'Canelado',
+          'Todo Ok, Gracias',
+          'error'
+        )
+
+        this.viewCtrl.dismiss(this.pedido);
+      }
+    })
   }
 
-  rechazar(): void{
-    this.checkStatus = true;
+  aceptar(): void {
+    Swal({
+      
+      text: 'Seleccione una opcion de Pedido?',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, ACEPTAR!',
+      confirmButtonColor: 'primary',
+      cancelButtonColor: 'danger',
+      cancelButtonText: 'No, Cancelar'
+    }).then((result) => {
+      if (result.value) {
+
+        this.pedidoServices.postAceptarPedido(this.pedido.idPedido).subscribe(result => {
+          
+          if (typeof result != 'undefined') {
+            if (result.ok) {
+              Swal(
+                'Felicidades',
+                result.message,
+                'success'
+              );
+             
+              this.viewCtrl.dismiss();
+            } else {
+              Swal(
+                'Advertencia',
+                result.message,
+                'error'
+              )
+            }
+          } else {
+            Swal(
+              'Advertencia',
+              'Ocurrio un problema, vuelva a Intentar!',
+              'error'
+            )
+          }
+        })
+        //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+        Swal(
+          'Canelado',
+          'Todo Ok, Gracias',
+          'error'
+        )
+
+        this.viewCtrl.dismiss(this.pedido);
+      }
+    })
   }
 }
