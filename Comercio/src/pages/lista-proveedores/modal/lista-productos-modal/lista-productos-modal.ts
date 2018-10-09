@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController, IonicPage, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, IonicPage, LoadingController } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import Swal from 'sweetalert2';
 import { PedidoModalPage } from '../pedido-modal/pedido-modal';
@@ -10,7 +10,6 @@ import { CarritoPage } from '../carrito/carrito';
 import { ListaProveedoresPage } from '../../lista-proveedores';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { Events } from 'ionic-angular';
-import { ListaProveedoresModalPage } from '../lista-proveedores-modal/lista-proveedores-modal';
 
 @IonicPage()
 @Component({
@@ -34,6 +33,9 @@ export class ListaProductosModalPage {
   arrayProductos: any[] = new Array();
   tipoEntrega: any;
 
+  itemSubcategoriaSelected: any;
+
+  
   pedido: Pedido;
   productosPedidos: any[] = new Array();
 
@@ -136,6 +138,7 @@ export class ListaProductosModalPage {
       }
     });
     this.arraySubcategorias = this.auxiliar.crearArray(this.productoSubCategorias);
+    this.itemSubcategoriaSelected = this.arraySubcategorias[0] || 1;
   }
 
   onSubCategoriasChange(ctxt: string): void {

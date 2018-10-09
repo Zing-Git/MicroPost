@@ -23,9 +23,9 @@
     <ion-card>
       <ion-item>
         <ion-label floating>Sub-Categoria</ion-label>
-        <ion-select type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+        <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
           interface="popover">
-          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isEnabledSubCategoria"
+          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isEnabledSubCategoria" [value]="+(subcategoria)" [selected]="itemSubcategoriaSelected"
             (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
         </ion-select>
       </ion-item>

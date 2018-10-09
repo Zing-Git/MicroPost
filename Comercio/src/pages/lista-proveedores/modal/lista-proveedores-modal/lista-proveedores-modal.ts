@@ -15,7 +15,8 @@ export class ListaProveedoresModalPage {
   proveedores: any[];
   idComercio: string;
   text: string;
-
+  peticion: any;
+  
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private proveedorService: ProveedorProvider) {
@@ -39,10 +40,24 @@ export class ListaProveedoresModalPage {
 
   }
 
-   cargarProveedor(proveedor: any) {
+   async cargarProveedor(proveedor: any) {
     console.log(proveedor._id);
 
-   this.cargarTexto();
+    const {value: text} = await Swal({
+      title: 'Ingrese Peticion',
+      input: 'textarea',
+      inputPlaceholder: 'Enviar mensaje al proveedor...',
+      showCancelButton: true
+    });
+    this.text = text;
+    
+    this.realizarPeticion(proveedor);
+    
+
+  }
+
+  realizarPeticion(proveedor: any){
+    
 
     this.proveedorService.postEnviarInvitacion(proveedor._id, this.idComercio, this.text).subscribe(result => {
       if (result.ok === true) {
@@ -51,6 +66,8 @@ export class ListaProveedoresModalPage {
           'Se envio una invitacion al Proveedor ' + proveedor.entidad.razonSocial,
           'success'
         );
+        this.navCtrl.setRoot(ListaProveedoresModalPage);
+          this.navCtrl.popToRoot();
       } else {
         Swal(
           'Error!',
@@ -59,17 +76,6 @@ export class ListaProveedoresModalPage {
         );
       }
     });
-
-  }
-
-  async cargarTexto(){
-    let {value: text} = await Swal({
-      title: 'Ingrese Peticion',
-      input: 'textarea',
-      inputPlaceholder: 'Enviar mensaje al proveedor...',
-      showCancelButton: true
-    });
-    this.text = text;
   }
 
 }
