@@ -64,14 +64,14 @@ export class LoginPage {
           });
           this.almacenarValoresImportantes();
           loader.dismiss();
-          this.navCtrl.setRoot(HomePage, {
+          this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
             animate: true
           });
         }
 
       }, err => {
         loader.dismiss();
-        Swal('Atención', 'Ocurrio un problema inesperado', 'error')
+        Swal('Atención', 'Ocurrio un problema inesperado codigo: ' + err, 'error')
       });
     }
   }
@@ -109,7 +109,7 @@ export class LoginPage {
     this.storage.set('id', this.usuarioLogin._id);
     this.storage.set('token', this.usuarioLogin.token);
     this.storage.set('idProveedor', this.idProveedor);
-
+    console.log(this.idProveedor);
     //this.storage.set('proveedor', JSON.stringify(this.datosProveedor));
 
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;

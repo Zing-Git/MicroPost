@@ -14,62 +14,44 @@ export class ListaProveedoresModalPage {
   proveedoresViewModel: any[] = new Array();
   proveedores: any[];
   idComercio: string;
-  
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              private proveedorService: ProveedorProvider) {
-              
-               
+  text: string;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private proveedorService: ProveedorProvider) {
+
+
   }
 
   ionViewDidLoad() {
     this.cargarInicial();
-    
+
   }
 
   cargarInicial() {
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(result => {
       this.proveedoresViewModel = result['proveedores'];
-      
+
     });
 
-    
+
 
   }
 
-  async cargarProveedor(proveedor: any){
+   cargarProveedor(proveedor: any) {
     console.log(proveedor._id);
 
-    let peticion:{
-      comercio: string,
-      proveedor: string,
-      text: string
-    }
-   
+   this.cargarTexto();
 
-    var {value: text} = await Swal({
-      input: 'textarea',
-      inputPlaceholder: 'Enviar mensaje al proveedor...',
-      showCancelButton: true
-    })
-    
-    /*if(typeof text === 'undefined'){
-      text : 'Podrias unirte a mi red de proveedores?. Gracias.';
-    }*/
-
-    peticion.proveedor = proveedor._id;
-    peticion.comercio= this.idComercio;
-    peticion.text = text;
-
-    this.proveedorService.postEnviarInvitacion(peticion).subscribe(result =>{
-      if(result.ok === true){
+    this.proveedorService.postEnviarInvitacion(proveedor._id, this.idComercio, this.text).subscribe(result => {
+      if (result.ok === true) {
         Swal(
           'Peticion Enviada!',
           'Se envio una invitacion al Proveedor ' + proveedor.entidad.razonSocial,
           'success'
         );
-      }else{
+      } else {
         Swal(
           'Error!',
           'Se produjo un error al enviar la peticion ',
@@ -77,7 +59,17 @@ export class ListaProveedoresModalPage {
         );
       }
     });
-   
+
+  }
+
+  async cargarTexto(){
+    let {value: text} = await Swal({
+      title: 'Ingrese Peticion',
+      input: 'textarea',
+      inputPlaceholder: 'Enviar mensaje al proveedor...',
+      showCancelButton: true
+    });
+    this.text = text;
   }
 
 }

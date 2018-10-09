@@ -41,7 +41,7 @@ export class ListadoPedidosFiltradosPage {
     public viewCtrl: ViewController,
     public appCtrl: App) {
 
-      this.obtenerDatosImportantes();
+    this.obtenerDatosImportantes();
 
   }
 
@@ -55,35 +55,9 @@ export class ListadoPedidosFiltradosPage {
     });
     loader.present();
     this.proveedorServices.load(this.idProveedor).then(data => {
-      this.pedidos = data['pedidos_array'];
-      this.pedidos.forEach(x => {
+      ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
 
-        if (x.comercio != null) {
-
-          switch (x.estadoPedido) {
-            case "RECHAZADO": {
-              this.estadoRechazado = false;
-              this.pedidosRechazados.push(x);
-              break;
-            }
-            case "PEDIDO INFORMADO": {
-              this.estadoInformado = false;
-              this.pedidosInformados.push(x);
-              break;
-            }
-            case "ACEPTADO": {
-              this.estadoAceptado = false;
-              this.pedidosAceptados.push(x);
-              break;
-            }
-            default: {
-              this.pedidosOtros.push(x);
-              break;
-            }
-          }
-
-        }
-      })
+      this.cargarCombos();
 
     });
 
@@ -91,7 +65,11 @@ export class ListadoPedidosFiltradosPage {
   }
 
   ionViewDidLoad() {
-        
+
+  }
+  ionWillEnter() {
+    console.log('estoy en ion will enter');
+    this.obtenerDatosImportantes();
   }
 
   /*volver() {
@@ -101,18 +79,19 @@ export class ListadoPedidosFiltradosPage {
   verDetalle(item: any) {
     const modal = this.modalCtrl.create(DetallePedidoProveedorPage, { data: item });
     modal.present();
-    modal.onDidDismiss(() => {
+    modal.onDidDismiss((miPedido) => {
+      this.estadoInformado = true;
+      this.estadoAceptado = true;
+      this.estadoRechazado = true;
       this.pedidosInformados = new Array();
       this.pedidosAceptados = new Array();
       this.pedidosRechazados = new Array();
       this.pedidosOtros = new Array();
-      this.pedidos = ' ';
+      //this.pedidos = ' ';
       console.log('ACTUALIZANDO INFO');
-      this.obtenerDatosImportantes();
-      //let refresh: any;
-      //this.doRefresh(refresh);
-      //this.events.publish('updateScreen');     
-     
+
+      this.actualizarPedido(miPedido);
+
     });
   }
 
@@ -121,8 +100,56 @@ export class ListadoPedidosFiltradosPage {
 
     setTimeout(() => {
       console.log('Async operation has ended');
+      //this.obtenerDatosImportantes();
       refresher.complete();
     }, 2000);
+  }
+
+  actualizarPedido(miPedido: any):void {
+    console.log('mi pedido');
+    console.log(miPedido);
+    this.pedidos.forEach(x => {
+      if (x.idPedido === miPedido.idPedido) {
+        x.estadoPedido = miPedido.estadoPedido;
+      }
+    })
+    console.log('actulkizando');
+    console.log(this.pedidos);
+    ENV.PEDIDOS = JSON.stringify(this.auxiliar.crearArray(this.pedidos));
+    this.cargarCombos();
+
+  }
+
+  cargarCombos() {
+    this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
+    this.pedidos.forEach(x => {
+
+      if (x.comercio != null) {
+
+        switch (x.estadoPedido) {
+          case "RECHAZADO": {
+            this.estadoRechazado = false;
+            this.pedidosRechazados.push(x);
+            break;
+          }
+          case "PEDIDO INFORMADO": {
+            this.estadoInformado = false;
+            this.pedidosInformados.push(x);
+            break;
+          }
+          case "ACEPTADO": {
+            this.estadoAceptado = false;
+            this.pedidosAceptados.push(x);
+            break;
+          }
+          default: {
+            this.pedidosOtros.push(x);
+            break;
+          }
+        }
+
+      }
+    })
   }
 
 }

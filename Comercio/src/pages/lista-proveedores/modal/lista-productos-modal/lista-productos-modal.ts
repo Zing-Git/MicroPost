@@ -10,6 +10,7 @@ import { CarritoPage } from '../carrito/carrito';
 import { ListaProveedoresPage } from '../../lista-proveedores';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { Events } from 'ionic-angular';
+import { ListaProveedoresModalPage } from '../lista-proveedores-modal/lista-proveedores-modal';
 
 @IonicPage()
 @Component({
@@ -225,7 +226,7 @@ export class ListaProductosModalPage {
   }
 
   enviarPedido() {
-    
+
     //this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
     if (this.pedido != null) {
       //ENV.CARRITO = JSON.stringify(this.pedido);
@@ -238,9 +239,11 @@ export class ListaProductosModalPage {
         if (location != null) {
           this.pedido = location;
         } else {
-          this.events.publish('reloadPage1');
+          //this.events.publish('reloadPage1');
 
-          this.navCtrl.pop();
+          this.navCtrl.setRoot(ListaProveedoresPage);
+          this.navCtrl.popToRoot();
+
         }
 
       });

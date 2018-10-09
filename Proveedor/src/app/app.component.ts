@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { ListadoPedidoPage } from '../pages/pedido/listado-pedido/listado-pedido';
 import { ListadoPedidosFiltradosPage } from '../pages/pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
+import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/listado-invitacion';
 
 @Component({
   templateUrl: 'app.html'
@@ -34,8 +35,8 @@ export class MyApp {
     this.pages = [
       { title: 'Pedidos de Clientes', component: ListadoPedidoPage }, 
       { title: 'Pedidos Filtrados', component: ListadoPedidosFiltradosPage },
-      /*//{ title: 'Mis proveedores', component: ListaProveedoresPage },
-      { title: 'Proveedores de MicroPOS', component: ListaProveedoresModalPage },
+      { title: 'Invitaciones', component: ListadoInvitacionPage },
+      /*{ title: 'Proveedores de MicroPOS', component: ListaProveedoresModalPage },
       { title: 'Configuracion', component: ConfiguracionInicialPage },*/
       { title: 'Salir', component: LoginPage }
     ];

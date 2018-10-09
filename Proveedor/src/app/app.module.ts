@@ -23,6 +23,7 @@ import { DetallePedidoProveedorPage } from '../pages/pedido/detalle-pedido-prove
 import { DecimalPipe } from '@angular/common'; 
 import { ListadoPedidosFiltradosPage } from '../pages/pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
 import { PedidoProvider } from '../providers/pedido/pedido';
+import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/listado-invitacion';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PedidoProvider } from '../providers/pedido/pedido';
     AltaClientePage, 
     ListadoPedidoPage,
     DetallePedidoProveedorPage,
-    ListadoPedidosFiltradosPage
+    ListadoPedidosFiltradosPage,
+    ListadoInvitacionPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { PedidoProvider } from '../providers/pedido/pedido';
     AltaClientePage,
     ListadoPedidoPage,
     DetallePedidoProveedorPage,
-    ListadoPedidosFiltradosPage
+    ListadoPedidosFiltradosPage,
+    ListadoInvitacionPage
   ],
   providers: [
     StatusBar,

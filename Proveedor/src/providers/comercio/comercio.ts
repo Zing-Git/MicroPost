@@ -15,11 +15,14 @@ export class ComercioProvider {
   private urlBase = ENV.BASE_URL;
   private urlPostComercio = this.urlBase + '/comercio/nuevo/';
   
+  
   constructor(public http: HttpClient) {}
 
   postComercio(comercio: Comercio): Observable<any[]> {
     const newSession = Object.assign({}, comercio);
     return this.http.post<any[]>(this.urlPostComercio, newSession, cudOptions);
   }
+
+ 
 
 }

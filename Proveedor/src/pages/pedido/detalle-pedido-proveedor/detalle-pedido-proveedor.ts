@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, App } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import Swal from 'sweetalert2';
@@ -27,14 +27,15 @@ export class DetallePedidoProveedorPage {
     public auxiliar: AuxiliarProvider,
     public pedidoServices: PedidoProvider,
     public viewCtrl: ViewController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public appCtrl: App) {
 
     this.pedido = navParams.get('data');
     if (this.pedido != undefined) {
       this.pedido.detallePedido.forEach(x => {
         this.cantidadProductos = this.cantidadProductos + 1;
       })
-      
+
       this.pedidoForm = this.formBuilder.group({
         nombreComercio: [{ value: this.pedido.comercio.entidad.razonSocial, disabled: true }],
         tipoEntrega: [{ value: this.pedido.tipoEntrega, disabled: true }],
@@ -76,7 +77,7 @@ export class DetallePedidoProveedorPage {
   }
 
   volver() {
-    this.navCtrl.pop();
+    this.viewCtrl.dismiss(this.pedido);
   }
 
 
@@ -84,7 +85,7 @@ export class DetallePedidoProveedorPage {
     //this.checkStatus = true;
 
     Swal({
-      
+
       text: 'Seleccione una opcion de Pedido?',
       type: 'question',
       showCancelButton: true,
@@ -96,7 +97,7 @@ export class DetallePedidoProveedorPage {
       if (result.value) {
 
         this.pedidoServices.postRechazarPedido(this.pedido.idPedido).subscribe(result => {
-         
+
           if (typeof result != 'undefined') {
 
             if (result.ok) {
@@ -105,12 +106,19 @@ export class DetallePedidoProveedorPage {
                 result.message,
                 'success'
               );
+             this.pedido.estadoPedido='RECHAZADO';
               const loader = this.loadingCtrl.create({
                 content: "Actualizando Informacion, aguarde unos segundos...",
                 duration: 3000
               });
               loader.present();
-              this.viewCtrl.dismiss();
+              //this.viewCtrl.dismiss();
+              //this.viewCtrl.dismiss().then(() => this.app.getRootNav().setRoot('SomeLazyPage'));
+              //this.navCtrl.setRoot(ListadoPedidosFiltradosPage);
+              //this.navCtrl.popToRoot();
+              //this.viewCtrl.dismiss();
+              //this.appCtrl.getRootNav().push(ListadoPedidosFiltradosPage);
+              this.viewCtrl.dismiss(this.pedido);
             } else {
               Swal(
                 'Advertencia',
@@ -143,7 +151,7 @@ export class DetallePedidoProveedorPage {
 
   aceptar(): void {
     Swal({
-      
+
       text: 'Seleccione una opcion de Pedido?',
       type: 'question',
       showCancelButton: true,
@@ -155,7 +163,7 @@ export class DetallePedidoProveedorPage {
       if (result.value) {
 
         this.pedidoServices.postAceptarPedido(this.pedido.idPedido).subscribe(result => {
-          
+
           if (typeof result != 'undefined') {
             if (result.ok) {
               Swal(
@@ -163,8 +171,11 @@ export class DetallePedidoProveedorPage {
                 result.message,
                 'success'
               );
-             
-              this.viewCtrl.dismiss();
+
+              this.pedido.estadoPedido = 'ACEPTADO';
+              this.viewCtrl.dismiss(this.pedido);
+              //this.appCtrl.getRootNav().push(ListadoPedidosFiltradosPage);
+              //this.viewCtrl.dismiss();
             } else {
               Swal(
                 'Advertencia',

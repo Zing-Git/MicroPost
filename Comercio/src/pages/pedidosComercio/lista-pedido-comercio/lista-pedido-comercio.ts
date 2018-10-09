@@ -26,6 +26,7 @@ export class ListaPedidoComercioPage {
   idComercio: string;
   productos: any[];
   montoTotal: number;
+  colorEstado: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,6 +45,17 @@ export class ListaPedidoComercioPage {
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
 
       this.pedidos = result['pedidos_array'];
+      /*this.pedidos.forEach(x=>{
+        if(x.estadoPedido==='RECHAZADO'){
+          this.colorEstado = 'danger';
+        }else{
+          if(x.estadoPedido === 'ACEPTADO'){
+            this.colorEstado = 'secondary';
+          }else{
+            this.colorEstado = 'dark';
+          }
+        }
+      })*/
     })
   }
 

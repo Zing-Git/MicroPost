@@ -22,9 +22,10 @@ export class ProveedorProvider {
 
   //private urlPostGetProveedoresDeRed = this.urlBase + '/proveedor/listar_todos/';
   private urlPostGetProveedores =  this.urlBase + '/proveedor/listar_todos/';
-  private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
+  //private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
   private urlGetProductosPorIdProveedor = this.urlBase + '/proveedor/obtener_productos/';
   private urlPostProveedor = this.urlBase + '/proveedor/nuevo/';
+  private urlGetInvitacion = this.urlBase + '/invitacion/consultar_pendientes/';
 
   data: any;
   constructor(public http: HttpClient) {
@@ -47,7 +48,13 @@ export class ProveedorProvider {
     return this.http.get<any[]>(this.urlPostGetProveedores, cudOptions);
   }
 
-  postEnviarInvitacion(peticion: any): Observable<any>{
+  getInvitaciones(idProveedor: string): Observable<any[]>{
+    let url= this.urlGetInvitacion + '?proveedor=' + idProveedor;
+    
+    return this.http.get<any[]>(url, cudOptions);
+  }
+
+  /*postEnviarInvitacion(peticion: any): Observable<any>{
     const invitacion ={
       comercio: peticion.comercio,
       proveedor: peticion.proveedor,
@@ -55,7 +62,7 @@ export class ProveedorProvider {
     }
     
     return this.http.post<any>(this.urlPostEnviarInvitacion, invitacion, cudOptions);
-  }
+  }*/
 
   postGetProductosPorIdProveedor(idProveedor: string): Observable<any[]>{
     

@@ -9,5 +9,6 @@ export var envirotment = {
     PROVEEDOR_LOGIN:'',
     APIKEY: 'AIzaSyBR0QD8bdbTqRLZsc07MYmTL7BpiYrVEUM',
     PEDIDO: '',
-    CARRITO: ' '
+    CARRITO: ' ',
+    PEDIDOS: ' '
 }

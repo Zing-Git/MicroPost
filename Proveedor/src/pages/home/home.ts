@@ -10,16 +10,11 @@ export class HomePage {
   
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
-    const loader = this.loadingCtrl.create({
-      content: "Actualizando Informacion, aguarde unos segundos...",
-      duration: 3000
-    });
-    loader.present();
-    this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
-      animate: true
-    });
+    
   }
 
-  
+  goPage(){
+    this.navCtrl.setRoot(ListadoPedidosFiltradosPage);
+  }
 
 }

@@ -38,6 +38,10 @@ export class ListaProveedoresPage {
     this.datosComercio.forEach(x => {
       this.proveedoresViewModel = x.proveedores;
     });
+
+    /*if(this.productosViewModel.length === 0){
+      this.presentConfirm();
+    }*/
   }
 
   //clic desde vista
@@ -70,8 +74,9 @@ export class ListaProveedoresPage {
           'Cancelled',
           'Todo Ok, Gracias',
           'error'
-        )
+        )        
         this.navCtrl.setRoot(ConfiguracionInicialPage);
+          this.navCtrl.popToRoot();
       }
     })
   }

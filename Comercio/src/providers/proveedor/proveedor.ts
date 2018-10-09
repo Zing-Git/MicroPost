@@ -33,13 +33,13 @@ export class ProveedorProvider {
     return this.http.get<any[]>(url, cudOptions);
   }
 
-  postEnviarInvitacion(peticion: any): Observable<any>{
+  postEnviarInvitacion(proveedor: string, comercio: string, texto: string): Observable<any>{
     const invitacion ={
-      comercio: peticion.comercio,
-      proveedor: peticion.proveedor,
-      texto: peticion.texto
+      comercio: comercio,
+      proveedor: proveedor,
+      texto: texto
     }
-    
+    console.log(invitacion);
     return this.http.post<any>(this.urlPostEnviarInvitacion, invitacion, cudOptions);
   }
 

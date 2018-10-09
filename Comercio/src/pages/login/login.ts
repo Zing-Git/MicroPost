@@ -93,6 +93,7 @@ export class LoginPage {
         }
 
       }, err => {
+        loader.dismiss();
         Swal('Atención', 'Ocurrio un problema inesperado', 'error')
       });
     }

@@ -69,7 +69,7 @@ export class CarritoPage {
             Swal({
                 title: 'CARRITO!',
                 text: 'Desea enviar el Pedido?',
-                type: 'success',
+                type: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Si, ENVIAR!',
                 cancelButtonText: 'No, Cancelar'
@@ -85,7 +85,8 @@ export class CarritoPage {
                                     result.message,
                                     'success'
                                 )
-                                this.navCtrl.setRoot(ListaProveedoresPage);
+                                //this.navCtrl.setRoot(ListaProveedoresPage);
+                                this.viewCtrl.dismiss();
                                
                             } else {
                                 Swal(

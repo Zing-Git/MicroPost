@@ -28,17 +28,21 @@
     
       <ion-scroll  scrollY="true">
         <ion-list *ngFor="let item of pedidos">
-          <ion-item>
+          <ion-item style="border-bottom: 1px solid rgb(236, 31, 31) !important;" [color]="item.estadoPedido == 'RECHAZADO' ? 'other' :  'light'">
             <ion-avatar item-end>
               <button ion-button small (click)='visualizarDatosPedido(item)'>
                 <ion-icon name="eye"> Ver</ion-icon>
               </button>
             </ion-avatar>
+           
+              <h3 > <strong>Estado </strong> {{item.estadoPedido}}</h3>
+           
+            
             <h2><strong> Proveedor </strong> {{item.proveedor.entidad.razonSocial}}</h2>
             <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
             <h4><strong> Hora Entrega </strong> {{item.fechaEntrega | date: 'hh:mm'}}</h4>
             <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
-            <ion-item-divider></ion-item-divider>
+            
           </ion-item>
 
         </ion-list>
