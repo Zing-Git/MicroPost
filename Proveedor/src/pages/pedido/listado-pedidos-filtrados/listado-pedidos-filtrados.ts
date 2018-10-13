@@ -6,6 +6,8 @@ import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import { DetallePedidoProveedorPage } from '../detalle-pedido-proveedor/detalle-pedido-proveedor';
 import Swal from 'sweetalert2';
+import { ListadoInvitacionPage } from '../../invitacion/listado-invitacion/listado-invitacion';
+import { CrearPublicidadPage } from '../../publicidad/crear-publicidad/crear-publicidad';
 
 @IonicPage()
 @Component({
@@ -56,20 +58,24 @@ export class ListadoPedidosFiltradosPage {
     });
     loader.present();
     this.proveedorServices.load(this.idProveedor).then(data => {
-      console.log(data['pedidos_array']);
-      if(data['pedidos_array'] === undefined){
+
+      if (data['pedidos_array'] === undefined) {
+
+        //this.navCtrl.push(CrearPublicidadPage);
+        //this.navCtrl.popToRoot();
         loader.dismiss();
         Swal('Atención', 'No posee Pedidos ', 'error')
-      }else{
-         ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
+      } else {
+        ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
 
-      this.cargarCombos();
+        this.cargarCombos();
+        loader.dismiss();
       }
-     
+
 
     });
 
-    loader.dismiss();
+
   }
 
   ionViewDidLoad() {
@@ -113,14 +119,14 @@ export class ListadoPedidosFiltradosPage {
     }, 2000);
   }
 
-  actualizarPedido(miPedido: any):void {
-    
+  actualizarPedido(miPedido: any): void {
+
     this.pedidos.forEach(x => {
       if (x.idPedido === miPedido.idPedido) {
         x.estadoPedido = miPedido.estadoPedido;
       }
     })
-    
+
     ENV.PEDIDOS = JSON.stringify(this.auxiliar.crearArray(this.pedidos));
     this.cargarCombos();
 

@@ -48,7 +48,7 @@ export class LoginPage {
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario != ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
-console.log(result);
+
         this.usuarioLogin = result['usuario'];
         
         if (typeof this.usuarioLogin === 'undefined') {
@@ -57,7 +57,7 @@ console.log(result);
         } else {
 
           this.datosProveedor = result['proveedorDB'];
-          console.log(result['proveedorDB']);
+          
           if (this.datosProveedor != undefined) {
             this.datosProveedor.forEach(element => {
               this.idProveedor = element._id;
@@ -132,7 +132,7 @@ console.log(result);
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
-
+    console.log(ENV);
 
   }
 

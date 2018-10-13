@@ -38,24 +38,47 @@ export class ListaProveedoresModalPage {
     });
   }
 
-   async cargarProveedor(proveedor: any) {
+   /*async cargarProveedor(proveedor: any) {
     console.log(proveedor._id);
 
     const {value: text} = await Swal({
       title: 'Ingrese Peticion',
       input: 'textarea',
       inputPlaceholder: 'Enviar mensaje al proveedor...',
-      showCancelButton: true
+      showCancelButton: true,     
+      confirmButtonText: 'Si, ENVIAR!',
+      confirmButtonColor: '#063079',
+      cancelButtonColor: '#f53d3d',
+      cancelButtonText: 'Cancelar'
     });
     this.text = text;
     
     this.realizarPeticion(proveedor);
     
+  }*/
 
+  cargarProveedor(proveedor: any){
+    Swal({
+
+      text: 'Desea Enviar Invitacion?',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, ENVIAR!',
+      confirmButtonColor: '#063079',
+      cancelButtonColor: '#f53d3d',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      
+      if (result.value) {
+        this.realizarPeticion(proveedor);
+        
+      }
+ 
+    })
   }
 
   realizarPeticion(proveedor: any){
-    
+    this.text= 'Te invito a formar parte de mi red, gracias.'
     const loader = this.loadingCtrl.create({
       content: "Por favor Espere unos segundos..."
      

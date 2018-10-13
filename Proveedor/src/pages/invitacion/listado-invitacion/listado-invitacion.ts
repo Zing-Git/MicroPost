@@ -5,6 +5,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import Swal from 'sweetalert2';
+import { CrearPublicidadPage } from '../../publicidad/crear-publicidad/crear-publicidad';
 
 @IonicPage()
 @Component({
@@ -58,8 +59,10 @@ export class ListadoInvitacionPage {
         ENV.INVITACIONES = JSON.stringify(data['invitaciones']);
         console.log(ENV.INVITACIONES);
         this.cargarCombos();
+        loader.dismiss();
       }
       else {
+        loader.dismiss();
         Swal(
           'Atencion',
           'No hay invitaciones pendientes',
@@ -69,10 +72,14 @@ export class ListadoInvitacionPage {
 
     });
 
-    loader.dismiss();
+    
   }
 
   cargarCombos() {
+    this.invitacionesAceptadas = new Array();
+    this.invitacionesRechazadas = new Array();
+    this.invitacionesPendientes = new Array();
+
     this.invitaciones = this.auxiliar.crearArray(JSON.parse(ENV.INVITACIONES));
 
     this.invitaciones.forEach(x => {
@@ -105,71 +112,114 @@ export class ListadoInvitacionPage {
     console.log('ionViewDidLoad ListadoInvitacionPage');
   }
 
-  aceptarRechazar(invitacion: any) {
+  aceptar(invitacion: any) {
 
 
     Swal({
 
-      text: 'Desea Aceptar o Rechazar Invitacion?',
+      text: 'Desea Aceptar Invitacion?',
       type: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, ACEPTAR!',
       confirmButtonColor: '#063079',
       cancelButtonColor: '#f53d3d',
-      cancelButtonText: 'Si, Rechazar'
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
-      const newInvitacion = {
-        idInvitacion: ' ',
-        value: false
-      }
-
-      newInvitacion.idInvitacion = invitacion._id;
+      
       if (result.value) {
-
-        newInvitacion.value = true;
-      }
-      else {
-        newInvitacion.value = false;
-      }
-
-      console.log(newInvitacion);
-      this.proveedorServices.postAceptarRechazar(newInvitacion).subscribe(result => {
-
-        if (typeof result != 'undefined') {
-
-          if (result.ok) {
-            Swal(
-              'Felicidades',
-              result.message,
-              'success'
-            );
-
-            const loader = this.loadingCtrl.create({
-              content: "Actualizando Informacion, aguarde unos segundos...",
-              duration: 3000
-            });
-            loader.present();
-
-          } else {
-            Swal(
-              'Advertencia',
-              result.message,
-              'error'
-            )
+       
+        this.proveedorServices.postAceptarRechazar(invitacion._id, true).subscribe(result => {
+          console.log(invitacion);
+          console.log(result);
+          if (typeof result != 'undefined') {
+  
+            if (result.ok) {
+              Swal(
+                'Felicidades',
+                result.message,
+                'success'
+              );
+  
+              const loader = this.loadingCtrl.create({
+                content: "Actualizando Informacion, aguarde unos segundos...",
+                duration: 3000
+              });
+              loader.present();
+  
+            } else {
+              Swal(
+                'Advertencia',
+                result.message,
+                'error'
+              )
+            }
           }
-        }
-      })
+        })
 
-
-      this.actualizarInvitacion(newInvitacion);
+        this.actualizarInvitacion(invitacion._id, true);
+      }
+ 
     })
   }
 
-  actualizarInvitacion(miInvitacion: any): void {
+  rechazar(invitacion: any) {
+
+
+    Swal({
+
+      text: 'Desea Rechazar Invitacion?',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, RECHAZAR!',
+      confirmButtonColor: '#063079',
+      cancelButtonColor: '#f53d3d',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      
+      
+      if (result.value) {
+        
+        this.proveedorServices.postAceptarRechazar(invitacion._id, false).subscribe(result => {
+          console.log(invitacion);
+          console.log(result);
+          if (typeof result != 'undefined') {
+  
+            if (result.ok) {
+              Swal(
+                'Atención!',
+                result.message,
+                'success'
+              );
+  
+              const loader = this.loadingCtrl.create({
+                content: "Actualizando Informacion, aguarde unos segundos...",
+                duration: 3000
+              });
+              loader.present();
+  
+            } else {
+              Swal(
+                'Advertencia',
+                result.message,
+                'error'
+              )
+            }
+          }
+        })
+  
+  
+        this.actualizarInvitacion(invitacion._id, false);
+      }
+      
+      
+    })
+  }
+
+  actualizarInvitacion(idInvitacion, value): void {
 
     this.invitaciones.forEach(x => {
-      if (x._id === miInvitacion.idInvitacion) {
-        x.aceptada = miInvitacion.value;
+      if (x._id === idInvitacion) {
+        x.aceptada = value;
         x.pendienteDeRevision = false;
       }
     })

@@ -34,11 +34,12 @@ export class MyApp {
     });
 
     this.pages = [
-      { title: 'Pedidos de Clientes', component: ListadoPedidoPage }, 
-      { title: 'Pedidos Filtrados', component: ListadoPedidosFiltradosPage },
+      
+      { title: 'Pedidos de Clientes', component: ListadoPedidosFiltradosPage },
       { title: 'Invitaciones', component: ListadoInvitacionPage },
       { title: 'Publicidad', component: CrearPublicidadPage },
-      /*{ title: 'Configuracion', component: ConfiguracionInicialPage },*/
+      /*{ title: 'Pedidos de Clientes', component: ListadoPedidoPage }, 
+      { title: 'Configuracion', component: ConfiguracionInicialPage },*/
       { title: 'Salir', component: LoginPage }
     ];
     

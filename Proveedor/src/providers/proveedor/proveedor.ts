@@ -55,22 +55,15 @@ export class ProveedorProvider {
     return this.http.get<any[]>(url, cudOptions);
   }
 
-  postAceptarRechazar(invitacion: any): Observable<any>{
+  postAceptarRechazar(idInvitacion: any, aceptado: boolean): Observable<any>{
     const parametros = {
-      idInvitacion: invitacion.idInvitacion,
-      aceptado: invitacion.value
-    }
-    return this.http.post<any>(this.urlPostAceptarRechazar, parametros,cudOptions);
-  }
-  /*postEnviarInvitacion(peticion: any): Observable<any>{
-    const invitacion ={
-      comercio: peticion.comercio,
-      proveedor: peticion.proveedor,
-      texto: peticion.texto
+      idInvitacion: idInvitacion,
+      aceptada: aceptado
     }
     
-    return this.http.post<any>(this.urlPostEnviarInvitacion, invitacion, cudOptions);
-  }*/
+    return this.http.post<any>(this.urlPostAceptarRechazar, parametros,cudOptions);
+  }
+ 
 
   postGetProductosPorIdProveedor(idProveedor: string): Observable<any[]>{
     

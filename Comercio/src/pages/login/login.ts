@@ -152,7 +152,7 @@ export class LoginPage {
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
-
+    console.log(ENV);
   }
 
   limpiarValoresPorDefecto(){
