@@ -26,13 +26,14 @@ export class ProveedorProvider {
   private urlGetProductosPorIdProveedor = this.urlBase + '/proveedor/obtener_productos/';
   private urlPostProveedor = this.urlBase + '/proveedor/nuevo/';
   private urlGetInvitacion = this.urlBase + '/invitacion/consultar_pendientes/';
+  private urlPostAceptarRechazar = this.urlBase + '/invitacion/aceptar_rechazar/';
 
   data: any;
   constructor(public http: HttpClient) {
     
   }
 
-  postProveedor(proveedor: Proveedor): Observable<any[]> {
+  postProveedor(proveedor: Proveedor): Observable<any> {
     const newSession = Object.assign({}, proveedor);
     return this.http.post<any[]>(this.urlPostProveedor, newSession, cudOptions);
   }
@@ -54,6 +55,13 @@ export class ProveedorProvider {
     return this.http.get<any[]>(url, cudOptions);
   }
 
+  postAceptarRechazar(invitacion: any): Observable<any>{
+    const parametros = {
+      idInvitacion: invitacion.idInvitacion,
+      aceptado: invitacion.value
+    }
+    return this.http.post<any>(this.urlPostAceptarRechazar, parametros,cudOptions);
+  }
   /*postEnviarInvitacion(peticion: any): Observable<any>{
     const invitacion ={
       comercio: peticion.comercio,

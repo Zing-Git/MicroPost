@@ -31,6 +31,8 @@ import { ProductoProvider } from '../providers/producto/producto';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detalle-pedido-comercio/detalle-pedido-comercio';
 import { DecimalPipe } from '@angular/common';
+import { ListaPublicidadPage } from '../pages/publicidad/lista-publicidad/lista-publicidad';
+import { ListaPublicidadModalPage } from '../pages/publicidad/modal/lista-publicidad-modal/lista-publicidad-modal';
 //declare module 'google-maps';
 
 @NgModule({
@@ -48,7 +50,9 @@ import { DecimalPipe } from '@angular/common';
     PedidoModalPage,
     CarritoPage,
     ListaPedidoComercioPage,
-    DetallePedidoComercioPage
+    DetallePedidoComercioPage,
+    ListaPublicidadPage,
+    ListaPublicidadModalPage
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,9 @@ import { DecimalPipe } from '@angular/common';
     PedidoModalPage,
     CarritoPage,
     ListaPedidoComercioPage,
-    DetallePedidoComercioPage
+    DetallePedidoComercioPage,
+    ListaPublicidadPage,
+    ListaPublicidadModalPage
   ],
   providers: [
     StatusBar,

@@ -7,6 +7,7 @@ import { Persona } from '../../../modelo/persona';
 import { LoginPage } from '../../login/login';
 import { Comercio } from '../../../modelo/comercio';
 import { ComercioProvider } from '../../../providers/comercio/comercio';
+import Swal from 'sweetalert2';
 
 @IonicPage()
 @Component({
@@ -75,6 +76,10 @@ export class AltaLoginPage {
       let respuesta = result;
       console.log('respuesta del server: ' + respuesta);
       this.isCorrect = true;
+      if(respuesta != undefined){
+        
+        Swal('Felicidades', 'Ya puede ingresar con sus credenciales' , 'success')
+      }
 
     }, err => {
       alert('Hubo un problema al crear Comercio' + err);

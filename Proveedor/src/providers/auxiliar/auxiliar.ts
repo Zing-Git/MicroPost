@@ -6,6 +6,11 @@ import { DecimalPipe } from '@angular/common';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+
+};
+
+const cudMultiPart ={
+  headers: new HttpHeaders({'Content-Type':'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'})
 };
 
 
@@ -14,6 +19,7 @@ export class AuxiliarProvider {
 
   private urlBase = ENV.BASE_URL;
   public urlPostGetCombos = this.urlBase + '/conf/combos/';
+  private urlPostPublicidad  = this.urlBase + '/publicidad/subir_foto/';
 
   constructor(public http: HttpClient, private decimalPipe: DecimalPipe) {
    
@@ -34,6 +40,21 @@ export class AuxiliarProvider {
     let nuevoArreglo = Array.from(new Set(clon.map((item: any) => item)))
 
     return nuevoArreglo;
+  }
+
+  postCrearPublicidad(imagen: any, cuerpo: string, proveedor: string, fechaInicio: string, fechaFin: string, titulo: string): Observable<any>{
+    
+    
+    const parametros = {
+      imagen: imagen,
+      extension: "jpg",
+      cuerpo: cuerpo,
+      proveedor: proveedor,
+      fechaInicio: fechaInicio,
+      fechaFin: fechaFin,
+      titulo: titulo
+    }
+    return this.http.post<any>(this.urlPostPublicidad, parametros, cudOptions);
   }
 
 }

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lista de Publicidades</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header text-center>
+      Listado de Publicidades
+    </ion-card-header>
+    
+      <ion-scroll  scrollY="true">
+        <ion-list *ngFor="let item of vista">
+          <ion-item style="border-bottom: 1px solid rgb(236, 31, 31) !important;" >
+            <ion-avatar item-start>
+              <img [src]="item.imagen">
+            </ion-avatar>
+            <ion-avatar item-end>
+              <button ion-button small (click)='mostrarPublicidadModal(item)'>
+                <ion-icon name="eye"> Ver</ion-icon>
+              </button>
+            </ion-avatar>
+              <h2><strong>Titulo </strong> </h2> <p>{{item.titulo}}</p>
+              <p > <strong>Proveedor </strong> {{item.razonSocial}}</p>            
+          </ion-item>
+
+        </ion-list>
+      </ion-scroll>
+    
+  </ion-card>
+
+</ion-content>

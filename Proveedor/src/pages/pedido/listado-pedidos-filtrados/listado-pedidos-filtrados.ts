@@ -5,6 +5,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import { DetallePedidoProveedorPage } from '../detalle-pedido-proveedor/detalle-pedido-proveedor';
+import Swal from 'sweetalert2';
 
 @IonicPage()
 @Component({
@@ -55,9 +56,16 @@ export class ListadoPedidosFiltradosPage {
     });
     loader.present();
     this.proveedorServices.load(this.idProveedor).then(data => {
-      ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
+      console.log(data['pedidos_array']);
+      if(data['pedidos_array'] === undefined){
+        loader.dismiss();
+        Swal('Atención', 'No posee Pedidos ', 'error')
+      }else{
+         ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
 
       this.cargarCombos();
+      }
+     
 
     });
 
@@ -106,15 +114,13 @@ export class ListadoPedidosFiltradosPage {
   }
 
   actualizarPedido(miPedido: any):void {
-    console.log('mi pedido');
-    console.log(miPedido);
+    
     this.pedidos.forEach(x => {
       if (x.idPedido === miPedido.idPedido) {
         x.estadoPedido = miPedido.estadoPedido;
       }
     })
-    console.log('actulkizando');
-    console.log(this.pedidos);
+    
     ENV.PEDIDOS = JSON.stringify(this.auxiliar.crearArray(this.pedidos));
     this.cargarCombos();
 

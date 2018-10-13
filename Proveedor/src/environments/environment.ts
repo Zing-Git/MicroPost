@@ -10,5 +10,6 @@ export var envirotment = {
     APIKEY: 'AIzaSyBR0QD8bdbTqRLZsc07MYmTL7BpiYrVEUM',
     PEDIDO: '',
     CARRITO: ' ',
-    PEDIDOS: ' '
+    PEDIDOS: ' ',
+    INVITACIONES: ' '
 }

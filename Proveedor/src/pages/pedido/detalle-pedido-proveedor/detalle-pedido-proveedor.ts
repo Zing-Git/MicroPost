@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import Swal from 'sweetalert2';
 import { PedidoProvider } from '../../../providers/pedido/pedido';
-import { ListadoPedidosFiltradosPage } from '../listado-pedidos-filtrados/listado-pedidos-filtrados';
 
 @IonicPage()
 @Component({

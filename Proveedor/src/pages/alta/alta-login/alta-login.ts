@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController, NavController, ModalController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController, NavController, ModalController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../../../modelo/usuario';
 import { Persona } from '../../../modelo/persona';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { LoginPage } from '../../login/login';
 import { Comercio } from '../../../modelo/comercio';
+import Swal from 'sweetalert2';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,8 @@ export class AltaLoginPage {
     private formBuilder: FormBuilder,
     private proveedorServices: ProveedorProvider,
     public navCtrl: NavController,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController) {
 
     this.clienteViewModel = navParams.get('data');
 
@@ -71,13 +73,23 @@ export class AltaLoginPage {
   }
 
   guardarCliente() {
+
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos...",
+      duration: 6000
+    });
+    loader.present();
     this.proveedorServices.postProveedor(this.clienteViewModel).subscribe(result => {
-      let respuesta = result;
-      console.log('respuesta del server: ' + respuesta);
-      this.isCorrect = true;
+     if(result.ok == true){
+      loader.dismiss();
+      Swal('Felicidades!!', 'Ahora puede ingresar con usuario y clave al sistema..' , 'success')
+     }else{
+       loader.dismiss();
+       Swal('Atención!!', result.message , 'error')
+     }     
 
     }, err => {
-      alert('Hubo un problema al crear Comercio' + err);
+      Swal('Atención!!', err , 'error')
     });
   }
 

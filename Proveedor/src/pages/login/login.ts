@@ -7,7 +7,6 @@ import { LoginModel } from '../../modelo/login';
 import { LoginProvider } from '../../providers/login/login';
 import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { ListadoPedidosFiltradosPage } from '../pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
-import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-login',
@@ -33,7 +32,7 @@ export class LoginPage {
     public loadingCtrl: LoadingController) {
     this.limpiarValoresPorDefecto();
 
-      console.log(ENV);
+    console.log(ENV);
     this.newLogin = new LoginModel();
 
   }
@@ -41,38 +40,51 @@ export class LoginPage {
   getLogin() {
 
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."
-
+      content: "Por favor Espere unos segundos...",
+      duration: 6000
     });
     loader.present();
 
-    if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
+    if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario != ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
-
+console.log(result);
         this.usuarioLogin = result['usuario'];
-
+        
         if (typeof this.usuarioLogin === 'undefined') {
           loader.dismiss();
-          Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
+          Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
         } else {
 
           this.datosProveedor = result['proveedorDB'];
-          this.datosProveedor.forEach(element => {
-            this.idProveedor = element._id;
+          console.log(result['proveedorDB']);
+          if (this.datosProveedor != undefined) {
+            this.datosProveedor.forEach(element => {
+              this.idProveedor = element._id;
 
-          });
-          this.almacenarValoresImportantes();
-          loader.dismiss();
-          this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
-            animate: true
-          });
+            });
+            if (this.idProveedor != undefined) {
+              this.almacenarValoresImportantes();
+              loader.dismiss();
+              this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
+                animate: true
+              });
+            } else {
+              loader.dismiss();
+              Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas' , 'error')
+            }
+          }
+
+
         }
 
       }, err => {
         loader.dismiss();
         Swal('Atención', 'Ocurrio un problema inesperado codigo: ' + err, 'error')
       });
+    } else {
+      loader.dismiss();
+      Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
     }
   }
 

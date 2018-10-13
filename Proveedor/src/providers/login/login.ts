@@ -24,7 +24,7 @@ export class LoginProvider {
       nombreUsuario: loginModel.nombreUsuario,
       clave: loginModel.clave
     };
-    
+   
     return this.http.post<any[]>(this.urlPostGetLogin, parametros, cudOptions);
   }
 }

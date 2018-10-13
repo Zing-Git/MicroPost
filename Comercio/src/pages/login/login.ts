@@ -11,6 +11,7 @@ import { envirotment as ENV } from '../../environments/environments';
 import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
+import { ListaPublicidadPage } from '../publicidad/lista-publicidad/lista-publicidad';
 
 @Component({
   selector: 'page-login',
@@ -18,7 +19,7 @@ import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
 })
 export class LoginPage {
 
-  esPedidoDe: string = 'Cliente';
+  esPedidoDe: string = 'Otro';
   newLogin: LoginModel;
   usuarioLogin: any;   //get token and _id
   datosComercio: any;
@@ -48,7 +49,7 @@ export class LoginPage {
     });
     loader.present();
     
-    if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario) && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave)) {
+    if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario!= ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
 
@@ -64,7 +65,8 @@ export class LoginPage {
             this.idComercio = element._id;
           });
 
-          this.almacenarValoresImportantes();
+          if(this.idComercio != undefined){
+            this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
           loader.dismiss();
           switch (this.esPedidoDe) {
@@ -79,7 +81,7 @@ export class LoginPage {
               break;
             }
             case "Otro": {
-              this.navCtrl.setRoot(ListaProveedoresPage, { animate: true });
+              this.navCtrl.setRoot(ListaPublicidadPage, { animate: true });
               break;
             }
             default:
@@ -89,6 +91,11 @@ export class LoginPage {
               });
             /* this.navCtrl.setRoot(MenuPage);*/
           }
+          }else{
+            loader.dismiss();
+              Swal('Atención', 'Usted no es Cliente, ingrese con credenciales validas' , 'error')
+          }
+          
 
         }
 

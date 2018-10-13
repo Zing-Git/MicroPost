@@ -25,6 +25,13 @@ import { ListadoPedidosFiltradosPage } from '../pages/pedido/listado-pedidos-fil
 import { PedidoProvider } from '../providers/pedido/pedido';
 import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/listado-invitacion';
 
+import { FileUploadModule } from 'ng2-file-upload';
+import { CrearPublicidadPage } from '../pages/publicidad/crear-publicidad/crear-publicidad';
+import { Camera } from '@ionic-native/camera';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -36,9 +43,11 @@ import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/li
     ListadoPedidoPage,
     DetallePedidoProveedorPage,
     ListadoPedidosFiltradosPage,
-    ListadoInvitacionPage
+    ListadoInvitacionPage,
+    CrearPublicidadPage
   ],
   imports: [
+    FileUploadModule,
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
@@ -55,9 +64,14 @@ import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/li
     ListadoPedidoPage,
     DetallePedidoProveedorPage,
     ListadoPedidosFiltradosPage,
-    ListadoInvitacionPage
+    ListadoInvitacionPage,
+    CrearPublicidadPage
   ],
   providers: [
+    File,
+    Transfer,
+    Camera,
+    FilePath,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

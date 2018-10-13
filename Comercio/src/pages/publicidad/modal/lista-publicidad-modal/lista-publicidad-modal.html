@@ -1,0 +1,74 @@
+<ion-content padding>
+
+  <div padding>
+    <ion-segment [(ngModel)]="inicial">
+      <ion-segment-button value="encabezado">
+        <strong>Publicidad</strong>
+      </ion-segment-button>
+      <ion-segment-button value="detalle">
+        <strong>Imagen</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div [ngSwitch]="inicial">
+    <form *ngSwitchCase="'encabezado'">
+      <ion-card>
+
+        <ion-item>
+          <h2>Titulo</h2>
+          <p >{{publicidad.titulo}}</p>
+        </ion-item>
+
+
+        <ion-item>
+          <h2>Descripción</h2>
+          <p  >{{publicidad.cuerpo}}</p>
+        </ion-item>
+
+
+
+        <ion-item>
+          <h2>Proveedor</h2>
+          <p>{{publicidad.razonSocial}}</p>
+        </ion-item>
+
+
+        <ion-item>
+          <h2>Fecha de Inicio</h2>
+          <p >{{publicidad.fechaInicio}}</p>
+        </ion-item>
+        <ion-item>
+          <h2>Fecha de Fin</h2>
+          <p >{{publicidad.fechaFin}}</p>
+        </ion-item>
+
+
+      </ion-card>
+    </form>
+
+
+    <form *ngSwitchCase="'detalle'">
+
+      <ion-card *ngIf="publicidad.tieneImagen">
+        <ion-title>Imagen</ion-title>
+        <ion-card-content>
+          <img [src]="publicidad.imagen"  />
+        </ion-card-content>
+      </ion-card>
+
+    </form>
+
+  </div>
+  <ion-card>
+    <ion-item>
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;">
+        <ion-icon>Volver</ion-icon>
+      </button>
+    </ion-item>
+
+  </ion-card>
+
+</ion-content>
+

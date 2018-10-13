@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Publicidad</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="home">
+    <ion-card>
+        <ion-title>Titulo</ion-title>
+        <ion-item>
+          <ion-textarea [(ngModel)]="titulo" placeholder="Ingrese Titulo de publicidad"></ion-textarea>
+        </ion-item>
+      </ion-card>
+  <ion-card>
+    <ion-title>Descripción</ion-title>
+    <ion-item>
+      <ion-textarea [(ngModel)]="descripcion" placeholder="Ingrese descripción de la publicidad"></ion-textarea>
+    </ion-item>
+  </ion-card>
+  <ion-card>      
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Fecha de Inicio</ion-label>
+          <ion-datetime 
+          cancelText="Cancelar" 
+          doneText="Ok" 
+          displayFormat="DD/MM/YYYY" 
+          pickerFormat="YYYY MM DD" 
+          [(ngModel)]="fechaInicio"
+          
+          ></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Fecha de Fin</ion-label>
+            <ion-datetime 
+            cancelText="Cancelar" 
+            doneText="Ok" 
+            displayFormat="DD/MM/YYYY" 
+            pickerFormat="YYYY MM DD" 
+            [(ngModel)]="fechaFin"
+            
+            ></ion-datetime>
+          </ion-item>       
+      </ion-card-content>
+    </ion-card>
+  <ion-card>
+    <ion-row>
+      <ion-col width-50 style="text-align: center">
+        <button ion-button round (click)="tomarFoto($event)">Tomar Foto</button>
+      </ion-col>
+      <ion-col width-50 style="text-align: center">
+          <button ion-button round (click)="tomarDeGaleria($event)">Tomar Foto de Galeria</button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <ion-title>Imagen para enviar</ion-title>
+    <ion-card-content>
+      <img [src]="base64Image" *ngIf="base64Image" />
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <button ion-button round full color="secondary" (click)="enviarPublicidad()">Crear Publicidad</button>
+    </ion-item>
+  </ion-card>
+</ion-content>

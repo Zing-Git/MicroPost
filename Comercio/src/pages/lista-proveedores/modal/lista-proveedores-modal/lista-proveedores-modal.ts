@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
@@ -19,7 +19,8 @@ export class ListaProveedoresModalPage {
   
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private proveedorService: ProveedorProvider) {
+    private proveedorService: ProveedorProvider,
+    public loadingCtrl: LoadingController) {
 
 
   }
@@ -35,9 +36,6 @@ export class ListaProveedoresModalPage {
       this.proveedoresViewModel = result['proveedores'];
 
     });
-
-
-
   }
 
    async cargarProveedor(proveedor: any) {
@@ -58,9 +56,14 @@ export class ListaProveedoresModalPage {
 
   realizarPeticion(proveedor: any){
     
-
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos..."
+     
+    });
+    loader.present();
     this.proveedorService.postEnviarInvitacion(proveedor._id, this.idComercio, this.text).subscribe(result => {
       if (result.ok === true) {
+        loader.dismiss();
         Swal(
           'Peticion Enviada!',
           'Se envio una invitacion al Proveedor ' + proveedor.entidad.razonSocial,
@@ -69,6 +72,7 @@ export class ListaProveedoresModalPage {
         this.navCtrl.setRoot(ListaProveedoresModalPage);
           this.navCtrl.popToRoot();
       } else {
+        loader.dismiss();
         Swal(
           'Error!',
           'Se produjo un error al enviar la peticion ',
