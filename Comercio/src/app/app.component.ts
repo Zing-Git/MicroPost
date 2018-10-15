@@ -8,6 +8,7 @@ import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configu
 import { ListaProveedoresModalPage } from '../pages/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import { ListaProveedoresPage } from '../pages/lista-proveedores/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
+import { ListaPublicidadPage } from '../pages/publicidad/lista-publicidad/lista-publicidad';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,7 +36,7 @@ export class MyApp {
       this.pages = [
         { title: 'Pedidos a mi proveedores', component: ListaPedidoComercioPage },
         { title: 'Nuevo Pedido', component: ListaProveedoresPage },
-        //{ title: 'Mis proveedores', component: ListaProveedoresPage },
+        { title: 'Publicidades', component: ListaPublicidadPage },
         { title: 'Proveedores de MicroPOS', component: ListaProveedoresModalPage },
         { title: 'Configuracion', component: ConfiguracionInicialPage },
         { title: 'Salir', component: LoginPage }

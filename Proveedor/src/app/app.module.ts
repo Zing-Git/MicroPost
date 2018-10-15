@@ -31,6 +31,7 @@ import { Camera } from '@ionic-native/camera';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { Transfer } from '@ionic-native/transfer';
     FilePath,
     StatusBar,
     SplashScreen,
+    DatePipe,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
       ,
     ProveedorProvider,

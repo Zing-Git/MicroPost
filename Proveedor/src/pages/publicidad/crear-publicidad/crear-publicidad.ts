@@ -9,6 +9,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 declare var cordova: any;
 import Swal from 'sweetalert2';
 import { normalizeURL } from 'ionic-angular';
+import { DatePipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -39,7 +40,8 @@ export class CrearPublicidadPage {
     private file: File,
     private transfer: Transfer,
     public loadingCtrl: LoadingController,
-    private auxliar: AuxiliarProvider) {
+    private auxliar: AuxiliarProvider,
+    private datePipe: DatePipe) {
 
 
     this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
@@ -97,11 +99,14 @@ export class CrearPublicidadPage {
   }
 
   enviarPublicidad() {
+    console.log(this.fechaInicio);
+    console.log(this.fechaFin);
+    console.log(ENV.PROVEEDOR_ID);
     const loader = this.loadingCtrl.create({
       content: "Subiendo Publicidad, espere unos segundos..."
     });
     loader.present();
-    this.auxliar.postCrearPublicidad(this.lastImage, this.descripcion, ENV.PROVEEDOR_ID, this.fechaInicio, this.fechaFin, this.titulo).subscribe(result => {
+    this.auxliar.postCrearPublicidad(this.lastImage, this.descripcion, ENV.PROVEEDOR_ID, this.datePipe.transform(this.fechaInicio,"yyyy-MM-dd"), this.datePipe.transform(this.fechaFin,"yyyy-MM-dd"), this.titulo).subscribe(result => {
       if (result.ok == true) {
         loader.dismiss();
         Swal('Felicidades', result.message, 'success');
@@ -116,5 +121,7 @@ export class CrearPublicidadPage {
     })
 
   }
+
+  
 
 }
