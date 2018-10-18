@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController, ViewController, Events, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, ViewController, App } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import { DetallePedidoProveedorPage } from '../detalle-pedido-proveedor/detalle-pedido-proveedor';
 import Swal from 'sweetalert2';
-import { ListadoInvitacionPage } from '../../invitacion/listado-invitacion/listado-invitacion';
-import { CrearPublicidadPage } from '../../publicidad/crear-publicidad/crear-publicidad';
 
 @IonicPage()
 @Component({

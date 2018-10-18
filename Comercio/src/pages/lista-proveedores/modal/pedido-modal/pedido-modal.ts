@@ -13,6 +13,7 @@ export class PedidoModalPage {
   nuevoProductoForm: FormGroup;
   nuevoProducto: any;
   itemProductoSelected: number;
+  itemSubtotal: number;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -23,17 +24,19 @@ export class PedidoModalPage {
     console.log(this.producto);
 
     this.itemProductoSelected = this.producto.unidadesMedida[0] || 1;
-
+    this.itemSubtotal = this.producto.precioSugerido;  
     console.log(this.itemProductoSelected)
     this.nuevoProductoForm = formBuilder.group({
       cantidad: ['', Validators.required],
-      unidadMedida: [this.itemProductoSelected]
+      unidadMedida: [this.itemProductoSelected],
+      precioSugerido: [this.producto.precioSugerido]
     });
     this.nuevoProducto = {
       _id: ' ',
       cantidad: 0,
       unidadMedida: ' ',
-      nombreProducto: ' '
+      nombreProducto: ' ',
+      precioSugerido: 0
     };
   }
 
@@ -47,6 +50,7 @@ export class PedidoModalPage {
     this.nuevoProducto.nombreProducto = this.producto.nombreProducto;
     this.nuevoProducto.cantidad = this.nuevoProductoForm.controls['cantidad'].value;
     this.nuevoProducto.unidadMedida = this.itemProductoSelected;
+    this.nuevoProducto.precioSugerido = this.producto.precioSugerido
 
     this.viewCtrl.dismiss(this.nuevoProducto);
 
@@ -60,4 +64,5 @@ export class PedidoModalPage {
     this.nuevoProducto.cantidad = 0;
     this.viewCtrl.dismiss(this.nuevoProducto);
   }
+  
 }

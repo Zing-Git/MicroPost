@@ -6,6 +6,8 @@ import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environments';
 import { Publicidad } from '../../../modelo/publicidad';
 import { ListaPublicidadModalPage } from '../modal/lista-publicidad-modal/lista-publicidad-modal';
+import { NgZone  } from '@angular/core';
+import { Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -25,27 +27,34 @@ export class ListaPublicidadPage {
     public auxiliar: AuxiliarProvider,
     public proveedorService: ProveedorProvider,
     public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public events: Events,
+    private zone: NgZone) {
+
+      this.events.subscribe('updateScreen', () => {
+        this.zone.run(() => {
+          console.log('force update the screen');
+        });
+      });
   }
 
   ionViewDidLoad() {
-    this.getProveedores();
-    /*const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos...",
-     duration:2000
+    
+    const loader = this.loadingCtrl.create({
+      content: "Cargando ofertas, espere unos segundos...",
+      duration: 3000
     });
     loader.present();
-    this.getPublicidades();*/
-
+    this.getProveedores();
+    //this.getPublicidades();
+    //loader.dismiss();
   }
 
   getProveedores() {
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(resultP => {
-      this.auxiliar.getPublcidades().subscribe(resultA => {
-        console.log('publicidades');
-        console.log(resultA['publicaciones']);
-        if (resultA['ok']== true) {
+      this.auxiliar.getPublcidades().subscribe(resultA => {        
+        if (resultA['ok']== true && resultP['ok'] == true) {
           this.publicidades = resultA['publicaciones'];
           this.proveedoresViewModel = resultP['proveedores'];
 
@@ -62,14 +71,13 @@ export class ListaPublicidadPage {
               fechaFin: x.fechaFin,
               imagen: x.imagen,
               __v: x.__v,
-              razonSocial: this.proveedoresViewModel.find(y => x.proveedor === y._id).entidad.razonSocial
+              razonSocial: x.proveedor.entidad.razonSocial
             }
 
             this.vista.push(publicidad);
   
           })
-          console.log('proveedores');
-          console.log(this.vista);
+          
         } else {
           Swal(
             'Advertencia',
@@ -123,6 +131,7 @@ export class ListaPublicidadPage {
     });*/
 
   mostrarPublicidadModal(item: any): void {
+    //item.razonSocial = this.proveedoresViewModel.find(y => x.proveedor === y._id).entidad.razonSocial
     const modal = this.modalCtrl.create(ListaPublicidadModalPage, { data: item });
     modal.present();
   }

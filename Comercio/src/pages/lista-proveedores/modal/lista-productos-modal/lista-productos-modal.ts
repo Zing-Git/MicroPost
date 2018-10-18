@@ -34,10 +34,13 @@ export class ListaProductosModalPage {
   tipoEntrega: any;
 
   itemSubcategoriaSelected: any;
+  nombrecomercio: string;
 
-  
   pedido: Pedido;
   productosPedidos: any[] = new Array();
+
+  cantidadPedido: string ='0';
+  totalPedido: string = '0';
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -48,6 +51,7 @@ export class ListaProductosModalPage {
     private loadingCtrl: LoadingController,
     public events: Events) {
 
+    this.nombrecomercio = ENV.NOMBRE_COMERCIO;
     const loader = this.loadingCtrl.create({
       content: "Por favor Espere unos segundos...",
       duration: 3000
@@ -172,12 +176,15 @@ export class ListaProductosModalPage {
           _id: nuevoProducto._id,
           unidadMedida: nuevoProducto.unidadMedida,
           cantidad: nuevoProducto.cantidad,
-          nombreProducto: nuevoProducto.nombreProducto
+          nombreProducto: nuevoProducto.nombreProducto,
+          precioSugerido : nuevoProducto.precioSugerido
         })
 
         ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //tercero aqui almaceno la lista de productos
         //console.log('Productos Pedidos');
         //console.log(this.productosPedidos);
+
+        this.calcularTotalCantidad();
       }
 
     });
@@ -258,5 +265,17 @@ export class ListaProductosModalPage {
 
   ionViewDidLoad() { }
 
-
+  calcularTotalCantidad() {
+    let cantidadP = 0;
+    let totalP = 0;
+    this.productosPedidos = JSON.parse(ENV.PEDIDO);
+    this.productosPedidos.forEach(x => {
+      totalP = totalP+ +(x.precioSugerido);
+      cantidadP = cantidadP + +(x.cantidad);
+    })
+    console.log(totalP);
+    console.log(cantidadP);
+    this.totalPedido = totalP.toFixed(2);
+    this.cantidadPedido = cantidadP.toString();
+  }
 }

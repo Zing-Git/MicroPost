@@ -6,18 +6,16 @@
 </ion-header>
 
 
-<ion-content>
-    <!--<ion-refresher > (ionRefresh) ="doRefresh($event)"
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>-->
+<ion-content >
+    
       <ion-list>
         <ion-item>
-          <h1> </h1>
-          <h1 text-center padding>microPOS comercio</h1>
-          <h2 text-center>Comercio</h2>
+            <h1> </h1>
+            <img class="center" src="../../assets/icon/logobitbi.png">
+            <h2  class="miColor">Comercio</h2> 
         </ion-item>
       </ion-list>
-      <form (ngSubmit)="getLogin()">
+      <form (ngSubmit)="getLogin()" >
         <ion-item item-center>
           <ion-label floating>Usuario</ion-label>
           <ion-input type="text" [(ngModel)]="newLogin.nombreUsuario" name="usuario"></ion-input>
@@ -37,19 +35,20 @@
         
       </form>
  <br>
-  <ion-list>
-    <div>
-      <ion-row>
-        <ion-col style="text-align: center">
-          <button ion-button clear >Olvidé mi Clave</button>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col style="text-align: center">
-            <button ion-button clear (click)='goCreateCliente()' >Crear nueva cuenta</button>
-          </ion-col>
-        </ion-row>
-    </div>   
-  </ion-list>
+ <ion-list>
+  <div>
+    <ion-row>
+      <ion-col style="text-align: center">
+        <button class="miColor" ion-button clear>Olvidé mi usuario o clave</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      <div class="miColor" style="text-align: center">
+          <span>Si no está registrado ingrese </span><a href="#" (click)='goCreateCliente()'>aqui</a>
+      </div>    </ion-col>
+    </ion-row>
+  </div>
+</ion-list>
   
 </ion-content>

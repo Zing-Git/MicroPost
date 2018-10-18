@@ -74,5 +74,12 @@ export class AuxiliarProvider {
         });
     });
   }
+
+  getNombreComercio(){
+    return ENV.NOMBRE_COMERCIO;
+  }
+  getRubroComercio(){
+    return ENV.RUBRO_COMERCIO;
+  }
   
 }

@@ -6,17 +6,29 @@
 
   <ion-card>
     <ion-card-header>
-      Listado de Productos
+      Paso 2: Elija productos de {{nombrecomercio}}.
     </ion-card-header>
     <ion-card>
-      <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+      <ion-item>
+        <ion-icon name="logo-usd" item-start></ion-icon>
+        {{totalPedido}}
+       
+      </ion-item>
+      <ion-item>
+        <ion-icon name="cart" item-start></ion-icon>
+        {{cantidadPedido}}
+       
+      </ion-item>
     </ion-card>
+    
+      <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+    
     <ion-card>
       <ion-item>
         <ion-label floating>Categoria</ion-label>
         <ion-select [(ngModel)]="categoria" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
           interface="popover">
-          <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)" >{{categoria}}</ion-option>
+          <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)">{{categoria}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-card>
@@ -25,27 +37,27 @@
         <ion-label floating>Sub-Categoria</ion-label>
         <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
           interface="popover">
-          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isEnabledSubCategoria" [value]="+(subcategoria)" [selected]="itemSubcategoriaSelected"
-            (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
+          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isEnabledSubCategoria"
+            [value]="+(subcategoria)" [selected]="itemSubcategoriaSelected" (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
         </ion-select>
       </ion-item>
 
     </ion-card>
   </ion-card>
-  <ion-card *ngIf="showListProducto" >
+  <ion-card *ngIf="showListProducto">
     <ion-card-header>
       Productos
     </ion-card-header>
 
-    <ion-scroll  scrollY="true">
+    <ion-scroll scrollY="true">
       <ion-list *ngFor="let item of arrayProductos;">
-        <ion-item >
+        <ion-item>
           <ion-avatar item-end>
             <button ion-button small (click)='seleccionarProducto(item)'>
               <ion-icon name="cart"></ion-icon>
             </button>
           </ion-avatar>
-         
+
           <h2>{{item.nombreProducto}}</h2>
           <ion-item-divider></ion-item-divider>
         </ion-item>
@@ -56,9 +68,11 @@
 
   <ion-card>
     <ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;"><ion-icon>Cancelar</ion-icon></button>
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;">
+        <ion-icon>Cancelar</ion-icon>
+      </button>
       <button ion-button round (click)='pedirProducto()' item-end style="width:150px;">
-        <ion-icon name="cart"> Ver Pedido</ion-icon> 
+        <ion-icon name="cart"> Ver Pedido</ion-icon>
       </button>
     </ion-item>
 

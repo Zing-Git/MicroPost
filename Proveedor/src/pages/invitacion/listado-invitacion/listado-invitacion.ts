@@ -5,7 +5,6 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import Swal from 'sweetalert2';
-import { CrearPublicidadPage } from '../../publicidad/crear-publicidad/crear-publicidad';
 
 @IonicPage()
 @Component({
@@ -57,7 +56,7 @@ export class ListadoInvitacionPage {
     this.proveedorServices.getInvitaciones(this.idProveedor).subscribe(data => {
       if (data['invitaciones'] != undefined) {
         ENV.INVITACIONES = JSON.stringify(data['invitaciones']);
-        console.log(ENV.INVITACIONES);
+       
         this.cargarCombos();
         loader.dismiss();
       }
@@ -79,6 +78,9 @@ export class ListadoInvitacionPage {
     this.invitacionesAceptadas = new Array();
     this.invitacionesRechazadas = new Array();
     this.invitacionesPendientes = new Array();
+    this.estadoAceptado = true;
+    this.estadoPendiente = true;
+    this.estadoRechazado = true;
 
     this.invitaciones = this.auxiliar.crearArray(JSON.parse(ENV.INVITACIONES));
 
@@ -103,13 +105,13 @@ export class ListadoInvitacionPage {
 
     setTimeout(() => {
       console.log('Async operation has ended');
-      //this.obtenerDatosImportantes();
+      this.cargarCombos();
       refresher.complete();
     }, 2000);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ListadoInvitacionPage');
+    
   }
 
   aceptar(invitacion: any) {
@@ -129,10 +131,8 @@ export class ListadoInvitacionPage {
       if (result.value) {
        
         this.proveedorServices.postAceptarRechazar(invitacion._id, true).subscribe(result => {
-          console.log(invitacion);
-          console.log(result);
-          if (typeof result != 'undefined') {
-  
+         
+          if (typeof result != 'undefined') {  
             if (result.ok) {
               Swal(
                 'Felicidades',

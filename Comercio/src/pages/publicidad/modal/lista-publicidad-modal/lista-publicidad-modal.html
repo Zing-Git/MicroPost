@@ -23,8 +23,8 @@
 
 
         <ion-item>
-          <h2>Descripción</h2>
-          <p  >{{publicidad.cuerpo}}</p>
+          <h2 >Descripción</h2>
+          <p  text-wrap>{{publicidad.cuerpo}}</p>
         </ion-item>
 
 
@@ -37,11 +37,11 @@
 
         <ion-item>
           <h2>Fecha de Inicio</h2>
-          <p >{{publicidad.fechaInicio}}</p>
+          <p >{{publicidad.fechaInicio  | date: 'dd/MM/yyyy'}}</p>
         </ion-item>
         <ion-item>
           <h2>Fecha de Fin</h2>
-          <p >{{publicidad.fechaFin}}</p>
+          <p >{{publicidad.fechaFin  | date: 'dd/MM/yyyy'}}</p>
         </ion-item>
 
 
@@ -63,8 +63,11 @@
   </div>
   <ion-card>
     <ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;">
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:120px;">
         <ion-icon>Volver</ion-icon>
+      </button>
+      <button ion-button round (click)='cargarProveedor()' item-end style="width:140px;">
+        <ion-icon name="cart"> Enviar Invitacion</ion-icon>
       </button>
     </ion-item>
 

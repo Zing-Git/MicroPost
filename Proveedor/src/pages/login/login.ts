@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Refresher, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, Refresher, AlertController, LoadingController, Events } from 'ionic-angular';
 import Swal from 'sweetalert2';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environment';
@@ -29,7 +29,8 @@ export class LoginPage {
     private login: LoginProvider,
     private alertCtrl: AlertController,
     public storage: Storage,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    private event: Events) {
     this.limpiarValoresPorDefecto();
 
     console.log(ENV);
@@ -61,8 +62,12 @@ export class LoginPage {
           if (this.datosProveedor != undefined) {
             this.datosProveedor.forEach(element => {
               this.idProveedor = element._id;
-
+              ENV.NOMBRE_PROVEEDOR = element.entidad.razonSocial;
+              ENV.RUBRO_PROVEEDOR = element.entidad.actividadPrincipal;
             });
+
+            this.event.publish('creado',ENV.NOMBRE_PROVEEDOR,ENV.RUBRO_PROVEEDOR);
+
             if (this.idProveedor != undefined) {
               this.almacenarValoresImportantes();
               loader.dismiss();

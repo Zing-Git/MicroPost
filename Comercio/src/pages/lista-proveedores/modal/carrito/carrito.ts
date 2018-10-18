@@ -3,11 +3,7 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pedido } from '../../../../modelo/pedido';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
-import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
-import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
-import { PedidoModalPage } from '../pedido-modal/pedido-modal';
-import { ListaProveedoresPage } from '../../lista-proveedores';
 
 @Component({
     selector: 'page-carrito',
@@ -22,6 +18,8 @@ export class CarritoPage {
     comentario: string = ' ';
     productosViewModel: any[];
     arrayProductosviewModel: any[] = new Array();
+    visualItem: boolean = false;
+    total: number = 0;
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
@@ -31,13 +29,16 @@ export class CarritoPage {
     ) {
 
         this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
-        //this.nuevoArrayProductos = this.auxiliar.crearArray(this.pedido.productos);
+
+        this.pedido.productos.forEach(element => {
+            this.total = element.cantidad * element.precioSugerido;
+        });
         console.log('en el carrito');
         console.log(this.pedido);
 
         this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
-        this.fechaEntrega = this.fechaMinima.toISOString();
-    
+        this.fechaEntrega = ' ';//this.fechaMinima.toISOString();
+
     }
 
     ionViewDidLoad() { }
@@ -49,7 +50,7 @@ export class CarritoPage {
         if (index > -1) {
             this.pedido.productos.splice(index, 1);
         }
-       
+
     }
 
     pedirProducto() {
@@ -67,12 +68,14 @@ export class CarritoPage {
             this.pedido.fechaEntrega = this.fechaEntrega;
             this.pedido.comentario = this.comentario;
             Swal({
-                title: 'CARRITO!',
-                text: 'Desea enviar el Pedido?',
+                title: 'Pedido Listo!',
+                text: 'Ya completaste tu pedido, solo debes presionar enviar y llegará inmediatamente a tu proveedor.',
                 type: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Si, ENVIAR!',
-                cancelButtonText: 'No, Cancelar'
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Enviar!',
+                confirmButtonColor: '#063079',
+                cancelButtonColor: '#f53d3d',
             }).then((result) => {
                 if (result.value) {
 
@@ -80,14 +83,17 @@ export class CarritoPage {
                         console.log(result);
                         if (typeof result != 'undefined') {
                             if (result.ok) {
-                                Swal(
-                                    'Felicidades',
-                                    result.message,
-                                    'success'
-                                )
+                                Swal({
+                                     showCancelButton: false,
+                                    confirmButtonText: 'Si, Aceptar!',
+                                    confirmButtonColor: '#063079',
+                                    title: 'Felicidades',
+                                    text:'El proveedor ya recibió tu pedido. Te informaremos cuando el proveedor acepte tu pedido.',
+                                    type: 'success'
+                                })
                                 //this.navCtrl.setRoot(ListaProveedoresPage);
                                 this.viewCtrl.dismiss();
-                               
+
                             } else {
                                 Swal(
                                     'Advertencia',
@@ -127,4 +133,7 @@ export class CarritoPage {
         this.viewCtrl.dismiss(this.pedido);
     }
 
+    showItem(): void {
+        this.visualItem = !this.visualItem;
+    }
 }

@@ -57,4 +57,11 @@ export class AuxiliarProvider {
     return this.http.post<any>(this.urlPostPublicidad, parametros, cudOptions);
   }
 
+  getRazonSocial(){
+    return ENV.NOMBRE_PROVEEDOR;
+  }
+  getRubroProveedor(){
+    return ENV.RUBRO_PROVEEDOR;
+  }
+
 }

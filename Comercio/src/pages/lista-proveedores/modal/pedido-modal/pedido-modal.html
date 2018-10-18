@@ -21,11 +21,22 @@
 
       <ion-item item-center>
         <ion-label floating>Cantidad</ion-label>
-        <ion-input formControlName="cantidad" type="number"></ion-input>
+        <ion-input formControlName="cantidad" type="number" ></ion-input>
       </ion-item>
 
+     
     </ion-card>
-    
+    <ion-card>
+       <ion-item>
+          <ion-label >Precio </ion-label>
+          <ion-input type="text" disabled formControlName="precioSugerido"></ion-input>
+          
+      </ion-item>
+      <ion-item>
+        <ion-label >Sub total  $ {{nuevoProductoForm.controls['cantidad'].value * nuevoProductoForm.controls['precioSugerido'].value}}</ion-label>
+         
+      </ion-item>
+    </ion-card>
     <ion-card>
       <ion-item>
         <button ion-button round color="danger" (click)='volver1()' item-first style="width:130px;"><ion-icon>Volver</ion-icon></button>

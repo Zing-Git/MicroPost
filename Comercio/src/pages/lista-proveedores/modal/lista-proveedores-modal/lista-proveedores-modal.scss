@@ -1,3 +1,9 @@
 page-lista-proveedores-modal {
-
+    img{
+        width: 25%;
+        height: 25%;
+    }
+    ion-item.item:hover {
+        background-color: rgb(247, 214, 155);
+      }
 }

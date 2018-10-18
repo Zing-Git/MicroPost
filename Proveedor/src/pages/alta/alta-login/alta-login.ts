@@ -18,7 +18,7 @@ export class AltaLoginPage {
   strings: Array<string>;
   selected: string;
   loginForm: FormGroup;
-  clienteViewModel : Comercio = new Comercio();
+  clienteViewModel: Comercio = new Comercio();
   isCorrect: boolean = false;
 
   constructor(public navParams: NavParams,
@@ -45,7 +45,12 @@ export class AltaLoginPage {
   }
 
   onSingin() {
-    //para pobtener los valores cargos en la vista
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos...",
+      duration: 6000
+    });
+    loader.present();
+
     if (this.loginForm.controls['clave'].value === this.loginForm.controls['reClave'].value) {
       let usuario = new Usuario(
         new Persona("DNI", this.loginForm.controls['dni'].value),
@@ -56,13 +61,31 @@ export class AltaLoginPage {
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
       this.clienteViewModel.usuarios = usuarios;
-      
-      this.guardarCliente();
-      
-     /*  let miModal = this.modalCtrl.create(mensaje);
-      miModal.present(); */
+
+      this.proveedorServices.postProveedor(this.clienteViewModel).subscribe(result => {
+        if (result.ok == true) {
+
+          loader.dismiss();
+          Swal('Felicidades!!', 'Ahora puede ingresar con usuario y clave al sistema..', 'success')
+          this.navCtrl.push(LoginPage);
+          
+        } else {
+
+          loader.dismiss();
+          Swal('Atención!!', result.message, 'error')
+          
+        }
+       
+
+      }, err => {
+        loader.dismiss();
+        Swal('Atención!!', err, 'error')
+      });
+
+      /*  let miModal = this.modalCtrl.create(mensaje);
+       miModal.present(); */
       //this.navCtrl.popToRoot()
-      this.navCtrl.push(LoginPage);
+
 
     } else {
       let miModal = this.modalCtrl.create('Ocurrio un error, Vuelva a intentarlo');
@@ -70,27 +93,6 @@ export class AltaLoginPage {
       this.navCtrl.setRoot('LoginPage');
     }
 
-  }
-
-  guardarCliente() {
-
-    const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos...",
-      duration: 6000
-    });
-    loader.present();
-    this.proveedorServices.postProveedor(this.clienteViewModel).subscribe(result => {
-     if(result.ok == true){
-      loader.dismiss();
-      Swal('Felicidades!!', 'Ahora puede ingresar con usuario y clave al sistema..' , 'success')
-     }else{
-       loader.dismiss();
-       Swal('Atención!!', result.message , 'error')
-     }     
-
-    }, err => {
-      Swal('Atención!!', err , 'error')
-    });
   }
 
 }

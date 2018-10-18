@@ -88,31 +88,23 @@
           </ion-item>
         </ion-list>
       </ion-scroll>
-
-
-
-
     </form>
-
 
   </div>
   <ion-card>
 
-    <ion-item>
-      <button ion-button round color="primary" (click)='aceptar()' full [class.hide]="checkAceptar">
-        <ion-icon>Aceptar Pedido</ion-icon>
+    <ion-item>     
+      <button color="primary" ion-button round (click)='aceptar()' item-end style="width:80px;" [class.hide]="checkAceptar">
+        <ion-icon name="cart"> Aceptar</ion-icon>
       </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button round color="danger" (click)='rechazar()' full [class.hide]="checkRechazar">
-        <ion-icon>Rechazar Pedido</ion-icon>
+      <button color="secundary" ion-button round (click)='rechazar()' item-end style="width:80px;" [class.hide]="checkRechazar">
+        <ion-icon name="cart"> Rechazar</ion-icon>
       </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button round color="secundary" (click)='volver()' full>
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:80px;">
         <ion-icon>Volver</ion-icon>
       </button>
     </ion-item>
+   
   </ion-card>
 
 </ion-content>

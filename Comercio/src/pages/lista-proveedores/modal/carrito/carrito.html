@@ -4,29 +4,34 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header text-center>
-      Pedido
+        Paso 3: Ver Pedidos
     </ion-card-header>
     <ion-card>
       
       <ion-card-content>
         <ion-item>
-          <ion-label>Seleccione Fecha</ion-label>
-          <ion-datetime 
+          <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si quiere una fecha en particular</h3> 
+        </ion-item>
+        <ion-item >
+          <div></div>
+            <ion-datetime (ionChange)="showItem()"
           cancelText="Cancelar" 
           doneText="Ok" 
           displayFormat="DD/MM/YYYY" 
           pickerFormat="YYYY MM DD" 
           [(ngModel)]="fechaEntrega"
+          placeholder=" presione aqui"
           
           ></ion-datetime>
         </ion-item>
-        <ion-item>
+       
+        <ion-item *ngIf='visualItem'>
           <p>Fecha seleccionada es {{fechaEntrega.substr(0,10)}}</p>
         </ion-item>
       </ion-card-content>
     </ion-card>
     
-      <ion-scroll style="height: 300px" scrollY="true">
+      <ion-scroll scrollY="true">
 
         <ion-list *ngFor="let producto of pedido.productos;">
           <ion-item>
@@ -39,6 +44,8 @@
             <h3><strong> Producto </strong>{{producto.nombreProducto}}</h3>
             <h3><strong> Unidad </strong> {{producto.unidadMedida}}</h3>
             <h3><strong> Cant. </strong> {{producto.cantidad}}</h3>
+            <h3><strong> Precio </strong> {{producto.precioSugerido}}</h3>
+            <h2><strong> Sub - Total </strong>$ {{producto.cantidad * producto.precioSugerido}}</h2>
             <ion-item-divider></ion-item-divider>
           </ion-item>
         </ion-list>
@@ -55,11 +62,16 @@
     </ion-card>
     <ion-card>
       <ion-item>
+        <h3><strong> Total</strong> $ {{total}}</h3>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item>
         <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
           <ion-icon>Volver</ion-icon>
         </button>
         <button ion-button round (click)='pedirProducto()' item-end style="width:100px;">
-          <ion-icon name="cart"> Enviar</ion-icon>
+          <ion-icon name="cart"> Finalizar</ion-icon>
         </button>
       </ion-item>
     </ion-card>

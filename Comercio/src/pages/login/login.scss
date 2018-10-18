@@ -1,4 +1,7 @@
 page-login {
+  .cuerpo{
+    background-color: lightblue;
+  }
   .btnStyle {
     align-items: center;
   }
@@ -13,4 +16,27 @@ page-login {
   ion-icon {
     font-size: 40px; //Preferred size here
   }
+
+  
+  .logo{
+    font-size: 40px !important;
+    color: rgb(6, 6, 161);
+    
+  }
+ 
+  h2{
+    color: rgb(6, 6, 161);
+    font-size: 20px !important;
+    text-align: center;
+  }
+  .miColor{
+    color:rgb(138, 3, 115);
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
 }

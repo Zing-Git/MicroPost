@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Events } from 'ionic-angular';
 import Swal from 'sweetalert2';
 
 import { LoginModel } from '../../modelo/login';
@@ -8,9 +8,7 @@ import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
-import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
-import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
 import { ListaPublicidadPage } from '../publicidad/lista-publicidad/lista-publicidad';
 
 @Component({
@@ -35,7 +33,8 @@ export class LoginPage {
     private login: LoginProvider,
     private alertCtrl: AlertController,
     private storage: Storage,
-    private auxiliar: AuxiliarProvider, private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private event: Events) {
     this.newLogin = new LoginModel();
 
   }
@@ -44,8 +43,8 @@ export class LoginPage {
   getLogin() {
     //this.auxiliar.presentLoading();
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."
-     
+      content: "Por favor Espere unos segundos..."     ,
+      duration:10000
     });
     loader.present();
     
@@ -63,8 +62,13 @@ export class LoginPage {
           this.datosComercio = result['comercioDB'];
           this.datosComercio.forEach(element => {
             this.idComercio = element._id;
+            ENV.NOMBRE_COMERCIO = element.entidad.razonSocial;
+            ENV.RUBRO_COMERCIO = element.entidad.actividadPrincipal;
+            
           });
 
+          this.event.publish('creado',ENV.NOMBRE_COMERCIO,ENV.RUBRO_COMERCIO);
+          
           if(this.idComercio != undefined){
             this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
@@ -152,7 +156,7 @@ export class LoginPage {
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
-    console.log(ENV);
+    
   }
 
   limpiarValoresPorDefecto(){

@@ -2,27 +2,28 @@
   <ion-navbar>
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>Alta de Cliente</ion-title>
+        </button>   
   </ion-navbar>
  
 </ion-header>
 
 <ion-content>
-
-  <h1 text-center>Registro de Comercio</h1>
-
+  <h1 text-center>Adhesión de comercio</h1>
+  <h2 text-center>Paso 1 de 3 “Mi Comercio”</h2>
+<ion-item>
+  <p text-wrap> Felicidades, estás a punto de formar parte de la red Bitbi de comercios que apoyan a micro productores y distribuidores con el mejor precio final. Ingresa tus datos para formar parte de la red</p>
+</ion-item>
 <form [formGroup]="credencialesForm">
   <ion-item>
     <ion-label floating>C.U.I.T / C.U.I.L.</ion-label>
     <ion-input [formControl]="credencialesForm.controls['cuil']" type="text" placeholder="20-11111111-1" class="floating-with-placeholder"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label floating>Razon social</ion-label>
+    <ion-label floating>Nombre del comercio</ion-label>
     <ion-input [formControl]="credencialesForm.controls['razonSocial']" type="text"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label floating>Personeria</ion-label>
+    <ion-label floating>Condicion IVA</ion-label>
     <ion-select [(ngModel)]="itemPersoneriaSelected" [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)" interface="popover">
       <ion-option *ngFor="let item of tiposPersoneria; let idx = index" [value]="+(item.orden)" [selected]="itemPersoneriaSelected" select-text="itemPersoneriaSelected">{{item.tipoPersoneria}}</ion-option>
     </ion-select>

@@ -1,55 +1,56 @@
-
 <ion-header>
-
-  
-
 </ion-header>
 
-
 <ion-content>
-    <ion-refresher (ionRefresh) ="doRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-      <ion-list>
-        <ion-item>
-          <h1> </h1>
-          <h1 text-center padding>microPOS Proveedor</h1>
-          
-        </ion-item>
-      </ion-list>
-      <form (ngSubmit)="getLogin()">
-        <ion-item item-center>
-          <ion-label floating>Usuario</ion-label>
-          <ion-input type="text" [(ngModel)]="newLogin.nombreUsuario" name="usuario"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Contraseña</ion-label>
-          <ion-input type="{{type}}" [(ngModel)]="newLogin.clave" name="password" required clearOnEdit="false"></ion-input>
-          <button *ngIf="!showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off-outline"></ion-icon></button>
-          <button *ngIf="showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-outline"></ion-icon></button>
-        </ion-item>
-        <div><br><br><br><br><br><br></div>
-          <ion-row>
-                <ion-col width-50 style="text-align: center">
-                  <button ion-button round >Ingresar</button>
-             </ion-col>               
-          </ion-row>
-        
-      </form>
- <br>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item>
+      <h1> </h1>
+      <img class="center" src="../../assets/icon/logobitbi.png">
+      <h2  class="miColor">Proveedor</h2>
+    </ion-item>
+  </ion-list>
+  <form (ngSubmit)="getLogin()">
+    <ion-item item-center>
+      <ion-label floating>Usuario</ion-label>
+      <ion-input type="text" [(ngModel)]="newLogin.nombreUsuario" name="usuario"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input type="{{type}}" [(ngModel)]="newLogin.clave" name="password" required clearOnEdit="false"></ion-input>
+      <button *ngIf="!showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()">
+        <ion-icon name="ios-eye-off-outline"></ion-icon>
+      </button>
+      <button *ngIf="showPass" ion-button clear color="dark" type="button" item-right (click)="showPassword()">
+        <ion-icon class="miColor" name="ios-eye-outline"></ion-icon>
+      </button>
+    </ion-item>
+    <div><br><br><br><br><br><br></div>
+    <ion-row>
+      <ion-col width-50 style="text-align: center">
+        <button ion-button round>Ingresar</button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+  <br>
   <ion-list>
     <div>
       <ion-row>
         <ion-col style="text-align: center">
-          <button ion-button clear >Olvidé mi Clave</button>
+          <button class="miColor" ion-button clear>Olvidé mi usuario o clave</button>
         </ion-col>
       </ion-row>
       <ion-row>
-          <ion-col style="text-align: center">
-            <button ion-button clear (click)='goCreateCliente()' >Crear nueva cuenta</button>
-          </ion-col>
-        </ion-row>
-    </div>   
+        <ion-col>
+        <div class="miColor" style="text-align: center">
+            <span>Si no está registrado ingrese </span><a href="#" (click)='goCreateCliente()'>aqui</a>
+        </div>
+      </ion-col>
+      </ion-row>
+    </div>
   </ion-list>
-  
+
 </ion-content>

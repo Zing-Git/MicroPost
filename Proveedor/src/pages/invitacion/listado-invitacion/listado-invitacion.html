@@ -21,7 +21,7 @@
         <strong>Pendientes</strong>
       </ion-segment-button>
       <ion-segment-button value="aceptado" [class.hide]="estadoAceptado">
-        <strong>Aceptados</strong>
+        <strong>En proceso</strong>
       </ion-segment-button>
       <ion-segment-button value="rechazado" [class.hide]="estadoRechazado">
         <strong>Rechazados</strong>
@@ -44,12 +44,16 @@
             <ion-item>
               <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
               <h3><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</h3>
-              <button ion-button full round (click)='aceptar(item)'>
-                <ion-icon name="eye"> Aceptar</ion-icon>
-              </button>
-              <button ion-button full round (click)='rechazar(item)'>
-                <ion-icon color="danger" name="eye"> Rechazar</ion-icon>
-              </button>
+              <h3><strong> Personeria</strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
+              <h3><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</h3>
+              <ion-item>
+                 <button ion-button round color="danger" (click)='rechazar(item)' item-first style="width:100px;"><ion-icon>Rechazar</ion-icon></button>
+                <button ion-button round (click)="aceptar(item)"  item-end  style="width:100px;">
+                  <ion-icon name="cart" > Aceptar</ion-icon>
+                </button>
+              </ion-item>
+               
+              
             </ion-item>
 
           </ion-list>
@@ -71,6 +75,8 @@
 
               <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
               <h3><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</h3>
+              <h3><strong> Personeria</strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
+              <h3><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</h3>
 
               <ion-item-divider></ion-item-divider>
             </ion-item>
@@ -94,6 +100,8 @@
             <ion-item>
               <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
               <h3><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</h3>
+              <h3><strong> Personeria</strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
+              <h3><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</h3>
               <ion-item-divider></ion-item-divider>
             </ion-item>
 

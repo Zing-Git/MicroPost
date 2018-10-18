@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 import { Comercio } from '../../../modelo/comercio';
 import { PedidoComercio } from '../../../modelo/pedidoComercio';
 import { ComercioProvider } from '../../../providers/comercio/comercio';
@@ -15,7 +15,9 @@ import { DetallePedidoComercioPage } from '../modal/detalle-pedido-comercio/deta
   templateUrl: 'lista-pedido-comercio.html',
 })
 export class ListaPedidoComercioPage {
-
+  nombreComercio: string = ENV.NOMBRE_COMERCIO;
+  rubroComercio: string = ENV.RUBRO_COMERCIO;
+  
   clienteViewModel: Comercio = new Comercio();
 
   pedidosViewModel: any[] = new Array();
@@ -33,8 +35,14 @@ export class ListaPedidoComercioPage {
     public comercioServices: ComercioProvider,
     public productoServices: ProductoProvider,
     public storage: Storage,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController) {
 
+      const loader = this.loadingCtrl.create({
+        content: "Cargando pedidos, espere unos segundos...",
+        duration: 2000
+      });
+      loader.present();
     this.idComercio = ENV.COMERCIO_ID;
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.obtenerDatosImportantes();

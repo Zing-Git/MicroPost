@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController, NavController, ModalController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController, NavController, ModalController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../../../modelo/usuario';
 import { Persona } from '../../../modelo/persona';
@@ -27,7 +27,8 @@ export class AltaLoginPage {
     private formBuilder: FormBuilder,
     private comercioService: ComercioProvider,
     public navCtrl: NavController,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController) {
 
     this.clienteViewModel = navParams.get('data');
 
@@ -53,6 +54,11 @@ export class AltaLoginPage {
         this.loginForm.controls['clave'].value
       );
 
+      const loader = this.loadingCtrl.create({
+        content: "Por favor Espere unos segundos..."
+       
+      });
+      loader.present();
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
       this.clienteViewModel.usuarios = usuarios;
@@ -62,7 +68,7 @@ export class AltaLoginPage {
       miModal.present(); */
       //this.navCtrl.popToRoot()
       this.navCtrl.push(LoginPage);
-
+      loader.dismiss();
     } else {
       let miModal = this.modalCtrl.create('Ocurrio un error, Vuelva a intentarlo');
       miModal.present();
