@@ -13,11 +13,25 @@
 <ion-card>
   <ion-card-header>Paso 1: Elija Proveedor</ion-card-header>
   <ion-item>
-    <ion-label floating>Proveedor</ion-label>
-    <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
+    
+  <!--  <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
         <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id" >{{fProv.entidad.razonSocial}}</ion-option>
-    </ion-select>
+    </ion-select>-->
 </ion-item>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+      Proveedores
+  </ion-card-header>   
+    <ion-list *ngFor="let fProv of proveedoresViewModel; let i=index">
+      <ion-item (click)="mostrarProductosModal(fProv)">
+          <ion-avatar item-start>
+              <img src="../../../../assets/icon/camion.png">
+            </ion-avatar>       
+          <h2>{{fProv.entidad.razonSocial}}</h2>
+      </ion-item> 
+    </ion-list>
 </ion-card>
   <!--<ion-list>
     <ion-item-sliding *ngFor="let proveedor of proveedoresViewModel; let i=index">

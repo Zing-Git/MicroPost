@@ -1,6 +1,11 @@
 page-lista-pedido-comercio {
 
-    ion-scroll {
-        height: 80vh;
-        }
+  ion-scroll {
+    height: 80vh;
+  }
+
+  .hide {
+    display: none;
+
+  }
 }

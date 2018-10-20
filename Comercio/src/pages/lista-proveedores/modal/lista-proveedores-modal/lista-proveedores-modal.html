@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+    <ion-card>
+        <h3 text-center><strong>Paso 1 de 2: Elija Proveedor</strong>r</h3>
+      </ion-card>
   <ion-card>
     <ion-card-header>
       <p text-wrap>
@@ -15,13 +18,11 @@
       </p>
     </ion-card-header>
   </ion-card>
-  <ion-card>
-    <h3 text-center><strong>Paso 1 de 3: Elija Proveedo</strong>r</h3>
-  </ion-card>
+ 
   <ion-card>
     <ion-list>
-    <ion-item *ngFor="let proveedor of proveedoresViewModel; let i=index">
-      <ion-item (click)="cargarProveedor(proveedor)">
+    <ion-item *ngFor="let proveedor of proveedores; let i=index">
+      <ion-item (click)="realizarInvitacion(proveedor)">
           <ion-avatar item-start>
               <img src="../../../../assets/icon/camion.png">
             </ion-avatar>       

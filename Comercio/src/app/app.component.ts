@@ -18,7 +18,7 @@ export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, component: any, src: any }>;
   username = '';
   nombreComercio: string;
   rubroComercio: string;
@@ -40,12 +40,12 @@ export class MyApp {
 
 
       this.pages = [
-        { title: 'Mis Pedidos', component: ListaPedidoComercioPage },
-        { title: 'Nuevo Pedido', component: ListaProveedoresPage },
-        { title: 'Proveedores', component: ListaProveedoresModalPage },
-        { title: 'Publicidades', component: ListaPublicidadPage },        
-        { title: 'Configuracion', component: ConfiguracionInicialPage },
-        { title: 'Salir', component: LoginPage }
+        { title: 'Mis Pedidos', component: ListaPedidoComercioPage, src:'' },
+        { title: 'Nuevo Pedido', component: ListaProveedoresPage, src:'' },
+        { title: 'Proveedores', component: ListaProveedoresModalPage, src:'' },
+        { title: 'Ofertas', component: ListaPublicidadPage, src:'../assets/imgs/hotSale.png' },        
+        { title: 'Configuracion', component: ConfiguracionInicialPage, src:'' },
+        { title: 'Salir', component: LoginPage, src:'' }
       ];
     });
 

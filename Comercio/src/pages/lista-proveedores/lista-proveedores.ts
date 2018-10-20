@@ -45,8 +45,8 @@ export class ListaProveedoresPage {
   }
 
   //clic desde vista
-  mostrarProductosModal(ctxt: string) {
-    let proveedor= this.proveedoresViewModel.find(x => x.entidad._id === ctxt);
+  mostrarProductosModal(proveedor: any) {
+    //let proveedor= this.proveedoresViewModel.find(x => x.entidad._id === ctxt.entidad._id);
     
     this.navCtrl.push(ListaProductosModalPage, { data: proveedor });
 

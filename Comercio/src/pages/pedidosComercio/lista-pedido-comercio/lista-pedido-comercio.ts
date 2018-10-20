@@ -7,6 +7,7 @@ import { envirotment as ENV } from '../../../environments/environments';
 import { ProductoProvider } from '../../../providers/producto/producto';
 import { Storage } from '@ionic/storage';
 import { DetallePedidoComercioPage } from '../modal/detalle-pedido-comercio/detalle-pedido-comercio';
+import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 
 
 @IonicPage()
@@ -17,11 +18,11 @@ import { DetallePedidoComercioPage } from '../modal/detalle-pedido-comercio/deta
 export class ListaPedidoComercioPage {
   nombreComercio: string = ENV.NOMBRE_COMERCIO;
   rubroComercio: string = ENV.RUBRO_COMERCIO;
-  
+
   clienteViewModel: Comercio = new Comercio();
 
   pedidosViewModel: any[] = new Array();
-  pedidos: any[] = new Array();
+
   datosComercio: any;
   detallePedido: any[] = new Array();
   proveedores: any[];
@@ -30,40 +31,44 @@ export class ListaPedidoComercioPage {
   montoTotal: number;
   colorEstado: any;
 
+  //  aqui inician las variables que vamos a usar
+  inicial: string = 'solicitado';
+  estadoAceptado: boolean = true;
+  estadoRechazado: boolean = true;
+  estadoSolicitado: boolean = true;
+
+  pedidos: any[] = new Array();
+  pedidosAceptados: any[] = new Array();
+  pedidosRechazados: any[] = new Array();
+  pedidosSolicitados: any[] = new Array();
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public comercioServices: ComercioProvider,
     public productoServices: ProductoProvider,
     public storage: Storage,
     public modalCtrl: ModalController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public auxiliar: AuxiliarProvider) {
 
-      const loader = this.loadingCtrl.create({
-        content: "Cargando pedidos, espere unos segundos...",
-        duration: 2000
-      });
-      loader.present();
-    this.idComercio = ENV.COMERCIO_ID;
-    this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
+    const loader = this.loadingCtrl.create({
+      content: "Cargando pedidos, espere unos segundos...",
+      duration: 2000
+    });
+    loader.present();
+
     this.obtenerDatosImportantes();
   }
 
   obtenerDatosImportantes() {
 
+
+    this.idComercio = ENV.COMERCIO_ID;
+    this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
 
-      this.pedidos = result['pedidos_array'];
-      /*this.pedidos.forEach(x=>{
-        if(x.estadoPedido==='RECHAZADO'){
-          this.colorEstado = 'danger';
-        }else{
-          if(x.estadoPedido === 'ACEPTADO'){
-            this.colorEstado = 'secondary';
-          }else{
-            this.colorEstado = 'dark';
-          }
-        }
-      })*/
+      ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
+      this.cargarCombos();
     })
   }
 
@@ -84,9 +89,47 @@ export class ListaPedidoComercioPage {
     );
   }
 
-  visualizarDatosPedido(item: any){
-   
+  visualizarDatosPedido(item: any) {
+
     const modal = this.modalCtrl.create(DetallePedidoComercioPage, { data: item });
     modal.present();
+  }
+
+  cargarCombos() {
+    this.pedidosAceptados = new Array();
+    this.pedidosRechazados = new Array();
+    this.pedidosSolicitados = new Array();
+
+    this.estadoAceptado = true;
+    this.estadoSolicitado = true;
+    this.estadoRechazado = true;
+
+    this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
+    console.log(this.pedidos);
+    this.pedidos.forEach(x => {
+
+      switch (x.estadoPedido) {
+        case "RECHAZADO": {
+          this.estadoRechazado = false;
+          this.pedidosRechazados.push(x);
+          break;
+        }
+        case "PEDIDO SOLICITADO": {
+          this.estadoSolicitado = false;
+          this.pedidosSolicitados.push(x);
+          break;
+        }
+        case "ACEPTADO": {
+          this.estadoAceptado = false;
+          this.pedidosAceptados.push(x);
+          break;
+        }
+        default: {
+          //this.pedidosOtros.push(x);
+          break;
+        }
+      }
+
+    })
   }
 }

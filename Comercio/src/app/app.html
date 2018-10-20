@@ -1,21 +1,23 @@
 <ion-menu [content]="content" side="left" type="overlay">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Red Bitbi</ion-title>
-        <h4 text-center>{{nombreComercio}} ({{rubroComercio}})</h4>
-      </ion-toolbar>
-    </ion-header>
-   
-    <ion-content>
-      <ion-list>
-        <button ion-item  menuClose *ngFor="let p of pages" (click)="openPage(p)">          
+  <ion-header>
+    <ion-toolbar>
+      <h3>Red Bitbi</h3>
+      <p text-center text-lowercase>{{nombreComercio}} ({{rubroComercio}})</p>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list inset *ngFor="let p of pages">
+        <button ion-item menuClose (click)="openPage(p)">
           {{ p.title }}
+          <ion-avatar class="base" item-end *ngIf="p.src">
+            <img src="{{p.src}}">
+          </ion-avatar>
         </button>
-      </ion-list>
-   
-    </ion-content>
-   
-  </ion-menu>
-   
-  <ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>
-  
+    </ion-list>
+
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

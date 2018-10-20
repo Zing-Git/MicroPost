@@ -43,8 +43,7 @@ export class LoginPage {
   getLogin() {
     //this.auxiliar.presentLoading();
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."     ,
-      duration:10000
+      content: "Por favor Espere unos segundos..."    
     });
     loader.present();
     
@@ -72,29 +71,10 @@ export class LoginPage {
           if(this.idComercio != undefined){
             this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
-          loader.dismiss();
-          switch (this.esPedidoDe) {
-            case "Proveedor": {
-              this.navCtrl.setRoot(ListaPedidoComercioPage, {
-                animate: true
-              });
-              break;
-            }
-            case "Cliente": {
-              this.navCtrl.setRoot(ListaPedidoComercioPage, { animate: true });
-              break;
-            }
-            case "Otro": {
+         
+           loader.dismiss();
               this.navCtrl.setRoot(ListaPublicidadPage, { animate: true });
-              break;
-            }
-            default:
-              Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
-              this.navCtrl.setRoot(ConfiguracionInicialPage, { data: this.datosComercio }, {
-                animate: true
-              });
-            /* this.navCtrl.setRoot(MenuPage);*/
-          }
+             
           }else{
             loader.dismiss();
               Swal('Atención', 'Usted no es Cliente, ingrese con credenciales validas' , 'error')

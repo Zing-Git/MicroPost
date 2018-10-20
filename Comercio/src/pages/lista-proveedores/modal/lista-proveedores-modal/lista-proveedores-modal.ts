@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
+import { InvitacionProveedorModalPage } from '../invitacion-proveedor-modal/invitacion-proveedor-modal';
 
 @IonicPage()
 @Component({
@@ -20,27 +21,39 @@ export class ListaProveedoresModalPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private proveedorService: ProveedorProvider,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController) {
 
 
   }
 
   ionViewDidLoad() {
-    const loader = this.loadingCtrl.create({
-      content: "Cargando Proveedores, espere unos segundos...",
-      duration: 2000
-    });
-    loader.present();
+    
     this.cargarInicial();
 
   }
 
   cargarInicial() {
+    const loader = this.loadingCtrl.create({
+      content: "Cargando Proveedores, espere unos segundos..."
+    });
+    loader.present();
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(result => {
-      this.proveedoresViewModel = result['proveedores'];
-
+      this.proveedores = result['proveedores'];
+     /* this.proveedores.forEach(x=>{
+        this.proveedorService.getEstadoProveedor(x._id).subscribe(data =>{
+          let invitaciones = data['invitaciones'];
+          invitaciones.forEach(y =>{
+            if(this.idComercio === y.comercio._id){
+              this.proveedoresViewModel.push(x);
+            }
+          })
+        } )
+      })*/
     });
+    loader.dismiss();
+    console.log(this.proveedoresViewModel);
   }
 
   /*async cargarProveedor(proveedor: any) {
@@ -62,9 +75,13 @@ export class ListaProveedoresModalPage {
    
  }*/
 
+  realizarInvitacion(proveedor: any){
+    const modal = this.modalCtrl.create(InvitacionProveedorModalPage, { data: proveedor });
+    modal.present();
+  }
   cargarProveedor(proveedor: any) {
     Swal({
-      title:'Paso 2 de 3: Confirme el proveedor ' ,
+      title:'Paso 2 de 2: Confirme el proveedor ' ,
       text: proveedor.entidad.razonSocial + ' le permitirá adquirir productos del rubro: ' + proveedor.entidad.actividadPrincipal,
       type: 'question',
       showCancelButton: true,

@@ -31,7 +31,8 @@ export class CarritoPage {
         this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
 
         this.pedido.productos.forEach(element => {
-            this.total = element.cantidad * element.precioSugerido;
+            let subtotal= element.cantidad * element.precioSugerido;
+            this.total = this.total + subtotal;
         });
         console.log('en el carrito');
         console.log(this.pedido);

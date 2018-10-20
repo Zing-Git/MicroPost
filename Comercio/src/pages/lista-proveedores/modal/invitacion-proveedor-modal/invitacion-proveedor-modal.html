@@ -1,0 +1,24 @@
+<ion-content>
+  <ion-card>
+    <h3 text-center><strong>Paso 2 de 2: Confirme el proveedor</strong>r</h3>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <p text-wrap>
+       {{titulo}}
+      </p>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+      <ion-item>
+        <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
+          <ion-icon>Volver</ion-icon>
+        </button>
+        <button ion-button round (click)='enviarInvitacion()' item-end style="width:100px;">
+          <ion-icon name="cart"> Finalizar</ion-icon>
+        </button>
+      </ion-item>
+    </ion-card>
+
+</ion-content>

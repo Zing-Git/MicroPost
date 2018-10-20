@@ -17,7 +17,7 @@ export class ProveedorProvider {
   private urlPostGetProveedoresDeComercio =  this.urlBase + '/proveedor/listar_todos/';
   private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
   private urlGetProductosPorIdProveedor = this.urlBase + '/proveedor/obtener_productos/';
-
+  private urlGetInvitacionPendiente = this.urlBase + '/invitacion/consultar_pendientes/';
   data: any;
   constructor(public http: HttpClient) {
     
@@ -71,6 +71,11 @@ export class ProveedorProvider {
           resolve(this.data);
         });
     });
+  }
+
+  getEstadoProveedor(idProveedor: string): Observable<any[]>{
+    const url = this.urlGetInvitacionPendiente + '?idProveedor=' + idProveedor; 
+    return this.http.get<any>(url, cudOptions);
   }
 
 }

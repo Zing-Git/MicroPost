@@ -34,13 +34,14 @@ export class ListaProductosModalPage {
   tipoEntrega: any;
 
   itemSubcategoriaSelected: any;
-  nombrecomercio: string;
+  nombreProveedor: string;
 
   pedido: Pedido;
   productosPedidos: any[] = new Array();
 
   cantidadPedido: string ='0';
   totalPedido: string = '0';
+  contadorCarrito: string = '0';
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -51,7 +52,7 @@ export class ListaProductosModalPage {
     private loadingCtrl: LoadingController,
     public events: Events) {
 
-    this.nombrecomercio = ENV.NOMBRE_COMERCIO;
+    //this.nombrecomercio = ENV.NOMBRE_COMERCIO;
     const loader = this.loadingCtrl.create({
       content: "Por favor Espere unos segundos...",
       duration: 3000
@@ -60,7 +61,7 @@ export class ListaProductosModalPage {
 
     this.proveedor = navParams.get('data');
     this.pedido = new Pedido();
-
+    this.nombreProveedor = this.proveedor.entidad.razonSocial;
     this.cargarListaProductos();
 
   }
@@ -69,23 +70,6 @@ export class ListaProductosModalPage {
 
     this.isEnabledSubCategoria = false;
     this.showListProducto = false;
-
-
-    /* this.proveedorService.load(this.proveedor._id).then(data => {
-      this.productosViewModel = data['productos'];
-
-      if (typeof this.productosViewModel === 'undefined') {
-        Swal(
-          'Advertencia',
-          'El proveedor no tiene productos)',
-          'error'
-        )
-      } else {
-        this.iniciarArrayCategorias();
-      }
-
-    });*/
-
 
     this.proveedorService.postGetProductosPorIdProveedor(this.proveedor._id).subscribe(result => {
       this.productosViewModel = result['productos'];
@@ -268,14 +252,17 @@ export class ListaProductosModalPage {
   calcularTotalCantidad() {
     let cantidadP = 0;
     let totalP = 0;
+    let contador = 0;
+
     this.productosPedidos = JSON.parse(ENV.PEDIDO);
     this.productosPedidos.forEach(x => {
       totalP = totalP+ +(x.precioSugerido);
       cantidadP = cantidadP + +(x.cantidad);
+      contador +=1;
     })
-    console.log(totalP);
-    console.log(cantidadP);
+    
     this.totalPedido = totalP.toFixed(2);
     this.cantidadPedido = cantidadP.toString();
+    this.contadorCarrito = contador.toString();
   }
 }
