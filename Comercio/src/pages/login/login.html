@@ -39,13 +39,13 @@
   <div>
     <ion-row>
       <ion-col style="text-align: center">
-        <button class="miColor" ion-button clear text-lowercase>Olvidé mi usuario o clave</button>
+        <button class="miColor" ion-button clear (click)="llamar()" >O <span text-lowercase>lvidé mi usuario o clave</span></button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
       <div class="miColor" style="text-align: center">
-          <span>Si no está registrado ingrese </span><a href="#" (click)='goCreateCliente()'>aqui</a>
+          <span>Si no está registrado ingrese </span><a href="#" (click)='goCreateCliente()'>aquí</a>
       </div>    </ion-col>
     </ion-row>
   </div>

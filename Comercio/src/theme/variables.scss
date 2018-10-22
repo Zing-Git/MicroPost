@@ -33,14 +33,12 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  other: orange
-);
+$colors: (primary: #488aff,
+secondary: #32db64,
+danger: #f53d3d,
+light: #f4f4f4,
+dark: #222,
+other: orange);
 
 
 // App iOS Variables
@@ -89,6 +87,12 @@ $colors: (
 @import "noto-sans";
 
 //aqui voy a agregar lo necesario para que la aplicacion entera cambie la vista
-ion-icon{
-  color:rgb(230, 187, 109);
-  }
+ion-icon {
+  color: rgb(230, 187, 109);
+}
+
+.scroll {
+
+  height: 70vh !important;
+
+}

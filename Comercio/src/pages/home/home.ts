@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ListaProveedoresPage } from '../lista-proveedores/lista-proveedores';
+import { ListaProveedoresPage } from '../pedido/lista-proveedores';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';

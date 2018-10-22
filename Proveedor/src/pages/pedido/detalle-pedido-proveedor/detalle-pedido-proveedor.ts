@@ -94,7 +94,7 @@ export class DetallePedidoProveedorPage {
       cancelButtonText: 'No, Cancelar'
     }).then((result) => {
       if (result.value) {
-
+        //TODO aqui poner un comentario
         this.pedidoServices.postRechazarPedido(this.pedido.idPedido).subscribe(result => {
 
           if (typeof result != 'undefined') {
@@ -108,7 +108,7 @@ export class DetallePedidoProveedorPage {
              this.pedido.estadoPedido='RECHAZADO';
               const loader = this.loadingCtrl.create({
                 content: "Actualizando Informacion, aguarde unos segundos...",
-                duration: 3000
+                duration: 2500
               });
               loader.present();
               //this.viewCtrl.dismiss();

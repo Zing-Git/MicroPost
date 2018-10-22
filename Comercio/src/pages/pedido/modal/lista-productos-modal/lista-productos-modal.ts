@@ -7,7 +7,7 @@ import { Pedido } from '../../../../modelo/pedido';
 import { envirotment as ENV } from '../../../../environments/environments';
 import { Storage } from '@ionic/storage';
 import { CarritoPage } from '../carrito/carrito';
-import { ListaProveedoresPage } from '../../lista-proveedores';
+import { ListaProveedoresPage } from '../../../pedido/lista-proveedores';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { Events } from 'ionic-angular';
 

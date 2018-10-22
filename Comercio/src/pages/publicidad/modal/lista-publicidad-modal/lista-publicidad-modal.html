@@ -20,30 +20,21 @@
           <h2>Titulo</h2>
           <p >{{publicidad.titulo}}</p>
         </ion-item>
-
-
+        
         <ion-item>
           <h2 >Descripción</h2>
           <p  text-wrap>{{publicidad.cuerpo}}</p>
         </ion-item>
-
-
 
         <ion-item>
           <h2>Proveedor</h2>
           <p>{{publicidad.razonSocial}}</p>
         </ion-item>
 
-
         <ion-item>
-          <h2>Fecha de Inicio</h2>
-          <p >{{publicidad.fechaInicio  | date: 'dd/MM/yyyy'}}</p>
-        </ion-item>
-        <ion-item>
-          <h2>Fecha de Fin</h2>
-          <p >{{publicidad.fechaFin  | date: 'dd/MM/yyyy'}}</p>
-        </ion-item>
-
+          <h2>Vigencia</h2>
+          <p >{{publicidad.fechaInicio  | date: 'dd/MM/yyyy'}} - {{publicidad.fechaFin  | date: 'dd/MM/yyyy'}}</p>
+        </ion-item>       
 
       </ion-card>
     </form>
@@ -63,10 +54,10 @@
   </div>
   <ion-card>
     <ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:120px;">
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:80%;">
         <ion-icon>Volver</ion-icon>
       </button>
-      <button ion-button round (click)='cargarProveedor()' item-end style="width:140px;">
+      <button ion-button round (click)='cargarProveedor()' item-end style="width:60%;">
         <ion-icon name="cart"> Enviar Invitacion</ion-icon>
       </button>
     </ion-item>

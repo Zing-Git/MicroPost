@@ -57,20 +57,20 @@
        <ion-item>
           <ion-textarea placeholder="'Ingrese Comentario...'" [(ngModel)]="comentario"></ion-textarea>
        </ion-item>    
-       
-      
+       <ion-item-divider></ion-item-divider>
+      <ion-row text-center>
+        <ion-col text-center>
+           <p style="font-size: 22px;"><strong> Total</strong> $ {{total}}</p>
+        </ion-col>
+      </ion-row>
     </ion-card>
+   
     <ion-card>
       <ion-item>
-        <h3><strong> Total</strong> $ {{total}}</h3>
-      </ion-item>
-    </ion-card>
-    <ion-card>
-      <ion-item>
-        <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
+        <button ion-button round color="danger" (click)='volver()' item-first style="width:60%;">
           <ion-icon>Volver</ion-icon>
         </button>
-        <button ion-button round (click)='pedirProducto()' item-end style="width:100px;">
+        <button ion-button round (click)='pedirProducto()' item-end style="width:40%;">
           <ion-icon name="cart"> Finalizar</ion-icon>
         </button>
       </ion-item>

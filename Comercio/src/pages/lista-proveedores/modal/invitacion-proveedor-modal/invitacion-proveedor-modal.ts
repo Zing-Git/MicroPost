@@ -5,12 +5,6 @@ import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
 import { ListaProveedoresModalPage } from '../lista-proveedores-modal/lista-proveedores-modal';
 
-/**
- * Generated class for the InvitacionProveedorModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -56,8 +50,7 @@ export class InvitacionProveedorModalPage {
           confirmButtonColor: '#063079',         
         })
 
-        this.navCtrl.setRoot(ListaProveedoresModalPage);
-        this.navCtrl.popToRoot();
+        
         loader.dismiss();
       } else {
         loader.dismiss();
@@ -67,6 +60,8 @@ export class InvitacionProveedorModalPage {
           'error'
         );
       }
+
+      this.navCtrl.pop();
     });
   }
 }

@@ -21,7 +21,7 @@
   <div padding>
     <ion-segment [(ngModel)]="inicial">
       <ion-segment-button value="informado" [class.hide]="estadoInformado">
-        <strong>Informados</strong>
+        <strong>Solicitados</strong>
       </ion-segment-button>
       <ion-segment-button value="aprobado" [class.hide]="estadoAceptado">
         <strong>Aprobados</strong>
@@ -39,20 +39,20 @@
 
       <ion-card>
         <ion-card-header text-center>
-
+          Elija el pedido para mas detalle
         </ion-card-header>
 
         <ion-scroll style="height:400px" scrollY="true">
           <ion-list *ngFor="let item of pedidosInformados">
-            <ion-item>
+            <ion-item (click)='verDetalle(item)'>
 
-              <button ion-button small item-end (click)='verDetalle(item)'>
+              <!--<button ion-button small item-end (click)='verDetalle(item)'>
                 <ion-icon name="eye"> Ver</ion-icon>
-              </button>
+              </button>-->
 
               <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
               <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
-              <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
+              <h3><strong> Fecha de Solicitud</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
               <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
               <ion-item-divider></ion-item-divider>
             </ion-item>
@@ -67,17 +67,17 @@
     <form *ngSwitchCase="'aprobado'" [class.hide]="estadoAceptado">
 
       <ion-card>
-        <ion-card-header text-center>
-
-        </ion-card-header>
+          <ion-card-header text-center>
+              Elija el pedido para mas detalle
+            </ion-card-header>
 
         <ion-scroll style="height:400px" scrollY="true">
           <ion-list *ngFor="let item of pedidosAceptados">
-            <ion-item>
+            <ion-item (click)='verDetalle(item)'>
 
-              <button ion-button small item-end (click)='verDetalle(item)'>
+              <!--<button ion-button small item-end (click)='verDetalle(item)'>
                 <ion-icon name="eye"> Ver</ion-icon>
-              </button>
+              </button>-->
 
               <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
               <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
@@ -96,17 +96,16 @@
     <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado">
 
       <ion-card>
-        <ion-card-header text-center>
-
-        </ion-card-header>
-
+          <ion-card-header text-center>
+              Elija el pedido para mas detalle
+            </ion-card-header>
         <ion-scroll style="height:400px" scrollY="true">
           <ion-list *ngFor="let item of pedidosRechazados">
-            <ion-item>
+            <ion-item (click)='verDetalle(item)'>
 
-              <button ion-button small item-end (click)='verDetalle(item)'>
+              <!--<button ion-button small item-end (click)='verDetalle(item)'>
                 <ion-icon name="eye"> Ver</ion-icon>
-              </button>
+              </button>-->
 
               <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
               <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>

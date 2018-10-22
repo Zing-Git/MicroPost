@@ -16,17 +16,16 @@ import { ProveedorProvider } from '../providers/proveedor/proveedor';
 import { LoginProvider } from '../providers/login/login';
 import { AltaClientePage } from '../pages/alta/alta-cliente/alta-cliente';
 import { ComercioProvider } from '../providers/comercio/comercio';
-import { ListaProveedoresPage } from '../pages/lista-proveedores/lista-proveedores';
+import { ListaProveedoresPage } from '../pages/pedido/lista-proveedores';
 import { ListaProveedoresModalPage } from '../pages/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
-import { ListaProductosModalPage } from '../pages/lista-proveedores/modal/lista-productos-modal/lista-productos-modal';
+
 import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 
 import { IonicStorageModule } from '@ionic/storage';
 //import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 //import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 
-import { PedidoModalPage } from '../pages/lista-proveedores/modal/pedido-modal/pedido-modal';
-import { CarritoPage } from '../pages/lista-proveedores/modal/carrito/carrito';
+
 import { ProductoProvider } from '../providers/producto/producto';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { DetallePedidoComercioPage } from '../pages/pedidosComercio/modal/detalle-pedido-comercio/detalle-pedido-comercio';
@@ -34,6 +33,9 @@ import { DecimalPipe } from '@angular/common';
 import { ListaPublicidadPage } from '../pages/publicidad/lista-publicidad/lista-publicidad';
 import { ListaPublicidadModalPage } from '../pages/publicidad/modal/lista-publicidad-modal/lista-publicidad-modal';
 import { InvitacionProveedorModalPage } from '../pages/lista-proveedores/modal/invitacion-proveedor-modal/invitacion-proveedor-modal';
+import { CarritoPage } from '../pages/pedido/modal/carrito/carrito';
+import { PedidoModalPage } from '../pages/pedido/modal/pedido-modal/pedido-modal';
+import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-modal/lista-productos-modal';
 //declare module 'google-maps';
 
 @NgModule({

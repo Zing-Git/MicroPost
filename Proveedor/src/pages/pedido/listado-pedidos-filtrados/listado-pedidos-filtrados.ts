@@ -51,7 +51,7 @@ export class ListadoPedidosFiltradosPage {
     this.idProveedor = ENV.PROVEEDOR_ID;
 
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."
+      content: "Por favor Espere, cargando pedidos..."
 
     });
     loader.present();
@@ -142,7 +142,7 @@ export class ListadoPedidosFiltradosPage {
             this.pedidosRechazados.push(x);
             break;
           }
-          case "PEDIDO INFORMADO": {
+          case "PEDIDO SOLICITADO": {
             this.estadoInformado = false;
             this.pedidosInformados.push(x);
             break;

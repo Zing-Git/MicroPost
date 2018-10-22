@@ -27,7 +27,8 @@ export class DetallePedidoComercioPage {
         tipoEntrega: [{value: this.pedido.tipoEntrega, disabled: true}],
         montoTotal: [{value: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido), disabled: true }],   //aqui probando
         fechaEntrega: [{value: this.pedido.fechaEntrega, disabled: true}],
-        cantidadProducto: [{value: this.cantidadProductos, disabled: true}]
+        cantidadProducto: [{value: this.cantidadProductos, disabled: true}],
+        comentario: [{value: this.pedido.comentario, disabled: true}]
       });
     }
 

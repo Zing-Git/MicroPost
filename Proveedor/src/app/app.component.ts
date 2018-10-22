@@ -53,7 +53,7 @@ export class MyApp {
 
     event.subscribe('creado', (proveedor, rubro) => {
       this.razonSocial = proveedor;
-      this.rubroProveedor = rubro;
+      this.rubroProveedor =(!!rubro) ? rubro.charAt(0).toUpperCase() + rubro.substr(1).toLowerCase() : '';
     })
   }
 

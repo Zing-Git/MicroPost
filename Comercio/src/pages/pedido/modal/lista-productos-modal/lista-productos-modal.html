@@ -5,20 +5,15 @@
 <ion-content>
 
   <ion-card>
-    <ion-card-header>
+    <ion-card-header text-center>
       Paso 2: Elija productos de {{nombreProveedor}}.
     </ion-card-header>
     <ion-card>
-      <ion-item>
-        <ion-icon name="logo-usd" item-start></ion-icon>
-        {{totalPedido}}
-       
-      </ion-item>
-      <ion-item>
-        <ion-icon name="cart" item-start></ion-icon>
-        {{contadorCarrito}}
-       
-      </ion-item>
+      <ion-row text-center>
+        <ion-col width-50 text-center><ion-icon name="logo-usd" item-start></ion-icon> {{totalPedido}}</ion-col>
+        <ion-col width-50 text-center><ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}</ion-col>
+      </ion-row>
+      
     </ion-card>
     
       <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
@@ -31,8 +26,7 @@
           <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)">{{categoria}}</ion-option>
         </ion-select>
       </ion-item>
-    </ion-card>
-    <ion-card>
+    
       <ion-item>
         <ion-label floating>Sub-Categoria</ion-label>
         <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
@@ -68,11 +62,11 @@
 
   <ion-card>
     <ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;">
+      <button ion-button round color="danger" (click)='volver()' item-first style="width:80%;">
         <ion-icon>Cancelar</ion-icon>
       </button>
-      <button ion-button round (click)='pedirProducto()' item-end style="width:150px;">
-        <ion-icon name="cart"> Ver Pedido</ion-icon>
+      <button ion-button round (click)='pedirProducto()' item-end style="width:40%;">
+        <ion-icon name=""> Siguiente</ion-icon>
       </button>
     </ion-item>
 

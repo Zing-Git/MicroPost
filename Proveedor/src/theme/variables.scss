@@ -88,5 +88,10 @@ $colors: (
 @import "noto-sans";
 
 ion-icon{
-  color:rgb(230, 187, 109);
+  color:rgb(238, 231, 218);
   }
+
+  .item-button {
+    padding:  15px !important;
+    height: 40px !important;
+    }

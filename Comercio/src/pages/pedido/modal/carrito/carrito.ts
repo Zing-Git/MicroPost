@@ -66,6 +66,13 @@ export class CarritoPage {
                 })
             })
             this.pedido.productos = this.arrayProductosviewModel;
+            if(this.fechaEntrega === ' '){
+                let fecha = new Date();
+                fecha.setDate(fecha.getDate() + 1);
+                this.fechaEntrega = fecha.toISOString();
+            }
+            console.log('fecha');
+            console.log(this.fechaEntrega);
             this.pedido.fechaEntrega = this.fechaEntrega;
             this.pedido.comentario = this.comentario;
             Swal({

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { Proveedor } from '../../modelo/proveedor';
-import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
+
 import Swal from 'sweetalert2';
-import { ListaProductosModalPage } from '../lista-proveedores/modal/lista-productos-modal/lista-productos-modal';
+
 import { Storage } from '@ionic/storage';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { envirotment as ENV } from '../../environments/environments';
+import { ListaProductosModalPage } from './modal/lista-productos-modal/lista-productos-modal';
+import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 
 @IonicPage()
 @Component({

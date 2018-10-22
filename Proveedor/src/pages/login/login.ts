@@ -165,4 +165,21 @@ export class LoginPage {
     }
   }
 
+  llamar(){
+
+    Swal({
+      title: '<strong>No te preocupes!</strong>',
+      type: 'info',
+      html:
+        'Mandanos un mensaje o llamanos a ' +
+        '<a href="tel:+5493886001968" class="button button-positive">este número 388-6001968</a> ' +
+        ', te preguntaremos datos de tu comercio.',
+      showCloseButton: true,
+      showCancelButton: false,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Entendido!'
+      
+    })
+  }
 }

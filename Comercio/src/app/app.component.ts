@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configuracion-inicial';
 import { ListaProveedoresModalPage } from '../pages/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
-import { ListaProveedoresPage } from '../pages/lista-proveedores/lista-proveedores';
+import { ListaProveedoresPage } from '../pages/pedido/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { ListaPublicidadPage } from '../pages/publicidad/lista-publicidad/lista-publicidad';
 import { AuxiliarProvider } from '../providers/auxiliar/auxiliar';
@@ -51,12 +51,13 @@ export class MyApp {
 
     event.subscribe('creado', (comercio, rubro) => {
       this.nombreComercio = comercio;
-      this.rubroComercio = rubro;
+      this.rubroComercio = (!!rubro) ? rubro.charAt(0).toUpperCase() + rubro.substr(1).toLowerCase() : '';
     })
   }
 
   openPage(page) {
     this.nav.setRoot(page.component);
+    
   }
 }
 

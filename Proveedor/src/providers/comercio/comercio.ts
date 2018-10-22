@@ -5,6 +5,7 @@ import { Observable } from  'rxjs/Observable';
 import  'rxjs/add/operator/catch';
 import  'rxjs/add/operator/map';
 import { envirotment as ENV} from '../../environments/environment';
+import { UsingObservable } from 'rxjs/observable/UsingObservable';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -14,7 +15,7 @@ const cudOptions = {
 export class ComercioProvider {
   private urlBase = ENV.BASE_URL;
   private urlPostComercio = this.urlBase + '/comercio/nuevo/';
-  
+  private urlGetComercioPorNombre = this.urlBase + '/comercio/buscar_por_nombre/';
   
   constructor(public http: HttpClient) {}
 
@@ -23,6 +24,10 @@ export class ComercioProvider {
     return this.http.post<any[]>(this.urlPostComercio, newSession, cudOptions);
   }
 
- 
+  getComercioPorNombre(nombre: string):Observable<any[]>{
+    
+    let url= this.urlGetComercioPorNombre + '?nombreComercio=' + nombre;
+    return this.http.post<any[]>(url,cudOptions);
+  }
 
 }

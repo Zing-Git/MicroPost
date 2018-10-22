@@ -1,3 +1,13 @@
+<ion-header>
+	<ion-navbar>	
+      <ion-item padding no-lines>
+			<button (click)="volver()" item-right class="cerrar">
+				<ion-icon name="close"></ion-icon> Cerrar
+      </button>
+      </ion-item>
+	</ion-navbar>
+</ion-header>
+
 <ion-content padding>
 
   <div padding>
@@ -93,16 +103,10 @@
   </div>
   <ion-card>
 
-    <ion-item>     
-      <button color="primary" ion-button round (click)='aceptar()' item-end style="width:80px;" [class.hide]="checkAceptar">
-        <ion-icon name="cart"> Aceptar</ion-icon>
-      </button>
-      <button color="secundary" ion-button round (click)='rechazar()' item-end style="width:80px;" [class.hide]="checkRechazar">
-        <ion-icon name="cart"> Rechazar</ion-icon>
-      </button>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:80px;">
-        <ion-icon>Volver</ion-icon>
-      </button>
+    <ion-item>  
+      <button ion-button round (click)='aceptar()' [class.hide]="checkAceptar">Aceptar</button>
+      <button ion-button item-end round (click)='rechazar()'  [class.hide]="checkRechazar">Rechazar</button>
+      
     </ion-item>
    
   </ion-card>

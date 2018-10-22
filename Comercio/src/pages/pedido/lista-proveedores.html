@@ -11,7 +11,7 @@
 
 <ion-content>
 <ion-card>
-  <ion-card-header>Paso 1: Elija Proveedor</ion-card-header>
+  <ion-card-header text-center><span ><strong>Paso 1: Elija Proveedor</strong></span></ion-card-header>
   <ion-item>
     
   <!--  <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
@@ -29,26 +29,9 @@
           <ion-avatar item-start>
               <img src="../../../../assets/icon/camion.png">
             </ion-avatar>       
-          <h2>{{fProv.entidad.razonSocial}}</h2>
+          <h2>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() + fProv.entidad.razonSocial.substr(1).toLowerCase() }}</h2>
       </ion-item> 
     </ion-list>
 </ion-card>
-  <!--<ion-list>
-    <ion-item-sliding *ngFor="let proveedor of proveedoresViewModel; let i=index">
-      <ion-item>
-          <ion-icon name="person" item-start></ion-icon>
-          <h2>{{proveedor.entidad.razonSocial}}</h2>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="danger" (click)="borrarProveedor(i)">
-          <ion-icon name="trash"> Borrar</ion-icon>
-        </button>
-      </ion-item-options>
-      <ion-item-options side="left">
-        <button ion-button color="success" (click)="mostrarProductosModal(proveedor)">
-          <ion-icon name="add-circle"> Productos</ion-icon>
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list> -->
+  
 </ion-content>

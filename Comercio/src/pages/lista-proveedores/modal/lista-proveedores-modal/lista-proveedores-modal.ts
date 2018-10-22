@@ -24,12 +24,12 @@ export class ListaProveedoresModalPage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController) {
 
-
+    this.cargarInicial();
   }
 
   ionViewDidLoad() {
-    
-    this.cargarInicial();
+
+
 
   }
 
@@ -41,47 +41,30 @@ export class ListaProveedoresModalPage {
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(result => {
       this.proveedores = result['proveedores'];
-     /* this.proveedores.forEach(x=>{
-        this.proveedorService.getEstadoProveedor(x._id).subscribe(data =>{
-          let invitaciones = data['invitaciones'];
-          invitaciones.forEach(y =>{
-            if(this.idComercio === y.comercio._id){
-              this.proveedoresViewModel.push(x);
-            }
-          })
-        } )
-      })*/
+      /* this.proveedores.forEach(x=>{
+         this.proveedorService.getEstadoProveedor(x._id).subscribe(data =>{
+           let invitaciones = data['invitaciones'];
+           invitaciones.forEach(y =>{
+             if(this.idComercio === y.comercio._id){
+               this.proveedoresViewModel.push(x);
+             }
+           })
+         } )
+       })*/
     });
     loader.dismiss();
-    console.log(this.proveedoresViewModel);
+    
   }
 
-  /*async cargarProveedor(proveedor: any) {
-   console.log(proveedor._id);
-
-   const {value: text} = await Swal({
-     title: 'Ingrese Peticion',
-     input: 'textarea',
-     inputPlaceholder: 'Enviar mensaje al proveedor...',
-     showCancelButton: true,     
-     confirmButtonText: 'Si, ENVIAR!',
-     confirmButtonColor: '#063079',
-     cancelButtonColor: '#f53d3d',
-     cancelButtonText: 'Cancelar'
-   });
-   this.text = text;
-   
-   this.realizarPeticion(proveedor);
-   
- }*/
-
-  realizarInvitacion(proveedor: any){
-    const modal = this.modalCtrl.create(InvitacionProveedorModalPage, { data: proveedor });
-    modal.present();
+  realizarInvitacion(proveedor: any) {
+    this.navCtrl.push(InvitacionProveedorModalPage,{ data: proveedor }, { animate: true });
+    //const modal = this.modalCtrl.create(InvitacionProveedorModalPage, );
+    //modal.present();
   }
+  
   cargarProveedor(proveedor: any) {
     Swal({
-      title:'Paso 2 de 2: Confirme el proveedor ' ,
+      title: 'Paso 2 de 2: Confirme el proveedor ',
       text: proveedor.entidad.razonSocial + ' le permitirá adquirir productos del rubro: ' + proveedor.entidad.actividadPrincipal,
       type: 'question',
       showCancelButton: true,
@@ -107,7 +90,7 @@ export class ListaProveedoresModalPage {
     loader.present();
     this.proveedorService.postEnviarInvitacion(proveedor._id, this.idComercio, this.text).subscribe(result => {
       if (result.ok === true) {
-       
+
         Swal({
 
           title: 'Paso 3 de 3: Felicidades ya cumpliste!',
@@ -115,12 +98,12 @@ export class ListaProveedoresModalPage {
           type: 'success',
           showCancelButton: false,
           confirmButtonText: 'Si, Aceptar!',
-          confirmButtonColor: '#063079',         
+          confirmButtonColor: '#063079',
         })
-
-        this.navCtrl.setRoot(ListaProveedoresModalPage);
-        this.navCtrl.popToRoot();
         loader.dismiss();
+        //this.navCtrl.setRoot(ListaProveedoresModalPage);
+        //this.navCtrl.popToRoot();
+
       } else {
         loader.dismiss();
         Swal(

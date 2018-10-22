@@ -4,7 +4,7 @@
     <description>App para comercio</description>
     <author email="zinginternacional@gmail.com" href="http://bin-tech.net/zing/">Zing</author>
     <content src="index.html" />
-    <access origin="*" />
+    <access launch-external="yes" origin="tel:*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

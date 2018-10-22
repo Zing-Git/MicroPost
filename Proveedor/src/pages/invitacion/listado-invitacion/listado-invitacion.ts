@@ -31,6 +31,8 @@ export class ListadoInvitacionPage {
   invitacionesRechazadas: any[] = new Array();
   invitacionesPendientes: any[] = new Array();
 
+  direciones: any;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
@@ -56,7 +58,7 @@ export class ListadoInvitacionPage {
     this.proveedorServices.getInvitaciones(this.idProveedor).subscribe(data => {
       if (data['invitaciones'] != undefined) {
         ENV.INVITACIONES = JSON.stringify(data['invitaciones']);
-       
+
         this.cargarCombos();
         loader.dismiss();
       }
@@ -71,7 +73,7 @@ export class ListadoInvitacionPage {
 
     });
 
-    
+
   }
 
   cargarCombos() {
@@ -85,6 +87,7 @@ export class ListadoInvitacionPage {
     this.invitaciones = this.auxiliar.crearArray(JSON.parse(ENV.INVITACIONES));
 
     this.invitaciones.forEach(x => {
+
       if (x.pendienteDeRevision == true) {
         this.estadoPendiente = false;
         this.invitacionesPendientes.push(x);
@@ -111,7 +114,7 @@ export class ListadoInvitacionPage {
   }
 
   ionViewDidLoad() {
-    
+
   }
 
   aceptar(invitacion: any) {
@@ -122,30 +125,36 @@ export class ListadoInvitacionPage {
       text: 'Desea Aceptar Invitacion?',
       type: 'question',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, ACEPTAR!',
       confirmButtonColor: '#063079',
-      cancelButtonColor: '#f53d3d',
-      cancelButtonText: 'Cancelar'
+      cancelButtonColor: '#063079'
+
     }).then((result) => {
-      
+
       if (result.value) {
-       
+
         this.proveedorServices.postAceptarRechazar(invitacion._id, true).subscribe(result => {
-         
-          if (typeof result != 'undefined') {  
+
+          if (typeof result != 'undefined') {
             if (result.ok) {
-              Swal(
-                'Felicidades',
-                result.message,
-                'success'
+              Swal({
+                title: 'Felicidades',
+                text: 'Acabas de agregar un comercio más a tu red de puntos de venta. Bitbi te ayuda a crecer',
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'GRACIAS!',
+                confirmButtonColor: '#063079',
+              }
+
               );
-  
+
               const loader = this.loadingCtrl.create({
                 content: "Actualizando Informacion, aguarde unos segundos...",
                 duration: 3000
               });
               loader.present();
-  
+
             } else {
               Swal(
                 'Advertencia',
@@ -158,7 +167,7 @@ export class ListadoInvitacionPage {
 
         this.actualizarInvitacion(invitacion._id, true);
       }
- 
+
     })
   }
 
@@ -170,33 +179,34 @@ export class ListadoInvitacionPage {
       text: 'Desea Rechazar Invitacion?',
       type: 'question',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, RECHAZAR!',
       confirmButtonColor: '#063079',
-      cancelButtonColor: '#f53d3d',
-      cancelButtonText: 'Cancelar'
+      cancelButtonColor: '#063079'
+
     }).then((result) => {
-      
-      
+
+
       if (result.value) {
-        
+
         this.proveedorServices.postAceptarRechazar(invitacion._id, false).subscribe(result => {
           console.log(invitacion);
           console.log(result);
           if (typeof result != 'undefined') {
-  
+
             if (result.ok) {
               Swal(
                 'Atención!',
                 result.message,
                 'success'
               );
-  
+
               const loader = this.loadingCtrl.create({
                 content: "Actualizando Informacion, aguarde unos segundos...",
                 duration: 3000
               });
               loader.present();
-  
+
             } else {
               Swal(
                 'Advertencia',
@@ -206,12 +216,12 @@ export class ListadoInvitacionPage {
             }
           }
         })
-  
-  
+
+
         this.actualizarInvitacion(invitacion._id, false);
       }
-      
-      
+
+
     })
   }
 

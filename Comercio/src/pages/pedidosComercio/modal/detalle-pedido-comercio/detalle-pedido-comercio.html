@@ -14,7 +14,7 @@
 
   <div [ngSwitch]="inicial">
     <form *ngSwitchCase="'encabezado'">
-      <ion-card>
+      <ion-card class="scroll">
 
         <ion-item>
           <ion-label floating>Proveedor</ion-label>
@@ -41,6 +41,10 @@
           <ion-datetime displayFormat="DD/MM/YYYY hh:mm" [formControl]="pedidoForm.controls['fechaEntrega']"></ion-datetime>
         </ion-item>
 
+        <ion-item>
+          <ion-label floating>Comentario</ion-label>
+          <ion-input [formControl]="pedidoForm.controls['comentario']" type="text"></ion-input>
+        </ion-item>
 
       </ion-card>
     </form>
@@ -48,7 +52,7 @@
 
     <form *ngSwitchCase="'detalle'">
 
-      <ion-scroll style="height: 300px" scrollY="true">
+      <ion-scroll class="scroll" scrollY="true">
 
         <ion-list *ngFor="let item of pedido.detallePedido">
           <ion-item>
@@ -73,7 +77,7 @@
   </div>
   <ion-card>
     <ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:150px;">
+      <button ion-button round color="danger" (click)='volver()' item-first full>
         <ion-icon>Volver</ion-icon>
       </button>
     </ion-item>

@@ -14,7 +14,7 @@
     <ion-card-header text-center>
       <ion-item>
         <h1>Ofertas del Día</h1>
-
+        <h3>Selecciona la que te interese</h3>
         <ion-avatar class="base" item-end>
           <img src="../assets/imgs/hotSale.png">
         </ion-avatar>
@@ -24,19 +24,14 @@
 
     <ion-scroll scrollY="true">
       <ion-list *ngFor="let item of vista">
-        <ion-item>
+        <ion-item (click)='mostrarPublicidadModal(item)'>
           <ion-avatar item-start>
-            <img [src]="item.imagen">
-          </ion-avatar>
-          <ion-avatar item-end>
-            <button ion-button small (click)='mostrarPublicidadModal(item)'>
-              <ion-icon name="eye"> Ver</ion-icon>
-            </button>
-          </ion-avatar>
+            <img class="nueva-img" [src]="item.imagen">
+          </ion-avatar>         
           <h2></h2>
-          <h2><strong>Titulo </strong> </h2>
-          <p>{{item.titulo}}</p>
-          <p> <strong>Proveedor </strong> {{item.razonSocial}}</p>
+          <h2><strong>{{item.titulo}} </strong> </h2>          
+          <p text-wrap> <strong>Proveedor </strong> {{item.razonSocial}}</p>
+          <ion-item-divider></ion-item-divider>
         </ion-item>
 
       </ion-list>

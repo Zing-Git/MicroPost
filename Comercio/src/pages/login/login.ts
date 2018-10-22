@@ -5,10 +5,8 @@ import Swal from 'sweetalert2';
 import { LoginModel } from '../../modelo/login';
 import { LoginProvider } from '../../providers/login/login';
 import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
-import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
-import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { ListaPublicidadPage } from '../publicidad/lista-publicidad/lista-publicidad';
 
 @Component({
@@ -161,5 +159,23 @@ export class LoginPage {
     } else {
       this.type = 'password';
     }
+  }
+
+  llamar(){
+
+    Swal({
+      title: '<strong>No te preocupes!</strong>',
+      type: 'info',
+      html:
+        'Mandanos un mensaje o llamanos a ' +
+        '<a href="tel:+5493886001968" class="button button-positive">este número 388-6001968</a> ' +
+        ', te preguntaremos datos de tu comercio.',
+      showCloseButton: true,
+      showCancelButton: false,
+      focusConfirm: false,
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Entendido!'
+      
+    })
   }
 }
