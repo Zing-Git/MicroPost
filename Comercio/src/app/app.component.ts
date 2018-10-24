@@ -9,6 +9,7 @@ import { ListaProveedoresPage } from '../pages/pedido/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { ListaPublicidadPage } from '../pages/publicidad/lista-publicidad/lista-publicidad';
 import { AuxiliarProvider } from '../providers/auxiliar/auxiliar';
+import { AyudaPage } from '../pages/ayuda/ayuda';
 
 @Component({
   templateUrl: 'app.html'
@@ -43,8 +44,9 @@ export class MyApp {
         { title: 'Mis Pedidos', component: ListaPedidoComercioPage, src:'' },
         { title: 'Nuevo Pedido', component: ListaProveedoresPage, src:'' },
         { title: 'Proveedores', component: ListaProveedoresModalPage, src:'' },
-        { title: 'Ofertas', component: ListaPublicidadPage, src:'../assets/imgs/hotSale.png' },        
-        { title: 'Configuracion', component: ConfiguracionInicialPage, src:'' },
+        //{ title: 'Ofertas', component: ListaPublicidadPage, src:'../assets/imgs/hotSale.png' },        
+        //{ title: 'Configuracion', component: ConfiguracionInicialPage, src:'' },
+        { title: 'Ayuda', component: AyudaPage, src:'' },  
         { title: 'Salir', component: LoginPage, src:'' }
       ];
     });

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
-import Swal from 'sweetalert2';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environments';
-import { Publicidad } from '../../../modelo/publicidad';
 import { ListaPublicidadModalPage } from '../modal/lista-publicidad-modal/lista-publicidad-modal';
 import { NgZone  } from '@angular/core';
 import { Events } from 'ionic-angular';
@@ -20,7 +18,7 @@ export class ListaPublicidadPage {
   proveedoresViewModel: any[] = new Array();
   proveedores: any[] = new Array();
   vista: any[] = new Array();
-  publicidad: Publicidad;
+  publicidad: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,6 +56,8 @@ export class ListaPublicidadPage {
           this.publicidades = resultA['publicaciones'];
           this.proveedoresViewModel = resultP['proveedores'];
 
+          this.publicidad = true;
+
           this.publicidades.forEach(x => {
             let publicidad =  {
               tieneImagen: x.tieneImagen,
@@ -73,22 +73,18 @@ export class ListaPublicidadPage {
               __v: x.__v,
               razonSocial: x.proveedor.entidad.razonSocial
             }
-
+            
             this.vista.push(publicidad);
   
-          })
-          
-        } else {
-          Swal(
-            'Advertencia',
-            'Sin Publicidades...',
-            'info'
-          )
+          }) 
+        } 
+        else {
+         this.publicidad = false;
         }
       })
-     
-
     });
+
+    console.log(this.vista);
   }
 
   getPublicidades(): void {
@@ -105,11 +101,7 @@ export class ListaPublicidadPage {
         })
         console.log(this.proveedores);
       } else {
-        Swal(
-          'Advertencia',
-          'Sin Publicidades...',
-          'info'
-        )
+        this.publicidad = false;
       }
 
     })

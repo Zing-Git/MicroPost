@@ -1,11 +1,17 @@
 page-lista-pedido-comercio {
 
   ion-scroll {
-    height: 80vh;
+    height: 70vh !important;
   }
 
   .hide {
     display: none;
 
   }
+
+  p{
+    text-align: center;
+    font-size: 30px;
+    color: gray;
+}
 }

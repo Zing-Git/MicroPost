@@ -50,7 +50,7 @@ export class PedidoModalPage {
     this.nuevoProducto.nombreProducto = this.producto.nombreProducto;
     this.nuevoProducto.cantidad = this.nuevoProductoForm.controls['cantidad'].value;
     this.nuevoProducto.unidadMedida = this.itemProductoSelected;
-    this.nuevoProducto.precioSugerido = this.producto.precioSugerido
+    this.nuevoProducto.precioSugerido =  this.producto.precioSugerido;
 
     this.viewCtrl.dismiss(this.nuevoProducto);
 
@@ -60,7 +60,7 @@ export class PedidoModalPage {
     this.itemProductoSelected = unidad;
   }
 
-  volver1() {
+  volver() {
     this.nuevoProducto.cantidad = 0;
     this.viewCtrl.dismiss(this.nuevoProducto);
   }

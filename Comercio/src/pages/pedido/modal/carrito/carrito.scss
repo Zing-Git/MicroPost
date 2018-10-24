@@ -2,5 +2,9 @@ page-carrito {
     ion-scroll {
         height: 30vh;
         }
-  
+  .ion-button {
+      color: blue !important;
+      background-color: #a5dc86 !important;
+  }
+  $swal2-success:  #a5dc86 !default;
 }

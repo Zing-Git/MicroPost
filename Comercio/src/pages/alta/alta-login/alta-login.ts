@@ -46,6 +46,13 @@ export class AltaLoginPage {
   }
 
   onSingin() {
+
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos..."
+     
+    });
+    loader.present();
+
     //para pobtener los valores cargos en la vista
     if (this.loginForm.controls['clave'].value === this.loginForm.controls['reClave'].value) {
       let usuario = new Usuario(
@@ -54,11 +61,7 @@ export class AltaLoginPage {
         this.loginForm.controls['clave'].value
       );
 
-      const loader = this.loadingCtrl.create({
-        content: "Por favor Espere unos segundos..."
-       
-      });
-      loader.present();
+      
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
       this.clienteViewModel.usuarios = usuarios;
@@ -70,9 +73,11 @@ export class AltaLoginPage {
       this.navCtrl.push(LoginPage);
       loader.dismiss();
     } else {
+      
       let miModal = this.modalCtrl.create('Ocurrio un error, Vuelva a intentarlo');
       miModal.present();
       this.navCtrl.setRoot('LoginPage');
+      loader.dismiss();
     }
 
   }

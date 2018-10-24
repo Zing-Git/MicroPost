@@ -30,7 +30,11 @@
           <ion-label floating>Comercio</ion-label>
           <ion-input [formControl]="pedidoForm.controls['nombreComercio']" type="text"></ion-input>
         </ion-item>
-
+        
+        <ion-item>
+          <ion-label floating>Direccion</ion-label>
+          <ion-textarea [formControl]="pedidoForm.controls['direccion']" type="text" text-wrap ></ion-textarea>
+        </ion-item>
 
         <ion-item>
           <ion-label floating>Tipo de Entrega</ion-label>
@@ -92,8 +96,8 @@
             <h3><strong> Producto </strong>{{item.producto.nombreProducto}}</h3>
             <h3><strong> Unidad </strong> {{item.unidadMedida}}</h3>
             <h3><strong> Cant. </strong> {{item.cantidadPedido}}</h3>
-
-
+            <h3><strong> Precio unitario $ </strong>{{item.producto.precioSugerido}} </h3>
+            <h2><strong> Sub total $ </strong> {{item.cantidadPedido * item.producto.precioSugerido}}</h2>
             <ion-item-divider></ion-item-divider>
           </ion-item>
         </ion-list>

@@ -1,6 +1,18 @@
 <ion-header>
-  <ion-title> </ion-title>
+  <ion-navbar>	
+     
+  </ion-navbar>
 </ion-header>
+
+<!--<ion-header>
+    <ion-navbar>	
+        <ion-item padding no-lines>
+        <button (click)="volver()" item-right class="cerrar">
+          <ion-icon name="close"></ion-icon> Cerrar
+        </button>
+        </ion-item>
+    </ion-navbar>
+  </ion-header>-->
 <ion-content padding>
   <ion-card>
     <ion-card-header text-center>
@@ -66,14 +78,18 @@
     </ion-card>
    
     <ion-card>
-      <ion-item>
+        <ion-item>
+            <button ion-button full round (click)='pedirProducto()' item-end><ion-icon name="cart"> Finalizar</ion-icon></button>  
+          </ion-item>
+    
+      <!--<ion-item>
         <button ion-button round color="danger" (click)='volver()' item-first style="width:60%;">
           <ion-icon>Volver</ion-icon>
         </button>
         <button ion-button round (click)='pedirProducto()' item-end style="width:40%;">
           <ion-icon name="cart"> Finalizar</ion-icon>
         </button>
-      </ion-item>
+      </ion-item>-->
     </ion-card>
 
   </ion-card>

@@ -26,9 +26,9 @@ export class ListaProveedoresPage {
     public storage: Storage,
     public events: Events) {
 
-     
+
     this.proveedoresViewModel = new Array();
-    
+
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.cargarListaDeProveedores();
 
@@ -49,10 +49,10 @@ export class ListaProveedoresPage {
   //clic desde vista
   mostrarProductosModal(proveedor: any) {
     //let proveedor= this.proveedoresViewModel.find(x => x.entidad._id === ctxt.entidad._id);
-    
+
     this.navCtrl.push(ListaProductosModalPage, { data: proveedor });
 
-      //const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor });
+    //const modal = this.modalCtrl.create(ListaProductosModalPage, { data: proveedor });
     //modal.present();
   }
 
@@ -64,21 +64,24 @@ export class ListaProveedoresPage {
       text: 'Quieres agregar proveedores a tu red?',
       type: 'warning',
       showCancelButton: true,
+      cancelButtonText: 'no, gracias',
       confirmButtonText: 'Si, listar!',
-      cancelButtonText: 'no, gracias'
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true
     }).then((result) => {
       if (result.value) {
         this.mostrarProveedoresModal();
-   
+
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal(
           'Cancelled',
           'Todo Ok, Gracias',
           'error'
-        )        
+        )
         this.navCtrl.setRoot(ConfiguracionInicialPage);
-          this.navCtrl.popToRoot();
+        this.navCtrl.popToRoot();
       }
     })
   }
@@ -88,13 +91,13 @@ export class ListaProveedoresPage {
     modal.present();
   }
 
-  
-  ionViewDidLoad() {  
+
+  ionViewDidLoad() {
     //this.productosViewModel.length = 0;
   }
 
-  borrarProveedor(index: number) {  }
+  borrarProveedor(index: number) { }
 
-  cargarProveedor(index: number) {  }
+  cargarProveedor(index: number) { }
 
 }

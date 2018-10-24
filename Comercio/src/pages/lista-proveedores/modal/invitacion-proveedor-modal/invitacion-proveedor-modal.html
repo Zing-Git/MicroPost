@@ -1,3 +1,13 @@
+<ion-header>
+    <ion-navbar>	
+        <ion-item padding no-lines>
+        <button (click)="volver()" item-right class="cerrar">
+          <ion-icon name="close"></ion-icon> Cerrar
+        </button>
+        </ion-item>
+    </ion-navbar>
+  </ion-header>
+
 <ion-content>
   <ion-card>
     <h3 text-center><strong>Paso 2 de 2: Confirme el proveedor</strong>r</h3>
@@ -11,14 +21,19 @@
   </ion-card>
 
   <ion-card>
+
       <ion-item>
+          <button ion-button full round (click)='enviarInvitacion()' item-end> Finalizar</button>  
+        </ion-item>
+
+      <!--<ion-item>
         <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
           <ion-icon>Volver</ion-icon>
         </button>
         <button ion-button round (click)='enviarInvitacion()' item-end style="width:100px;">
           <ion-icon name="cart"> Finalizar</ion-icon>
         </button>
-      </ion-item>
+      </ion-item>-->
     </ion-card>
 
 </ion-content>

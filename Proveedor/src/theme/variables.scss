@@ -33,13 +33,11 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$colors: (
-  primary:    #063079,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
-);
+$colors: (primary: #063079,
+secondary: #32db64,
+danger: #f53d3d,
+light: #f4f4f4,
+dark: #222);
 
 
 // App iOS Variables
@@ -87,11 +85,21 @@ $colors: (
 @import "roboto";
 @import "noto-sans";
 
-ion-icon{
-  color:rgb(238, 231, 218);
-  }
+ion-icon {
+  color: rgb(238, 231, 218);
+}
 
-  .item-button {
-    padding:  15px !important;
-    height: 40px !important;
-    }
+.item-button {
+  padding: 15px !important;
+  height: 40px !important;
+}
+
+.cerrar {
+  height: 25px;
+  background-color: transparent;
+  color: red;
+}
+
+.cerrar ion-icon {
+  color: red;
+}

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Provincia } from '../../../modelo/provincia';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { Domicilio } from '../../../modelo/domicilio';
-import { AltaLoginPage } from '../alta-login/alta-login';
 import { Comercio } from '../../../modelo/comercio';
+import { AltaContactosPage } from '../alta-contactos/alta-contactos';
 
 @IonicPage()
 @Component({
@@ -27,7 +27,8 @@ export class AltaDomicilioPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private formBuilder: FormBuilder,
-            private auxiliar: AuxiliarProvider) {
+            private auxiliar: AuxiliarProvider,
+            public loadingCtrl: LoadingController) {
              
     this.clienteViewModel = navParams.get('data');
    
@@ -44,7 +45,13 @@ export class AltaDomicilioPage {
   }
 
   ionViewDidLoad() {
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos..."
+     
+    });
+    loader.present();
     this.cargarControlesCombos();
+    loader.dismiss();
   }  
 
   onSingin() {
@@ -56,7 +63,7 @@ export class AltaDomicilioPage {
         this.domicilioForm.controls['numeroCasa'].value,
         this.domicilioForm.controls['codigoPostal'].value
     );
-    this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+    this.navCtrl.push(AltaContactosPage, { data: this.clienteViewModel});
     //console.log(this.clienteViewModel);   // control de alta de domicilio
 
     //this.presentConfirm();

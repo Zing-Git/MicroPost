@@ -14,15 +14,15 @@ export class ListaPublicidadModalPage {
   publicidad: any;
   inicial: string = 'encabezado';
   publicidadForm: FormGroup;
-  cantidadProductos : number = 0;
+  cantidadProductos: number = 0;
   proveedor: any;
-  constructor(public proveedorService: ProveedorProvider, public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public loadingCtrl:LoadingController) {
+  constructor(public proveedorService: ProveedorProvider, public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public loadingCtrl: LoadingController) {
 
     this.publicidad = navParams.get('data');
     if (this.publicidad != undefined) {
-     
+
       console.log(this.publicidad);
-      
+
     }
 
   }
@@ -30,21 +30,23 @@ export class ListaPublicidadModalPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListaPublicidadModalPage');
   }
-  
-  volver(){
+
+  volver() {
     this.navCtrl.pop();
   }
 
   cargarProveedor() {
     Swal({
-      title:'Paso 2 de 3: Confirme el proveedor ' ,
+      title: 'Confirme el proveedor ',
       text: 'Se va a enviar una invitacion a ' + this.publicidad.proveedor.entidad.razonSocial,
       type: 'question',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, ENVIAR!',
-      confirmButtonColor: '#063079',
-      cancelButtonColor: '#f53d3d',
-      cancelButtonText: 'Cancelar'
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true
+
     }).then((result1) => {
       if (result1.value) {
         this.realizarPeticion();
@@ -57,7 +59,7 @@ export class ListaPublicidadModalPage {
   //realiza peticion al proveedor de la imagen
   realizarPeticion() {
     let text = 'Te invito a formar parte de mi red, gracias.'
-    let idComercio= ENV.COMERCIO_ID;
+    let idComercio = ENV.COMERCIO_ID;
     const loader = this.loadingCtrl.create({
       content: "Por favor Espere unos segundos..."
 
@@ -65,15 +67,17 @@ export class ListaPublicidadModalPage {
     loader.present();
     this.proveedorService.postEnviarInvitacion(this.publicidad.proveedor._id, idComercio, text).subscribe(result => {
       if (result.ok === true) {
-       
+
         Swal({
 
-          title: 'Paso 3 de 3: Felicidades ya cumpliste!',
+          title: 'Felicidades ya cumpliste!',
           text: 'Debes esperar a que el proveedor te agregue a la red de comercios. Te informaremos cuando eso ocurra.',
           type: 'success',
           showCancelButton: false,
           confirmButtonText: 'Si, Aceptar!',
-          confirmButtonColor: '#063079',         
+          confirmButtonColor: '#488aff'
+                      
+                
         })
 
         //this.navCtrl.setRoot(ListaProveedoresModalPage);

@@ -24,7 +24,7 @@ export class DetallePedidoComercioPage {
       console.log(this.pedido);
       this.pedidoForm = this.formBuilder.group({
         nombreProveedor: [{value: this.pedido.proveedor.entidad.razonSocial, disabled: true}],
-        tipoEntrega: [{value: this.pedido.tipoEntrega, disabled: true}],
+        //tipoEntrega: [{value: this.pedido.tipoEntrega, disabled: true}],
         montoTotal: [{value: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido), disabled: true }],   //aqui probando
         fechaEntrega: [{value: this.pedido.fechaEntrega, disabled: true}],
         cantidadProducto: [{value: this.cantidadProductos, disabled: true}],

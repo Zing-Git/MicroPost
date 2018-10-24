@@ -82,8 +82,10 @@ export class CarritoPage {
                 showCancelButton: true,
                 cancelButtonText: 'Cancelar',
                 confirmButtonText: 'Enviar!',
-                confirmButtonColor: '#063079',
-                cancelButtonColor: '#f53d3d',
+                confirmButtonColor: '#488aff',
+                cancelButtonColor: '#488aff',                
+                reverseButtons: true
+              
             }).then((result) => {
                 if (result.value) {
 
@@ -94,7 +96,7 @@ export class CarritoPage {
                                 Swal({
                                      showCancelButton: false,
                                     confirmButtonText: 'Si, Aceptar!',
-                                    confirmButtonColor: '#063079',
+                                    confirmButtonColor: '#488aff',
                                     title: 'Felicidades',
                                     text:'El proveedor ya recibió tu pedido. Te informaremos cuando el proveedor acepte tu pedido.',
                                     type: 'success'

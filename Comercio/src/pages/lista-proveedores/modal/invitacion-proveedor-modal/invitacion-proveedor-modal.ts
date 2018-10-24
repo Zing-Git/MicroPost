@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
-import { ListaProveedoresModalPage } from '../lista-proveedores-modal/lista-proveedores-modal';
 
 
 @IonicPage()
@@ -47,7 +46,7 @@ export class InvitacionProveedorModalPage {
           type: 'success',
           showCancelButton: false,
           confirmButtonText: 'Ok!',
-          confirmButtonColor: '#063079',         
+          confirmButtonColor: '#488aff'
         })
 
         

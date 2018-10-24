@@ -3,18 +3,18 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Promociones</ion-title>
+    <ion-title>Ofertas</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content>
+<ion-content *ngIf="publicidad">
 
   <ion-card>
     <ion-card-header text-center>
       <ion-item>
         <h1>Ofertas del Día</h1>
-        <h3>Selecciona la que te interese</h3>
+        <h3>Seleccioná la que te interese</h3>
         <ion-avatar class="base" item-end>
           <img src="../assets/imgs/hotSale.png">
         </ion-avatar>
@@ -39,4 +39,7 @@
 
   </ion-card>
 
+</ion-content>
+<ion-content *ngIf="!publicidad">
+<p>Por el momento no hay Ofertas Disponibles... </p>
 </ion-content>

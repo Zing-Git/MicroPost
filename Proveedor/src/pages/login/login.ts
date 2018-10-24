@@ -178,7 +178,8 @@ export class LoginPage {
       showCancelButton: false,
       focusConfirm: false,
       confirmButtonText:
-        '<i class="fa fa-thumbs-up"></i> Entendido!'
+        '<i class="fa fa-thumbs-up"></i> Entendido!',
+        confirmButtonColor: '#488aff'
       
     })
   }

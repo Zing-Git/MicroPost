@@ -36,6 +36,7 @@ export class ListaPedidoComercioPage {
   estadoAceptado: boolean = true;
   estadoRechazado: boolean = true;
   estadoSolicitado: boolean = true;
+  estado: boolean = false;
 
   pedidos: any[] = new Array();
   pedidosAceptados: any[] = new Array();
@@ -66,9 +67,15 @@ export class ListaPedidoComercioPage {
     this.idComercio = ENV.COMERCIO_ID;
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
-
-      ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
+console.log(result['pedidos_array']);
+      if(result['pedidos_array'] != undefined){
+        this.estado = true;
+        ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
       this.cargarCombos();
+      }else{
+        this.estado = false;
+      }
+      
     })
   }
 
@@ -110,18 +117,24 @@ export class ListaPedidoComercioPage {
 
       switch (x.estadoPedido) {
         case "RECHAZADO": {
+         
           this.estadoRechazado = false;
           this.pedidosRechazados.push(x);
+         
           break;
         }
         case "PEDIDO SOLICITADO": {
+         
           this.estadoSolicitado = false;
           this.pedidosSolicitados.push(x);
+          
           break;
         }
         case "ACEPTADO": {
+         
           this.estadoAceptado = false;
           this.pedidosAceptados.push(x);
+         
           break;
         }
         default: {

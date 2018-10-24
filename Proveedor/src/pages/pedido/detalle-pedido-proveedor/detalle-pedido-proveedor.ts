@@ -30,6 +30,9 @@ export class DetallePedidoProveedorPage {
     public appCtrl: App) {
 
     this.pedido = navParams.get('data');
+    console.log('AQUI'); 
+    console.log(this.pedido);
+    
     if (this.pedido != undefined) {
       this.pedido.detallePedido.forEach(x => {
         this.cantidadProductos = this.cantidadProductos + 1;
@@ -40,7 +43,8 @@ export class DetallePedidoProveedorPage {
         tipoEntrega: [{ value: this.pedido.tipoEntrega, disabled: true }],
         montoTotal: [{ value: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido), disabled: true }],   //aqui probando
         fechaEntrega: [{ value: this.pedido.fechaEntrega, disabled: true }],
-        cantidadProducto: [{ value: this.cantidadProductos, disabled: true }]
+        cantidadProducto: [{ value: this.cantidadProductos, disabled: true }],
+        direccion: [{value: this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )', disabled: true}]
       });
 
       if (this.pedido.estadoPedido === 'PEDIDO INFORMADO') {
@@ -88,10 +92,12 @@ export class DetallePedidoProveedorPage {
       text: 'Seleccione una opcion de Pedido?',
       type: 'question',
       showCancelButton: true,
+      cancelButtonText: 'No, Cancelar',
       confirmButtonText: 'Si, RECHAZAR!',
-      confirmButtonColor: 'primary',
-      cancelButtonColor: 'danger',
-      cancelButtonText: 'No, Cancelar'
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true
+
     }).then((result) => {
       if (result.value) {
         //TODO aqui poner un comentario
@@ -105,7 +111,7 @@ export class DetallePedidoProveedorPage {
                 result.message,
                 'success'
               );
-             this.pedido.estadoPedido='RECHAZADO';
+              this.pedido.estadoPedido = 'RECHAZADO';
               const loader = this.loadingCtrl.create({
                 content: "Actualizando Informacion, aguarde unos segundos...",
                 duration: 2500
@@ -154,10 +160,12 @@ export class DetallePedidoProveedorPage {
       text: 'Seleccione una opcion de Pedido?',
       type: 'question',
       showCancelButton: true,
+      cancelButtonText: 'No, Cancelar',
       confirmButtonText: 'Si, ACEPTAR!',
-      confirmButtonColor: 'primary',
-      cancelButtonColor: 'danger',
-      cancelButtonText: 'No, Cancelar'
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true
+
     }).then((result) => {
       if (result.value) {
 

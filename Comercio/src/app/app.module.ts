@@ -36,6 +36,8 @@ import { InvitacionProveedorModalPage } from '../pages/lista-proveedores/modal/i
 import { CarritoPage } from '../pages/pedido/modal/carrito/carrito';
 import { PedidoModalPage } from '../pages/pedido/modal/pedido-modal/pedido-modal';
 import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-modal/lista-productos-modal';
+import { AltaContactosPage } from '../pages/alta/alta-contactos/alta-contactos';
+import { AyudaPage } from '../pages/ayuda/ayuda';
 //declare module 'google-maps';
 
 @NgModule({
@@ -47,6 +49,7 @@ import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-m
     AltaDomicilioPage,
     AltaLoginPage,
     AltaClientePage, 
+    AltaContactosPage,
     ListaProveedoresPage,
     ListaProductosModalPage,
     ConfiguracionInicialPage,
@@ -56,7 +59,8 @@ import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-m
     DetallePedidoComercioPage,
     ListaPublicidadPage,
     ListaPublicidadModalPage,
-    InvitacionProveedorModalPage
+    InvitacionProveedorModalPage,
+    AyudaPage
   ],
   imports: [
     BrowserModule,
@@ -73,6 +77,7 @@ import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-m
     AltaDomicilioPage,
     AltaLoginPage,
     AltaClientePage,
+    AltaContactosPage,
     ListaProveedoresPage,
     ListaProductosModalPage,
     ConfiguracionInicialPage,
@@ -82,7 +87,8 @@ import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-m
     DetallePedidoComercioPage,
     ListaPublicidadPage,
     ListaPublicidadModalPage,
-    InvitacionProveedorModalPage
+    InvitacionProveedorModalPage,
+    AyudaPage
   ],
   providers: [
     StatusBar,

@@ -53,15 +53,15 @@ export class ListaProveedoresModalPage {
        })*/
     });
     loader.dismiss();
-    
+
   }
 
   realizarInvitacion(proveedor: any) {
-    this.navCtrl.push(InvitacionProveedorModalPage,{ data: proveedor }, { animate: true });
+    this.navCtrl.push(InvitacionProveedorModalPage, { data: proveedor }, { animate: true });
     //const modal = this.modalCtrl.create(InvitacionProveedorModalPage, );
     //modal.present();
   }
-  
+
   cargarProveedor(proveedor: any) {
     Swal({
       title: 'Paso 2 de 2: Confirme el proveedor ',
@@ -69,8 +69,9 @@ export class ListaProveedoresModalPage {
       type: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, ENVIAR!',
-      confirmButtonColor: '#063079',
-      cancelButtonColor: '#f53d3d',
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true,
       cancelButtonText: 'Cancelar'
     }).then((result1) => {
       if (result1.value) {
@@ -98,7 +99,7 @@ export class ListaProveedoresModalPage {
           type: 'success',
           showCancelButton: false,
           confirmButtonText: 'Si, Aceptar!',
-          confirmButtonColor: '#063079',
+          confirmButtonColor: '#488aff'
         })
         loader.dismiss();
         //this.navCtrl.setRoot(ListaProveedoresModalPage);

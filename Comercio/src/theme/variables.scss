@@ -37,8 +37,7 @@ $colors: (primary: #488aff,
 secondary: #32db64,
 danger: #f53d3d,
 light: #f4f4f4,
-dark: #222,
-other: orange);
+dark: #222);
 
 
 // App iOS Variables
@@ -87,12 +86,25 @@ other: orange);
 @import "noto-sans";
 
 //aqui voy a agregar lo necesario para que la aplicacion entera cambie la vista
-ion-icon {
-  color: rgb(230, 187, 109);
-}
+
+
+.item-button {
+  padding: 15px !important;
+  height: 40px !important;
+} 
 
 .scroll {
 
   height: 70vh !important;
 
+}
+
+.cerrar {
+  height: 25px;
+  background-color: transparent;
+  color: red;
+}
+
+.cerrar ion-icon {
+  color: red;
 }

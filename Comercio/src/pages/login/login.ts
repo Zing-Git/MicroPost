@@ -45,7 +45,7 @@ export class LoginPage {
     });
     loader.present();
     
-    if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario!= ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
+    if ((typeof this.newLogin.nombreUsuario != undefined && this.newLogin.nombreUsuario!= ' ') && (typeof this.newLogin.clave != undefined && this.newLogin.clave != ' ')) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
 
@@ -70,9 +70,9 @@ export class LoginPage {
             this.almacenarValoresImportantes();
           //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
          
-           loader.dismiss();
+           
               this.navCtrl.setRoot(ListaPublicidadPage, { animate: true });
-             
+            loader.dismiss(); 
           }else{
             loader.dismiss();
               Swal('Atención', 'Usted no es Cliente, ingrese con credenciales validas' , 'error')

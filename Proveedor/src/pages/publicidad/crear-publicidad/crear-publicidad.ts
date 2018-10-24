@@ -45,7 +45,7 @@ export class CrearPublicidadPage {
   tomarFoto() {
 
     let options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -69,9 +69,9 @@ export class CrearPublicidadPage {
     let cameraOptions = {
       sourceType: 0,//this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      quality: 100,
-      targetWidth: 300,
-      targetHeight: 300,
+      quality: 50,
+      targetWidth: 500,
+      targetHeight: 500,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true

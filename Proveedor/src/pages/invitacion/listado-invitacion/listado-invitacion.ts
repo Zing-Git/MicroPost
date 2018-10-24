@@ -21,6 +21,7 @@ export class ListadoInvitacionPage {
   estadoAceptado: boolean = true;
   estadoRechazado: boolean = true;
   estadoPendiente: boolean = true;
+  estado: boolean = true;
 
   pedidos: any;
   idProveedor: string;
@@ -56,23 +57,19 @@ export class ListadoInvitacionPage {
     });
     loader.present();
     this.proveedorServices.getInvitaciones(this.idProveedor).subscribe(data => {
+      console.log(data['invitaciones']);
       if (data['invitaciones'] != undefined) {
         ENV.INVITACIONES = JSON.stringify(data['invitaciones']);
-
+        this.estado = true;
         this.cargarCombos();
-        loader.dismiss();
+        
       }
       else {
-        loader.dismiss();
-        Swal(
-          'Atencion',
-          'No hay invitaciones pendientes',
-          'warning'
-        );
+       this.estado = false;
       }
 
     });
-
+loader.dismiss();
 
   }
 
@@ -103,7 +100,7 @@ export class ListadoInvitacionPage {
     })
   }
 
-  doRefresh(refresher) {
+ /* doRefresh(refresher) {
     console.log('Begin async operation', refresher);
 
     setTimeout(() => {
@@ -111,7 +108,7 @@ export class ListadoInvitacionPage {
       this.cargarCombos();
       refresher.complete();
     }, 2000);
-  }
+  }*/
 
   ionViewDidLoad() {
 
@@ -144,7 +141,7 @@ export class ListadoInvitacionPage {
                 type: 'success',
                 showCancelButton: false,
                 confirmButtonText: 'GRACIAS!',
-                confirmButtonColor: '#063079',
+                confirmButtonColor: '#488aff'
               }
 
               );
@@ -181,8 +178,9 @@ export class ListadoInvitacionPage {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, RECHAZAR!',
-      confirmButtonColor: '#063079',
-      cancelButtonColor: '#063079'
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true
 
     }).then((result) => {
 

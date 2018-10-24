@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 export class ListadoPedidosFiltradosPage {
 
   pedido: any;
-  inicial: string = 'informado';
+  inicial: string = 'aprobado';
   pedidoForm: FormGroup;
   cantidadProductos: number = 0;
 
@@ -138,8 +138,10 @@ export class ListadoPedidosFiltradosPage {
 
         switch (x.estadoPedido) {
           case "RECHAZADO": {
+            this.inicial = 'rechazado'
             this.estadoRechazado = false;
             this.pedidosRechazados.push(x);
+            
             break;
           }
           case "PEDIDO SOLICITADO": {
@@ -148,6 +150,7 @@ export class ListadoPedidosFiltradosPage {
             break;
           }
           case "ACEPTADO": {
+            this.inicial = 'aceptado'
             this.estadoAceptado = false;
             this.pedidosAceptados.push(x);
             break;
