@@ -1,11 +1,11 @@
 <ion-header>
-	<ion-navbar>	
-      <ion-item padding no-lines>
-			<button (click)="volver()" item-right class="cerrar">
-				<ion-icon name="close"></ion-icon> Cerrar
+  <ion-navbar>
+    <ion-item padding no-lines>
+      <button (click)="volver()" item-right class="cerrar">
+        <ion-icon name="close"></ion-icon> Cerrar
       </button>
-      </ion-item>
-	</ion-navbar>
+    </ion-item>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
@@ -23,24 +23,24 @@
 
 
   <div [ngSwitch]="inicial">
-    <form *ngSwitchCase="'encabezado'">
-      <ion-card>
+    <form *ngSwitchCase="'encabezado'" style="height: 500px">
+      <ion-list>
 
         <ion-item>
           <ion-label floating>Comercio</ion-label>
           <ion-input [formControl]="pedidoForm.controls['nombreComercio']" type="text"></ion-input>
         </ion-item>
-        
-        <ion-item>
-          <ion-label floating>Direccion</ion-label>
-          <ion-textarea [formControl]="pedidoForm.controls['direccion']" type="text" text-wrap ></ion-textarea>
-        </ion-item>
 
         <ion-item>
+          <ion-label floating>Direccion</ion-label>
+          <ion-textarea [formControl]="pedidoForm.controls['direccion']" type="text" text-wrap></ion-textarea>
+        </ion-item>
+
+        <!--<ion-item>
           <ion-label floating>Tipo de Entrega</ion-label>
           <ion-input [formControl]="pedidoForm.controls['tipoEntrega']" type="text"></ion-input>
         </ion-item>
-
+-->
 
 
         <ion-item>
@@ -56,43 +56,22 @@
         </ion-item>
 
 
-      </ion-card>
+      </ion-list>
     </form>
 
 
     <form *ngSwitchCase="'detalle'">
 
-      <ion-card>
-        <!--<ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label floating>Cantidad de Productos</ion-label>
-              <ion-input [formControl]="pedidoForm.controls['cantidadProducto']" type="text" disabled></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label floating>Monto Total</ion-label>
-              <ion-input [formControl]="pedidoForm.controls['montoTotal']" type="text" disabled></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>-->
-      </ion-card>
-
-
-      <ion-scroll style="height: 300px" scrollY="true">
+      <ion-scroll style="height: 500px" scrollY="true">
 
         <ion-list *ngFor="let item of pedido.detallePedido">
           <ion-item>
 
-            <ion-avatar item-start>
+            <!-- <ion-avatar item-start>
               <button ion-button small>
                 <ion-icon name="pricetag"></ion-icon>
               </button>
-            </ion-avatar>
+            </ion-avatar>-->
             <h3><strong> Producto </strong>{{item.producto.nombreProducto}}</h3>
             <h3><strong> Unidad </strong> {{item.unidadMedida}}</h3>
             <h3><strong> Cant. </strong> {{item.cantidadPedido}}</h3>
@@ -105,14 +84,12 @@
     </form>
 
   </div>
-  <ion-card>
 
-    <ion-item>  
-      <button ion-button round (click)='aceptar()' [class.hide]="checkAceptar">Aceptar</button>
-      <button ion-button item-end round (click)='rechazar()'  [class.hide]="checkRechazar">Rechazar</button>
-      
-    </ion-item>
-   
-  </ion-card>
+  <ion-item-divider></ion-item-divider>
+  <ion-item>
+    <button ion-button item-end round (click)='aceptar()' [class.hide]="checkAceptar">Aceptar</button>
+    <button ion-button  round (click)='rechazar()' [class.hide]="checkRechazar">Rechazar</button>
+
+  </ion-item>
 
 </ion-content>

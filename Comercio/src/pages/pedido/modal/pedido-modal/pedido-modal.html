@@ -25,34 +25,19 @@
         <ion-label floating>Cantidad</ion-label>
         <ion-input formControlName="cantidad" type="number"></ion-input>
       </ion-item>
-
-
-    </ion-card>
-    <ion-card>
       <ion-item>
         <ion-label>Precio $</ion-label>
         <ion-input type="text" disabled formControlName="precioSugerido"></ion-input>
-
       </ion-item>
       <ion-item>
         <ion-label>Sub total $ {{nuevoProductoForm.controls['cantidad'].value *
           nuevoProductoForm.controls['precioSugerido'].value}}</ion-label>
 
       </ion-item>
-    </ion-card>
-    <ion-card>
+    <ion-item-divider></ion-item-divider>
       <ion-item>
         <button ion-button round (click)="dismiss()" item-end [disabled]="!nuevoProductoForm.valid">Cargar Pedido</button>
-
-
       </ion-item>
-
-      <!--<ion-item>
-        <button ion-button round color="danger" (click)='volver1()' item-first style="width:130px;"><ion-icon>Volver</ion-icon></button>
-        <button ion-button round (click)="dismiss()"  item-end [disabled]="!nuevoProductoForm.valid" style="width:130px;">
-          <ion-icon name="cart" > Cargar Pedido</ion-icon>
-        </button>
-      </ion-item>-->
     </ion-card>
   </form>
 </ion-content>

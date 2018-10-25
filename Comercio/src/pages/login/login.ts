@@ -8,6 +8,7 @@ import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
 import { ListaPublicidadPage } from '../publicidad/lista-publicidad/lista-publicidad';
+import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
 
 @Component({
   selector: 'page-login',
@@ -20,7 +21,7 @@ export class LoginPage {
   usuarioLogin: any;   //get token and _id
   datosComercio: any;
   idComercio: string;
-  
+
   public readyToLogin: boolean;
   //private secureStorage: SecureStorage;
 
@@ -32,20 +33,21 @@ export class LoginPage {
     private alertCtrl: AlertController,
     private storage: Storage,
     private loadingCtrl: LoadingController,
-    private event: Events) {
+    private event: Events,
+    private auxiliar: AuxiliarProvider) {
     this.newLogin = new LoginModel();
 
   }
 
 
   getLogin() {
-    //this.auxiliar.presentLoading();
+    this.auxiliar.presentLoading();
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."    
+      content: "Por favor Espere unos segundos..."
     });
     loader.present();
-    
-    if ((typeof this.newLogin.nombreUsuario != undefined && this.newLogin.nombreUsuario!= ' ') && (typeof this.newLogin.clave != undefined && this.newLogin.clave != ' ')) {
+
+    if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario != ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
 
       this.login.getLogin(this.newLogin).subscribe(result => {
 
@@ -55,29 +57,27 @@ export class LoginPage {
           loader.dismiss();
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
         } else {
-          
+
           this.datosComercio = result['comercioDB'];
           this.datosComercio.forEach(element => {
             this.idComercio = element._id;
             ENV.NOMBRE_COMERCIO = element.entidad.razonSocial;
             ENV.RUBRO_COMERCIO = element.entidad.actividadPrincipal;
-            
+
           });
 
-          this.event.publish('creado',ENV.NOMBRE_COMERCIO,ENV.RUBRO_COMERCIO);
-          
-          if(this.idComercio != undefined){
+          this.event.publish('creado', ENV.NOMBRE_COMERCIO, ENV.RUBRO_COMERCIO);
+
+          if (this.idComercio != undefined) {
             this.almacenarValoresImportantes();
-          //aqui un switch porque debo elegir mostrar lista de pedidos de clientes o proveedores
-         
-           
-              this.navCtrl.setRoot(ListaPublicidadPage, { animate: true });
-            loader.dismiss(); 
-          }else{
+
+            this.navCtrl.setRoot(ListaPublicidadPage, { animate: true });
             loader.dismiss();
-              Swal('Atención', 'Usted no es Cliente, ingrese con credenciales validas' , 'error')
+          } else {
+            loader.dismiss();
+            Swal('Atención', 'Usted no es Cliente, ingrese con credenciales validas', 'error')
           }
-          
+
 
         }
 
@@ -134,10 +134,10 @@ export class LoginPage {
     /*this.storage.get('token').then((val) => {
       console.log('Your id is', val);
     });*/
-    
+
   }
 
-  limpiarValoresPorDefecto(){
+  limpiarValoresPorDefecto() {
     this.storage.set('id', ' ');
     this.storage.set('token', ' ');
     this.storage.set('idComercio', ' ');
@@ -151,17 +151,17 @@ export class LoginPage {
     ENV.COMERCIO_LOGIN = ' ';
   }
 
-  showPassword(){
+  showPassword() {
     this.showPass = !this.showPass;
- 
-    if(this.showPass){
+
+    if (this.showPass) {
       this.type = 'text';
     } else {
       this.type = 'password';
     }
   }
 
-  llamar(){
+  llamar() {
 
     Swal({
       title: '<strong>No te preocupes!</strong>',
@@ -175,7 +175,7 @@ export class LoginPage {
       focusConfirm: false,
       confirmButtonText:
         '<i class="fa fa-thumbs-up"></i> Entendido!'
-      
+
     })
   }
 }

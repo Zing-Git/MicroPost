@@ -32,6 +32,7 @@ import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { DatePipe } from '@angular/common';
+import { SalirPage } from '../pages/salir/salir';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { DatePipe } from '@angular/common';
     DetallePedidoProveedorPage,
     ListadoPedidosFiltradosPage,
     ListadoInvitacionPage,
-    CrearPublicidadPage
+    CrearPublicidadPage,
+    SalirPage
   ],
   imports: [
     FileUploadModule,
@@ -66,7 +68,8 @@ import { DatePipe } from '@angular/common';
     DetallePedidoProveedorPage,
     ListadoPedidosFiltradosPage,
     ListadoInvitacionPage,
-    CrearPublicidadPage
+    CrearPublicidadPage,
+    SalirPage
   ],
   providers: [
     File,

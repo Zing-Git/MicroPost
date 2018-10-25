@@ -30,9 +30,10 @@ export class MyApp {
     splashScreen: SplashScreen,
     auxiliarServices: AuxiliarProvider,
     event: Events) {
+      
     this.nombreComercio = auxiliarServices.getNombreComercio();
     this.rubroComercio = auxiliarServices.getRubroComercio();
-    console.log('aqui se obtiene los nombres');
+    
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -44,7 +45,7 @@ export class MyApp {
         { title: 'Mis Pedidos', component: ListaPedidoComercioPage, src:'' },
         { title: 'Nuevo Pedido', component: ListaProveedoresPage, src:'' },
         { title: 'Proveedores', component: ListaProveedoresModalPage, src:'' },
-        //{ title: 'Ofertas', component: ListaPublicidadPage, src:'../assets/imgs/hotSale.png' },        
+        { title: 'Ofertas', component: ListaPublicidadPage, src:'../assets/imgs/hotSale.png' },        
         //{ title: 'Configuracion', component: ConfiguracionInicialPage, src:'' },
         { title: 'Ayuda', component: AyudaPage, src:'' },  
         { title: 'Salir', component: LoginPage, src:'' }

@@ -3,11 +3,7 @@ page-listado-invitacion {
     display: none;
   }
 
-  p {
-    text-align: center;
-    font-size: 30px;
-    margin: 5,5,5,5;
-  }
+  
   .noContent {
     div {
       height: 100%;
@@ -15,6 +11,10 @@ page-listado-invitacion {
       display: flex;
       justify-content: center;
       align-items: center;
+      color: gray;
+      text-align: center;
+      font-size: 30px;
+      margin: 5,5,5,5;
     }
    }
 }

@@ -7,6 +7,7 @@ import { LoginModel } from '../../modelo/login';
 import { LoginProvider } from '../../providers/login/login';
 import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { ListadoPedidosFiltradosPage } from '../pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
+import { SalirPage } from '../salir/salir';
 
 @Component({
   selector: 'page-login',
@@ -31,13 +32,68 @@ export class LoginPage {
     public storage: Storage,
     public loadingCtrl: LoadingController,
     private event: Events) {
-    this.limpiarValoresPorDefecto();
+    //this.limpiarValoresPorDefecto();
 
+    this.storage.get('proveedor').then((val) => {
+      if(val != ' '){
+
+     
+      if (typeof val != null) {
+        console.log('no es nulo');
+        console.log(val);
+        let newLogin = JSON.parse(val);
+        console.log(newLogin);
+        this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave)
+      } 
+    }
+    });
     console.log(ENV);
     this.newLogin = new LoginModel();
 
   }
 
+  getLoginStorage(usuario: string, clave: string) {
+    this.newLogin.nombreUsuario = usuario;
+    this.newLogin.clave = clave;
+    const loader = this.loadingCtrl.create({
+      content: "Cargando datos, unos segundos, Gracias..."
+    });
+    loader.present();
+    this.login.getLogin(this.newLogin).subscribe(result => {
+      this.usuarioLogin = result['usuario'];
+      this.datosProveedor = result['proveedorDB'];
+
+      if (this.datosProveedor != undefined) {
+        this.datosProveedor.forEach(element => {
+          this.idProveedor = element._id;
+          ENV.NOMBRE_PROVEEDOR = element.entidad.razonSocial;
+          ENV.RUBRO_PROVEEDOR = element.entidad.actividadPrincipal;
+        });
+
+        this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR);
+
+        if (this.idProveedor != undefined) {
+          this.almacenarValoresImportantes();
+
+          this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
+            animate: true
+          });
+          loader.dismiss();
+        } else {
+          Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
+          this.navCtrl.setRoot(SalirPage);
+          loader.dismiss();
+        }
+      } else {
+        Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
+        this.navCtrl.setRoot(SalirPage);
+        loader.dismiss();
+      }
+    })
+
+
+
+  }
   getLogin() {
 
     const loader = this.loadingCtrl.create({
@@ -51,14 +107,14 @@ export class LoginPage {
       this.login.getLogin(this.newLogin).subscribe(result => {
 
         this.usuarioLogin = result['usuario'];
-        
+
         if (typeof this.usuarioLogin === 'undefined') {
           loader.dismiss();
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
         } else {
 
           this.datosProveedor = result['proveedorDB'];
-          
+
           if (this.datosProveedor != undefined) {
             this.datosProveedor.forEach(element => {
               this.idProveedor = element._id;
@@ -66,7 +122,7 @@ export class LoginPage {
               ENV.RUBRO_PROVEEDOR = element.entidad.actividadPrincipal;
             });
 
-            this.event.publish('creado',ENV.NOMBRE_PROVEEDOR,ENV.RUBRO_PROVEEDOR);
+            this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR);
 
             if (this.idProveedor != undefined) {
               this.almacenarValoresImportantes();
@@ -76,7 +132,7 @@ export class LoginPage {
               });
             } else {
               loader.dismiss();
-              Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas' , 'error')
+              Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas', 'error')
             }
           }
 
@@ -126,8 +182,8 @@ export class LoginPage {
     this.storage.set('id', this.usuarioLogin._id);
     this.storage.set('token', this.usuarioLogin.token);
     this.storage.set('idProveedor', this.idProveedor);
-    console.log(this.idProveedor);
-    //this.storage.set('proveedor', JSON.stringify(this.datosProveedor));
+
+    this.storage.set('proveedor', JSON.stringify(this.newLogin));
 
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
     ENV.ID_USUARIO = this.usuarioLogin._id;
@@ -141,19 +197,7 @@ export class LoginPage {
 
   }
 
-  limpiarValoresPorDefecto() {
-    this.storage.set('id', ' ');
-    this.storage.set('token', ' ');
-    this.storage.set('idProveedor', ' ');
 
-    //this.storage.set('proveedor', JSON.stringify(this.datosProveedor));
-
-    ENV.NOMBRE_USUARIO = ' ';
-    ENV.ID_USUARIO = ' ';
-    ENV.PROVEEDOR_ID = ' ';
-    ENV.TOKEN = ' ';
-    ENV.PROVEEDOR_LOGIN = ' ';
-  }
 
   showPassword() {
     this.showPass = !this.showPass;
@@ -165,7 +209,7 @@ export class LoginPage {
     }
   }
 
-  llamar(){
+  llamar() {
 
     Swal({
       title: '<strong>No te preocupes!</strong>',
@@ -179,8 +223,8 @@ export class LoginPage {
       focusConfirm: false,
       confirmButtonText:
         '<i class="fa fa-thumbs-up"></i> Entendido!',
-        confirmButtonColor: '#488aff'
-      
+      confirmButtonColor: '#488aff'
+
     })
   }
 }

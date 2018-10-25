@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-navbar>	
-     
+  <ion-navbar>
+
   </ion-navbar>
 </ion-header>
 
@@ -12,15 +12,18 @@
     </ion-card-header>
     <ion-card>
       <ion-row text-center>
-        <ion-col width-50 text-center><ion-icon name="logo-usd" item-start></ion-icon> {{totalPedido}}</ion-col>
-        <ion-col width-50 text-center><ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}</ion-col>
+        <ion-col width-50 text-center>
+          <ion-icon name="logo-usd" item-start></ion-icon> {{totalPedido}}
+        </ion-col>
+        <ion-col width-50 text-center>
+          <ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}
+        </ion-col>
       </ion-row>
-      
-    </ion-card>
-    
-      <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
-    
-    <ion-card>
+      <ion-item-divider></ion-item-divider>
+      <ion-row>
+        <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+      </ion-row>
+    <ion-item-divider></ion-item-divider>
       <ion-item>
         <ion-label floating>Categoria</ion-label>
         <ion-select [(ngModel)]="categoria" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
@@ -28,7 +31,7 @@
           <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)">{{categoria}}</ion-option>
         </ion-select>
       </ion-item>
-    
+
       <ion-item>
         <ion-label floating>Sub-Categoria</ion-label>
         <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
@@ -39,58 +42,34 @@
       </ion-item>
 
     </ion-card>
-  </ion-card>
-  <ion-card *ngIf="showListProducto">
-    <ion-card-header>
-      Productos
-    </ion-card-header>
 
-    <ion-scroll scrollY="true">
-      <ion-list *ngFor="let item of arrayProductos;">
-        <ion-item>
-          <ion-avatar item-end>
-            <button ion-button small (click)='seleccionarProducto(item)'>
-              <ion-icon name="cart"></ion-icon>
-            </button>
-          </ion-avatar>
+    <ion-card *ngIf="showListProducto">
+      <ion-card-header text-center>
+        Productos
+      </ion-card-header>
 
-          <h2>{{item.nombreProducto}}</h2>
-          <ion-item-divider></ion-item-divider>
-        </ion-item>
+      <ion-scroll scrollY="true">
+        <ion-list *ngFor="let item of arrayProductos;">
+          <ion-item>
+            <ion-avatar item-end>
+              <button ion-button small (click)='seleccionarProducto(item)'>
+                <ion-icon name="cart"></ion-icon>
+              </button>
+            </ion-avatar>
 
-      </ion-list>
-    </ion-scroll>
-  </ion-card>
+            <h2>{{item.nombreProducto}}</h2>
+            <ion-item-divider></ion-item-divider>
+          </ion-item>
 
-  <ion-card>
-      <ion-item>  
-          <button ion-button round (click)='pedirProducto()' item-end>Siguiente</button>
-          
-          
-        </ion-item>
+        </ion-list>
+      </ion-scroll>
+    </ion-card>
 
-   <!--<ion-item>
-      <button ion-button round color="danger" (click)='volver()' item-first style="width:80%;">
-        <ion-icon>Cancelar</ion-icon>
-      </button>
-      <button ion-button round (click)='pedirProducto()' item-end style="width:40%;">
-        <ion-icon name=""> Siguiente</ion-icon>
-      </button>
-    </ion-item>--> 
+    <ion-card>
+      <ion-item>
+        <button ion-button round (click)='pedirProducto()' item-end>Siguiente</button>
+      </ion-item>
 
+    </ion-card>
   </ion-card>
 </ion-content>
-<!--<ion-content>
-    <ion-card>
-        <ion-list>
-          <button ion-item *ngFor="let item of arrayCategorias" (click)="openSubcategoriasPage(item)" icon-start>
-            <ion-icon name="arrow-back" item-start></ion-icon>
-            {{ item }}
-          </button>
-        </ion-list>
-      </ion-card>
-      <ion-card>
-        <button ion-button color="secondary" clear (click)='volver()'>Cancelar</button>
-      </ion-card>
-  
-</ion-content>-->

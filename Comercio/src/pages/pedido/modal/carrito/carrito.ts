@@ -25,8 +25,7 @@ export class CarritoPage {
         public navParams: NavParams,
         public formBuilder: FormBuilder,
         private comercioService: ComercioProvider,
-        private viewCtrl: ViewController
-    ) {
+        private viewCtrl: ViewController) {
 
         this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
 

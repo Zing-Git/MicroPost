@@ -9,6 +9,7 @@ import { ListadoPedidosFiltradosPage } from '../pages/pedido/listado-pedidos-fil
 import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/listado-invitacion';
 import { CrearPublicidadPage } from '../pages/publicidad/crear-publicidad/crear-publicidad';
 import { AuxiliarProvider } from '../providers/auxiliar/auxiliar';
+import { SalirPage } from '../pages/salir/salir';
 
 @Component({
   templateUrl: 'app.html'
@@ -48,7 +49,7 @@ export class MyApp {
       { title: 'Publicidad', component: CrearPublicidadPage },
       /*{ title: 'Pedidos de Clientes', component: ListadoPedidoPage }, 
       { title: 'Configuracion', component: ConfiguracionInicialPage },*/
-      { title: 'Salir', component: LoginPage }
+      { title: 'Salir', component: SalirPage }
     ];
 
     event.subscribe('creado', (proveedor, rubro) => {

@@ -61,19 +61,19 @@ export class ListadoPedidosFiltradosPage {
 
         //this.navCtrl.push(CrearPublicidadPage);
         //this.navCtrl.popToRoot();
-        loader.dismiss();
+        
         Swal('Atención', 'No posee Pedidos ', 'error')
       } else {
         ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
 
         this.cargarCombos();
-        loader.dismiss();
+        
       }
 
 
     });
 
-
+loader.dismiss();
   }
 
   ionViewDidLoad() {
@@ -163,6 +163,38 @@ export class ListadoPedidosFiltradosPage {
 
       }
     })
+  }
+
+  buscar(index) {
+    console.log(this.pedidosAceptados);
+    console.log(this.pedidosInformados);
+    console.log(this.pedidosRechazados);
+    const val = index.target.value;
+    //item.comercio.entidad.razonSocial
+    if (val && val.trim() != '') {
+      if(this.pedidosInformados.length > 0){
+         this.pedidosInformados = this.pedidosInformados.filter((x) =>{
+           return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+         })
+      }
+      if(this.pedidosAceptados.length > 0){
+        this.pedidosAceptados = this.pedidosAceptados.filter((x) =>{
+          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        })
+      }
+      if(this.pedidosRechazados.length > 0){
+        this.pedidosRechazados = this.pedidosRechazados.filter((x) =>{
+          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        })
+      }     
+    }else{
+      this.pedidosInformados = new Array();
+      this.pedidosAceptados= new Array();
+      this.pedidosRechazados = new Array();
+      this.pedidosOtros = new Array();
+      this.pedidos = new Array();
+      this.cargarCombos();
+    }
   }
 
 }

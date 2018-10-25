@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { envirotment as ENV } from '../../environments/environments';
 import { LoadingController } from 'ionic-angular';
-import { DecimalPipe } from '@angular/common'
+import { DecimalPipe } from '@angular/common';
+import { Storage } from '@ionic/storage';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,7 +18,7 @@ export class AuxiliarProvider {
   private urlGetPublcidades = this.urlBase + '/publicidad/obtener_publicidad/';
   data: any;
 
-  constructor(public http: HttpClient, private loadingCtrl: LoadingController, private decimalPipe: DecimalPipe) {
+  constructor(private storage: Storage,public http: HttpClient, private loadingCtrl: LoadingController, private decimalPipe: DecimalPipe) {
 
   }
 
@@ -27,12 +28,9 @@ export class AuxiliarProvider {
   }
 
   presentLoading() {
-    const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos...",
-      duration: 4000
+    this.storage.get('token').then((val) => {
+      console.log('Your id is', val);
     });
-    loader.present();
-    loader.dismiss();
   }
 
   twoDecimals(number) {
