@@ -58,8 +58,7 @@
     <ion-card>
       <h3 text-center><strong>Paso 3 de 3 - Muestra tu producto
         </strong></h3>
-    </ion-card>
-    <ion-card>
+    <ion-item-divider></ion-item-divider>
       <h3 text-center>Muestra a la red de comercios Bitbi tu promoción, esmérate en publicar la mejor oferta con la
         mejor imagen.
       </h3>
@@ -76,14 +75,12 @@
          </ion-item>
     </ion-card>
     
-  <ion-card>
+  <ion-card *ngIf="base64Image">
     <ion-title>Preview Imagen cargada o tomada</ion-title>
     <ion-card-content>
-      <img [src]="base64Image" *ngIf="base64Image" />
+      <img [src]="base64Image"  />
     </ion-card-content>
-  </ion-card>
-
-  <ion-card>
+  <ion-item-divider></ion-item-divider>
     <ion-item>
       <button ion-button round full color="secondary" (click)="enviarPublicidad()"  [disabled]="esValido">Viralizar ahora!</button>
     </ion-item>

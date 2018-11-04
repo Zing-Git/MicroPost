@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, ViewController, DateTime } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pedido } from '../../../../modelo/pedido';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
     templateUrl: 'carrito.html',
 })
 export class CarritoPage {
-
+    
     carritoForm: FormGroup;
     pedido: Pedido;
     fechaEntrega: string = new Date().toISOString();
@@ -25,7 +25,8 @@ export class CarritoPage {
         public navParams: NavParams,
         public formBuilder: FormBuilder,
         private comercioService: ComercioProvider,
-        private viewCtrl: ViewController) {
+        private viewCtrl: ViewController
+        ) {
 
         this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
 
@@ -37,7 +38,7 @@ export class CarritoPage {
         console.log(this.pedido);
 
         this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
-        this.fechaEntrega = ' ';//this.fechaMinima.toISOString();
+        this.fechaEntrega = this.fechaMinima.toISOString();
 
     }
 
@@ -144,5 +145,8 @@ export class CarritoPage {
 
     showItem(): void {
         this.visualItem = !this.visualItem;
+        
     }
+
+   
 }

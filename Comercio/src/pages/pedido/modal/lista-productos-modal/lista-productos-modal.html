@@ -4,46 +4,45 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding >
 
-  <ion-card>
+  <div id="container">
     <ion-card-header text-center>
       Paso 2: Elija productos de {{nombreProveedor}}.
     </ion-card-header>
-    <ion-card>
-      <ion-row text-center>
-        <ion-col width-50 text-center>
-          <ion-icon name="logo-usd" item-start></ion-icon> {{totalPedido}}
-        </ion-col>
-        <ion-col width-50 text-center>
-          <ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}
-        </ion-col>
-      </ion-row>
-      <ion-item-divider></ion-item-divider>
-      <ion-row>
-        <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
-      </ion-row>
+
+    <ion-row text-center>
+      <ion-col width-50 text-center>
+        <ion-icon name="logo-usd" item-start></ion-icon> {{totalPedido}}
+      </ion-col>
+      <ion-col width-50 text-center>
+        <ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}
+      </ion-col>
+    </ion-row>
     <ion-item-divider></ion-item-divider>
-      <ion-item>
-        <ion-label floating>Categoria</ion-label>
-        <ion-select [(ngModel)]="categoria" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
-          interface="popover">
-          <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)">{{categoria}}</ion-option>
-        </ion-select>
-      </ion-item>
+    
+      <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+    
+    <ion-item-divider></ion-item-divider>
+    <ion-item>
+      <ion-label floating>Categoria</ion-label>
+      <ion-select [(ngModel)]="categoria" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+        interface="popover">
+        <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)">{{categoria}}</ion-option>
+      </ion-select>
+    </ion-item>
 
-      <ion-item>
-        <ion-label floating>Sub-Categoria</ion-label>
-        <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
-          interface="popover">
-          <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isEnabledSubCategoria"
-            [value]="+(subcategoria)" [selected]="itemSubcategoriaSelected" (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
-        </ion-select>
-      </ion-item>
+    <ion-item>
+      <ion-label floating>Sub-Categoria</ion-label>
+      <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+        interface="popover">
+        <ion-option *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [disabled]="!isEnabledSubCategoria"
+          [value]="+(subcategoria)" [selected]="itemSubcategoriaSelected" (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
+      </ion-select>
+    </ion-item>
 
-    </ion-card>
-
-    <ion-card *ngIf="showListProducto">
+   
+    <ion-item *ngIf="showListProducto">
       <ion-card-header text-center>
         Productos
       </ion-card-header>
@@ -63,13 +62,13 @@
 
         </ion-list>
       </ion-scroll>
-    </ion-card>
+    </ion-item>
 
-    <ion-card>
-      <ion-item>
-        <button ion-button round (click)='pedirProducto()' item-end>Siguiente</button>
-      </ion-item>
+    
+    <ion-item>
+      <button ion-button round (click)='pedirProducto()' item-end>Siguiente</button>
+    </ion-item>
+    
 
-    </ion-card>
-  </ion-card>
+  </div>
 </ion-content>

@@ -15,7 +15,7 @@ import { SalirPage } from '../pages/salir/salir';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = CrearPublicidadPage;
   razonSocial: string;
   rubroProveedor: string;
 

@@ -38,6 +38,7 @@ import { PedidoModalPage } from '../pages/pedido/modal/pedido-modal/pedido-modal
 import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-modal/lista-productos-modal';
 import { AltaContactosPage } from '../pages/alta/alta-contactos/alta-contactos';
 import { AyudaPage } from '../pages/ayuda/ayuda';
+import { DatePicker } from '@ionic-native/date-picker';
 //declare module 'google-maps';
 
 @NgModule({
@@ -99,7 +100,8 @@ import { AyudaPage } from '../pages/ayuda/ayuda';
     LoginProvider,
     ComercioProvider,
     ProductoProvider,
-    DecimalPipe
+    DecimalPipe,
+    DatePicker
   ]
 })
 export class AppModule {}

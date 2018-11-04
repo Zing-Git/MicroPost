@@ -12,12 +12,15 @@ export class DetallePedidoComercioPage {
   inicial: string = 'encabezado';
   pedidoForm: FormGroup;
   cantidadProductos : number = 0;
+  encabezadoList: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private auxiliar: AuxiliarProvider) {
 
     this.pedido = navParams.get('data');
     if (this.pedido != undefined) {
+      this.encabezadoList = new Array();
+
       this.pedido.detallePedido.forEach(x =>{
         this.cantidadProductos = this.cantidadProductos + 1;
       })
@@ -30,6 +33,14 @@ export class DetallePedidoComercioPage {
         cantidadProducto: [{value: this.cantidadProductos, disabled: true}],
         comentario: [{value: this.pedido.comentario, disabled: true}]
       });
+
+      this.encabezadoList.push({
+        nombreProveedor : this.pedido.proveedor.entidad.razonSocial,
+        montoTotal : '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido),
+        fechaEntrega: this.pedido.fechaEntrega,
+        cantidadProducto: this.cantidadProductos,
+        comentario: this.pedido.comentario
+      })
     }
 
 

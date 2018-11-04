@@ -18,31 +18,26 @@
     <ion-card-header text-center>
         Paso 3: Ver Pedidos
     </ion-card-header>
-    <ion-card>
-      
-      <ion-card-content>
         <ion-item>
-          <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si quiere una fecha en particular</h3> 
-        </ion-item>
-        <ion-item >
-          <div></div>
-            <ion-datetime (ionChange)="showItem()"
-          cancelText="Cancelar" 
-          doneText="Ok" 
-          displayFormat="DD/MM/YYYY" 
-          pickerFormat="YYYY MM DD" 
-          [(ngModel)]="fechaEntrega"
-          placeholder=" presione aqui"
+          <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si quiere una fecha en particular <a href="#" (click)=" picker.open(); visualItem = !visualItem "> presione aqui
+              
+          </a></h3>  
           
-          ></ion-datetime>
         </ion-item>
-       
         <ion-item *ngIf='visualItem'>
           <p>Fecha seleccionada es {{fechaEntrega.substr(0,10)}}</p>
         </ion-item>
-      </ion-card-content>
-    </ion-card>
-    
+         <ion-datetime #picker
+              hidden="true"
+              cancelText="Cancelar" 
+              doneText="Ok" 
+              displayFormat="DD/MM/YYYY" 
+              pickerFormat="YYYY MM DD" 
+              [(ngModel)]="fechaEntrega"
+             
+              
+              ></ion-datetime>
+
       <ion-scroll scrollY="true">
 
         <ion-list *ngFor="let producto of pedido.productos;">
@@ -64,7 +59,7 @@
       </ion-scroll>
      
     
-    <ion-card>
+    
       <ion-card-header> <h3>Comentario</h3></ion-card-header> 
        <ion-item>
           <ion-textarea placeholder="Ingrese Comentario..." [(ngModel)]="comentario"></ion-textarea>
@@ -79,7 +74,7 @@
         <ion-item>
             <button ion-button full round (click)='pedirProducto()' item-end><ion-icon name="cart"> Finalizar</ion-icon></button>  
           </ion-item>
-    </ion-card>
+    
 
   </ion-card>
 </ion-content>

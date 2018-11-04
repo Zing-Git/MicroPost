@@ -18,7 +18,7 @@ export class ListaPublicidadPage {
   proveedoresViewModel: any[] = new Array();
   proveedores: any[] = new Array();
   vista: any[] = new Array();
-  publicidad: boolean = false;
+  publicidad: boolean = true;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -56,7 +56,7 @@ export class ListaPublicidadPage {
           this.publicidades = resultA['publicaciones'];
           this.proveedoresViewModel = resultP['proveedores'];
 
-          this.publicidad = true;
+          this.publicidad = false;
 
           this.publicidades.forEach(x => {
             let publicidad =  {
@@ -79,7 +79,7 @@ export class ListaPublicidadPage {
           }) 
         } 
         else {
-         this.publicidad = false;
+         this.publicidad = true;
         }
       })
     });

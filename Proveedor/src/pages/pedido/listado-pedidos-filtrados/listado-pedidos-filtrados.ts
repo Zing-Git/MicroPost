@@ -67,9 +67,8 @@ export class ListadoPedidosFiltradosPage {
         ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
 
         this.cargarCombos();
-        
-      }
 
+      }
 
     });
 

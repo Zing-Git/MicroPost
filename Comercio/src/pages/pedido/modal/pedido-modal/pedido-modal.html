@@ -11,33 +11,33 @@
 
 <ion-content padding>
 
-  <form [formGroup]="nuevoProductoForm">
-    <ion-card>
-      <ion-item>
-        <ion-label floating>Unidad de Medida</ion-label>
+  <form [formGroup]="nuevoProductoForm" id="container">
+    <h2><strong>1. Unidad de Medida</strong></h2>
+      <ion-item id="rounded">
+        
         <ion-select formControlName="unidadMedida" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
           interface="popover">
           <ion-option *ngFor="let unidad of producto.unidadesMedida" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
         </ion-select>
       </ion-item>
-
-      <ion-item item-center>
-        <ion-label floating>Cantidad</ion-label>
-        <ion-input formControlName="cantidad" type="number"></ion-input>
+ <h2><strong>2. Cantidad</strong></h2>
+      <ion-item  id="rounded">
+       
+        <ion-input formControlName="cantidad" type="number" id="ion-input"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item id="rounded">
         <ion-label>Precio $</ion-label>
         <ion-input type="text" disabled formControlName="precioSugerido"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item id="rounded">
         <ion-label>Sub total $ {{nuevoProductoForm.controls['cantidad'].value *
           nuevoProductoForm.controls['precioSugerido'].value}}</ion-label>
 
       </ion-item>
-    <ion-item-divider></ion-item-divider>
-      <ion-item>
+    
+      <ion-item id="rounded">
         <button ion-button round (click)="dismiss()" item-end [disabled]="!nuevoProductoForm.valid">Cargar Pedido</button>
       </ion-item>
-    </ion-card>
+   
   </form>
 </ion-content>

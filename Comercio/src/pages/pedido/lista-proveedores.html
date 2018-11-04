@@ -10,20 +10,20 @@
 
 
 <ion-content>
-<ion-card>
-  <ion-card-header text-center><span ><strong>Paso 1: Elija Proveedor</strong></span></ion-card-header>
-  <ion-item>
+<ion-item>
+  <h2 text-center><span ><strong>Paso 1: Elija Proveedor</strong></span></h2>
+     <!--  <ion-item>
     
-  <!--  <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
+   <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
         <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id" >{{fProv.entidad.razonSocial}}</ion-option>
-    </ion-select>-->
+    </ion-select>
+    </ion-item>-->
 </ion-item>
-</ion-card>
 
-<ion-card>
-  <ion-card-header>
+<ion-item>
+  <h3 text-center>
       Proveedores
-  </ion-card-header>   
+  </h3>   
     <ion-list *ngFor="let fProv of proveedoresViewModel; let i=index">
       <ion-item (click)="mostrarProductosModal(fProv)">
           <ion-avatar item-start>
@@ -32,6 +32,6 @@
           <h2>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() + fProv.entidad.razonSocial.substr(1).toLowerCase() }}</h2>
       </ion-item> 
     </ion-list>
-</ion-card>
+</ion-item>
   
 </ion-content>

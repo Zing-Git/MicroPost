@@ -36,7 +36,7 @@ export class ListaPedidoComercioPage {
   estadoAceptado: boolean = true;
   estadoRechazado: boolean = true;
   estadoSolicitado: boolean = true;
-  estado: boolean = false;
+  estado: boolean = true;
 
   pedidos: any[] = new Array();
   pedidosAceptados: any[] = new Array();
@@ -69,11 +69,11 @@ export class ListaPedidoComercioPage {
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
 console.log(result['pedidos_array']);
       if(result['pedidos_array'] != undefined){
-        this.estado = true;
+        this.estado = false;
         ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
       this.cargarCombos();
       }else{
-        this.estado = false;
+        this.estado = true;
       }
       
     })
