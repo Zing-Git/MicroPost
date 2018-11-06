@@ -5,76 +5,78 @@
 </ion-header>-->
 
 <ion-header>
-    <ion-navbar>	
-        <ion-item padding no-lines>
-        <button (click)="volver()" item-right class="cerrar">
-          <ion-icon name="close"></ion-icon> Cerrar
-        </button>
-        </ion-item>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <ion-item padding no-lines>
+      <button (click)="volver()" item-right class="cerrar">
+        <ion-icon name="close"></ion-icon> Cerrar
+      </button>
+    </ion-item>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
   <ion-card>
     <ion-card-header text-center>
-        Paso 3: Ver Pedidos
+      Paso 3: Ver Pedidos
     </ion-card-header>
+    <ion-item>
+      <h3></h3>
+      <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si
+        quiere una fecha en particular <a href="#" (click)=" picker.open(); visualItem = !visualItem "> presione aqui
+
+        </a></h3>
+
+    </ion-item>
+    <ion-item *ngIf='visualItem'>
+      <p>Fecha seleccionada es {{fechaEntrega.substr(0,10)}}</p>
+    </ion-item>
+    <ion-datetime #picker hidden="true" cancelText="Cancelar" doneText="Ok" displayFormat="DD/MM/YYYY" pickerFormat="YYYY MM DD"
+      [(ngModel)]="fechaEntrega"></ion-datetime>
+
+    <ion-scroll scrollY="true">
+
+      <ion-list *ngFor="let producto of pedido.productos;">
         <ion-item>
-          <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si quiere una fecha en particular <a href="#" (click)=" picker.open(); visualItem = !visualItem "> presione aqui
-              
-          </a></h3>  
+
+          <ion-avatar item-start>
+            <button ion-button small (click)='sacarProducto(producto)' item-first>
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-avatar>
+          <h3> </h3>
+          <h3><strong> Producto </strong>{{producto.nombreProducto}}</h3>
+          <h3><strong> Unidad </strong> {{producto.unidadMedida}}</h3>
+          <h3><strong> Cant. </strong> {{producto.cantidad}}</h3>
+          <h3><strong> Precio </strong>$ {{producto.precioSugerido}}</h3>
+          <h2><strong> Sub - Total </strong>$ {{producto.cantidad * producto.precioSugerido}}</h2>
           
         </ion-item>
-        <ion-item *ngIf='visualItem'>
-          <p>Fecha seleccionada es {{fechaEntrega.substr(0,10)}}</p>
-        </ion-item>
-         <ion-datetime #picker
-              hidden="true"
-              cancelText="Cancelar" 
-              doneText="Ok" 
-              displayFormat="DD/MM/YYYY" 
-              pickerFormat="YYYY MM DD" 
-              [(ngModel)]="fechaEntrega"
-             
-              
-              ></ion-datetime>
+      </ion-list>
+    </ion-scroll>
 
-      <ion-scroll scrollY="true">
+   <!-- <ion-card-header text-center>
+      <h3 style=" color: #f4f4f4;">Comentario</h3>
+    </ion-card-header>
+    <ion-card-header text-center>
 
-        <ion-list *ngFor="let producto of pedido.productos;">
-          <ion-item>
+      <ion-item>
+        <ion-textarea placeholder="Ingrese Comentario..." [(ngModel)]="comentario"></ion-textarea>
+      </ion-item>
+    </ion-card-header>
+-->
 
-            <ion-avatar item-start>
-              <button ion-button small (click)='sacarProducto(producto)' item-first>
-                <ion-icon name="trash"></ion-icon>
-              </button>
-            </ion-avatar>
-            <h3><strong> Producto </strong>{{producto.nombreProducto}}</h3>
-            <h3><strong> Unidad </strong> {{producto.unidadMedida}}</h3>
-            <h3><strong> Cant. </strong> {{producto.cantidad}}</h3>
-            <h3><strong> Precio </strong>$ {{producto.precioSugerido}}</h3>
-            <h2><strong> Sub - Total </strong>$ {{producto.cantidad * producto.precioSugerido}}</h2>
-            <ion-item-divider></ion-item-divider>
-          </ion-item>
-        </ion-list>
-      </ion-scroll>
-     
-    
-    
-      <ion-card-header> <h3>Comentario</h3></ion-card-header> 
-       <ion-item>
-          <ion-textarea placeholder="Ingrese Comentario..." [(ngModel)]="comentario"></ion-textarea>
-       </ion-item>    
-       <ion-item-divider></ion-item-divider>
-      <ion-row text-center>
-        <ion-col text-center>
-           <p style="font-size: 22px;"><strong> Total</strong> $ {{total}}</p>
-        </ion-col>
-      </ion-row>
     <ion-item-divider></ion-item-divider>
-        <ion-item>
-            <button ion-button full round (click)='pedirProducto()' item-end><ion-icon name="cart"> Finalizar</ion-icon></button>  
-          </ion-item>
-    
+    <ion-card-header text-center>
+      <p style="font-size: 22px; color: #f4f4f4;"><strong> Total</strong> $ {{total}}</p>
+    </ion-card-header>
+
+
+    <button color="secondary" ion-button full round (click)='pedirProducto()' item-end>
+      <p style="font-size: 22px; color: #f4f4f4;">
+        <ion-icon name="cart"> Finalizar</ion-icon>
+      </p>
+    </button>
+
+
 
   </ion-card>
 </ion-content>

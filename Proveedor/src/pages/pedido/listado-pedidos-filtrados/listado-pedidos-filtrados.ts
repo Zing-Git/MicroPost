@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController, ViewController, App } from 'ionic-angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
@@ -40,7 +40,8 @@ export class ListadoPedidosFiltradosPage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
-    public appCtrl: App) {
+    public appCtrl: App,
+    public zone: NgZone) {
 
     this.obtenerDatosImportantes();
 
@@ -108,12 +109,14 @@ loader.dismiss();
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-
+    this.zone.run(()=>{
+      this.obtenerDatosImportantes();
+    })
     setTimeout(() => {
       console.log('Async operation has ended');
-      //this.obtenerDatosImportantes();
+      
       refresher.complete();
-    }, 2000);
+    }, 3000);
   }
 
   actualizarPedido(miPedido: any): void {

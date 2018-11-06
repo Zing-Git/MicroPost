@@ -2,4 +2,15 @@ page-home {
     ion-icon {
         font-size: 20px; //Preferred size here
     }
+    ion-scroll {
+        height: 30vh;
+        }
+  .ion-button {
+      color: blue !important;
+      background-color: #a5dc86 !important;
+  }
+  $swal2-success:  #a5dc86 !default;
+  ion-textarea{
+      background-color: lightgoldenrodyellow !important;
+  }
 }

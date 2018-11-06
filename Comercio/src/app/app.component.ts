@@ -10,6 +10,7 @@ import { ListaPedidoComercioPage } from '../pages/pedidosComercio/lista-pedido-c
 import { ListaPublicidadPage } from '../pages/publicidad/lista-publicidad/lista-publicidad';
 import { AuxiliarProvider } from '../providers/auxiliar/auxiliar';
 import { AyudaPage } from '../pages/ayuda/ayuda';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'

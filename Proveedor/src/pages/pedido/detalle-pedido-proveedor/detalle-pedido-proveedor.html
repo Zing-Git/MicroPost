@@ -24,9 +24,27 @@
 
   <div [ngSwitch]="inicial">
     <form *ngSwitchCase="'encabezado'" style="height: 500px">
-      <ion-list>
+      <ion-list *ngFor="let item of encabezado">
+          <ion-item>
+              <h2> <strong>Comercio</strong></h2>
+              <h3><strong>{{item.nombreComercio}}</strong></h3>
+            </ion-item>
+            <ion-item>
+              <h2> <strong>Direccion</strong></h2>
+              <h3 text-wrap><strong>{{item.direccion}}</strong></h3>
+            </ion-item>
+            <ion-item>
+              <h2> <strong>Monto Total</strong></h2>
+              <h3><strong>{{item.montoTotal}}</strong></h3>
+            </ion-item>
+  
+            <ion-item>
+              <h2> <strong>Fecha de Entrega</strong></h2>
+              <h3 ><strong>{{item.fechaEntrega  | date: 'dd/MM/yyyy'}}</strong></h3>
+            </ion-item>
 
-        <ion-item>
+
+        <!--<ion-item>
           <ion-label floating>Comercio</ion-label>
           <ion-input [formControl]="pedidoForm.controls['nombreComercio']" type="text"></ion-input>
         </ion-item>
@@ -36,11 +54,11 @@
           <ion-textarea [formControl]="pedidoForm.controls['direccion']" type="text" text-wrap></ion-textarea>
         </ion-item>
 
-        <!--<ion-item>
+        <ion-item>
           <ion-label floating>Tipo de Entrega</ion-label>
           <ion-input [formControl]="pedidoForm.controls['tipoEntrega']" type="text"></ion-input>
         </ion-item>
--->
+
 
 
         <ion-item>
@@ -53,7 +71,7 @@
         <ion-item>
           <ion-label floating>Fecha de Entrega</ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY hh:mm" [formControl]="pedidoForm.controls['fechaEntrega']"></ion-datetime>
-        </ion-item>
+        </ion-item>-->
 
 
       </ion-list>

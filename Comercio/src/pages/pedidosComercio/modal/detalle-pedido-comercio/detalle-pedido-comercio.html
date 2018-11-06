@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar>	
-        <ion-item padding no-lines>
-        <button (click)="volver()" item-right class="cerrar">
-          <ion-icon name="close"></ion-icon> Cerrar
-        </button>
-        </ion-item>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <ion-item padding no-lines>
+      <button (click)="volver()" item-right class="cerrar">
+        <ion-icon name="close"></ion-icon> Cerrar
+      </button>
+    </ion-item>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
 
   <div padding>
@@ -30,23 +30,21 @@
             <h3><strong>{{item.nombreProveedor}}</strong></h3>
           </ion-item>
           <ion-item>
-              <h2> <strong>Monto Total</strong></h2>
-              <h3><strong>{{item.montoTotal}}</strong></h3>
-            </ion-item>
-            <ion-item>
-                <h2> <strong>Fecha de Entrega</strong></h2>
-                <h3><strong>{{item.fechaEntrega | date: 'dd/MM/yyyy'}}</strong></h3>
-              </ion-item>
-        
-              <ion-item>
-                  <h2> <strong>Comentario</strong></h2>
-                  <h3 text-wrap><strong>{{item.comentario}}</strong></h3>
-                </ion-item>
-            
-            
-         
+            <h2> <strong>Monto Total</strong></h2>
+            <h3><strong>{{item.montoTotal}}</strong></h3>
+          </ion-item>
+          <ion-item>
+            <h2> <strong>Fecha de Entrega</strong></h2>
+            <h3><strong>{{item.fechaEntrega | date: 'dd/MM/yyyy'}}</strong></h3>
+          </ion-item>
+
+          <ion-item>
+            <h2> <strong>Comentario</strong></h2>
+            <h3 text-wrap><strong>{{item.comentario}}</strong></h3>
+          </ion-item>
+
         </ion-list>
-      <!--<ion-item>
+        <!--<ion-item>
           <ion-label floating>Proveedor</ion-label>
           <ion-input [formControl]="pedidoForm.controls['nombreProveedor']" type="text"></ion-input>
         </ion-item>
@@ -74,7 +72,7 @@
         <ion-item>
           <ion-label floating>Comentario</ion-label>
           <ion-input [formControl]="pedidoForm.controls['comentario']" type="text" text-wrap></ion-input>
-        </ion-item>--> 
+        </ion-item>-->
 
       </ion-card>
     </form>

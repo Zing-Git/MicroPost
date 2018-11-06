@@ -4,7 +4,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environments';
 import { ListaPublicidadModalPage } from '../modal/lista-publicidad-modal/lista-publicidad-modal';
-import { NgZone  } from '@angular/core';
+import { NgZone } from '@angular/core';
 import { Events } from 'ionic-angular';
 
 @IonicPage()
@@ -29,15 +29,11 @@ export class ListaPublicidadPage {
     public events: Events,
     private zone: NgZone) {
 
-      this.events.subscribe('updateScreen', () => {
-        this.zone.run(() => {
-          console.log('force update the screen');
-        });
-      });
+
   }
 
   ionViewDidLoad() {
-    
+
     const loader = this.loadingCtrl.create({
       content: "Cargando ofertas, espere unos segundos...",
       duration: 3000
@@ -49,17 +45,22 @@ export class ListaPublicidadPage {
   }
 
   getProveedores() {
+    this.publicidades.length = 0;
+    this.proveedoresViewModel.length = 0;
+    this.vista.length = 0;
+    this.publicidad = true;
+
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(resultP => {
-      this.auxiliar.getPublcidades().subscribe(resultA => {        
-        if (resultA['ok']== true && resultP['ok'] == true) {
+      this.auxiliar.getPublcidades().subscribe(resultA => {
+        if (resultA['ok'] == true && resultP['ok'] == true) {
           this.publicidades = resultA['publicaciones'];
           this.proveedoresViewModel = resultP['proveedores'];
 
           this.publicidad = false;
 
           this.publicidades.forEach(x => {
-            let publicidad =  {
+            let publicidad = {
               tieneImagen: x.tieneImagen,
               disponibilidad: x.disponibilidad,
               fechaAlta: x.fechaAlta,
@@ -73,13 +74,13 @@ export class ListaPublicidadPage {
               __v: x.__v,
               razonSocial: x.proveedor.entidad.razonSocial
             }
-            
+
             this.vista.push(publicidad);
-  
-          }) 
-        } 
+
+          })
+        }
         else {
-         this.publicidad = true;
+          this.publicidad = true;
         }
       })
     });
@@ -126,5 +127,19 @@ export class ListaPublicidadPage {
     //item.razonSocial = this.proveedoresViewModel.find(y => x.proveedor === y._id).entidad.razonSocial
     const modal = this.modalCtrl.create(ListaPublicidadModalPage, { data: item });
     modal.present();
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.zone.run(() => {
+
+      this.getProveedores();
+      console.log('force update the screen');
+    });
+    setTimeout(() => {
+      console.log('Async operation has ended');
+
+      refresher.complete();
+    }, 3000);
   }
 }

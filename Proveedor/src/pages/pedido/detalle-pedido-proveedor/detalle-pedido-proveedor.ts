@@ -19,6 +19,7 @@ export class DetallePedidoProveedorPage {
   checkAceptar: boolean = false;
   checkRechazar: boolean = false;
   idPedido: string;
+  encabezado: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,6 +35,8 @@ export class DetallePedidoProveedorPage {
     console.log(this.pedido);
     
     if (this.pedido != undefined) {
+      this.encabezado = new Array();
+
       this.pedido.detallePedido.forEach(x => {
         this.cantidadProductos = this.cantidadProductos + 1;
       })
@@ -47,6 +50,15 @@ export class DetallePedidoProveedorPage {
         direccion: [{value: this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )', disabled: true}]
       });
 
+      this.encabezado.push({
+        nombreComercio : this.pedido.comercio.entidad.razonSocial,
+        tipoEntrega: this.pedido.tipoEntrega,
+        montoTotal : '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido),
+        fechaEntrega: this.pedido.fechaEntrega,
+        cantidadProducto : this.cantidadProductos,
+        direccion : this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )'
+      })
+      
       if (this.pedido.estadoPedido === 'PEDIDO INFORMADO') {
         this.checkAceptar = false;
         this.checkRechazar = false;

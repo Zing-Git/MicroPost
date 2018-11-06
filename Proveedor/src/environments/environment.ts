@@ -4,7 +4,7 @@ export var envirotment = {
     NOMBRE_USUARIO: '',
     ID_USUARIO:'',
     PROVEEDOR_ID: '',
-    PROVEEDOR:'',
+    PROVEEDOR:' ',
     TOKEN:'',
     PROVEEDOR_LOGIN:'',
     APIKEY: 'AIzaSyBR0QD8bdbTqRLZsc07MYmTL7BpiYrVEUM',

@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ViewController, DateTime } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pedido } from '../../../../modelo/pedido';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
@@ -34,8 +34,6 @@ export class CarritoPage {
             let subtotal= element.cantidad * element.precioSugerido;
             this.total = this.total + subtotal;
         });
-        console.log('en el carrito');
-        console.log(this.pedido);
 
         this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
         this.fechaEntrega = this.fechaMinima.toISOString();
@@ -65,32 +63,34 @@ export class CarritoPage {
                     unidadMedida: x.unidadMedida
                 })
             })
+
             this.pedido.productos = this.arrayProductosviewModel;
             if(this.fechaEntrega === ' '){
                 let fecha = new Date();
                 fecha.setDate(fecha.getDate() + 1);
                 this.fechaEntrega = fecha.toISOString();
             }
-            console.log('fecha');
-            console.log(this.fechaEntrega);
+ 
             this.pedido.fechaEntrega = this.fechaEntrega;
-            this.pedido.comentario = this.comentario;
+           
+
             Swal({
                 title: 'Pedido Listo!',
-                text: 'Ya completaste tu pedido, solo debes presionar enviar y llegará inmediatamente a tu proveedor.',
+                html: '<strong><p style="font-size: 12px;">Ya completaste tu pedido, solo debes presionar enviar y llegará inmediatamente a tu proveedor.<br/> Si quiere agregar un comentario escriba aquí abajo.</p></strong>',
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonText: 'Cancelar',
                 confirmButtonText: 'Enviar!',
                 confirmButtonColor: '#488aff',
                 cancelButtonColor: '#488aff',                
-                reverseButtons: true
+                reverseButtons: true,      
+                input: 'text'
               
             }).then((result) => {
                 if (result.value) {
-
+                    this.pedido.comentario = result.value;
                     this.comercioService.postPedidoProveedor(this.pedido).subscribe(result => {
-                        console.log(result);
+                       
                         if (typeof result != 'undefined') {
                             if (result.ok) {
                                 Swal({

@@ -8,28 +8,28 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
-        <h3 text-center><strong>Paso 1 de 2: Elija Proveedor</strong>r</h3>
-      </ion-card>
+  <ion-card-header>
+    <h3 style="color: #f4f4f4;" text-center><strong>Paso 1 de 2: Elija Proveedor</strong></h3>
+  </ion-card-header>
   <ion-card>
-    <ion-card-header>
-      <p text-wrap>
-          Felicidades, estás por agregar un nuevo proveedor a tu red, esto te permitirá vender nuevos productos
-      </p>
-    </ion-card-header>
+
+    <p text-wrap>
+      Felicidades, estás por agregar un nuevo proveedor a tu red, esto te permitirá vender nuevos productos
+    </p>
+
   </ion-card>
- 
+
   <ion-card>
     <ion-list>
-    <ion-item *ngFor="let proveedor of proveedores; let i=index">
-      <ion-item (click)="realizarInvitacion(proveedor)">
+      <ion-item *ngFor="let proveedor of proveedores; let i=index">
+        <ion-item (click)="realizarInvitacion(proveedor)">
           <ion-avatar item-start>
-              <img src="../../../../assets/icon/camion.png">
-            </ion-avatar>       
+            <img src="../../../../assets/icon/camion.png">
+          </ion-avatar>
           <h2>{{proveedor.entidad.razonSocial}}</h2>
-      </ion-item> 
-    </ion-item>
-  </ion-list>
+        </ion-item>
+      </ion-item>
+    </ion-list>
   </ion-card>
-  
+
 </ion-content>

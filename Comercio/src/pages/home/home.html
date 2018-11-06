@@ -5,8 +5,42 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
+    <ion-card>
+      <ion-card-header text-center>
+        Paso 3: Ver Pedidos
+      </ion-card-header>
+      <ion-item>
+        <h3></h3>
+        <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si
+          quiere una fecha en particular <a href="#" > presione aqui
+  
+          </a></h3>
+  
+      </ion-item>
+      </ion-card>
+      <ion-scroll scrollY="true">
+
+          <ion-list *ngFor="let producto of pedidos;">
+            <ion-item>
+    
+              <ion-avatar item-start>
+                <button ion-button small  item-first>
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-avatar>
+              <h3> </h3>
+              <h3><strong> Producto </strong>{{producto.a}}</h3>
+              <h3><strong> Unidad </strong> {{producto.b}}</h3>
+              <h3><strong> Cant. </strong> {{producto.c}}</h3>
+              <h3><strong> Precio </strong>$ {{producto.d}}</h3>
+              <h2><strong> Sub - Total </strong>$ {{producto.e}}</h2>
+              
+            </ion-item>
+          </ion-list>
+        </ion-scroll>
+</ion-content>
+<!--<ion-content padding>
   <ion-card>
     <ion-card-header>
       Micro Post Comercio
@@ -34,4 +68,4 @@
       </button>
     </ion-list>
   </ion-card>
-</ion-content>
+</ion-content>-->

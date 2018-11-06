@@ -38,7 +38,7 @@ export class LoginPage {
       if(val != ' '){
 
      
-      if (typeof val != null) {
+      if (val != null) {
         console.log('no es nulo');
         console.log(val);
         let newLogin = JSON.parse(val);
@@ -97,8 +97,8 @@ export class LoginPage {
   getLogin() {
 
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos...",
-      duration: 6000
+      content: "Por favor Espere unos segundos..."//,
+      //duration: 6000
     });
     loader.present();
 
@@ -109,7 +109,7 @@ export class LoginPage {
         this.usuarioLogin = result['usuario'];
 
         if (typeof this.usuarioLogin === 'undefined') {
-          loader.dismiss();
+         
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
         } else {
 
@@ -126,23 +126,25 @@ export class LoginPage {
 
             if (this.idProveedor != undefined) {
               this.almacenarValoresImportantes();
-              loader.dismiss();
+              
               this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
                 animate: true
               });
             } else {
-              loader.dismiss();
+              
               Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas', 'error')
             }
           }
 
 
         }
-
+ loader.dismiss();
       }, err => {
-        loader.dismiss();
+        
         Swal('Atención', 'Ocurrio un problema inesperado codigo: ' + err, 'error')
+        loader.dismiss();
       });
+
     } else {
       loader.dismiss();
       Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
@@ -164,7 +166,7 @@ export class LoginPage {
     }, 1500);
   }
 
-  presentAlert() {
+  /*presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'Atencion',
       subTitle: 'Ingreso mal las credenciales',
@@ -176,7 +178,7 @@ export class LoginPage {
       }]
     });
     alert.present();
-  }
+  }*/
 
   almacenarValoresImportantes() {
     this.storage.set('id', this.usuarioLogin._id);
