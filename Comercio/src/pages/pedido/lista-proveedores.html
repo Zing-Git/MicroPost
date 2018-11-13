@@ -1,20 +1,42 @@
-
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    
-  </ion-navbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+
+        </ion-navbar>
+      </ion-col>
+
+
+      <ion-col col-2>
+        <div class="center_vertically" (click)='doRefresh()'>
+          <i class="fas fa-sync-alt fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-header>
 
 
-<ion-content>
-  <ion-card-header text-center>
-    Paso 1: Elija Proveedor
-  </ion-card-header>
- 
-     <!--  <ion-item>
+<ion-content padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <p class="tituloTotal"><strong>Elija Proveedor <br> Seleccioná al proveedor para realizar el pedido</strong></p>
+
+
+  <br>
+  <!--  <ion-item>
     
    <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
         <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id" >{{fProv.entidad.razonSocial}}</ion-option>
@@ -22,18 +44,23 @@
     </ion-item>-->
 
 
-<ion-item>
-  <h3 text-center>
-      Proveedores
-  </h3>   
-    <ion-list *ngFor="let fProv of proveedoresViewModel; let i=index">
+  <ion-item>
+    <h3 text-center>
+
+    </h3>
+    <ion-list *ngFor="let fProv of proveedores; let i=index">
       <ion-item (click)="mostrarProductosModal(fProv)">
-          <ion-avatar item-start>
-              <img src="../../../../assets/icon/camion.png">
-            </ion-avatar>       
-          <h2>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() + fProv.entidad.razonSocial.substr(1).toLowerCase() }}</h2>
-      </ion-item> 
+        <ion-avatar item-start>
+
+          <i class="fas fa-truck-moving fa-3x"></i>
+
+        </ion-avatar>
+
+        <h2 text-wrap><strong>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() +
+            fProv.entidad.razonSocial.substr(1).toLowerCase() }}</strong></h2>
+        <h3 text-wrap>{{fProv.entidad.actividadPrincipal}}</h3>
+      </ion-item>
     </ion-list>
-</ion-item>
-  
+  </ion-item>
+
 </ion-content>

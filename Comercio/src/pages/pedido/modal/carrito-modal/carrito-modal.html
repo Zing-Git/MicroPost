@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+
+      <ion-col col-4>
+        <div class="center_vertically">
+          <strong> Total</strong> <br>$ {{total | number:'1.2-2'}}
+        </div>
+
+      </ion-col>
+      <ion-col colo-4 text-center>
+        <div class="center_vertically">
+          <ion-icon name="cart" item-start></ion-icon> {{contador}}
+        </div>
+
+      </ion-col>
+      <ion-col col-2>
+        <div class="center_vertically" (click)='pedirProducto()'>
+          <i class="fas fa-share-square fa-2x"></i>
+
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content padding>
+  <h3 class="tituloTotal" text-center>Mi Carrito.</h3>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+       <button full ion-button round color="dark" outline (click)=" picker.open(); visualItem = !visualItem ">Click para cambiar fecha  </button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+        <button full ion-button round color="dark" outline clear>Entrega estimada {{fechaEntrega.substr(0,10)}}  </button>
+      
+    </ion-col>
+  </ion-row>
+</ion-grid>
+  <div >
+     
+ 
+   
+  
+  </div>
+
+  <ion-scroll scrollY="true">
+    <ion-list *ngFor="let producto of pedido.productos;">
+      <ion-item>
+
+        <ion-avatar item-start>
+          <button ion-button small (click)='sacarProducto(producto)' item-first>
+            <i class="fas fa-trash-alt fa"></i>
+          </button>
+        </ion-avatar>
+        <h3> </h3>
+        <p text-wrap><strong>{{producto.unidadMedida + ' de ' + producto.nombreProducto + ' x ' + producto.cantidad + '
+            Und.'}} </strong></p>
+
+        <h3><strong> Precio </strong>$ {{producto.precioProveedor}}</h3>
+        <h2><strong> Sub - Total </strong>$ {{producto.cantidad * producto.precioProveedor | number:'1.2-2'}}</h2>
+
+      </ion-item>
+    </ion-list>
+  </ion-scroll>
+
+  
+
+
+<ion-datetime #picker hidden="true" cancelText="Cancelar" doneText="Ok" displayFormat="DD/MM/YYYY" pickerFormat="YYYY MM DD"
+    [(ngModel)]="fechaEntrega"></ion-datetime>
+</ion-content>

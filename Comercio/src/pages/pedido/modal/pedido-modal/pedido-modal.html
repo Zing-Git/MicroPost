@@ -1,49 +1,80 @@
 <ion-header>
-  <ion-navbar>
-    <ion-item padding no-lines>
-      <button (click)="volver()" item-right class="cerrar">
-        <ion-icon name="close"></ion-icon> Cerrar
-      </button>
-    </ion-item>
-  </ion-navbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+      <ion-col col-3>
+
+      </ion-col>
+
+      <ion-col col-3>
+        <div class="center_vertically" style=" color: rgb(17, 17, 161);">
+          <strong>{{nombreProducto}}</strong>
+
+        </div>
+
+      </ion-col>
+      <ion-col col-2>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-header>
 
 
 <ion-content padding>
 
-  <form [formGroup]="nuevoProductoForm" id="container">
-    <ion-card-header text-center>
-      1. Unidad de Medida
-    </ion-card-header>
+  <form [formGroup]="nuevoProductoForm">
+    <h5 text-center>
+      Unidad de Medida
+    </h5>
 
 
     <ion-select formControlName="unidadMedida" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
       interface="popover">
       <ion-option *ngFor="let unidad of producto.unidadesMedida" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
     </ion-select>
-    <ion-card-header text-center>
-      2. Cantidad
-    </ion-card-header>
-    <ion-input formControlName="cantidad" type="number" id="ion-input" placeholder="Ingrese cantidad"></ion-input>
-    <ion-card-header>
-       <table cellspacing="0" cellpadding="1" padding>
-      <tr>
-        <td><b>Precio $</b></td>
-        <td> <ion-input type="text" disabled formControlName="precioSugerido"></ion-input></td>
-      </tr>
-      <tr>
-        <td><b>Sub total $</b> </td>
-        <td>{{nuevoProductoForm.controls['cantidad'].value *
-      nuevoProductoForm.controls['precioSugerido'].value}}</td>
-      </tr>
-    </table>
+    <h5 text-center>
+      Cantidad
+    </h5>
+    <ion-input formControlName="cantidad" type="number" placeholder="Ingrese cantidad" class="ion-input"></ion-input>
 
-    </ion-card-header>
-   
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <div class="center_vertically">
+            <b>Precio unitario </b>
+          </div>
 
-    <ion-item id="rounded">
-      <button ion-button round (click)="dismiss()" item-end [disabled]="!nuevoProductoForm.valid">Cargar Pedido</button>
-    </ion-item>
+        </ion-col>
+        <ion-col col-5>
+          <div class="center_vertically">
+            <ion-input type="text" disabled formControlName="precioProveedor" class="no-opacity"></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          <div class="center_vertically">
+            <b>Sub total</b>
+          </div>
+        </ion-col>
+        <ion-col col-5>
+          <div class="center_vertically">
+            $ {{nuevoProductoForm.controls['cantidad'].value *
+            precioProveedorCalculo | number:'1.2-2' }}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <button class="button-1" ion-button round (click)="dismiss()" full [disabled]="!nuevoProductoForm.valid">Cargar
+      Pedido</button>
+
 
   </form>
 </ion-content>

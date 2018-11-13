@@ -39,6 +39,10 @@ import { ListaProductosModalPage } from '../pages/pedido/modal/lista-productos-m
 import { AltaContactosPage } from '../pages/alta/alta-contactos/alta-contactos';
 import { AyudaPage } from '../pages/ayuda/ayuda';
 import { DatePicker } from '@ionic-native/date-picker';
+import { SalirPage } from '../pages/salir/salir';
+import { CarritoModalPage } from '../pages/pedido/modal/carrito-modal/carrito-modal';
+
+import { AppVersion } from '@ionic-native/app-version';
 //declare module 'google-maps';
 
 @NgModule({
@@ -61,7 +65,9 @@ import { DatePicker } from '@ionic-native/date-picker';
     ListaPublicidadPage,
     ListaPublicidadModalPage,
     InvitacionProveedorModalPage,
-    AyudaPage
+    AyudaPage,
+    SalirPage,
+    CarritoModalPage
   ],
   imports: [
     BrowserModule,
@@ -89,7 +95,9 @@ import { DatePicker } from '@ionic-native/date-picker';
     ListaPublicidadPage,
     ListaPublicidadModalPage,
     InvitacionProveedorModalPage,
-    AyudaPage
+    AyudaPage,
+    SalirPage,
+    CarritoModalPage
   ],
   providers: [
     StatusBar,
@@ -101,7 +109,8 @@ import { DatePicker } from '@ionic-native/date-picker';
     ComercioProvider,
     ProductoProvider,
     DecimalPipe,
-    DatePicker
+    DatePicker,
+    AppVersion
   ]
 })
 export class AppModule {}

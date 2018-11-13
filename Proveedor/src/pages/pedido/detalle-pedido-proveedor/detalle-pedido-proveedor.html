@@ -1,11 +1,33 @@
 <ion-header>
-  <ion-navbar>
-    <ion-item padding no-lines>
-      <button (click)="volver()" item-right class="cerrar">
-        <ion-icon name="close"></ion-icon> Cerrar
-      </button>
-    </ion-item>
-  </ion-navbar>
+    <ion-grid>
+        <ion-row>
+          <ion-col col-2 >
+            <div class="center_vertically" (click)="volver()">
+                <i class="fas fa-angle-double-left fa-2x"></i>
+            </div>
+          </ion-col>
+    
+          <ion-col col-4>
+              <div class="center_vertically">
+                  
+                </div>
+    
+          </ion-col>
+          <ion-col colo-4 text-center>
+            <div class="center_vertically" >
+             
+            </div>
+    
+          </ion-col>
+          <ion-col col-2>
+            <div class="center_vertically" >
+            
+            </div>
+    
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
 </ion-header>
 
 <ion-content padding>
@@ -43,59 +65,21 @@
               <h3 ><strong>{{item.fechaEntrega  | date: 'dd/MM/yyyy'}}</strong></h3>
             </ion-item>
 
-
-        <!--<ion-item>
-          <ion-label floating>Comercio</ion-label>
-          <ion-input [formControl]="pedidoForm.controls['nombreComercio']" type="text"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label floating>Direccion</ion-label>
-          <ion-textarea [formControl]="pedidoForm.controls['direccion']" type="text" text-wrap></ion-textarea>
-        </ion-item>
-
-        <ion-item>
-          <ion-label floating>Tipo de Entrega</ion-label>
-          <ion-input [formControl]="pedidoForm.controls['tipoEntrega']" type="text"></ion-input>
-        </ion-item>
-
-
-
-        <ion-item>
-          <ion-label floating>Monto Total</ion-label>
-          <ion-input [formControl]="pedidoForm.controls['montoTotal']" type="text"></ion-input>
-        </ion-item>
-
-
-
-        <ion-item>
-          <ion-label floating>Fecha de Entrega</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY hh:mm" [formControl]="pedidoForm.controls['fechaEntrega']"></ion-datetime>
-        </ion-item>-->
-
-
       </ion-list>
     </form>
 
 
     <form *ngSwitchCase="'detalle'">
 
-      <ion-scroll style="height: 500px" scrollY="true">
+      <ion-scroll style="height: 400px" scrollY="true">
 
         <ion-list *ngFor="let item of pedido.detallePedido">
           <ion-item>
-
-            <!-- <ion-avatar item-start>
-              <button ion-button small>
-                <ion-icon name="pricetag"></ion-icon>
-              </button>
-            </ion-avatar>-->
-            <h3><strong> Producto </strong>{{item.producto.nombreProducto}}</h3>
-            <h3><strong> Unidad </strong> {{item.unidadMedida}}</h3>
-            <h3><strong> Cant. </strong> {{item.cantidadPedido}}</h3>
-            <h3><strong> Precio unitario $ </strong>{{item.producto.precioSugerido}} </h3>
-            <h2><strong> Sub total $ </strong> {{item.cantidadPedido * item.producto.precioSugerido}}</h2>
-            <ion-item-divider></ion-item-divider>
+            <p><strong> {{item.unidadMedida + ' de ' +item.producto.nombreProducto + ' x ' +item.cantidadPedido + ' Und.'}}</strong></p>
+       
+            <p><strong> Precio unitario $ </strong>{{item.producto.precioProveedor}} </p>
+            <p><strong> Sub total $ </strong> {{item.cantidadPedido * item.producto.precioProveedor}}</p>
+            <hr>
           </ion-item>
         </ion-list>
       </ion-scroll>

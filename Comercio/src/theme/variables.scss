@@ -33,8 +33,8 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$colors: (primary: #488aff,
-secondary: #32db64,
+$colors: (primary:  #063079,
+secondary: #0c8f33,
 danger: #f53d3d,
 light: #f4f4f4,
 dark: #222);
@@ -125,12 +125,69 @@ dark: #222);
   margin-right: auto; 
 }
 
-#ion-input {
-  background-color: lightgoldenrodyellow !important;
-}
 
 ion-card-header{
-  background-color: #488aff !important;
+  background-color:  #063079 !important;
   color: #f4f4f4 !important;
-  border-radius: 10px;
+  border-radius: 9px !important;
+  padding: 5px 5px 5px 5px !important;
+}
+ion-card-header h3{
+ 
+  font-size: 14px !important;
+  
+}
+.ion-card-ofertas{
+margin-top: 20%;
+}
+
+
+ion-scroll {
+  height: 70vh;
+  }
+  .p {
+      text-overflow: unset;
+      white-space: unset;
+   }
+.nueva-img{
+  width: 50px !important;
+  height: 50px !important;
+}
+
+p{
+  font-size:  13px !important;
+  text-align: left !important;
+  color: #222 !important;
+  opacity: 1 !important;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+}
+
+.tituloTotal{
+  //background-color: #2e66c9 !important;
+  text-align: center !important;
+  color: rgb(13, 8, 94) !important;
+  font-size: 16px !important;
+  
+  background: rgba(179,220,237,1);
+  background: -moz-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(179,220,237,1)), color-stop(50%, rgba(41,184,229,1)), color-stop(100%, rgba(188,224,238,1)));
+  background: -webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background: -o-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background: -ms-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee', GradientType=1 );
+border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+border: 1px solid #000000;
+
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+ion-searchbar{
+  height: auto !important;
+  padding: 5px 10px 0 0!important;
 }

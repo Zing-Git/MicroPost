@@ -8,6 +8,9 @@ import { LoginProvider } from '../../providers/login/login';
 import { AltaClientePage } from '../alta/alta-cliente/alta-cliente';
 import { ListadoPedidosFiltradosPage } from '../pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
 import { SalirPage } from '../salir/salir';
+import { AppVersion } from '@ionic-native/app-version';
+import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
+
 
 @Component({
   selector: 'page-login',
@@ -28,26 +31,25 @@ export class LoginPage {
 
   constructor(private navCtrl: NavController,
     private login: LoginProvider,
-    private alertCtrl: AlertController,
+    private appVersion: AppVersion,
     public storage: Storage,
     public loadingCtrl: LoadingController,
-    private event: Events) {
+    private event: Events,
+    private auxiliar: AuxiliarProvider) {
     //this.limpiarValoresPorDefecto();
 
+    this.getVersionNumber();
     this.storage.get('proveedor').then((val) => {
-      if(val != ' '){
+      if (val != ' ') {
 
-     
-      if (val != null) {
-        console.log('no es nulo');
-        console.log(val);
-        let newLogin = JSON.parse(val);
-        console.log(newLogin);
-        this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave)
-      } 
-    }
+
+        if (val != null) {
+          let newLogin = JSON.parse(val);
+          this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave)
+        }
+      }
     });
-    console.log(ENV);
+
     this.newLogin = new LoginModel();
 
   }
@@ -55,10 +57,12 @@ export class LoginPage {
   getLoginStorage(usuario: string, clave: string) {
     this.newLogin.nombreUsuario = usuario;
     this.newLogin.clave = clave;
+
     const loader = this.loadingCtrl.create({
-      content: "Cargando datos, unos segundos, Gracias..."
+      content: "Cargando datos, aguarde unos segundos, Gracias..."
     });
     loader.present();
+
     this.login.getLogin(this.newLogin).subscribe(result => {
       this.usuarioLogin = result['usuario'];
       this.datosProveedor = result['proveedorDB'];
@@ -96,21 +100,20 @@ export class LoginPage {
   }
   getLogin() {
 
-    const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."//,
-      //duration: 6000
-    });
-    loader.present();
-
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario != ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
 
+      const loader = this.loadingCtrl.create({
+        content: "Por favor Espere unos segundos..."
+      });
+      loader.present();
       this.login.getLogin(this.newLogin).subscribe(result => {
 
         this.usuarioLogin = result['usuario'];
 
         if (typeof this.usuarioLogin === 'undefined') {
-         
+
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
+          loader.dismiss();
         } else {
 
           this.datosProveedor = result['proveedorDB'];
@@ -126,33 +129,31 @@ export class LoginPage {
 
             if (this.idProveedor != undefined) {
               this.almacenarValoresImportantes();
-              
+
               this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
                 animate: true
               });
             } else {
-              
+
               Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas', 'error')
             }
           }
-
+          loader.dismiss();
 
         }
- loader.dismiss();
+
       }, err => {
-        
         Swal('Atención', 'Ocurrio un problema inesperado codigo: ' + err, 'error')
-        loader.dismiss();
+
       });
 
     } else {
-      loader.dismiss();
       Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
     }
   }
 
   goCreateCliente() {
-    //console.log('aqui');
+    
     this.navCtrl.push(AltaClientePage);
   }
 
@@ -160,25 +161,10 @@ export class LoginPage {
 
   doRefresh(refresher: Refresher) {
     setTimeout(() => {
-      console.log("Termino el refhresh");
       this.newLogin = new LoginModel();
       refresher.complete();
     }, 1500);
   }
-
-  /*presentAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Atencion',
-      subTitle: 'Ingreso mal las credenciales',
-      buttons: [{
-        text: 'Ok',
-        handler: () => {
-          location.reload();
-        }
-      }]
-    });
-    alert.present();
-  }*/
 
   almacenarValoresImportantes() {
     this.storage.set('id', this.usuarioLogin._id);
@@ -192,14 +178,8 @@ export class LoginPage {
     ENV.PROVEEDOR_ID = this.idProveedor;
     ENV.TOKEN = this.usuarioLogin.token;
     ENV.PROVEEDOR_LOGIN = JSON.stringify(this.datosProveedor);
-    /*this.storage.get('token').then((val) => {
-      console.log('Your id is', val);
-    });*/
-    console.log(ENV);
-
+    
   }
-
-
 
   showPassword() {
     this.showPass = !this.showPass;
@@ -229,4 +209,15 @@ export class LoginPage {
 
     })
   }
+
+  async getVersionNumber() {
+    const appNumber = await this.appVersion.getVersionNumber();
+    this.auxiliar.getVersionFromServer().subscribe(result => {
+      const appNumberServer = result['versiones'];
+      if (appNumber !== appNumberServer.versionAndroidProveedor) {
+        Swal('Actualizar Aplicación Bitbi Proveedor', 'Su version de aplicacion es ' + appNumber + ', nueva versión ' + appNumberServer.versionAndroidProveedor, 'info');
+      }
+    })
+  }
+
 }

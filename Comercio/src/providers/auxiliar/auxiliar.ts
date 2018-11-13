@@ -16,6 +16,7 @@ export class AuxiliarProvider {
   private urlBase = ENV.BASE_URL;
   private urlPostGetCombos = this.urlBase + '/conf/combos/';
   private urlGetPublcidades = this.urlBase + '/publicidad/obtener_publicidad/';
+  private urlVersion = this.urlBase + '/conf/version/';
   data: any;
 
   constructor(private storage: Storage,public http: HttpClient, private loadingCtrl: LoadingController, private decimalPipe: DecimalPipe) {
@@ -29,7 +30,7 @@ export class AuxiliarProvider {
 
   presentLoading() {
     this.storage.get('token').then((val) => {
-      console.log('Your id is', val);
+      
     });
   }
 
@@ -79,5 +80,15 @@ export class AuxiliarProvider {
   getRubroComercio(){
     return ENV.RUBRO_COMERCIO;
   }
+
+  removeDuplicates(myArr, prop) {
+    return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+    });
+}
+
+getVersionFromServer(): Observable<any[]>{
+  return this.http.get<any>(this.urlVersion,cudOptions);
+}
   
 }

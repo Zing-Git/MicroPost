@@ -6,10 +6,11 @@ import { PedidoModalPage } from '../pedido-modal/pedido-modal';
 import { Pedido } from '../../../../modelo/pedido';
 import { envirotment as ENV } from '../../../../environments/environments';
 import { Storage } from '@ionic/storage';
-import { CarritoPage } from '../carrito/carrito';
 import { ListaProveedoresPage } from '../../../pedido/lista-proveedores';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { Events } from 'ionic-angular';
+import { CarritoModalPage } from '../carrito-modal/carrito-modal';
+import { ListaPedidoComercioPage } from '../../../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 
 @IonicPage()
 @Component({
@@ -39,9 +40,12 @@ export class ListaProductosModalPage {
   pedido: Pedido;
   productosPedidos: any[] = new Array();
 
-  cantidadPedido: string ='0';
+  cantidadPedido: string = '0';
   totalPedido: string = '0';
   contadorCarrito: string = '0';
+
+  duration: any = 'Seleccione Categoria'
+  productoAEliminar: any = ' ';
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -50,7 +54,8 @@ export class ListaProductosModalPage {
     private storage: Storage,
     private auxiliar: AuxiliarProvider,
     private loadingCtrl: LoadingController,
-    public events: Events) {
+    public events: Events
+  ) {
 
     //this.nombrecomercio = ENV.NOMBRE_COMERCIO;
     const loader = this.loadingCtrl.create({
@@ -80,27 +85,45 @@ export class ListaProductosModalPage {
           'error'
         )
       } else {
-        this.iniciarArrayCategorias();
+        this.iniciarArrays();
       }
     });
 
 
   }
 
-  iniciarArrayCategorias() {
+  iniciarArrays() {
 
 
     this.productoCategorias = new Array();
+    this.productoSubCategorias = new Array();
+
     this.arrayCategorias.length = 0;
 
     if (typeof this.productosViewModel != 'undefined') {
-
+      //Inicializo el array de categorias y asigno el primer elemento
       this.productosViewModel.forEach(x => {
         this.productoCategorias.push(x.categoria);
       });
+
       this.arrayCategorias = this.auxiliar.crearArray(this.productoCategorias);
+
       this.arraySubcategorias.length = 0;
       this.arrayProductos.length = 0;
+      this.categoria = this.arrayCategorias[0] || 1;
+
+      //Inicializo el array de Sub categorias y asigno el primer elemento
+      this.productosViewModel.forEach(x => {
+        if (x.categoria === this.categoria) {
+          this.productoSubCategorias.push(x.subcategoria);
+        }
+      });
+
+      this.arraySubcategorias = this.auxiliar.crearArray(this.productoSubCategorias);
+      this.itemSubcategoriaSelected = this.arraySubcategorias[0] || 1;
+
+      this.cargarProductosViewModel();
+
 
     }
 
@@ -108,10 +131,15 @@ export class ListaProductosModalPage {
 
   }
 
+  cargarProductosViewModel() {
+    this.arrayProductos.length = 0;
 
+    this.productosViewModel.forEach(x => {
+      if (x.subcategoria === this.itemSubcategoriaSelected && x.categoria === this.categoria) {
+        this.arrayProductos.push(x);
+      }
+    });
 
-  volver() {
-    this.navCtrl.setRoot(ListaProveedoresPage);
   }
 
   onCategoriasChange(ctxt: string): void {
@@ -127,6 +155,9 @@ export class ListaProductosModalPage {
     });
     this.arraySubcategorias = this.auxiliar.crearArray(this.productoSubCategorias);
     this.itemSubcategoriaSelected = this.arraySubcategorias[0] || 1;
+
+    this.cargarProductosViewModel();
+
   }
 
   onSubCategoriasChange(ctxt: string): void {
@@ -138,46 +169,129 @@ export class ListaProductosModalPage {
         this.arrayProductos.push(x);
       }
     });
-    this.categoria = ' ';
+
+  }
+
+  controlarSiExisteProducto(producto: any): any {
+
+    this.productosPedidos.length = 0;
+    this.productosPedidos = JSON.parse(ENV.PEDIDO);
+    console.log('Existe?')
+    let nuevoProducto = this.productosPedidos.find(x => x._id === producto._id);
+    if (typeof nuevoProducto != "undefined") {
+      return nuevoProducto;
+    } else {
+      return "undefined";
+    }
+
   }
 
   seleccionarProducto(producto: any) {
+    this.productoAEliminar = this.controlarSiExisteProducto(producto);
+    if (this.productoAEliminar!= "undefined") {
+      Swal({
+        title: 'Confirmar',
+        html: 'Ya cargaste ' + this.productoAEliminar.nombreProducto + ' con cantidad de ' + this.productoAEliminar.cantidad + ' ' + this.productoAEliminar.unidadMedida + ', queres volver a agregar ' + this.productoAEliminar.nombreProducto + '?',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'No',
+        confirmButtonText: 'Si',
+        confirmButtonColor: '#488aff',
+        cancelButtonColor: '#488aff',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          /*console.log('antes de quitar ');
+          console.log(this.productoAEliminar);
+          console.log(this.productosPedidos);
+          this.productosPedidos = this.productosPedidos.filter(x => x._id !== this.productoAEliminar._id);
+          console.log('despues de sacar');
+          console.log(this.productosPedidos);
+          ENV.PEDIDO = JSON.stringify(this.productosPedidos);  //aqui esta en blanco
 
-    let nuevoProducto: any;
-    let modal = this.modalCtrl.create(PedidoModalPage, { data: producto });
+          Swal(
+            'Listo!',
+            'El producto fue retirado del carrito',
+            'success'
+          );
+          this.calcularTotalCantidad();*/
 
-    modal.present();
+          let nuevoProducto: any;
+      let modal = this.modalCtrl.create(PedidoModalPage, { data: producto });
 
-    modal.onDidDismiss((location) => {
-      //cargar en envirotment el listado de pedidos
+      modal.present();
 
-      if (location.cantidad > 0) {
+      modal.onDidDismiss((location) => {
+        //cargar en envirotment el listado de pedidos
 
-        this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
+        if (location.cantidad > 0) {
 
-        nuevoProducto = location;                         //segundo agrego el nuevo producto
-        this.productosPedidos.push({
-          _id: nuevoProducto._id,
-          unidadMedida: nuevoProducto.unidadMedida,
-          cantidad: nuevoProducto.cantidad,
-          nombreProducto: nuevoProducto.nombreProducto,
-          precioSugerido : nuevoProducto.precioSugerido
-        })
+          this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
 
-        ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //tercero aqui almaceno la lista de productos
-        //console.log('Productos Pedidos');
-        //console.log(this.productosPedidos);
+          nuevoProducto = location;                         //segundo agrego el nuevo producto
+          this.productosPedidos.push({
+            _id: nuevoProducto._id,
+            unidadMedida: nuevoProducto.unidadMedida,
+            cantidad: nuevoProducto.cantidad,
+            nombreProducto: nuevoProducto.nombreProducto,
+            precioProveedor: nuevoProducto.precioProveedor
+          })
 
-        this.calcularTotalCantidad();
-      }
+          ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //tercero aqui almaceno la lista de productos
+          //console.log('Productos Pedidos');
+          //console.log(this.productosPedidos);
 
-    });
+          this.calcularTotalCantidad();
+        }
 
-    this.cargarListaProductos();
+      });
+
+      this.cargarListaProductos();
+        } else {
+
+        }
+      })
+    }
+    else {
+      let nuevoProducto: any;
+      let modal = this.modalCtrl.create(PedidoModalPage, { data: producto });
+
+      modal.present();
+
+      modal.onDidDismiss((location) => {
+        //cargar en envirotment el listado de pedidos
+
+        if (location.cantidad > 0) {
+
+          this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
+
+          nuevoProducto = location;                         //segundo agrego el nuevo producto
+          this.productosPedidos.push({
+            _id: nuevoProducto._id,
+            unidadMedida: nuevoProducto.unidadMedida,
+            cantidad: nuevoProducto.cantidad,
+            nombreProducto: nuevoProducto.nombreProducto,
+            precioProveedor: nuevoProducto.precioProveedor
+          })
+
+          ENV.PEDIDO = JSON.stringify(this.productosPedidos);   //tercero aqui almaceno la lista de productos
+          //console.log('Productos Pedidos');
+          //console.log(this.productosPedidos);
+
+          this.calcularTotalCantidad();
+        }
+
+      });
+
+      this.cargarListaProductos();
+    }
+
 
   }
 
   buscarCateSubCat(index) {
+    this.categoria = ' ';
+    this.itemSubcategoriaSelected = ' ';
     this.isEnabledCategoria = false;
     this.isEnabledSubCategoria = false;
     this.showListProducto = true;
@@ -193,6 +307,18 @@ export class ListaProductosModalPage {
   }
 
   pedirProducto() {     //Visualizar en un modal el carrito
+
+    this.elaborarPedido();
+
+    //console.log(this.pedido);
+    //TODO Aqui debo llamar al servicio y realizar algun otro control para no enviar vacio
+
+    this.enviarPedido();
+    //this.mostrarCarrito();
+  }
+
+  elaborarPedido(){
+    this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
 
     this.storage.get('token').then((val) => {
       this.pedido.token = val
@@ -211,31 +337,27 @@ export class ListaProductosModalPage {
     this.pedido.tipoEntrega = this.tipoEntrega;
     this.pedido.comentario = 'Pedido realizado';
     this.pedido.productos = this.productosPedidos;
-
-    //console.log(this.pedido);
-    //TODO Aqui debo llamar al servicio y realizar algun otro control para no enviar vacio
-
-    this.enviarPedido();
-    //this.mostrarCarrito();
   }
-
   enviarPedido() {
 
     //this.storage.set('pedido', JSON.stringify(this.pedido));   //almaceno el pedido
-    if (this.pedido != null) {
-      //ENV.CARRITO = JSON.stringify(this.pedido);
-      //this.viewCtrl.dismiss();
-      let modal = this.modalCtrl.create(CarritoPage, { data: this.pedido });
+    if (this.pedido.productos.length > 0) {
+
+      let modal = this.modalCtrl.create(CarritoModalPage, { data: this.pedido });
       modal.present();
 
-      modal.onDidDismiss((location) => {
+      modal.onDidDismiss((location) => {   //aqui vienen los productos
 
         if (location != null) {
-          this.pedido = location;
+          this.pedido.productos = location;
+
+          ENV.PEDIDO = JSON.stringify(this.pedido.productos);   //tercero aqui almaceno la lista de productos
+
+          this.calcularTotalCantidad();
         } else {
           //this.events.publish('reloadPage1');
 
-          this.navCtrl.setRoot(ListaProveedoresPage);
+          this.navCtrl.setRoot(ListaPedidoComercioPage);
           this.navCtrl.popToRoot();
 
         }
@@ -253,16 +375,77 @@ export class ListaProductosModalPage {
     let cantidadP = 0;
     let totalP = 0;
     let contador = 0;
+    let total = 0;
 
     this.productosPedidos = JSON.parse(ENV.PEDIDO);
     this.productosPedidos.forEach(x => {
-      totalP = totalP+ +(x.precioSugerido);
+      totalP = totalP + +(x.precioProveedor);
       cantidadP = cantidadP + +(x.cantidad);
-      contador +=1;
+      contador += 1;
+      total = total + (x.precioProveedor * x.cantidad);
     })
-    
-    this.totalPedido = totalP.toFixed(2);
+
+    //this.totalPedido = totalP.toFixed(2);
+    this.totalPedido = total.toFixed(2);
     this.cantidadPedido = cantidadP.toString();
     this.contadorCarrito = contador.toString();
+  }
+
+  volver() {
+    this.navCtrl.setRoot(ListaProveedoresPage);
+    this.navCtrl.popToRoot();
+  }
+
+  showCarrito() {
+
+    this.elaborarPedido();
+    if (this.pedido.productos.length > 0) {
+
+      let modal = this.modalCtrl.create(CarritoModalPage, { data: this.pedido });
+      modal.present();
+
+      modal.onDidDismiss((location) => {   //aqui vienen los productos
+
+        if (location != null) {
+          this.pedido.productos = location;
+
+          ENV.PEDIDO = JSON.stringify(this.pedido.productos);   //tercero aqui almaceno la lista de productos
+
+          this.calcularTotalCantidad();
+        } else {
+          //this.events.publish('reloadPage1');
+
+          this.navCtrl.setRoot(ListaProveedoresPage);
+          this.navCtrl.popToRoot();
+
+        }
+
+      });
+      
+    }
+   /* this.productosPedidos.length = 0;
+    this.productosPedidos = JSON.parse(ENV.PEDIDO);
+    let htmlScript: string= ' ';
+
+    this.productosPedidos.forEach(x => {
+      htmlScript = htmlScript + ('<p>  ' + x.nombreProducto + '--->Cantidad: ' + x.cantidad + '--->Precio: $  ' + this.auxiliar.twoDecimals(x.precioProveedor) + '</p>');
+    })
+
+    Swal({
+      title: 'Carrito!',
+      html: htmlScript,
+      type: 'success',
+      showCancelButton: false,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Ok!',
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true,
+      
+
+    }).then((result) => {
+    })
+
+*/
   }
 }

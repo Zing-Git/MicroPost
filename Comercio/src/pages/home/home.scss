@@ -1,5 +1,5 @@
 page-home {
-    ion-icon {
+    /*ion-icon {
         font-size: 20px; //Preferred size here
     }
     ion-scroll {
@@ -12,5 +12,18 @@ page-home {
   $swal2-success:  #a5dc86 !default;
   ion-textarea{
       background-color: lightgoldenrodyellow !important;
+  }*/
+
+  .masonry-layout {
+    column-count: 3;
+    column-gap: 0;
+  }
+  .masonry-layout__panel {
+    break-inside: avoid;
+    padding: 5px;
+  }
+  .masonry-layout__panel-content {
+    padding: 10px;
+    border-radius: 10px;
   }
 }

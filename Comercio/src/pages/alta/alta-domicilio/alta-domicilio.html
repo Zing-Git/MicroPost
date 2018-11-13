@@ -13,7 +13,7 @@
   <form>
     <ion-item>
       <ion-label floating>Provincia</ion-label>
-      <ion-select [formControl]="domicilioForm.controls['provincia']" type="text" (ionChange)="onProvinciaChange($event)"
+      <ion-select  [(ngModel)]="provincia" [formControl]="domicilioForm.controls['provincia']" type="text" (ionChange)="onProvinciaChange($event)"
         class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
         <ion-option *ngFor="let fProv of provincias" [value]="fProv.iso_31662">{{fProv.provincia}}</ion-option>
       </ion-select>

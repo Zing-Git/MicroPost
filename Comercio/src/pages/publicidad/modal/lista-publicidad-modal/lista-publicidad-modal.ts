@@ -61,7 +61,7 @@ export class ListaPublicidadModalPage {
     let text = 'Te invito a formar parte de mi red, gracias.'
     let idComercio = ENV.COMERCIO_ID;
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."
+      content: "Procesando Información, aguarde unos segundos, Gracias..."
 
     });
     loader.present();

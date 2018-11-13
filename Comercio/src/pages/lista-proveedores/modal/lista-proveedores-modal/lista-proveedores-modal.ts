@@ -17,6 +17,7 @@ export class ListaProveedoresModalPage {
   idComercio: string;
   text: string;
   peticion: any;
+  permitirRefresh: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -24,6 +25,7 @@ export class ListaProveedoresModalPage {
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController) {
 
+    
     this.cargarInicial();
   }
 
@@ -34,23 +36,14 @@ export class ListaProveedoresModalPage {
   }
 
   cargarInicial() {
+
     const loader = this.loadingCtrl.create({
       content: "Cargando Proveedores, espere unos segundos..."
     });
     loader.present();
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(result => {
-      this.proveedores = result['proveedores'];
-      /* this.proveedores.forEach(x=>{
-         this.proveedorService.getEstadoProveedor(x._id).subscribe(data =>{
-           let invitaciones = data['invitaciones'];
-           invitaciones.forEach(y =>{
-             if(this.idComercio === y.comercio._id){
-               this.proveedoresViewModel.push(x);
-             }
-           })
-         } )
-       })*/
+      this.proveedores = result['proveedores'];      
     });
     loader.dismiss();
 
@@ -115,5 +108,13 @@ export class ListaProveedoresModalPage {
       }
     });
   }
+
+  doRefresh(refresher?: any) { //"?" in typescript means the parameter is optional
+
+    this.cargarInicial();
+    refresher && refresher.complete();//make sure refresher is truthy before calling complete
+
+  }
+
 
 }

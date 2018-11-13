@@ -43,6 +43,8 @@ export class ListaPedidoComercioPage {
   pedidosRechazados: any[] = new Array();
   pedidosSolicitados: any[] = new Array();
 
+  permitirRefresh: boolean = false;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public comercioServices: ComercioProvider,
@@ -61,13 +63,24 @@ export class ListaPedidoComercioPage {
     this.obtenerDatosImportantes();
   }
 
+  doRefresh(refresher?:any) { //"?" in typescript means the parameter is optional
+
+      this.obtenerDatosImportantes();
+      refresher && refresher.complete();//make sure refresher is truthy before calling complete
+   }
+
   obtenerDatosImportantes() {
 
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere, cargando pedidos..."
+
+    });
+    loader.present();
 
     this.idComercio = ENV.COMERCIO_ID;
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
-console.log(result['pedidos_array']);
+
       if(result['pedidos_array'] != undefined){
         this.estado = false;
         ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
@@ -77,6 +90,8 @@ console.log(result['pedidos_array']);
       }
       
     })
+
+    loader.dismiss();
   }
 
   obtenerNombreRazonSocial(idProveedor: string): string {

@@ -1,32 +1,46 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Proveedores</ion-title>
-  </ion-navbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Proveedores</ion-title>
+        </ion-navbar>
+      </ion-col>
+
+
+      <ion-col col-2>
+        <div class="center_vertically" (click)='doRefresh()'>
+          <i class="fas fa-sync-alt fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-header>
 
 <ion-content>
-  <ion-card-header>
-    <h3 style="color: #f4f4f4;" text-center><strong>Paso 1 de 2: Elija Proveedor</strong></h3>
-  </ion-card-header>
-  <ion-card>
 
-    <p text-wrap>
-      Felicidades, estás por agregar un nuevo proveedor a tu red, esto te permitirá vender nuevos productos
-    </p>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
-  </ion-card>
+  <p class="tituloTotal"> <strong>Agregar nuevo Proveedor a tu red<br></strong></p>
+
 
   <ion-card>
     <ion-list>
       <ion-item *ngFor="let proveedor of proveedores; let i=index">
         <ion-item (click)="realizarInvitacion(proveedor)">
           <ion-avatar item-start>
-            <img src="../../../../assets/icon/camion.png">
+            <i class="fas fa-truck-moving fa-3x"></i>
           </ion-avatar>
-          <h2>{{proveedor.entidad.razonSocial}}</h2>
+          <h2 text-wrap>{{proveedor.entidad.razonSocial}}</h2>
         </ion-item>
       </ion-item>
     </ion-list>

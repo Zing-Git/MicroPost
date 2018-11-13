@@ -24,6 +24,7 @@ export class AltaDomicilioPage {
   provinciaName: string;
   localidadName:string;
   
+  
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private formBuilder: FormBuilder,
@@ -46,12 +47,14 @@ export class AltaDomicilioPage {
 
   ionViewDidLoad() {
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."
+      content: "Por favor Espere unos segundos...",
+      duration: 3000
      
     });
     loader.present();
     this.cargarControlesCombos();
-    loader.dismiss();
+    
+    
   }  
 
   onSingin() {

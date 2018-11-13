@@ -44,6 +44,11 @@ export class CrearPublicidadPage {
 
   tomarFoto() {
 
+    const loader = this.loadingCtrl.create({
+      content: "Procesando..."
+    });
+    loader.present();
+
     let options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -54,6 +59,8 @@ export class CrearPublicidadPage {
       saveToPhotoAlbum: false,
       correctOrientation: true
     }
+
+
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
@@ -63,9 +70,17 @@ export class CrearPublicidadPage {
       // Handle error
     });
     this.esValido = false;
+
+    loader.dismiss();
   }
 
   tomarDeGaleria() {
+
+    const loader = this.loadingCtrl.create({
+      content: "Procesando..."
+    });
+    loader.present();
+
     let cameraOptions = {
       sourceType: 0,//this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -82,6 +97,7 @@ export class CrearPublicidadPage {
 
     })
     this.esValido = false;
+    loader.dismiss();
   }
 
   ionViewDidLoad() {
@@ -89,22 +105,22 @@ export class CrearPublicidadPage {
   }
 
   enviarPublicidad() {
-    console.log(this.fechaInicio);
-    console.log(this.fechaFin);
-    console.log(ENV.PROVEEDOR_ID);
+    
     const loader = this.loadingCtrl.create({
       content: "Subiendo Publicidad, espere unos segundos..."
     });
     loader.present();
     this.auxliar.postCrearPublicidad(this.lastImage, this.descripcion, ENV.PROVEEDOR_ID, this.datePipe.transform(this.fechaInicio, "yyyy-MM-dd"), this.datePipe.transform(this.fechaFin, "yyyy-MM-dd"), this.titulo).subscribe(result => {
       if (result.ok == true) {
-        loader.dismiss();
+        
         Swal('Felicidades', 'Bitbi Ads acaba de disparar tu publicidad a toda la red de comercios. Te deseamos exitos en tu campaña.', 'success');
         this.navCtrl.setRoot(CrearPublicidadPage);
         this.navCtrl.popToRoot();
-      } else {
         loader.dismiss();
+      } else {
+        
         Swal('Error', result.message, 'error');
+        loader.dismiss();
       }
 
 

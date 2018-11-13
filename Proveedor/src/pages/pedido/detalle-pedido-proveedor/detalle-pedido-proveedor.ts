@@ -12,7 +12,7 @@ import { PedidoProvider } from '../../../providers/pedido/pedido';
 })
 export class DetallePedidoProveedorPage {
 
-  pedido: any;
+  pedido: any = new Array();
   inicial: string = 'encabezado';
   pedidoForm: FormGroup;
   cantidadProductos: number = 0;
@@ -41,14 +41,14 @@ export class DetallePedidoProveedorPage {
         this.cantidadProductos = this.cantidadProductos + 1;
       })
 
-      this.pedidoForm = this.formBuilder.group({
+      /*this.pedidoForm = this.formBuilder.group({
         nombreComercio: [{ value: this.pedido.comercio.entidad.razonSocial, disabled: true }],
         tipoEntrega: [{ value: this.pedido.tipoEntrega, disabled: true }],
         montoTotal: [{ value: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido), disabled: true }],   //aqui probando
         fechaEntrega: [{ value: this.pedido.fechaEntrega, disabled: true }],
         cantidadProducto: [{ value: this.cantidadProductos, disabled: true }],
         direccion: [{value: this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )', disabled: true}]
-      });
+      });*/
 
       this.encabezado.push({
         nombreComercio : this.pedido.comercio.entidad.razonSocial,
@@ -101,10 +101,10 @@ export class DetallePedidoProveedorPage {
 
     Swal({
 
-      text: 'Seleccione una opcion de Pedido?',
+      text: 'Quiere rechazar el Pedido?',
       type: 'question',
       showCancelButton: true,
-      cancelButtonText: 'No, Cancelar',
+      cancelButtonText: 'Volver',
       confirmButtonText: 'Si, RECHAZAR!',
       confirmButtonColor: '#488aff',
       cancelButtonColor: '#488aff',
@@ -112,7 +112,10 @@ export class DetallePedidoProveedorPage {
 
     }).then((result) => {
       if (result.value) {
-        //TODO aqui poner un comentario
+        const loader = this.loadingCtrl.create({
+          content: "Actualizando Información, aguarde unos segundos, Gracias..."
+        });
+        loader.present();
         this.pedidoServices.postRechazarPedido(this.pedido.idPedido).subscribe(result => {
 
           if (typeof result != 'undefined') {
@@ -124,24 +127,15 @@ export class DetallePedidoProveedorPage {
                 'success'
               );
               this.pedido.estadoPedido = 'RECHAZADO';
-              const loader = this.loadingCtrl.create({
-                content: "Actualizando Informacion, aguarde unos segundos...",
-                duration: 2500
-              });
-              loader.present();
-              //this.viewCtrl.dismiss();
-              //this.viewCtrl.dismiss().then(() => this.app.getRootNav().setRoot('SomeLazyPage'));
-              //this.navCtrl.setRoot(ListadoPedidosFiltradosPage);
-              //this.navCtrl.popToRoot();
-              //this.viewCtrl.dismiss();
-              //this.appCtrl.getRootNav().push(ListadoPedidosFiltradosPage);
               this.viewCtrl.dismiss(this.pedido);
+              loader.dismiss();
             } else {
               Swal(
                 'Advertencia',
                 result.message,
                 'error'
               )
+              loader.dismiss();
             }
           } else {
             Swal(
@@ -149,6 +143,7 @@ export class DetallePedidoProveedorPage {
               'Ocurrio un problema, vuelva a Intentar!',
               'error'
             )
+            loader.dismiss();
           }
         })
         //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
@@ -157,8 +152,8 @@ export class DetallePedidoProveedorPage {
 
         Swal(
           'Canelado',
-          'Todo Ok, Gracias',
-          'error'
+          'Se cancelo el proceso, volviendo a la página',
+          'info'
         )
 
         this.viewCtrl.dismiss(this.pedido);
@@ -169,10 +164,10 @@ export class DetallePedidoProveedorPage {
   aceptar(): void {
     Swal({
 
-      text: 'Seleccione una opcion de Pedido?',
+      text: 'Quieres Aceptar el Pedido?',
       type: 'question',
       showCancelButton: true,
-      cancelButtonText: 'No, Cancelar',
+      cancelButtonText: 'Volver',
       confirmButtonText: 'Si, ACEPTAR!',
       confirmButtonColor: '#488aff',
       cancelButtonColor: '#488aff',
@@ -180,7 +175,10 @@ export class DetallePedidoProveedorPage {
 
     }).then((result) => {
       if (result.value) {
-
+        const loader = this.loadingCtrl.create({
+          content: "Procesando Información, aguarde unos segundos, Gracias..."
+        });
+        loader.present();
         this.pedidoServices.postAceptarPedido(this.pedido.idPedido).subscribe(result => {
 
           if (typeof result != 'undefined') {
@@ -193,6 +191,7 @@ export class DetallePedidoProveedorPage {
 
               this.pedido.estadoPedido = 'ACEPTADO';
               this.viewCtrl.dismiss(this.pedido);
+              loader.dismiss();
               //this.appCtrl.getRootNav().push(ListadoPedidosFiltradosPage);
               //this.viewCtrl.dismiss();
             } else {
@@ -201,6 +200,7 @@ export class DetallePedidoProveedorPage {
                 result.message,
                 'error'
               )
+              loader.dismiss();
             }
           } else {
             Swal(
@@ -208,6 +208,7 @@ export class DetallePedidoProveedorPage {
               'Ocurrio un problema, vuelva a Intentar!',
               'error'
             )
+            loader.dismiss();
           }
         })
         //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});

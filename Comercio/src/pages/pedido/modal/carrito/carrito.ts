@@ -10,12 +10,12 @@ import Swal from 'sweetalert2';
     templateUrl: 'carrito.html',
 })
 export class CarritoPage {
-    
+
     carritoForm: FormGroup;
     pedido: Pedido;
     fechaEntrega: string = new Date().toISOString();
     fechaMinima: Date = new Date();
-    comentario: string = ' ';
+    comentario: string = 'Escriba un comentario...';
     productosViewModel: any[];
     arrayProductosviewModel: any[] = new Array();
     visualItem: boolean = false;
@@ -26,12 +26,12 @@ export class CarritoPage {
         public formBuilder: FormBuilder,
         private comercioService: ComercioProvider,
         private viewCtrl: ViewController
-        ) {
+    ) {
 
         this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
 
         this.pedido.productos.forEach(element => {
-            let subtotal= element.cantidad * element.precioSugerido;
+            let subtotal = element.cantidad * element.precioProveedor;
             this.total = this.total + subtotal;
         });
 
@@ -49,6 +49,11 @@ export class CarritoPage {
         if (index > -1) {
             this.pedido.productos.splice(index, 1);
         }
+        this.total = 0;
+        this.pedido.productos.forEach(element => {
+            let subtotal = element.cantidad * element.precioProveedor;
+            this.total = this.total + subtotal;
+        });
 
     }
 
@@ -65,14 +70,14 @@ export class CarritoPage {
             })
 
             this.pedido.productos = this.arrayProductosviewModel;
-            if(this.fechaEntrega === ' '){
+            if (this.fechaEntrega === ' ') {
                 let fecha = new Date();
                 fecha.setDate(fecha.getDate() + 1);
                 this.fechaEntrega = fecha.toISOString();
             }
- 
+
             this.pedido.fechaEntrega = this.fechaEntrega;
-           
+
 
             Swal({
                 title: 'Pedido Listo!',
@@ -82,23 +87,39 @@ export class CarritoPage {
                 cancelButtonText: 'Cancelar',
                 confirmButtonText: 'Enviar!',
                 confirmButtonColor: '#488aff',
-                cancelButtonColor: '#488aff',                
-                reverseButtons: true,      
+                cancelButtonColor: '#488aff',
+                reverseButtons: true,
+                inputValue: this.comentario,
                 input: 'text'
-              
+
             }).then((result) => {
-                if (result.value) {
-                    this.pedido.comentario = result.value;
+                if (result.dismiss === Swal.DismissReason.cancel) {
+
+                    Swal('Canelado', 'Pedido Cancelado, Gracias', 'error' )
+                    this.viewCtrl.dismiss(this.pedido);
+                    
+                } else {
+                    if (result.value) {
+                        if (result.value != 'Escriba un comentario...') {
+                            this.pedido.comentario = result.value;
+                        }else{
+                            this.pedido.comentario = 'Gracias'
+                        }
+
+                    } else {
+                        this.pedido.comentario = 'Gracias'
+                    }
+
                     this.comercioService.postPedidoProveedor(this.pedido).subscribe(result => {
-                       
+                        console.log(result);
                         if (typeof result != 'undefined') {
                             if (result.ok) {
                                 Swal({
-                                     showCancelButton: false,
+                                    showCancelButton: false,
                                     confirmButtonText: 'Si, Aceptar!',
                                     confirmButtonColor: '#488aff',
                                     title: 'Felicidades',
-                                    text:'El proveedor ya recibió tu pedido. Te informaremos cuando el proveedor acepte tu pedido.',
+                                    text: 'El proveedor ya recibió tu pedido. Te informaremos cuando el proveedor acepte tu pedido.',
                                     type: 'success'
                                 })
                                 //this.navCtrl.setRoot(ListaProveedoresPage);
@@ -115,16 +136,8 @@ export class CarritoPage {
                     })
                     //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
                     // https://sweetalert2.github.io/#handling-dismissals
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-
-                    Swal(
-                        'Canelado',
-                        'Todo Ok, Gracias',
-                        'error'
-                    )
-
-                    this.viewCtrl.dismiss(this.pedido);
                 }
+               
             })
 
         } else {
@@ -140,13 +153,13 @@ export class CarritoPage {
         //ENV.PEDIDO = JSON.stringify(this.pedido.productos);    //segundo actualizo el listado de productos en caso de haber actualizado
         //this.navCtrl.pop();
 
-        this.viewCtrl.dismiss(this.pedido);
+        this.viewCtrl.dismiss(this.pedido.productos);
     }
 
     showItem(): void {
         this.visualItem = !this.visualItem;
-        
+
     }
 
-   
+
 }

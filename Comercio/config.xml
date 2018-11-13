@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.bintelligence.micropostcomercio" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.bintelligence.micropostcomercio" version="2.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Bitbi Comercio</name>
     <description>App para comercio</description>
     <author email="zinginternacional@gmail.com" href="http://bin-tech.net/zing/">Zing</author>
@@ -83,5 +83,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-datepicker" spec="0.9.3" />
+    <plugin name="cordova-plugin-app-version" spec="0.1.9" />
     <engine name="android" spec="7.1.1" />
 </widget>

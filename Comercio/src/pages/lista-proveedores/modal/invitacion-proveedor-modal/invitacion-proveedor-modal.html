@@ -1,30 +1,18 @@
 <ion-header>
-    <ion-navbar>	
-        
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+
+  </ion-navbar>
+</ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-        <h3 style="color: #f4f4f4;" text-center><strong>Paso 2 de 2: Confirme el proveedor</strong></h3>
-      </ion-card-header>
+  <p class="tituloTotal"><strong>Confirme el proveedor <br> {{titulo}}</strong></p>
   
-  
-    
-      <p text-wrap>
-       {{titulo}}
-      </p>
-    
 
+    <ion-item>
+      <button  ion-button full round (click)='enviarInvitacion()' item-end> Enviar</button>
+    </ion-item>
 
- 
-
-      <ion-item>
-          <button color="secondary" ion-button full round (click)='enviarInvitacion()' item-end> Finalizar</button>  
-        </ion-item>
-
-      <!--<ion-item>
+    <!--<ion-item>
         <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
           <ion-icon>Volver</ion-icon>
         </button>
@@ -32,6 +20,6 @@
           <ion-icon name="cart"> Finalizar</ion-icon>
         </button>
       </ion-item>-->
-    </ion-card>
+ 
 
 </ion-content>

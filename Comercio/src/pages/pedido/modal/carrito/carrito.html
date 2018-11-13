@@ -1,9 +1,15 @@
-<!--<ion-header>
-  <ion-navbar>	
-     
-  </ion-navbar>
-</ion-header>-->
-
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-8>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+<!--
 <ion-header>
   <ion-navbar>
     <ion-item padding no-lines>
@@ -12,12 +18,14 @@
       </button>
     </ion-item>
   </ion-navbar>
-</ion-header>
+</ion-header>-->
 <ion-content padding>
-  <ion-card>
-    <ion-card-header text-center>
-      Paso 3: Ver Pedidos
-    </ion-card-header>
+  <ion-card-header text-center>
+    <ion-item>
+     
+      <h3 text-wrap text-center><strong>Paso 3</strong></h3>
+      <h3 text-wrap text-center>Ver Pedidos.</h3>
+    </ion-item>
     <ion-item>
       <h3></h3>
       <h3 text-wrap>Su pedido se entregará en la fecha que confirme el proveedor (normalmente antes de las 48hs). Si
@@ -26,6 +34,10 @@
         </a></h3>
 
     </ion-item>
+  </ion-card-header>
+  <ion-card>
+
+
     <ion-item *ngIf='visualItem'>
       <p>Fecha seleccionada es {{fechaEntrega.substr(0,10)}}</p>
     </ion-item>
@@ -43,17 +55,17 @@
             </button>
           </ion-avatar>
           <h3> </h3>
-          <h3><strong> Producto </strong>{{producto.nombreProducto}}</h3>
+          <h3 text-wrap><strong> Producto </strong>{{producto.nombreProducto}}</h3>
           <h3><strong> Unidad </strong> {{producto.unidadMedida}}</h3>
           <h3><strong> Cant. </strong> {{producto.cantidad}}</h3>
-          <h3><strong> Precio </strong>$ {{producto.precioSugerido}}</h3>
-          <h2><strong> Sub - Total </strong>$ {{producto.cantidad * producto.precioSugerido}}</h2>
-          
+          <h3><strong> Precio </strong>$ {{producto.precioProveedor}}</h3>
+          <h2><strong> Sub - Total </strong>$ {{producto.cantidad * producto.precioProveedor | number:'1.2-2'}}</h2>
+
         </ion-item>
       </ion-list>
     </ion-scroll>
 
-   <!-- <ion-card-header text-center>
+    <!-- <ion-card-header text-center>
       <h3 style=" color: #f4f4f4;">Comentario</h3>
     </ion-card-header>
     <ion-card-header text-center>
@@ -66,13 +78,13 @@
 
     <ion-item-divider></ion-item-divider>
     <ion-card-header text-center>
-      <p style="font-size: 22px; color: #f4f4f4;"><strong> Total</strong> $ {{total}}</p>
+      <strong> Total</strong> $ {{total | number:'1.2-2'}}
     </ion-card-header>
 
 
-    <button color="secondary" ion-button full round (click)='pedirProducto()' item-end>
-      <p style="font-size: 22px; color: #f4f4f4;">
-        <ion-icon name="cart"> Finalizar</ion-icon>
+    <button color="secondary" ion-button full round (click)='pedirProducto()' item-end *ngIf="total > 0">
+      <p class="carritoTotal">
+        Finalizar
       </p>
     </button>
 

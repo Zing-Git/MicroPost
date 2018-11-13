@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-@IonicPage()
+
 @Component({
   selector: 'page-pedido-modal',
   templateUrl: 'pedido-modal.html',
@@ -14,6 +14,8 @@ export class PedidoModalPage {
   nuevoProducto: any;
   itemProductoSelected: number;
   itemSubtotal: number;
+  nombreProducto: any;
+  precioProveedorCalculo: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -24,19 +26,23 @@ export class PedidoModalPage {
     console.log(this.producto);
 
     this.itemProductoSelected = this.producto.unidadesMedida[0] || 1;
-    this.itemSubtotal = this.producto.precioSugerido;  
+    this.itemSubtotal = this.producto.precioProveedor;  
+    this.nombreProducto = this.producto.nombreProducto;
+    this.precioProveedorCalculo = this.producto.precioProveedor;
+    
     console.log(this.itemProductoSelected)
+    
     this.nuevoProductoForm = formBuilder.group({
       cantidad: ['', Validators.required],
       unidadMedida: [this.itemProductoSelected],
-      precioSugerido: [this.producto.precioSugerido]
+      precioProveedor: [ '$ ' +this.producto.precioProveedor]
     });
     this.nuevoProducto = {
       _id: ' ',
       cantidad: 0,
       unidadMedida: ' ',
       nombreProducto: ' ',
-      precioSugerido: 0
+      precioProveedor: 0
     };
   }
 
@@ -50,7 +56,7 @@ export class PedidoModalPage {
     this.nuevoProducto.nombreProducto = this.producto.nombreProducto;
     this.nuevoProducto.cantidad = this.nuevoProductoForm.controls['cantidad'].value;
     this.nuevoProducto.unidadMedida = this.itemProductoSelected;
-    this.nuevoProducto.precioSugerido =  this.producto.precioSugerido;
+    this.nuevoProducto.precioProveedor =  this.producto.precioProveedor;
 
     this.viewCtrl.dismiss(this.nuevoProducto);
 

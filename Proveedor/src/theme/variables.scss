@@ -34,7 +34,7 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (primary: #063079,
-secondary: #32db64,
+secondary: #0fbd43,
 danger: #f53d3d,
 light: #f4f4f4,
 dark: #222);
@@ -105,7 +105,60 @@ ion-icon {
 }
 
 ion-card-header{
-  background-color: #488aff !important;
+  background-color:  #063079 !important;
   color: #f4f4f4 !important;
-  border-radius: 10px;
+  border-radius: 9px !important;
+  padding: 5px 5px 5px 5px !important;
 }
+ion-card-header h3{
+ 
+  font-size: 14px !important;
+  
+}
+
+.noContent {
+  div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    text-align: center;
+    font-size: 30px;
+    margin: 5,5,5,5;
+  }
+
+  p{
+    font-size:  12px !important;
+    text-align: left !important;
+    color: #222 !important;
+    opacity: 1 !important;
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+  }
+
+  .tituloTotal{
+    //background-color: #2e66c9 !important;
+    text-align: center !important;
+    color: rgb(13, 8, 94) !important;
+    font-size: 16px !important;
+    
+    background: rgba(179,220,237,1) !important;
+    background: -moz-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(179,220,237,1)), color-stop(50%, rgba(41,184,229,1)), color-stop(100%, rgba(188,224,238,1))) !important;
+    background: -webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+    background: -o-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+    background: -ms-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+    background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee', GradientType=1 ) !important;
+  border-radius: 10px 10px 10px 10px !important;
+  -moz-border-radius: 10px 10px 10px 10px !important;
+  -webkit-border-radius: 10px 10px 10px 10px !important;
+  border: 1px solid #000000 !important;
+  
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  }
+ }

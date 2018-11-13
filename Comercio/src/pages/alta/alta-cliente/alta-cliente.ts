@@ -67,8 +67,6 @@ export class AltaClientePage {
         this.tipoPersoneriaName
       );
 
-    console.log(this.clienteViewModel);    //para control 
-
     this.navCtrl.push(AltaDomicilioPage,
       { data: this.clienteViewModel });
   }

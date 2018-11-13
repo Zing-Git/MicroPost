@@ -34,18 +34,14 @@
 
     <form *ngSwitchCase="'pendiente'" [class.hide]="estadoPendiente">
 
-      <ion-card>
-        <ion-card-header text-center>
-
-        </ion-card-header>
-
+     
         <ion-scroll style="height:400px" scrollY="true">
           <ion-list *ngFor="let item of invitacionesPendientes">
-            <ion-item>
-              <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
-              <h3><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</h3>
-              <h3><strong> Personeria</strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
-              <h3><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</h3>
+            <div>
+              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
               <ion-item>
                 <button ion-button round (click)='rechazar(item)'>
                   Rechazar
@@ -57,72 +53,59 @@
               </ion-item>
 
 
-            </ion-item>
+            </div>
 
           </ion-list>
         </ion-scroll>
 
-      </ion-card>
+      
     </form>
 
     <form *ngSwitchCase="'aceptado'" [class.hide]="estadoAceptado">
 
-      <ion-card>
-        <ion-card-header text-center>
-
-        </ion-card-header>
 
         <ion-scroll style="height:400px" scrollY="true">
           <ion-list *ngFor="let item of invitacionesAceptadas">
             <ion-item>
 
-              <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
-              <h3><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</h3>
-              <h3><strong> Personeria</strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
-              <h3><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</h3>
+              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
 
-              <ion-item-divider></ion-item-divider>
+              <hr>
             </ion-item>
 
           </ion-list>
         </ion-scroll>
 
-      </ion-card>
+      
     </form>
 
 
     <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado">
 
-      <ion-card>
-        <ion-card-header text-center>
-
-        </ion-card-header>
+      
 
         <ion-scroll style="height:400px" scrollY="true">
           <ion-list *ngFor="let item of invitacionesRechazadas">
-            <ion-item>
-              <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
-              <h3><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</h3>
-              <h3><strong> Personeria</strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
-              <h3><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</h3>
-              <ion-item-divider></ion-item-divider>
-            </ion-item>
+            <div>
+              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
+              <hr>
+            </div>
 
           </ion-list>
         </ion-scroll>
 
-      </ion-card>
+      
 
     </form>
 
 
   </div>
-  <!--<ion-card> 
-    <ion-item>
-      <button ion-button round color="secundary" (click)='volver()' full>
-        <ion-icon>Volver</ion-icon>
-      </button>
-    </ion-item>
-  </ion-card>-->
+ 
 
 </ion-content>

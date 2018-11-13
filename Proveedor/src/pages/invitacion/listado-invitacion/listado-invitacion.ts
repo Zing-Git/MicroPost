@@ -124,13 +124,17 @@ loader.dismiss();
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si, ACEPTAR!',
-      confirmButtonColor: '#063079',
-      cancelButtonColor: '#063079'
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
+      reverseButtons: true
 
     }).then((result) => {
 
       if (result.value) {
-
+        const loader = this.loadingCtrl.create({
+          content: "Procesando Información, aguarde unos segundos, Gracias..."
+        });
+        loader.present();
         this.proveedorServices.postAceptarRechazar(invitacion._id, true).subscribe(result => {
 
           if (typeof result != 'undefined') {
@@ -146,18 +150,15 @@ loader.dismiss();
 
               );
 
-              const loader = this.loadingCtrl.create({
-                content: "Actualizando Informacion, aguarde unos segundos...",
-                duration: 3000
-              });
-              loader.present();
-
+            
+              loader.dismiss();
             } else {
               Swal(
                 'Advertencia',
                 result.message,
                 'error'
               )
+              loader.dismiss();
             }
           }
         })
@@ -176,7 +177,7 @@ loader.dismiss();
       text: 'Desea Rechazar Invitacion?',
       type: 'question',
       showCancelButton: true,
-      cancelButtonText: 'Cancelar',
+      cancelButtonText: 'Volver',
       confirmButtonText: 'Si, RECHAZAR!',
       confirmButtonColor: '#488aff',
       cancelButtonColor: '#488aff',
@@ -186,31 +187,27 @@ loader.dismiss();
 
 
       if (result.value) {
-
+        const loader = this.loadingCtrl.create({
+          content: "Procesando Información, aguarde unos segundos, Gracias..."
+        });
+        loader.present();
         this.proveedorServices.postAceptarRechazar(invitacion._id, false).subscribe(result => {
-          console.log(invitacion);
-          console.log(result);
           if (typeof result != 'undefined') {
 
             if (result.ok) {
               Swal(
-                'Atención!',
+                'Realizado!',
                 result.message,
                 'success'
-              );
-
-              const loader = this.loadingCtrl.create({
-                content: "Actualizando Informacion, aguarde unos segundos...",
-                duration: 3000
-              });
-              loader.present();
-
+              );              
+                loader.dismiss();
             } else {
               Swal(
                 'Advertencia',
                 result.message,
                 'error'
               )
+              loader.dismiss();
             }
           }
         })

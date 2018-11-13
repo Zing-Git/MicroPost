@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events, LoadingController } from 'ionic-angular';
 import { Proveedor } from '../../modelo/proveedor';
 
 import Swal from 'sweetalert2';
@@ -9,6 +9,8 @@ import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion
 import { envirotment as ENV } from '../../environments/environments';
 import { ListaProductosModalPage } from './modal/lista-productos-modal/lista-productos-modal';
 import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
+import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
+import { LoginProvider } from '../../providers/login/login';
 
 @IonicPage()
 @Component({
@@ -19,32 +21,57 @@ export class ListaProveedoresPage {
   proveedoresViewModel: Proveedor[] = [];
   datosComercio: any[];
   productosViewModel: any[];
+  proveedores: any = new Array();
+  permitirRefresh: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public storage: Storage,
-    public events: Events) {
+    public events: Events,
+    public auxiliarServices: AuxiliarProvider,
+    private login: LoginProvider,
+    public loadingCtrl: LoadingController) {
 
+      this.cargarDatosComercio();
+
+  }
+
+  cargarDatosComercio() {
+    
+    const loader = this.loadingCtrl.create({
+      content: "Cargando datos, espere unos segundos, Gracias..."
+    });
+    loader.present();
 
     this.proveedoresViewModel = new Array();
+    this.storage.get('usuarioLogin').then((val) => {
+      if (val != ' ') {
 
-    this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
-    this.cargarListaDeProveedores();
+
+        if (val != null) {
+          console.log('no es nulo');
+          console.log(val);
+          let newLogin = JSON.parse(val);
+          this.login.getLogin(newLogin).subscribe(result => {
+
+            this.datosComercio = result['comercioDB'];
+
+            this.datosComercio.forEach(x => {
+              this.proveedoresViewModel = x.proveedores;
+            });
+            this.proveedores = this.auxiliarServices.removeDuplicates(this.proveedoresViewModel, "_id");
 
 
-  }
+          })
 
-  //obtiene los proveedores que pertenecena al comercio
-  cargarListaDeProveedores() {
-    this.datosComercio.forEach(x => {
-      this.proveedoresViewModel = x.proveedores;
+        }
+      }
     });
+    loader.dismiss();
 
-    /*if(this.productosViewModel.length === 0){
-      this.presentConfirm();
-    }*/
   }
+ 
 
   //clic desde vista
   mostrarProductosModal(proveedor: any) {
@@ -100,4 +127,10 @@ export class ListaProveedoresPage {
 
   cargarProveedor(index: number) { }
 
+  doRefresh(refresher?:any) { //"?" in typescript means the parameter is optional
+
+      this.cargarDatosComercio();
+      refresher && refresher.complete();//make sure refresher is truthy before calling complete
+   
+  }
 }

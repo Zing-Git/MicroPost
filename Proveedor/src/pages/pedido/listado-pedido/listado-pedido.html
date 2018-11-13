@@ -21,11 +21,11 @@
                 <ion-icon name="eye"> Ver</ion-icon>
               </button>
             
-            <h2><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</h2>
-            <h3><strong> Tipo </strong> {{item.comercio.entidad.tipoPersoneria}}</h3>
-            <h3><strong> Entrega</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</h3>
-            <h3><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</h3>
-            <ion-item-divider></ion-item-divider>
+            <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
+            <p><strong> Entrega estimada</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
+            <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
+            <hr>
           </ion-item>
 
         </ion-list>

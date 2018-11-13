@@ -9,9 +9,13 @@ page-lista-pedido-comercio {
 
   }
 
-  p{
+  p {
     text-align: center;
     font-size: 30px;
     color: gray;
-}
+  }
+
+  ion-grid {
+    background-color: #f8f8f8;
+  }
 }

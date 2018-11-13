@@ -5,5 +5,29 @@ page-crear-publicidad {
     }
     h3{
         margin: 5,5,5,5;
+        color: white;
     }
+    .tituloTotal{
+        //background-color: #2e66c9 !important;
+        text-align: center !important;
+        color: rgb(13, 8, 94) !important;
+        font-size: 16px !important;
+        
+        background: rgba(179,220,237,1) !important;
+        background: -moz-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(179,220,237,1)), color-stop(50%, rgba(41,184,229,1)), color-stop(100%, rgba(188,224,238,1))) !important;
+        background: -webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+        background: -o-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+        background: -ms-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+        background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%) !important;
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee', GradientType=1 ) !important;
+      border-radius: 10px 10px 10px 10px !important;
+      -moz-border-radius: 10px 10px 10px 10px !important;
+      -webkit-border-radius: 10px 10px 10px 10px !important;
+      border: 1px solid #000000 !important;
+      
+      -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+      box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+      }
 }

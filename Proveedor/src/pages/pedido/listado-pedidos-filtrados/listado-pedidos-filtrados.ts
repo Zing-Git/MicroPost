@@ -6,6 +6,7 @@ import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import { DetallePedidoProveedorPage } from '../detalle-pedido-proveedor/detalle-pedido-proveedor';
 import Swal from 'sweetalert2';
+import { BoundCallbackObservable } from 'rxjs/observable/BoundCallbackObservable';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ import Swal from 'sweetalert2';
 export class ListadoPedidosFiltradosPage {
 
   pedido: any;
-  inicial: string = 'aprobado';
+  inicial: string = 'informado';
   pedidoForm: FormGroup;
   cantidadProductos: number = 0;
 
@@ -31,6 +32,9 @@ export class ListadoPedidosFiltradosPage {
   pedidosAceptados: any[] = new Array();
   pedidosRechazados: any[] = new Array();
   pedidosOtros: any[] = new Array();
+
+  pedidoHabilitado: boolean = true;
+  permitirRefresh: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -48,7 +52,7 @@ export class ListadoPedidosFiltradosPage {
   }
 
   obtenerDatosImportantes() {
-
+    ENV.PEDIDOS = ' ';
     this.idProveedor = ENV.PROVEEDOR_ID;
 
     const loader = this.loadingCtrl.create({
@@ -56,24 +60,20 @@ export class ListadoPedidosFiltradosPage {
 
     });
     loader.present();
-    this.proveedorServices.load(this.idProveedor).then(data => {
 
-      if (data['pedidos_array'] === undefined) {
-
-        //this.navCtrl.push(CrearPublicidadPage);
-        //this.navCtrl.popToRoot();
+    this.proveedorServices.getPedidosProveedor(this.idProveedor).subscribe(result => {
+      if (result['pedidos_array'] === undefined) {
         
-        Swal('Atención', 'No posee Pedidos ', 'error')
+        this.pedidoHabilitado = true;
       } else {
-        ENV.PEDIDOS = JSON.stringify(data['pedidos_array']);
+        ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
 
         this.cargarCombos();
 
       }
+    })
 
-    });
-
-loader.dismiss();
+    loader.dismiss();
   }
 
   ionViewDidLoad() {
@@ -107,16 +107,11 @@ loader.dismiss();
     });
   }
 
-  doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-    this.zone.run(()=>{
+  doRefresh(refresher?:any) { //"?" in typescript means the parameter is optional
+
       this.obtenerDatosImportantes();
-    })
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      
-      refresher.complete();
-    }, 3000);
+      refresher && refresher.complete();//make sure refresher is truthy before calling complete
+   
   }
 
   actualizarPedido(miPedido: any): void {
@@ -132,18 +127,53 @@ loader.dismiss();
 
   }
 
+  buscar(index) {
+    console.log(this.pedidosAceptados);
+    console.log(this.pedidosInformados);
+    console.log(this.pedidosRechazados);
+    const val = index.target.value;
+    //item.comercio.entidad.razonSocial
+    if (val && val.trim() != '') {
+      if (this.pedidosInformados.length > 0) {
+        this.pedidosInformados = this.pedidosInformados.filter((x) => {
+          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        })
+      }
+      if (this.pedidosAceptados.length > 0) {
+        this.pedidosAceptados = this.pedidosAceptados.filter((x) => {
+          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        })
+      }
+      if (this.pedidosRechazados.length > 0) {
+        this.pedidosRechazados = this.pedidosRechazados.filter((x) => {
+          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        })
+      }
+    } else {
+
+      this.cargarCombos();
+    }
+  }
+
   cargarCombos() {
+
+    this.pedidosInformados = new Array();
+    this.pedidosAceptados = new Array();
+    this.pedidosRechazados = new Array();
+    this.pedidosOtros = new Array();
+    this.pedidos = new Array();
+
     this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
     this.pedidos.forEach(x => {
 
       if (x.comercio != null) {
-
+        this.pedidoHabilitado = false;
         switch (x.estadoPedido) {
           case "RECHAZADO": {
-            this.inicial = 'rechazado'
+            
             this.estadoRechazado = false;
             this.pedidosRechazados.push(x);
-            
+
             break;
           }
           case "PEDIDO SOLICITADO": {
@@ -152,7 +182,7 @@ loader.dismiss();
             break;
           }
           case "ACEPTADO": {
-            this.inicial = 'aceptado'
+            
             this.estadoAceptado = false;
             this.pedidosAceptados.push(x);
             break;
@@ -165,38 +195,7 @@ loader.dismiss();
 
       }
     })
+    console.log(this.pedidos);
   }
-
-  buscar(index) {
-    console.log(this.pedidosAceptados);
-    console.log(this.pedidosInformados);
-    console.log(this.pedidosRechazados);
-    const val = index.target.value;
-    //item.comercio.entidad.razonSocial
-    if (val && val.trim() != '') {
-      if(this.pedidosInformados.length > 0){
-         this.pedidosInformados = this.pedidosInformados.filter((x) =>{
-           return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
-         })
-      }
-      if(this.pedidosAceptados.length > 0){
-        this.pedidosAceptados = this.pedidosAceptados.filter((x) =>{
-          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
-        })
-      }
-      if(this.pedidosRechazados.length > 0){
-        this.pedidosRechazados = this.pedidosRechazados.filter((x) =>{
-          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
-        })
-      }     
-    }else{
-      this.pedidosInformados = new Array();
-      this.pedidosAceptados= new Array();
-      this.pedidosRechazados = new Array();
-      this.pedidosOtros = new Array();
-      this.pedidos = new Array();
-      this.cargarCombos();
-    }
-  }
-
+ 
 }

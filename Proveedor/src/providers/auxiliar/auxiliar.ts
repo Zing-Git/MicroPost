@@ -18,8 +18,9 @@ const cudMultiPart ={
 export class AuxiliarProvider {
 
   private urlBase = ENV.BASE_URL;
-  public urlPostGetCombos = this.urlBase + '/conf/combos/';
+  private urlPostGetCombos = this.urlBase + '/conf/combos/';
   private urlPostPublicidad  = this.urlBase + '/publicidad/subir_foto/';
+  private urlVersion = this.urlBase + '/conf/version/';
 
   constructor(public http: HttpClient, private decimalPipe: DecimalPipe) {
    
@@ -62,6 +63,10 @@ export class AuxiliarProvider {
   }
   getRubroProveedor(){
     return ENV.RUBRO_PROVEEDOR;
+  }
+
+  getVersionFromServer(): Observable<any[]>{
+    return this.http.get<any>(this.urlVersion,cudOptions);
   }
 
 }

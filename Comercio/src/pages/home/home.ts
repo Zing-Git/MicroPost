@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ListaProveedoresPage } from '../pedido/lista-proveedores';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
+import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2';
+import { envirotment as ENV } from '../../environments/environments';
 
 @Component({
   selector: 'page-home',
@@ -14,36 +16,12 @@ export class HomePage {
   
   comentario: string;
   pedidos: any = new Array();
-  constructor(public navCtrl: NavController) {
-    this.lanzarCarrito();
-    this.pedidos.push({
-      a: "valor1",
-      b: "valor2",
-      c: "valor 3",
-      d: "valor 6",
-      e: "valor 100"
-    })
-    this.pedidos.push({
-      a: "valor1",
-      b: "valor2",
-      c: "valor 3",
-      d: "valor 6",
-      e: "valor 100"
-    })
-    this.pedidos.push({
-      a: "valor1",
-      b: "valor2",
-      c: "valor 3",
-      d: "valor 6",
-      e: "valor 100"
-    })
-    this.pedidos.push({
-      a: "valor1",
-      b: "valor2",
-      c: "valor 3",
-      d: "valor 6",
-      e: "valor 100"
-    })
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, storage: Storage) {
+
+    this.comentario = JSON.parse(ENV.CARRITO);
+   Swal(this.comentario,this.comentario,'success');
   }
 
   goPageProveedores(){
