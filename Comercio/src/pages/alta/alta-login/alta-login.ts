@@ -19,7 +19,7 @@ export class AltaLoginPage {
   strings: Array<string>;
   selected: string;
   loginForm: FormGroup;
-  clienteViewModel : Comercio = new Comercio();
+  clienteViewModel: Comercio = new Comercio();
   isCorrect: boolean = false;
 
   constructor(public navParams: NavParams,
@@ -49,7 +49,7 @@ export class AltaLoginPage {
 
     const loader = this.loadingCtrl.create({
       content: "Por favor Espere unos segundos..."
-     
+
     });
     loader.present();
 
@@ -61,22 +61,20 @@ export class AltaLoginPage {
         this.loginForm.controls['clave'].value
       );
 
-      
+
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
       this.clienteViewModel.usuarios = usuarios;
       this.guardarCliente();
-      
-     /*  let miModal = this.modalCtrl.create(mensaje);
-      miModal.present(); */
+
+      /*  let miModal = this.modalCtrl.create(mensaje);
+       miModal.present(); */
       //this.navCtrl.popToRoot()
-      this.navCtrl.push(LoginPage);
+     
       loader.dismiss();
     } else {
-      
-      let miModal = this.modalCtrl.create('Ocurrio un error, Vuelva a intentarlo');
-      miModal.present();
-      this.navCtrl.setRoot('LoginPage');
+
+      Swal('Atención', 'Las credenciales no coinciden', 'warning')
       loader.dismiss();
     }
 
@@ -84,20 +82,18 @@ export class AltaLoginPage {
 
   guardarCliente() {
     this.comercioService.postComercio(this.clienteViewModel).subscribe(result => {
-      let respuesta = result;
-      console.log('respuesta del server: ' + respuesta);
-      this.isCorrect = true;
-      if(respuesta != undefined){
-        
-        Swal('Felicidades', 'Ya puede ingresar con sus credenciales' , 'success')
+      if (result['ok'] !== true) {
+        Swal('Atención', 'Ocurrio un problema, compruebe que los datos ingresados estan correctos', 'warning')
+      } else {
+        Swal('Felicidades', 'Ya puede ingresar con sus credenciales', 'success') 
+        this.navCtrl.push(LoginPage);
       }
-
     }, err => {
       alert('Hubo un problema al crear Comercio' + err);
     });
   }
 
-  mensajeLuegoCrear(){
+  mensajeLuegoCrear() {
     console.log('aqui crear el popup de exito o fracaso');
   }
 

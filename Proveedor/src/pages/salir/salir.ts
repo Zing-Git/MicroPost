@@ -21,9 +21,9 @@ export class SalirPage {
     console.log('ionViewDidLoad SalirPage');
   }
   limpiarValoresPorDefecto() {
-    this.storage.set('id', ' ');
+    /*this.storage.set('id', ' ');
     this.storage.set('token', ' ');
-    this.storage.set('idProveedor', ' ');
+    this.storage.set('idProveedor', ' ');*/
     this.storage.set('proveedor',' ');
 
     //this.storage.set('proveedor', JSON.stringify(this.datosProveedor));
@@ -33,6 +33,7 @@ export class SalirPage {
     ENV.PROVEEDOR_ID = ' ';
     ENV.TOKEN = ' ';
     ENV.PROVEEDOR_LOGIN = ' ';
+    ENV.PEDIDOS = ' ';
   }
 
 }

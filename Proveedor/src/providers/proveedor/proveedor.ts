@@ -71,7 +71,7 @@ export class ProveedorProvider {
     return this.http.get<any>(url, cudOptions);
   }
 
-  load(idProveedor: string): any {
+  /*load(idProveedor: string): any {
     let url= this.urlGetPedidosProveedor + '?idProveedor=' + idProveedor;
     
     if (this.data) {
@@ -93,6 +93,6 @@ export class ProveedorProvider {
           resolve(this.data);
         });
     });
-  }
+  }*/
 
 }

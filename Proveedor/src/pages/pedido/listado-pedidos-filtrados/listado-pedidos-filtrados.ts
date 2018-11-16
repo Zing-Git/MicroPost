@@ -5,8 +5,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../environments/environment';
 import { DetallePedidoProveedorPage } from '../detalle-pedido-proveedor/detalle-pedido-proveedor';
-import Swal from 'sweetalert2';
-import { BoundCallbackObservable } from 'rxjs/observable/BoundCallbackObservable';
+
 
 @IonicPage()
 @Component({
@@ -99,8 +98,6 @@ export class ListadoPedidosFiltradosPage {
       this.pedidosAceptados = new Array();
       this.pedidosRechazados = new Array();
       this.pedidosOtros = new Array();
-      //this.pedidos = ' ';
-      console.log('ACTUALIZANDO INFO');
 
       this.actualizarPedido(miPedido);
 
@@ -195,7 +192,7 @@ export class ListadoPedidosFiltradosPage {
 
       }
     })
-    console.log(this.pedidos);
+   
   }
  
 }

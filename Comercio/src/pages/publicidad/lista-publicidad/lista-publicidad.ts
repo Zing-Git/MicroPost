@@ -85,7 +85,9 @@ export class ListaPublicidadPage {
       })
     });
 
-    console.log(this.vista);
+   if(this.vista.length === 0){
+     this.publicidad = true;
+   }
   }
 
   getPublicidades(): void {

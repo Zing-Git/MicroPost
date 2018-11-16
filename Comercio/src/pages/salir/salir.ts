@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environments';
 import { LoginPage } from '../login/login';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -11,7 +11,7 @@ import { LoginPage } from '../login/login';
 })
 export class SalirPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage : Storage) {
 
     this.limpiarValoresPorDefecto();
     this.navCtrl.setRoot(LoginPage);
@@ -22,11 +22,11 @@ export class SalirPage {
   }
 
   limpiarValoresPorDefecto() {
-    this.storage.set('id', ' ');
+   /* this.storage.set('id', ' ');
     this.storage.set('token', ' ');
     this.storage.set('idComercio', ' ');
 
-    this.storage.set('comercio', ' ');
+    this.storage.set('comercio', ' ');*/
     this.storage.set('usuarioLogin', ' ');
 
     ENV.NOMBRE_USUARIO = ' ';
@@ -34,6 +34,10 @@ export class SalirPage {
     ENV.COMERCIO_ID = ' ';
     ENV.TOKEN = ' ';
     ENV.COMERCIO_LOGIN = ' ';
+    ENV.ID_USUARIO= ' ';
+    ENV.TOKEN = ' ';
+    ENV.NOMBRE_COMERCIO = ' ';
+    ENV.RUBRO_COMERCIO = ' ';
   }
 
 }

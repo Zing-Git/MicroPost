@@ -24,7 +24,7 @@ export class ListaPedidoComercioPage {
   pedidosViewModel: any[] = new Array();
 
   datosComercio: any;
-  detallePedido: any[] = new Array();
+  //detallePedido: any[] = new Array();
   proveedores: any[];
   idComercio: string;
   productos: any[];
@@ -104,12 +104,12 @@ export class ListaPedidoComercioPage {
     return razonSocial;
   }
 
-  async getPedidos() {
+  /*async getPedidos() {
 
     await this.storage.get('pedidos').then(
       val => this.detallePedido = JSON.parse(val)
     );
-  }
+  }*/
 
   visualizarDatosPedido(item: any) {
 

@@ -46,8 +46,7 @@ export class AltaLoginPage {
 
   onSingin() {
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos...",
-      duration: 6000
+      content: "Por favor Espere unos segundos..."
     });
     loader.present();
 
@@ -88,9 +87,8 @@ export class AltaLoginPage {
 
 
     } else {
-      let miModal = this.modalCtrl.create('Ocurrio un error, Vuelva a intentarlo');
-      miModal.present();
-      this.navCtrl.setRoot('LoginPage');
+      loader.dismiss();
+      Swal('Atención!!', 'Las credenciales no coinciden, vuelva a ingresar', 'error')
     }
 
   }

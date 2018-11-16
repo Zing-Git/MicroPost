@@ -24,6 +24,8 @@ export class ListaProveedoresPage {
   proveedores: any = new Array();
   permitirRefresh: boolean = false;
 
+  newLogin: any;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
@@ -44,8 +46,23 @@ export class ListaProveedoresPage {
     });
     loader.present();
 
+    this.newLogin = JSON.parse(ENV.NEWLOGIN);
+
     this.proveedoresViewModel = new Array();
-    this.storage.get('usuarioLogin').then((val) => {
+
+    this.login.getLogin(this.newLogin).subscribe(result => {
+
+      this.datosComercio = result['comercioDB'];
+
+      this.datosComercio.forEach(x => {
+        this.proveedoresViewModel = x.proveedores;
+      });
+      this.proveedores = this.auxiliarServices.removeDuplicates(this.proveedoresViewModel, "_id");
+
+
+    })
+
+    /*this.storage.get('usuarioLogin').then((val) => {
       if (val != ' ') {
 
 
@@ -67,7 +84,7 @@ export class ListaProveedoresPage {
 
         }
       }
-    });
+    });*/
     loader.dismiss();
 
   }

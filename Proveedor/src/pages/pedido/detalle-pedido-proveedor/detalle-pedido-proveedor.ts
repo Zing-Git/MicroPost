@@ -31,8 +31,6 @@ export class DetallePedidoProveedorPage {
     public appCtrl: App) {
 
     this.pedido = navParams.get('data');
-    console.log('AQUI'); 
-    console.log(this.pedido);
     
     if (this.pedido != undefined) {
       this.encabezado = new Array();
@@ -40,15 +38,6 @@ export class DetallePedidoProveedorPage {
       this.pedido.detallePedido.forEach(x => {
         this.cantidadProductos = this.cantidadProductos + 1;
       })
-
-      /*this.pedidoForm = this.formBuilder.group({
-        nombreComercio: [{ value: this.pedido.comercio.entidad.razonSocial, disabled: true }],
-        tipoEntrega: [{ value: this.pedido.tipoEntrega, disabled: true }],
-        montoTotal: [{ value: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido), disabled: true }],   //aqui probando
-        fechaEntrega: [{ value: this.pedido.fechaEntrega, disabled: true }],
-        cantidadProducto: [{ value: this.cantidadProductos, disabled: true }],
-        direccion: [{value: this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )', disabled: true}]
-      });*/
 
       this.encabezado.push({
         nombreComercio : this.pedido.comercio.entidad.razonSocial,
@@ -122,7 +111,7 @@ export class DetallePedidoProveedorPage {
 
             if (result.ok) {
               Swal(
-                'Felicidades',
+                'Procesado',
                 result.message,
                 'success'
               );
@@ -150,11 +139,11 @@ export class DetallePedidoProveedorPage {
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
 
-        Swal(
+       /* Swal(
           'Canelado',
           'Se cancelo el proceso, volviendo a la página',
           'info'
-        )
+        )*/
 
         this.viewCtrl.dismiss(this.pedido);
       }
@@ -215,11 +204,11 @@ export class DetallePedidoProveedorPage {
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
 
-        Swal(
+       /* Swal(
           'Canelado',
           'Todo Ok, Gracias',
           'error'
-        )
+        )*/
 
         this.viewCtrl.dismiss(this.pedido);
       }

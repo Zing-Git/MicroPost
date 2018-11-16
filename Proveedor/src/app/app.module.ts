@@ -18,7 +18,6 @@ import { ProveedorProvider } from '../providers/proveedor/proveedor';
 import { LoginProvider } from '../providers/login/login';
 import { AltaClientePage } from '../pages/alta/alta-cliente/alta-cliente';
 import { ComercioProvider } from '../providers/comercio/comercio';
-import { ListadoPedidoPage } from '../pages/pedido/listado-pedido/listado-pedido';
 import { DetallePedidoProveedorPage } from '../pages/pedido/detalle-pedido-proveedor/detalle-pedido-proveedor';
 import { DecimalPipe } from '@angular/common'; 
 import { ListadoPedidosFiltradosPage } from '../pages/pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
@@ -43,7 +42,6 @@ import { AppVersion } from '@ionic-native/app-version';
     AltaDomicilioPage,
     AltaLoginPage,
     AltaClientePage, 
-    ListadoPedidoPage,
     DetallePedidoProveedorPage,
     ListadoPedidosFiltradosPage,
     ListadoInvitacionPage,
@@ -65,7 +63,6 @@ import { AppVersion } from '@ionic-native/app-version';
     AltaDomicilioPage,
     AltaLoginPage,
     AltaClientePage,
-    ListadoPedidoPage,
     DetallePedidoProveedorPage,
     ListadoPedidosFiltradosPage,
     ListadoInvitacionPage,

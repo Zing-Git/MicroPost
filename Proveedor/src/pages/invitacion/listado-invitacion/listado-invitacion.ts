@@ -33,6 +33,7 @@ export class ListadoInvitacionPage {
   invitacionesPendientes: any[] = new Array();
 
   direciones: any;
+  permitirRefresh: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -100,15 +101,12 @@ loader.dismiss();
     })
   }
 
- /* doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
+  doRefresh(refresher?:any) { //"?" in typescript means the parameter is optional
 
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      this.cargarCombos();
-      refresher.complete();
-    }, 2000);
-  }*/
+      this.obtenerDatosImportantes();
+      refresher && refresher.complete();//make sure refresher is truthy before calling complete
+   
+  }
 
   ionViewDidLoad() {
 

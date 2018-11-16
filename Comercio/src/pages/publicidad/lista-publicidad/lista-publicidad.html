@@ -49,7 +49,9 @@
 
 
 </ion-content>
-
-<div *ngIf="publicidad">
-  <p>Por el momento no hay Ofertas Disponibles... </p>
+<ion-content class="noTiene" *ngIf="publicidad">
+  <div>
+  <p > Por el momento no hay Ofertas Disponibles... </p>
 </div>
+</ion-content>
+

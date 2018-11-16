@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Refresher, AlertController, LoadingController, Events } from 'ionic-angular';
+import { NavController, Refresher, LoadingController, Events } from 'ionic-angular';
 import Swal from 'sweetalert2';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../../environments/environment';
@@ -41,7 +41,6 @@ export class LoginPage {
     this.getVersionNumber();
     this.storage.get('proveedor').then((val) => {
       if (val != ' ') {
-
 
         if (val != null) {
           let newLogin = JSON.parse(val);
@@ -108,40 +107,45 @@ export class LoginPage {
       loader.present();
       this.login.getLogin(this.newLogin).subscribe(result => {
 
-        this.usuarioLogin = result['usuario'];
-
-        if (typeof this.usuarioLogin === 'undefined') {
-
+        if (result['ok'] !== true) {
           Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
+          this.navCtrl.setRoot(LoginPage, { animate: true });
           loader.dismiss();
         } else {
 
-          this.datosProveedor = result['proveedorDB'];
+          this.usuarioLogin = result['usuario'];
 
-          if (this.datosProveedor != undefined) {
-            this.datosProveedor.forEach(element => {
-              this.idProveedor = element._id;
-              ENV.NOMBRE_PROVEEDOR = element.entidad.razonSocial;
-              ENV.RUBRO_PROVEEDOR = element.entidad.actividadPrincipal;
-            });
+          if (typeof this.usuarioLogin === 'undefined') {
+            Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error');
+            loader.dismiss();
+          } else {
 
-            this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR);
+            this.datosProveedor = result['proveedorDB'];
 
-            if (this.idProveedor != undefined) {
-              this.almacenarValoresImportantes();
-
-              this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
-                animate: true
+            if (this.datosProveedor != undefined) {
+              this.datosProveedor.forEach(element => {
+                this.idProveedor = element._id;
+                ENV.NOMBRE_PROVEEDOR = element.entidad.razonSocial;
+                ENV.RUBRO_PROVEEDOR = element.entidad.actividadPrincipal;
               });
-            } else {
 
-              Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas', 'error')
+              this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR);
+
+              if (this.idProveedor != undefined) {
+                this.almacenarValoresImportantes();
+
+                this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
+                  animate: true
+                });
+              } else {
+
+                Swal('Atención', 'Usted no es Proveedor, ingrese con credenciales validas', 'error')
+              }
             }
+            loader.dismiss();
+
           }
-          loader.dismiss();
-
         }
-
       }, err => {
         Swal('Atención', 'Ocurrio un problema inesperado codigo: ' + err, 'error')
 
@@ -153,7 +157,7 @@ export class LoginPage {
   }
 
   goCreateCliente() {
-    
+
     this.navCtrl.push(AltaClientePage);
   }
 
@@ -167,9 +171,9 @@ export class LoginPage {
   }
 
   almacenarValoresImportantes() {
-    this.storage.set('id', this.usuarioLogin._id);
-    this.storage.set('token', this.usuarioLogin.token);
-    this.storage.set('idProveedor', this.idProveedor);
+    //this.storage.set('id', this.usuarioLogin._id);
+    //this.storage.set('token', this.usuarioLogin.token);
+    //this.storage.set('idProveedor', this.idProveedor);
 
     this.storage.set('proveedor', JSON.stringify(this.newLogin));
 
@@ -178,7 +182,7 @@ export class LoginPage {
     ENV.PROVEEDOR_ID = this.idProveedor;
     ENV.TOKEN = this.usuarioLogin.token;
     ENV.PROVEEDOR_LOGIN = JSON.stringify(this.datosProveedor);
-    
+
   }
 
   showPassword() {

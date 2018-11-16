@@ -13,5 +13,6 @@ export var envirotment = {
     PEDIDO: ' ',
     PEDIDOS:' ',
     CARRITO: ' ',
-    INVITACIONES: ' '
+    INVITACIONES: ' ',
+    NEWLOGIN: ' '
 }

@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { PedidoModalPage } from '../pedido-modal/pedido-modal';
 import { Pedido } from '../../../../modelo/pedido';
 import { envirotment as ENV } from '../../../../environments/environments';
-import { Storage } from '@ionic/storage';
 import { ListaProveedoresPage } from '../../../pedido/lista-proveedores';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { Events } from 'ionic-angular';
@@ -51,7 +50,6 @@ export class ListaProductosModalPage {
     public navParams: NavParams,
     private proveedorService: ProveedorProvider,
     private modalCtrl: ModalController,
-    private storage: Storage,
     private auxiliar: AuxiliarProvider,
     private loadingCtrl: LoadingController,
     public events: Events
@@ -320,12 +318,14 @@ export class ListaProductosModalPage {
   elaborarPedido(){
     this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
 
-    this.storage.get('token').then((val) => {
+    /*this.storage.get('token').then((val) => {
       this.pedido.token = val
-    });
-    this.storage.get('idComercio').then((val) => {
+    });*/
+    this.pedido.token = ENV.TOKEN;
+    this.pedido.comercio = ENV.COMERCIO_ID;
+    /*this.storage.get('idComercio').then((val) => {
       this.pedido.comercio = val
-    });
+    });*/
     this.pedido.proveedor = this.proveedor._id;
     this.tipoEntrega = ' ';
     if (typeof this.proveedor.tipoEntrega != 'undefined') {

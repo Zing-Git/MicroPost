@@ -1,10 +1,28 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Invitaciones</ion-title>
-  </ion-navbar>
+
+    <ion-grid >
+        <ion-row>
+          <ion-col col-10>
+    
+              <ion-navbar>
+                  <button ion-button menuToggle>
+                    <ion-icon name="menu"></ion-icon>
+                  </button>
+                  <ion-title>Invitaciones</ion-title>
+                </ion-navbar>
+          </ion-col>
+    
+          
+          <ion-col col-2>
+            <div class="center_vertically" (click)='doRefresh()'>
+              <i class="fas fa-sync-alt fa-2x"></i>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+  
 </ion-header>
 
 <ion-content padding class="noContent" *ngIf="!estado">
@@ -15,6 +33,13 @@
 </ion-content>
 
 <ion-content padding *ngIf="estado">
+
+    <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+          refreshingText="Refrescando...">
+        </ion-refresher-content>
+      </ion-refresher>
+
   <div padding>
     <ion-segment [(ngModel)]="inicial">
       <ion-segment-button value="pendiente" [class.hide]="estadoPendiente">
