@@ -22,7 +22,7 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -33,7 +33,8 @@
   <p class="tituloTotal"> <strong>Agregar nuevo Proveedor a tu red<br></strong></p>
 
 
-  <ion-card>
+  <!--<div class="nuevo-div">
+    <ion-scroll scrollY="true">
     <ion-list>
       <ion-item *ngFor="let proveedor of proveedores; let i=index">
         <ion-item (click)="realizarInvitacion(proveedor)">
@@ -44,6 +45,21 @@
         </ion-item>
       </ion-item>
     </ion-list>
-  </ion-card>
+  </ion-scroll>
+</div>-->
 
+<div class="nuevo-div">
+  <ion-scroll scrollY="true">
+    <ion-list *ngFor="let proveedor of proveedores; let i=index">
+      <ion-item class="nuevo-ion-item" (click)="realizarInvitacion(proveedor)">
+        <ion-avatar item-start>
+          <img src='../../../../assets/icon/camion.ico'>
+        </ion-avatar>
+        <h2 text-wrap><strong>{{proveedor.entidad.razonSocial}}</strong></h2>
+        <h3 text-wrap>{{proveedor.entidad.actividadPrincipal}}</h3>
+      </ion-item>
+
+    </ion-list>
+  </ion-scroll>
+</div>
 </ion-content>

@@ -63,11 +63,11 @@ export class ListaPedidoComercioPage {
     this.obtenerDatosImportantes();
   }
 
-  doRefresh(refresher?:any) { //"?" in typescript means the parameter is optional
+  doRefresh(refresher?: any) { //"?" in typescript means the parameter is optional
 
-      this.obtenerDatosImportantes();
-      refresher && refresher.complete();//make sure refresher is truthy before calling complete
-   }
+    this.obtenerDatosImportantes();
+    refresher && refresher.complete();//make sure refresher is truthy before calling complete
+  }
 
   obtenerDatosImportantes() {
 
@@ -81,14 +81,14 @@ export class ListaPedidoComercioPage {
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
 
-      if(result['pedidos_array'] != undefined){
+      if (result['pedidos_array'] != undefined) {
         this.estado = false;
         ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
-      this.cargarCombos();
-      }else{
+        this.cargarCombos();
+      } else {
         this.estado = true;
       }
-      
+
     })
 
     loader.dismiss();
@@ -118,6 +118,11 @@ export class ListaPedidoComercioPage {
   }
 
   cargarCombos() {
+    //para trabajr con las fechas
+    //tengo que restar hasta tres dias
+    let fechaMinima: Date = new Date();
+    let fechaAlta : Date = new Date();
+    //
     this.pedidosAceptados = new Array();
     this.pedidosRechazados = new Array();
     this.pedidosSolicitados = new Array();
@@ -128,28 +133,32 @@ export class ListaPedidoComercioPage {
 
     this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
     console.log(this.pedidos);
+    //this.condition();
     this.pedidos.forEach(x => {
 
       switch (x.estadoPedido) {
         case "RECHAZADO": {
-         
+          //x.color = "#f8f8f8";
           this.estadoRechazado = false;
           this.pedidosRechazados.push(x);
-         
+
           break;
         }
         case "PEDIDO SOLICITADO": {
-         
+          //if(x.detallePedido[0].fechaAlta.getDay()){
+
+          //}
+          //x.color = "#2662F7";
           this.estadoSolicitado = false;
           this.pedidosSolicitados.push(x);
-          
+
           break;
         }
         case "ACEPTADO": {
-         
+          //x.color = "#FD4B4B";
           this.estadoAceptado = false;
           this.pedidosAceptados.push(x);
-         
+
           break;
         }
         default: {
@@ -159,5 +168,21 @@ export class ListaPedidoComercioPage {
       }
 
     })
+  }
+
+  public condition(pedido: any): boolean {
+    let fechaMinima: Date = new Date();
+    let fechaActual = new Date(pedido.detallePedido[0].fechaAlta);
+    //fechaActual.setDate(fechaActual.getDate() - 1);
+    console.log(fechaMinima);
+    console.log(fechaActual);
+    console.log( fechaActual.setDate(fechaActual.getDate() - 1));
+    /*if (fechaActual.setDate(fechaActual.getDate() - 1) < fechaMinima){
+      return true
+    }else{
+      return false;
+    }*/
+
+      return true;
   }
 }

@@ -15,10 +15,13 @@ export class InvitacionProveedorModalPage {
   titulo: string;
   text: string;
   idComercio: string;
+  domicilio : string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public proveedorService: ProveedorProvider) {
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedor = navParams.get('data');
     this.titulo= this.proveedor.entidad.razonSocial + ' le permitirá adquirir productos del rubro: ' + this.proveedor.entidad.actividadPrincipal
+    this.domicilio = this.proveedor.entidad.domicilio.localidad + ', '+ this.proveedor.entidad.domicilio.barrio + ', ' + this.proveedor.entidad.domicilio.calle + ', ' + this.proveedor.entidad.domicilio.numeroCasa
   }
 
   ionViewDidLoad() {

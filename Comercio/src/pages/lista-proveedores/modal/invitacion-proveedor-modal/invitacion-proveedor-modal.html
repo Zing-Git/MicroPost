@@ -4,15 +4,17 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <p class="tituloTotal"><strong>Confirme el proveedor <br> {{titulo}}</strong></p>
-  
 
-    <ion-item>
-      <button  ion-button full round (click)='enviarInvitacion()' item-end> Enviar</button>
-    </ion-item>
+  <h4>Proveedor:<strong>{{proveedor.entidad.razonSocial}}</strong> </h4>
+  <h4>Rubro {{proveedor.entidad.actividadPrincipal}}</h4>
+  <h4 text-wrap>Domoicilio {{domicilio}}</h4>
+  <ion-item>
+    <button ion-button full round (click)='enviarInvitacion()' item-end> Enviar</button>
+  </ion-item>
 
-    <!--<ion-item>
+  <!--<ion-item>
         <button ion-button round color="danger" (click)='volver()' item-first style="width:100px;">
           <ion-icon>Volver</ion-icon>
         </button>
@@ -20,6 +22,6 @@
           <ion-icon name="cart"> Finalizar</ion-icon>
         </button>
       </ion-item>-->
- 
+
 
 </ion-content>

@@ -29,11 +29,7 @@ export class ListaProveedoresModalPage {
     this.cargarInicial();
   }
 
-  ionViewDidLoad() {
-
-
-
-  }
+  ionViewDidLoad() {  }
 
   cargarInicial() {
 
@@ -43,10 +39,11 @@ export class ListaProveedoresModalPage {
     loader.present();
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(result => {
-      this.proveedores = result['proveedores'];      
+      this.proveedores = result['proveedores'];  
+      console.log(this.proveedores);    
     });
     loader.dismiss();
-
+    
   }
 
   realizarInvitacion(proveedor: any) {
@@ -57,7 +54,7 @@ export class ListaProveedoresModalPage {
 
   cargarProveedor(proveedor: any) {
     Swal({
-      title: 'Paso 2 de 2: Confirme el proveedor ',
+      title: 'Confirme el proveedor ',
       text: proveedor.entidad.razonSocial + ' le permitirá adquirir productos del rubro: ' + proveedor.entidad.actividadPrincipal,
       type: 'question',
       showCancelButton: true,
@@ -87,7 +84,7 @@ export class ListaProveedoresModalPage {
 
         Swal({
 
-          title: 'Paso 3 de 3: Felicidades ya cumpliste!',
+          title: 'Felicidades ya cumpliste!',
           text: 'Debes esperar a que el proveedor te agregue a la red de comercios. Te informaremos cuando eso ocurra.',
           type: 'success',
           showCancelButton: false,

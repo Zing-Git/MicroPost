@@ -1,5 +1,12 @@
 page-lista-proveedores {
-    ion-grid{
-        background-color: #f8f8f8;
-      }
+  ion-grid {
+    background-color: #f8f8f8;
+  }
+
+  img {
+    border-radius: 30% !important;
+    overflow: hidden;
+    width: 50px !important;
+    height: 50px !important;
+  }
 }

@@ -86,8 +86,13 @@ dark: #222);
 @import "noto-sans";
 
 //aqui voy a agregar lo necesario para que la aplicacion entera cambie la vista
-
-
+/*ion-icon[name='menu']:before {
+  content: url('../assets/icon/menu.ico');
+  height: 20px !important;
+}*/
+i {
+  color: rgb(248, 116, 82);
+}
 .item-button {
   padding: 15px !important;
   height: 40px !important;
@@ -166,25 +171,26 @@ p{
 .tituloTotal{
   //background-color: #2e66c9 !important;
   text-align: center !important;
-  color: rgb(13, 8, 94) !important;
+  color: #FAF0E6 !important;
   font-size: 16px !important;
-  
-  background: rgba(179,220,237,1);
-  background: -moz-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  padding: 15px;
+  background: #00008B;
+ /* background: -moz-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
   background: -webkit-gradient(left top, right top, color-stop(0%, rgba(179,220,237,1)), color-stop(50%, rgba(41,184,229,1)), color-stop(100%, rgba(188,224,238,1)));
   background: -webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
   background: -o-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
   background: -ms-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
   background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee', GradientType=1 );
-border-radius: 10px 10px 10px 10px;
--moz-border-radius: 10px 10px 10px 10px;
--webkit-border-radius: 10px 10px 10px 10px;
+  */
+  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee', GradientType=1 );
+//border-radius: 10px 10px 10px 10px;
+//-moz-border-radius: 10px 10px 10px 10px;
+//-webkit-border-radius: 10px 10px 10px 10px;
 border: 1px solid #000000;
 
--webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+//-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+///-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+//box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 ion-searchbar{
@@ -216,4 +222,14 @@ ion-searchbar{
     font-size: 20px !important;
     color: gray !important; 
   }
+
+  .nuevo-div{
+    background-color: #FFFAFA;
+  }
+  .nuevo-ion-item{
+    padding: 0.5px 7px 0.5px 5px ;
+  }
+
+  
+
 }
