@@ -33,6 +33,9 @@ import { Transfer } from '@ionic-native/transfer';
 import { DatePipe } from '@angular/common';
 import { SalirPage } from '../pages/salir/salir';
 import { AppVersion } from '@ionic-native/app-version';
+import { PushnotificationProvider } from '../providers/pushnotification/pushnotification';
+// Plugins
+import { OneSignal } from '@ionic-native/onesignal';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,9 @@ import { AppVersion } from '@ionic-native/app-version';
     AuxiliarProvider,
     DecimalPipe,
     PedidoProvider,
-    AppVersion
+    AppVersion,
+    OneSignal,
+    PushnotificationProvider
   ]
 })
 export class AppModule {}

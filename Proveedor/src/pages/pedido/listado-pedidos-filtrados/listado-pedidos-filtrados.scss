@@ -1,17 +1,43 @@
 page-listado-pedidos-filtrados {
-    .hide {
-        display: none;
-        
-      }
 
-      .center_vertically {
-        position: relative;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-      }
-    ion-grid{
-      background-color: #f8f8f8;
-    }
+  ion-scroll {
+    height: 65vh;
+
+  }
+
+  .hide {
+    display: none;
+
+  }
+
+  .center_vertically {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  ion-grid {
+    background-color: #f8f8f8;
+  }
+
+  .nuevo-div {
+
+    background: rgba(242, 246, 248, 1);
+    /*background: -moz-linear-gradient(left, rgba(242, 246, 248, 1) 0%, rgba(216, 225, 231, 1) 24%, rgba(212, 222, 228, 1) 27%, rgba(181, 198, 208, 1) 50%, rgba(198, 214, 224, 1) 70%, rgba(224, 239, 249, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(242, 246, 248, 1)), color-stop(24%, rgba(216, 225, 231, 1)), color-stop(27%, rgba(212, 222, 228, 1)), color-stop(50%, rgba(181, 198, 208, 1)), color-stop(70%, rgba(198, 214, 224, 1)), color-stop(100%, rgba(224, 239, 249, 1)));
+    background: -webkit-linear-gradient(left, rgba(242, 246, 248, 1) 0%, rgba(216, 225, 231, 1) 24%, rgba(212, 222, 228, 1) 27%, rgba(181, 198, 208, 1) 50%, rgba(198, 214, 224, 1) 70%, rgba(224, 239, 249, 1) 100%);
+    background: -o-linear-gradient(left, rgba(242, 246, 248, 1) 0%, rgba(216, 225, 231, 1) 24%, rgba(212, 222, 228, 1) 27%, rgba(181, 198, 208, 1) 50%, rgba(198, 214, 224, 1) 70%, rgba(224, 239, 249, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(242, 246, 248, 1) 0%, rgba(216, 225, 231, 1) 24%, rgba(212, 222, 228, 1) 27%, rgba(181, 198, 208, 1) 50%, rgba(198, 214, 224, 1) 70%, rgba(224, 239, 249, 1) 100%);
+    background: linear-gradient(to right, rgba(242, 246, 248, 1) 0%, rgba(216, 225, 231, 1) 24%, rgba(212, 222, 228, 1) 27%, rgba(181, 198, 208, 1) 50%, rgba(198, 214, 224, 1) 70%, rgba(224, 239, 249, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f6f8', endColorstr='#e0eff9', GradientType=1);*/
+  }
+  p{
+    color: black !important;
+}
+
+  .nuevo-ion-item {
+    padding: 0.5px 7px 0.5px 5px;
+  }
 }

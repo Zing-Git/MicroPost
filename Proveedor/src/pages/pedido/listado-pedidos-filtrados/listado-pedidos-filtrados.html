@@ -2,17 +2,17 @@
 
   <ion-grid >
     <ion-row>
-      <ion-col col-10>
+      <ion-col col-10 >
 
-        <ion-navbar>
-          <button ion-button menuToggle>
+        <ion-navbar >
+          <button ion-button menuToggle class="nuevo-div"> 
             <ion-icon name="menu"></ion-icon>
           </button>
           <ion-title>Pedidos</ion-title>
         </ion-navbar>
       </ion-col>
 
-      
+
       <ion-col col-2>
         <div class="center_vertically" (click)='doRefresh()'>
           <i class="fas fa-sync-alt fa-2x"></i>
@@ -22,7 +22,7 @@
   </ion-grid>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="nuevo-div">
 
   <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -32,13 +32,13 @@
 
   <div padding *ngIf="!pedidoHabilitado">
     <ion-segment [(ngModel)]="inicial">
-      <ion-segment-button value="informado" [class.hide]="estadoInformado">
+      <ion-segment-button value="informado" [class.hide]="estadoInformado" class="segment-button">
         <strong>Solicitados</strong>
       </ion-segment-button>
-      <ion-segment-button value="aprobado" [class.hide]="estadoAceptado">
+      <ion-segment-button value="aprobado" [class.hide]="estadoAceptado" class="segment-button">
         <strong>Aprobados</strong>
       </ion-segment-button>
-      <ion-segment-button value="rechazado" [class.hide]="estadoRechazado">
+      <ion-segment-button value="rechazado" [class.hide]="estadoRechazado" class="segment-button">
         <strong>Rechazados</strong>
       </ion-segment-button>
     </ion-segment>
@@ -54,8 +54,22 @@
 
     <form *ngSwitchCase="'informado'" [class.hide]="estadoInformado">
 
+      <div class="nuevo-div">
+        <ion-scroll scrollY="true" >
+          <ion-list *ngFor="let item of pedidosInformados">
+            <ion-item  (click)='verDetalle(item)'>
+              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
+                item.comercio.entidad.domicilio.barrio}}</p>
+              <p><strong> Fecha de Solicitud</strong> {{item.detallePedido[0].fechaAlta | date: 'dd/MM/yyyy'}}</p>
+              <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
 
-      <ion-scroll style="height:400px" scrollY="true">
+            </ion-item>
+
+          </ion-list>
+        </ion-scroll>
+      </div>
+      <!--<ion-scroll style="height:400px" scrollY="true">
         <ion-list *ngFor="let item of pedidosInformados">
           <ion-item (click)='verDetalle(item)'>
 
@@ -68,7 +82,7 @@
           </ion-item>
 
         </ion-list>
-      </ion-scroll>
+      </ion-scroll>-->
 
 
     </form>
@@ -77,23 +91,39 @@
     <form *ngSwitchCase="'aprobado'" [class.hide]="estadoAceptado">
 
 
-      <ion-scroll style="height:400px" scrollY="true">
+      <div class="nuevo-div">
+        <ion-scroll scrollY="true" >
+          <ion-list *ngFor="let item of pedidosAceptados">
+            <ion-item (click)='verDetalle(item)'>
+              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
+                item.comercio.entidad.domicilio.barrio}}</p>
+              <p><strong> Entrega estimada </strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
+              <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
+
+            </ion-item>
+
+          </ion-list>
+        </ion-scroll>
+      </div>
+      <!--<ion-scroll style="height:400px" scrollY="true">
         <ion-list *ngFor="let item of pedidosAceptados">
           <ion-item (click)='verDetalle(item)'>
 
-            <!--<button ion-button small item-end (click)='verDetalle(item)'>
+            <button ion-button small item-end (click)='verDetalle(item)'>
                 <ion-icon name="eye"> Ver</ion-icon>
-              </button>-->
+              </button>
 
             <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
+            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
+              item.comercio.entidad.domicilio.barrio}}</p>
             <p><strong> Entrega estimada </strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
             <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
             <hr>
           </ion-item>
 
         </ion-list>
-      </ion-scroll>
+      </ion-scroll>-->
 
 
 
@@ -101,19 +131,35 @@
 
     <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado">
 
-      <ion-scroll style="height:400px" scrollY="true">
+        <div class="nuevo-div">
+            <ion-scroll scrollY="true" >
+              <ion-list *ngFor="let item of pedidosRechazados">
+                <ion-item (click)='verDetalle(item)'>
+                    <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
+                    <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
+                      item.comercio.entidad.domicilio.barrio}}</p>
+                    <p><strong> Entrega estimada</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
+                    <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
+    
+                </ion-item>
+    
+              </ion-list>
+            </ion-scroll>
+          </div>
+      <!--<ion-scroll style="height:400px" scrollY="true">
         <ion-list *ngFor="let item of pedidosRechazados">
           <ion-item (click)='verDetalle(item)'>
 
             <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
+            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
+              item.comercio.entidad.domicilio.barrio}}</p>
             <p><strong> Entrega estimada</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
             <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
             <hr>
           </ion-item>
 
         </ion-list>
-      </ion-scroll>
+      </ion-scroll>-->
 
     </form>
 
@@ -124,7 +170,7 @@
 
 </ion-content>
 
-<ion-content padding class="noContent" *ngIf="pedidoHabilitado">
+<ion-content padding class="nuevo-div" *ngIf="pedidoHabilitado">
   <div>
     <p>Por el momento no posee Pedidos... </p>
   </div>

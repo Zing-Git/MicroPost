@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.bintelligence.micropostproveedor" version="2.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.bintelligence.bitbiproveedor" version="2.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Bitbi Proveedor</name>
     <description>App para Proveedor</description>
     <author email="zinginternacional@gmail.com" href="http://bin-tech.net/zing/">Zing</author>
@@ -84,5 +84,6 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
     <plugin name="cordova-plugin-app-version" spec="0.1.9" />
+    <plugin name="onesignal-cordova-plugin" spec="2.4.5" />
     <engine name="android" spec="7.1.1" />
 </widget>

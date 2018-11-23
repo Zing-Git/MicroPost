@@ -1,13 +1,13 @@
 <ion-menu [content]="content" side="left" type="overlay">
     <ion-header>
       <ion-toolbar>
-          <ion-title>Red Bitbi</ion-title>
+          <h3>Red Bitbi</h3>
           <p text-center >{{razonSocial}} (<span>{{rubroProveedor}}</span>)</p>
       </ion-toolbar>
     </ion-header>
    
     <ion-content>
-      <ion-list class="soloApp">
+      <ion-list >
         <button ion-item  menuClose *ngFor="let p of pages" (click)="openPage(p)">          
           {{ p.title }}
         </button>

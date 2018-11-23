@@ -37,8 +37,10 @@ export class CrearPublicidadPage {
     private datePipe: DatePipe) {
 
 
-    this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
+    this.fechaMinima.setDate(this.fechaMinima.getDate() );
     this.fechaInicio = this.fechaMinima.toISOString();
+    //this.fechaFin = this.fechaMinima.toISOString();
+    this.fechaMinima.setDate(this.fechaMinima.getDate() + 2);
     this.fechaFin = this.fechaMinima.toISOString();
   }
 

@@ -45,7 +45,28 @@
     <h3 text-center>
 
     </h3>
-    <ion-list *ngFor="let fProv of proveedores; let i=index">
+
+    <div class="nuevo-div">
+      <ion-scroll scrollY="true">
+        <ion-list *ngFor="let fProv of proveedores; let i=index">
+          <ion-item class="nuevo-ion-item" (click)="mostrarProductosModal(fProv)">
+            
+            <ion-avatar item-start>
+
+              <img src='../../../../assets/icon/camion.ico'>
+    
+            </ion-avatar>
+    
+            <h2 text-wrap><strong>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() +
+                fProv.entidad.razonSocial.substr(1).toLowerCase() }}</strong></h2>
+            <h3 text-wrap>{{fProv.entidad.actividadPrincipal}}</h3>
+          </ion-item>
+
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+    <!--<ion-list *ngFor="let fProv of proveedores; let i=index">
       <ion-item (click)="mostrarProductosModal(fProv)">
         <ion-avatar item-start>
 
@@ -57,7 +78,7 @@
             fProv.entidad.razonSocial.substr(1).toLowerCase() }}</strong></h2>
         <h3 text-wrap>{{fProv.entidad.actividadPrincipal}}</h3>
       </ion-item>
-    </ion-list>
+    </ion-list>-->
   </ion-item>
 
 </ion-content>

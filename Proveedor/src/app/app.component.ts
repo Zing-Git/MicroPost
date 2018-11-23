@@ -9,6 +9,8 @@ import { ListadoInvitacionPage } from '../pages/invitacion/listado-invitacion/li
 import { CrearPublicidadPage } from '../pages/publicidad/crear-publicidad/crear-publicidad';
 import { AuxiliarProvider } from '../providers/auxiliar/auxiliar';
 import { SalirPage } from '../pages/salir/salir';
+import { AppVersion } from '@ionic-native/app-version';
+import { PushnotificationProvider } from '../providers/pushnotification/pushnotification';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,7 +31,8 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     event: Events,
-    auxiliarServices: AuxiliarProvider) {
+    auxiliarServices: AuxiliarProvider,
+    pushNotificationService: PushnotificationProvider) {
 
     this.razonSocial = auxiliarServices.getRazonSocial();
     this.rubroProveedor = auxiliarServices.getRubroProveedor();
@@ -39,6 +42,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      pushNotificationService.init_notifications();
+      pushNotificationService.obtener_idPushUnico();
+
     });
 
     this.pages = [

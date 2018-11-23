@@ -24,6 +24,8 @@ import { ConfiguracionInicialPage } from '../pages/configuracion-inicial/configu
 import { IonicStorageModule } from '@ionic/storage';
 //import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 //import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+// Plugins
+import { OneSignal } from '@ionic-native/onesignal';
 
 
 import { ProductoProvider } from '../providers/producto/producto';
@@ -43,6 +45,7 @@ import { SalirPage } from '../pages/salir/salir';
 import { CarritoModalPage } from '../pages/pedido/modal/carrito-modal/carrito-modal';
 
 import { AppVersion } from '@ionic-native/app-version';
+import { PushnotificationProvider } from '../providers/pushnotification/pushnotification';
 //declare module 'google-maps';
 
 @NgModule({
@@ -110,7 +113,9 @@ import { AppVersion } from '@ionic-native/app-version';
     ProductoProvider,
     DecimalPipe,
     DatePicker,
-    AppVersion
+    AppVersion,
+    OneSignal,
+    PushnotificationProvider
   ]
 })
 export class AppModule {}

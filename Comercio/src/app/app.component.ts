@@ -15,6 +15,7 @@ import { SalirPage } from '../pages/salir/salir';
 import { AppVersion } from '@ionic-native/app-version';
 import { Storage } from '@ionic/storage';
 import { envirotment as ENV } from '../environments/environments';
+import { PushnotificationProvider } from '../providers/pushnotification/pushnotification';
 
 @Component({
   templateUrl: 'app.html'
@@ -37,7 +38,7 @@ export class MyApp {
     auxiliarServices: AuxiliarProvider,
     event: Events,
     appVersion: AppVersion,
-    storage: Storage) {
+    pushNotificationService: PushnotificationProvider) {
       
     this.nombreComercio = auxiliarServices.getNombreComercio();
     this.rubroComercio = auxiliarServices.getRubroComercio();
@@ -47,9 +48,15 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      pushNotificationService.init_notifications();
+      pushNotificationService.obtener_idPushUnico();
       appVersion.getVersionNumber().then(function(valor){
         this.version = valor;
-      })
+      });
+
+      
+
+
        ENV.CARRITO = JSON.stringify(this.version);
       this.pages = [
         { title: 'Mis Pedidos', component: ListaPedidoComercioPage, src:'' },

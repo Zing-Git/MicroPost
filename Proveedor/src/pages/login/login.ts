@@ -65,7 +65,7 @@ export class LoginPage {
     this.login.getLogin(this.newLogin).subscribe(result => {
       this.usuarioLogin = result['usuario'];
       this.datosProveedor = result['proveedorDB'];
-
+      console.log(result);
       if (this.datosProveedor != undefined) {
         this.datosProveedor.forEach(element => {
           this.idProveedor = element._id;
@@ -112,7 +112,7 @@ export class LoginPage {
           this.navCtrl.setRoot(LoginPage, { animate: true });
           loader.dismiss();
         } else {
-
+          console.log(result);
           this.usuarioLogin = result['usuario'];
 
           if (typeof this.usuarioLogin === 'undefined') {
@@ -174,7 +174,7 @@ export class LoginPage {
     //this.storage.set('id', this.usuarioLogin._id);
     //this.storage.set('token', this.usuarioLogin.token);
     //this.storage.set('idProveedor', this.idProveedor);
-
+    
     this.storage.set('proveedor', JSON.stringify(this.newLogin));
 
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;

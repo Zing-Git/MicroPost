@@ -1,4 +1,4 @@
-<ion-header>
+<!--<ion-header>
 	<ion-navbar>	
       <ion-item padding no-lines>
 			<button (click)="volver()" item-right class="cerrar">
@@ -6,6 +6,30 @@
       </button>
       </ion-item>
 	</ion-navbar>
+</ion-header>-->
+
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+      <ion-col col-3>
+
+      </ion-col>
+
+      <ion-col col-3>
+       
+
+      </ion-col>
+      <ion-col col-2>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-header>
 
 <ion-content padding>
@@ -43,7 +67,7 @@
 
         <ion-item>
           <h2>Vigencia</h2>
-          <p >{{publicidad.fechaInicio  | date: 'dd/MM/yyyy'}} - {{publicidad.fechaFin  | date: 'dd/MM/yyyy'}}</p>
+          <p >{{publicidad.fechaInicio }} hasta {{publicidad.fechaFin  }}</p>
         </ion-item>       
 
       </ion-card>

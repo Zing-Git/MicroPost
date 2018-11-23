@@ -19,12 +19,14 @@ export class ListaPublicidadModalPage {
   constructor(public proveedorService: ProveedorProvider, public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public loadingCtrl: LoadingController) {
 
     this.publicidad = navParams.get('data');
+    this.publicidad.fechaInicio = new Date(this.publicidad.fechaInicio).toLocaleDateString();
+    this.publicidad.fechaFin = new Date(this.publicidad.fechaFin).toLocaleDateString();
     if (this.publicidad != undefined) {
 
       console.log(this.publicidad);
 
     }
-
+    console.log(this.publicidad);
   }
 
   ionViewDidLoad() {

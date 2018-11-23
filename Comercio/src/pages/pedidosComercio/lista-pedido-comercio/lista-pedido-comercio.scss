@@ -59,7 +59,7 @@ page-lista-pedido-comercio {
     }
 
     .nuevo-div{
-      background-color: #FFFAFA;
+      background-color: rgba(242, 246, 248, 1);
     }
     .nuevo-ion-item{
       padding: 0.5px 7px 0.5px 5px ;
@@ -75,8 +75,5 @@ page-lista-pedido-comercio {
     ion-grid {
       background-color: #f8f8f8 !important;
     }
-    .segment-button{
-      background-color:rgb(6, 48, 121) !important; 
-      color: #fff !important;
-    }
+    
 }
