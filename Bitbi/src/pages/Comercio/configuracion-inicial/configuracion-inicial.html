@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Configuracion inicial</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div padding>
+    <ion-segment [(ngModel)]="inicial">
+      <ion-segment-button value="domicilio">
+        Domicilio
+      </ion-segment-button>
+      <ion-segment-button value="horario">
+        Horario de Atencion
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="inicial">
+    <form *ngSwitchCase="'domicilio'">
+      <ion-card>
+        <ion-item>
+          <ion-label floating>Provincia</ion-label>
+          <ion-select [formControl]="domicilioForm.controls['provincia']" (ionChange)="onProvinciaChange($event)"
+            interface="popover" class="custom-control custom-select custom-control-inline form-control-sm w-100">
+            <ion-option *ngFor="let fProv of provincias" [value]="fProv.iso_31662">{{fProv.provincia}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Localidad</ion-label>
+          <ion-select [formControl]="domicilioForm.controls['localidad']" type="text" (ionChange)="onLocalidadChange($event)"
+            interface="popover" class="custom-control custom-select custom-control-inline form-control-sm w-100">
+            <ion-option *ngFor="let fLoc of localidades" [value]="fLoc">{{fLoc}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-card>
+
+      <ion-card>
+        <ion-row>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label floating>Barrio</ion-label>
+              <ion-input [formControl]="domicilioForm.controls['barrio']" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label floating>Calle</ion-label>
+              <ion-input [formControl]="domicilioForm.controls['calle']" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+      <ion-card>
+        <ion-row>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label floating>Número</ion-label>
+              <ion-input [formControl]="domicilioForm.controls['numeroCasa']" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label floating>Piso</ion-label>
+              <ion-input [formControl]="domicilioForm.controls['piso']" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+      <ion-card>
+        <ion-row>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label floating>Depatamento</ion-label>
+              <ion-input [formControl]="domicilioForm.controls['departamento']" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item>
+              <ion-label floating>Código Postal</ion-label>
+              <ion-input [formControl]="domicilioForm.controls['codigoPostal']" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+      <ion-card>
+        <button ion-button block color="secondary" (click)="launchLocationPage()">Obtener mis coordenadas</button>
+      </ion-card>
+
+      <ion-card>
+        <ion-item>
+          <button ion-button color="danger" clear (click)='volver()' item-first>Cancelar</button>
+          <button ion-button color="secondary" clear>Continuar</button>
+        </ion-item>
+
+      </ion-card>
+    </form>
+    <form *ngSwitchCase="'horario'">
+      <ion-card>
+        <ion-row>
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>Mañana</ion-label>
+              <ion-checkbox color="primary" checked="false" (click)='showSelection()'></ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item>
+              <ion-label>Apertura</ion-label>
+              <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" (ngSubmit)="event.timeStarts"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+              <ion-item>
+                <ion-label>Cierre</ion-label>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" (ngSubmit)="event.timeStarts"></ion-datetime>
+              </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label>Tarde</ion-label>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Noche</ion-label>
+          <ion-checkbox color="primary" checked="false"></ion-checkbox>
+        </ion-item>
+      </ion-card>
+      <ion-card>
+
+      </ion-card>
+
+
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button block color="secondary" [disabled]="!domicilioForm.valid">Crear
+            Usuario</button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</ion-content>

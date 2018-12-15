@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content has-header="true" padding="true">
+  <h1 text-center>Adhesión de comercio</h1>
+  <h2 text-center>Paso 3 de 4 “Contacto”</h2>
+  <form>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input [formControl]="credencialesForm.controls['email']" type="email"></ion-input>
+    </ion-item>
+    <!--<ion-item>
+      <ion-label floating>Celular</ion-label>
+      <ion-input [formControl]="credencialesForm.controls['codigoPaisCelular']" type="text" placeholder="+549"></ion-input>
+      <ion-input [formControl]="credencialesForm.controls['codigoAreaCelular']" type="text"  placeholder="388"></ion-input>
+      <ion-input [formControl]="credencialesForm.controls['numeroCelular']" type="text" ></ion-input>
+    </ion-item>-->
+   
+     <!-- <ion-grid>
+      <ion-row>
+        <ion-col col-3>
+          <ion-label floating>Codigo Pais</ion-label>
+          <ion-input [formControl]="credencialesForm.controls['codigoPaisCelular']" type="text" placeholder="+549"></ion-input>
+        </ion-col>
+        <ion-col>
+          <ion-label floating>Codigo Area</ion-label>
+          <ion-input [formControl]="credencialesForm.controls['codigoAreaCelular']" type="text" placeholder="388"></ion-input>
+        </ion-col>
+        <ion-col>
+            <ion-label floating>Celular</ion-label>
+            <ion-input [formControl]="credencialesForm.controls['numeroCelular']" type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+-->
+  <ion-card>
+    <ion-card-title>
+      <h3>Teléfono Celular</h3>
+    </ion-card-title>
+    <ion-item>
+        <ion-label floating>Código Pais</ion-label>
+      <ion-input [formControl]="credencialesForm.controls['codigoPaisCelular']" type="text" placeholder="+549" class="floating-with-placeholder"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>Código Área</ion-label>
+      <ion-input [formControl]="credencialesForm.controls['codigoAreaCelular']" type="text" placeholder="388" class="floating-with-placeholder"></ion-input>
+    </ion-item>
+     <ion-item >
+        <ion-label floating>Celular</ion-label>
+      <ion-input [formControl]="credencialesForm.controls['numeroCelular']" type="text" class="floating-with-placeholder"></ion-input>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+      <ion-card-title>
+        <h3>Teléfono fijo</h3>
+      </ion-card-title>
+      <ion-item>
+          <ion-label floating>Código Pais</ion-label>
+          <ion-input [formControl]="credencialesForm.controls['codigoPaisFijo']" type="text" placeholder="+549" class="floating-with-placeholder"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Código Área</ion-label>
+          <ion-input [formControl]="credencialesForm.controls['codigoAreaFijo']" type="text" placeholder="388" class="floating-with-placeholder"></ion-input>
+      </ion-item>
+       <ion-item >
+          <ion-label floating>Celular</ion-label>
+          <ion-input [formControl]="credencialesForm.controls['numeroFijo']" type="text" class="floating-with-placeholder"></ion-input>
+      </ion-item>
+    </ion-card>
+   
+
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button round block (click)="onSingin()">Siguiente</button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

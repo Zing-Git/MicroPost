@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-2>
+          <div class="center_vertically" (click)="volver()">
+            <i class="fas fa-angle-double-left fa-2x"></i>
+          </div>
+        </ion-col>
+  
+        <ion-col col-4>
+         
+  
+        </ion-col>
+        <ion-col colo-4 text-center>
+          <div class="center_vertically">
+            <!--<ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}-->
+            <img src='../../../../assets/icon/carrito.ico'> 
+          </div>
+  
+        </ion-col>
+        <ion-col col-2>
+          <div class="center_vertically" >
+            <img src='../../../../assets/icon/ENVIAR.png'>
+  
+          </div>
+  
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-header>
+  
+  <ion-content padding>
+    <h3 class="tituloTotal" text-center>Mi Carrito.</h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button full ion-button round color="dark" outline >Click
+           </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button full ion-button round color="dark" outline clear>Entrega estimada {{fechaEntrega.substr(0,10)}}
+          </button>
+  
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  
+  
+
+  </ion-content>

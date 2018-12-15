@@ -48,8 +48,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
       pushNotificationService.init_notifications();
       pushNotificationService.obtener_idPushUnico();
+      
       appVersion.getVersionNumber().then(function(valor){
         this.version = valor;
       });

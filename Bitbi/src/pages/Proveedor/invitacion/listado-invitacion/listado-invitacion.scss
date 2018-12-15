@@ -1,0 +1,47 @@
+page-listado-invitacion {
+  .hide {
+    display: none;
+  }
+  ion-grid{
+    background-color: #f8f8f8;
+   
+  }
+
+  .tituloTotal {
+
+    background-color: #f8f8f8;
+    color: black !important;
+    
+  }
+  p{
+      color: black !important;
+  }
+
+  .noContent {
+    div {
+      height: 80%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: gray;
+      text-align: center;
+      font-size: 30px;
+      margin: 5, 5, 5, 5;
+    }
+
+    p {
+
+
+      color: #222 !important;
+      opacity: 1 !important;
+      margin-top: 1px !important;
+      margin-bottom: 1px !important;
+      text-align: center !important;
+      font-size: 20px !important;
+      color: gray !important;
+    }
+
+
+  }
+}

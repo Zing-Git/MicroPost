@@ -1,0 +1,75 @@
+<ion-header >
+    <ion-navbar class="tituloTotal">
+    <button ion-button menuToggle class="tituloTotal">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-center>Publicidad</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="tituloTotal">
+  <p text-center><strong>Bienvenido a Bitbi</strong> Ads <br> Estás a unos segundos de viralizar tu publicidad en todos
+    los puntos de venta de la red de Bitbi</p>
+
+  <!--<p class="tituloTotal"><strong>Describe tu publicidad</strong></p>-->
+
+
+
+  <p text-center><strong>Titulo</strong></p>
+  <ion-item>
+    <ion-textarea [(ngModel)]="titulo" placeholder="Ingrese Titulo de publicidad"></ion-textarea>
+  </ion-item>
+
+  <p text-center><strong>Descripción</strong></p>
+  <ion-item>
+    <ion-textarea [(ngModel)]="descripcion" placeholder="Ingrese descripción de la publicidad"></ion-textarea>
+  </ion-item>
+
+
+  <p text-center><strong>Menciona la vigencia de tu publicida</strong></p>
+  <ion-label>Fecha de Inicio</ion-label>
+  <ion-item>
+    <ion-datetime cancelText="Cancelar" doneText="Ok" displayFormat="DD/MM/YYYY"  [(ngModel)]="fechaInicio"></ion-datetime>
+  </ion-item>
+
+  <ion-label>Fecha de Fin</ion-label>
+  <ion-item>
+    <ion-datetime cancelText="Cancelar" doneText="Ok" displayFormat="DD/MM/YYYY"  [(ngModel)]="fechaFin"></ion-datetime>
+  </ion-item>
+
+
+  <p text-center><strong> Promociona tu producto a traves de la red de comercios Bitbi, esmérate en publicar la mejor
+      oferta con la mejor imagen. </strong>
+  <p>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <button ion-button round (click)="tomarFoto($event)" item-first style="width:130px;">
+              <ion-icon>Tomar Foto</ion-icon>
+            </button></ion-col>
+          <ion-col>
+            <button ion-button round (click)="tomarDeGaleria($event)" item-end style="width:130px;">
+              <ion-icon> Elegir de Galería</ion-icon>
+            </button></ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div *ngIf="base64Image">
+        <p text-center><strong>Imagen cargada o tomada</strong></p>
+
+        <ion-grid>
+            <ion-row>
+              <ion-col text-center> 
+                <img [src]="base64Image" />
+              </ion-col>
+              
+            </ion-row>
+          </ion-grid>       
+       
+          <button ion-button round full color="primary" (click)="enviarPublicidad()" [disabled]="esValido">Viralizar
+            ahora!</button>
+       
+      </div>
+</ion-content>

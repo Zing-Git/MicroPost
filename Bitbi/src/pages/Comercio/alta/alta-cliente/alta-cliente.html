@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>   
+  </ion-navbar>
+ 
+</ion-header>
+
+<ion-content>
+  <h1 text-center>Adhesión de comercio</h1>
+  <h2 text-center>Paso 1 de 4 “Mi Comercio”</h2>
+<ion-item>
+  <p text-wrap> Felicidades, estás a punto de formar parte de la red Bitbi de comercios que apoyan a micro productores y distribuidores con el mejor precio final. Ingresa tus datos para formar parte de la red</p>
+</ion-item>
+<form [formGroup]="credencialesForm">
+  <ion-item>
+    <ion-label floating>C.U.I.T / C.U.I.L.</ion-label>
+    <ion-input [formControl]="credencialesForm.controls['cuil']" type="text" placeholder="20-11111111-1" class="floating-with-placeholder"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Nombre del comercio</ion-label>
+    <ion-input [formControl]="credencialesForm.controls['razonSocial']" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Condicion IVA</ion-label>
+    <ion-select [(ngModel)]="itemPersoneriaSelected" [formControl]="credencialesForm.controls['tipoPersoneria']" type="text" (ionChange)="onTipoPersoneriaChange($event)" interface="popover">
+      <ion-option *ngFor="let item of tiposPersoneria; let idx = index" [value]="+(item.orden)" [selected]="itemPersoneriaSelected" select-text="itemPersoneriaSelected">{{item.tipoPersoneria}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Actividad Principal</ion-label>
+    <ion-select [(ngModel)]="itemActividadSelected" [formControl]="credencialesForm.controls['actividadPrincipal']" type="text" (ionChange)="onActividadesPrincipalesClienteChange($event)" interface="popover">
+      <ion-option *ngFor="let item1 of actividadesPrincipalesComercio" [value]="+(item1.orden)" [selected]="itemActividadSelected">{{item1.nombre}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item [hidden]="!value">
+    <ion-label floating >Ingrese Actividad</ion-label>
+    <ion-input [formControl]="credencialesForm.controls['actividadPrincipalOtro']" type="text"></ion-input>
+  </ion-item>
+  <br>
+
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button round block (click)="onSingin()" [disabled]="!credencialesForm.valid">Cargar Domicilio</button>
+    </ion-col>
+  </ion-row>
+
+</form>
+</ion-content>

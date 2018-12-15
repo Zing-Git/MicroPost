@@ -1,0 +1,19 @@
+page-lista-proveedores {
+  ion-grid {
+    background-color: #f8f8f8;
+  }
+
+  img {
+    border-radius: 30% !important;
+    overflow: hidden;
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .nuevo-div{
+    background-color: rgba(242, 246, 248, 1);
+  }
+  .nuevo-ion-item{
+    padding: 0.5px 7px 0.5px 5px ;
+  }
+}

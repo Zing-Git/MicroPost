@@ -1,0 +1,98 @@
+<!--<ion-header>
+	<ion-navbar>	
+      <ion-item padding no-lines>
+			<button (click)="volver()" item-right class="cerrar">
+				<ion-icon name="close"></ion-icon> Cerrar
+      </button>
+      </ion-item>
+	</ion-navbar>
+</ion-header>-->
+
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+      <ion-col col-3>
+
+      </ion-col>
+
+      <ion-col col-3>
+       
+
+      </ion-col>
+      <ion-col col-2>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+
+<ion-content padding>
+
+  <div padding>
+    <ion-segment [(ngModel)]="inicial">
+      <ion-segment-button value="encabezado">
+        <strong>Publicidad</strong>
+      </ion-segment-button>
+      <ion-segment-button value="detalle">
+        <strong>Imagen</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div [ngSwitch]="inicial">
+    <form *ngSwitchCase="'encabezado'">
+      <ion-card>
+
+        <ion-item>
+          <h2>Titulo</h2>
+          <p >{{publicidad.titulo}}</p>
+        </ion-item>
+        
+        <ion-item>
+          <h2 >Descripción</h2>
+          <p  text-wrap>{{publicidad.cuerpo}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>Proveedor</h2>
+          <p>{{publicidad.razonSocial}}</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>Vigencia</h2>
+          <p >{{publicidad.fechaInicio }} hasta {{publicidad.fechaFin  }}</p>
+        </ion-item>       
+
+      </ion-card>
+    </form>
+
+
+    <form *ngSwitchCase="'detalle'">
+
+      <ion-card *ngIf="publicidad.tieneImagen">
+        <ion-title>Imagen</ion-title>
+        <ion-card-content>
+          <img [src]="publicidad.imagen"  />
+        </ion-card-content>
+      </ion-card>
+
+    </form>
+
+  </div>
+  <ion-card>
+      <ion-item>  
+          <!--<button ion-button round (click)='volver()'>Volver</button>-->
+          <button ion-button full round (click)='cargarProveedor()'>Enviar Invitacion</button>
+          
+        </ion-item>
+  </ion-card>
+
+</ion-content>
+

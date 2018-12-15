@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-grid >
+      <ion-row>
+        <ion-col col-10>
+            <ion-navbar>
+                <button ion-button menuToggle>
+                  <ion-icon name="menu"></ion-icon>
+                </button>
+                <ion-title></ion-title>
+              </ion-navbar>            
+        </ion-col>
+  
+        
+        <ion-col col-2>
+          <div class="center_vertically" (click)='doRefresh()'>
+            <i class="fas fa-sync-alt fa-2x"></i>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <p class="tituloTotal"><strong>Seleccione un Proveedor </strong></p>
+
+
+  <br>
+  <!--  <ion-item>
+    
+   <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
+        <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id" >{{fProv.entidad.razonSocial}}</ion-option>
+    </ion-select>
+    </ion-item>-->
+
+
+  <ion-item>
+    <h3 text-center>
+
+    </h3>
+
+    <div class="nuevo-div">
+      <ion-scroll scrollY="true">
+        <ion-list *ngFor="let fProv of proveedores; let i=index">
+          <ion-item class="nuevo-ion-item" (click)="mostrarProductosModal(fProv)">
+            
+            <ion-avatar item-start>
+
+              <img src='../../../../assets/icon/camion.ico'>
+    
+            </ion-avatar>
+    
+            <h2 text-wrap><strong>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() +
+                fProv.entidad.razonSocial.substr(1).toLowerCase() }}</strong></h2>
+            <h3 text-wrap>{{fProv.entidad.actividadPrincipal}}</h3>
+          </ion-item>
+
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+    <!--<ion-list *ngFor="let fProv of proveedores; let i=index">
+      <ion-item (click)="mostrarProductosModal(fProv)">
+        <ion-avatar item-start>
+
+          <img src='../../../../assets/icon/camion.ico'>
+
+        </ion-avatar>
+
+        <h2 text-wrap><strong>{{fProv.entidad.razonSocial.charAt(0).toUpperCase() +
+            fProv.entidad.razonSocial.substr(1).toLowerCase() }}</strong></h2>
+        <h3 text-wrap>{{fProv.entidad.actividadPrincipal}}</h3>
+      </ion-item>
+    </ion-list>-->
+  </ion-item>
+
+</ion-content>

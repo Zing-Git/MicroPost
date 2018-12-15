@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2 >
+        <div class="center_vertically" (click)="volver()">
+            <img src='../../../../assets/icon/tacho.ico'>
+        </div>
+      </ion-col>
+
+      <ion-col col-4>
+          <div class="center_vertically">
+              <strong> Total</strong> <br>$ {{totalPedido | number:'1.2-2'}}
+            </div>
+
+      </ion-col>
+      <ion-col colo-4 text-center>
+        <div class="center_vertically" (click)="pedirProducto()">
+          <!--<ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}-->
+          <img src='../../../../assets/icon/carrito.ico'> {{contadorCarrito}}
+        </div>
+
+      </ion-col>
+      <ion-col col-2>
+        <div class="center_vertically" (click)='pedirProducto()'>
+          <i class="fas fa-angle-double-right fa-2x"></i>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-header>
+
+<ion-content padding>
+
+  <div>
+      
+             
+              <p class="tituloTotal" text-wrap ><strong>Elija productos de <br> {{nombreProveedor}}.</strong></p>
+       
+    
+    <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+            <div class="center_vertically"><label> Categoria</label></div>
+          
+        </ion-col>
+        <ion-col col-8>
+          <ion-select [(ngModel)]="categoria" type="text" class="selector" interface="popover">
+            <ion-option *ngFor="let categoria of arrayCategorias" [value]="categoria" (ionSelect)="onCategoriasChange(categoria)"
+              class="option">{{categoria}}</ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+            <div class="center_vertically"><label> Sub Categoria </label></div>
+          
+        </ion-col>
+        <ion-col col-8>
+          <ion-select [(ngModel)]="itemSubcategoriaSelected" type="text" class="selector" interface="popover">
+            <ion-option class="option" *ngFor="let subcategoria of arraySubcategorias" [value]="subcategoria" [value]="+(subcategoria)"
+              [selected]="itemSubcategoriaSelected" (ionSelect)="onSubCategoriasChange(subcategoria)">{{subcategoria}}</ion-option>
+            <!--[disabled]="!isEnabledSubCategoria"-->
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="nuevo-div">
+      <ion-scroll scrollY="true">
+        <ion-list *ngFor="let item of arrayProductos;">
+          <ion-item class="nuevo-ion-item">
+            <ion-avatar item-end>
+              <button ion-button small (click)='seleccionarProducto(item)'>
+                <ion-icon name="cart"></ion-icon>
+              </button>
+            </ion-avatar>
+
+            <h2 text-wrap>{{item.nombreProducto}}</h2>
+
+          </ion-item>
+
+        </ion-list>
+      </ion-scroll>
+    </div>
+
+<!--
+    <ion-item>
+      <button ion-button round (click)='pedirProducto()' item-end>Siguiente</button>
+    </ion-item>
+-->
+
+  </div>
+</ion-content>

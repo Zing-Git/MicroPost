@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+      <ion-col col-3>
+
+      </ion-col>
+
+      <ion-col col-3>
+        <div class="center_vertically" style=" color: rgb(17, 17, 161);">
+          <strong>{{nombreProducto}}</strong>
+
+        </div>
+
+      </ion-col>
+      <ion-col col-2>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <form [formGroup]="nuevoProductoForm">
+    <h5 text-center>
+      Unidad de Medida
+    </h5>
+
+
+    <ion-select formControlName="unidadMedida" type="text" class="custom-control custom-select custom-control-inline form-control-sm w-100"
+      interface="popover">
+      <ion-option *ngFor="let unidad of producto.unidadesMedida" (ionSelect)="onUnidadMedidaChange(unidad)">{{unidad}}</ion-option>
+    </ion-select>
+    <h5 text-center>
+      Cantidad
+    </h5>
+    <ion-input formControlName="cantidad" type="number" placeholder="Ingrese cantidad" class="ion-input"></ion-input>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          <div class="center_vertically">
+            <b>Precio unitario </b>
+          </div>
+
+        </ion-col>
+        <ion-col col-5>
+          <div class="center_vertically">
+            <ion-input type="text" disabled formControlName="precioProveedor" class="no-opacity"></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          <div class="center_vertically">
+            <b>Sub total</b>
+          </div>
+        </ion-col>
+        <ion-col col-5>
+          <div class="center_vertically">
+            $ {{nuevoProductoForm.controls['cantidad'].value *
+            precioProveedorCalculo | number:'1.2-2' }}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <button class="button-1" ion-button round (click)="dismiss()" full [disabled]="!nuevoProductoForm.valid">Cargar
+      Pedido</button>
+
+
+  </form>
+</ion-content>

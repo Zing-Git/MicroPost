@@ -1,0 +1,27 @@
+<ion-content padding>
+  
+  <h2 text-center>Registro de Usuario</h2>
+  <form>
+    <ion-item>
+      <ion-label floating>DNI</ion-label>
+      <ion-input [formControl]="loginForm.controls['dni']" type="text"></ion-input>
+    </ion-item>    
+    <ion-item>
+      <ion-label floating>Usuario</ion-label>
+      <ion-input [formControl]="loginForm.controls['nombreUsuario']" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input [formControl]="loginForm.controls['clave']" type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Re ingresar Contraseña</ion-label>
+      <ion-input [formControl]="loginForm.controls['reClave']" type="password"></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button round block color="primary" (click)="onSingin()" [disabled]="!loginForm.valid">Crear Proveedor</button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

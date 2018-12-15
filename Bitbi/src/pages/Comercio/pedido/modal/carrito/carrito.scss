@@ -1,0 +1,24 @@
+page-carrito {
+    ion-scroll {
+        height: 30vh;
+        }
+  .ion-button {
+      color: blue !important;
+      background-color: #a5dc86 !important;
+  }
+  $swal2-success:  #a5dc86 !default;
+  ion-textarea{
+      background-color: lightgoldenrodyellow !important;
+  }
+  .carritoTotal{
+    font-size: 22px; 
+    color: #f4f4f4;
+  }
+  .center_vertically {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}

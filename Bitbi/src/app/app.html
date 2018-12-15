@@ -1,0 +1,22 @@
+<ion-menu [content]="content" side="left" type="overlay">
+  <ion-header>
+    <ion-toolbar>
+      <h3>Red Bitbi</h3>
+      <p text-center >{{nombre}} (<span>{{rubro}}</span>)</p>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list inset *ngFor="let p of pages">
+      <ion-item (click)="openPage(p)" menuClose>
+        <h2>{{ p.title }}</h2>
+        <ion-icon *ngIf="p.badge" name="leaf" item-end><ion-badge id="notifications-badge" color="danger">{{p.badge}}</ion-badge></ion-icon>
+      </ion-item>
+      
+    </ion-list>
+
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

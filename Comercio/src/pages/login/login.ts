@@ -11,6 +11,8 @@ import { AuxiliarProvider } from '../../providers/auxiliar/auxiliar';
 import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { AppVersion } from '@ionic-native/app-version';
 
+
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -37,7 +39,8 @@ export class LoginPage {
     private event: Events,
     private auxiliar: AuxiliarProvider,
     private appVersion: AppVersion,
-    private storage: Storage) {
+    private storage: Storage,
+    private push: PushnotificationProvider) {
 
     this.getVersionNumber();
     /*if (ENV.NEWLOGIN !== ' ') {
@@ -125,7 +128,7 @@ export class LoginPage {
             Swal('Atención', 'Ocurrio un problema, vuelva a ingresar las credenciales', 'error')
             loader.dismiss();
           } else {
-
+console.log( result['comercioDB']);
             this.datosComercio = result['comercioDB'];
             this.datosComercio.forEach(element => {
               this.idComercio = element._id;

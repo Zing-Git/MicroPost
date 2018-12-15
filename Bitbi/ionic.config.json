@@ -1,0 +1,7 @@
+{
+  "name": "preMicroPost",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

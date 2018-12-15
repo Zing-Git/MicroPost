@@ -1,0 +1,111 @@
+page-carrito-modal {
+    ion-scroll {
+        height: 55vh;
+        }
+  .ion-button {
+      color: blue !important;
+      background-color: #a5dc86 !important;
+  }
+  $swal2-success:  #a5dc86 !default;
+  ion-textarea{
+      background-color: lightgoldenrodyellow !important;
+  }
+  .carritoTotal{
+    font-size: 22px; 
+    color: #f4f4f4;
+  }
+  .center_vertically {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .selector {
+    font-family: SFNSDisplay;
+    font-size: 12px;
+    line-height: 1.0;
+    letter-spacing: 0.1px;
+    color: #29235e;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center;
+    border: solid 2px #e8ebf0;
+    background-color: #ffffff;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .option {
+    font-family: SFNSDisplay;
+    font-size: 8px;
+    line-height: 1.2;
+    letter-spacing: 0.1px;
+    color: #29235e;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center;
+    height: 10px;
+  }
+
+  ion-option .list {
+    font-family: SFNSDisplay;
+    font-size: 8px !important;
+    max-width: 100% !important;
+  }
+
+  .ion-option-items .item {
+    font-family: SFNSDisplay;
+    font-size: 8px !important;
+    max-width: 100% !important;
+  }
+
+  .select-popover {
+    font-family: SFNSDisplay !important;
+    font-size: 8px !important;
+    max-width: 100% !important;
+  }
+
+  ion-alert ion-option[class="option"] {
+    font-size: 8px;
+  }
+
+  label {
+    margin-bottom: 10%;
+  }
+
+  .nuevo-div {
+    background-color: rgba(242, 246, 248, 1);
+  }
+
+  .nuevo-ion-item {
+    padding: 0.5px 7px 0.5px 5px;
+  }
+
+  .center_vertically {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  ion-grid {
+    background-color: #f8f8f8 !important;
+  }
+
+  ion-select {
+
+    max-width: 100% !important;
+  }
+
+
+  img {
+    border-radius: 30% !important;
+    overflow: hidden;
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+}

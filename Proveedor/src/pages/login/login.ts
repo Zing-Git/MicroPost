@@ -183,6 +183,7 @@ export class LoginPage {
     ENV.TOKEN = this.usuarioLogin.token;
     ENV.PROVEEDOR_LOGIN = JSON.stringify(this.datosProveedor);
 
+    this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR);
   }
 
   showPassword() {

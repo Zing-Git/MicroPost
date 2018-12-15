@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+<ion-content padding>
+
+  <div padding>
+    <ion-segment [(ngModel)]="inicial">
+      <ion-segment-button value="encabezado" class="segment-button">
+        <strong>Mi Pedido</strong>
+      </ion-segment-button>
+      <ion-segment-button value="detalle" class="segment-button">
+        <strong>Detalle Pedido</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <div [ngSwitch]="inicial">
+    <form *ngSwitchCase="'encabezado'">
+      <ion-card class="scroll">
+        <ion-list *ngFor="let item of encabezadoList">
+          <ion-item>
+            <h2> <strong>Proveedor</strong></h2>
+            <h3><strong>{{item.nombreProveedor}}</strong></h3>
+          </ion-item>
+          <ion-item>
+            <h2> <strong>Monto Total</strong></h2>
+            <h3><strong>{{item.montoTotal}}</strong></h3>
+          </ion-item>
+          <ion-item>
+            <h2> <strong>Fecha de Entrega</strong></h2>
+            <h3><strong>{{item.fechaEntrega | date: 'dd/MM/yyyy'}}</strong></h3>
+          </ion-item>
+
+          <ion-item>
+            <h2> <strong>Comentario</strong></h2>
+            <h3 text-wrap><strong>{{item.comentario}}</strong></h3>
+          </ion-item>
+
+        </ion-list>
+
+
+      </ion-card>
+    </form>
+
+
+    <form *ngSwitchCase="'detalle'">
+
+      <ion-scroll class="scroll" scrollY="true">
+
+        <ion-list *ngFor="let item of pedido.detallePedido">
+          <div>
+
+            <p><strong>{{item.unidadMedida + ' de ' + item.producto.nombreProducto + ' x ' + item.cantidadPedido + '
+                Und.'}}</strong></p>
+
+            <p><strong> Precio unitario $ </strong>{{item.producto.precioProveedor}} </p>
+            <p><strong> Sub total $ </strong> {{item.cantidadPedido * item.producto.precioProveedor}}</p>
+            <hr>
+          </div>
+        </ion-list>
+      </ion-scroll>
+
+    </form>
+
+  </div>
+  <!--<ion-card>
+    <ion-item>
+      <button ion-button round color="danger" (click)='volver()' item-first full>
+        <ion-icon>Volver</ion-icon>
+      </button>
+    </ion-item>
+
+  </ion-card>-->
+
+</ion-content>

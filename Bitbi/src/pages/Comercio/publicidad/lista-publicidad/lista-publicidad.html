@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+
+        </ion-navbar>
+      </ion-col>
+     
+      <ion-col col-2>
+        <div class="center_vertically">
+          <ion-avatar class="base" item-end>
+            <img src="../assets/imgs/hotSale.png">
+          </ion-avatar>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+<!--<ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>-->
+<ion-content padding class="ion-card-ofertas" *ngIf="!publicidad">
+
+  <p class="tituloTotal"><strong>Ofertas del Día<br>Seleccioná la que te interese </strong>
+
+  </p><br>
+  <ion-scroll scrollY="true">
+    <ion-list *ngFor="let item of vista">
+      <ion-item (click)='mostrarPublicidadModal(item)'>
+        <ion-avatar item-start>
+          <img class="nueva-img" [src]="item.imagen">
+        </ion-avatar>
+        <h2></h2>
+        <h2 text-wrap><strong>{{item.titulo}} </strong> </h2>
+        <p text-wrap> <strong>Proveedor </strong> {{item.razonSocial}}</p>
+        <ion-item-divider></ion-item-divider>
+      </ion-item>
+
+    </ion-list>
+  </ion-scroll>
+
+
+</ion-content>
+<ion-content class="noTiene" *ngIf="publicidad">
+  <div>
+  <p > Por el momento no hay Ofertas Disponibles... </p>
+</div>
+</ion-content>
+

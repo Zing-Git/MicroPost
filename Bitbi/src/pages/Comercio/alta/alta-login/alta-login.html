@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  
+  <h1 text-center>Adhesión de comercio</h1>
+  <h2 text-center>Paso 4 de 4 “Mi usuario”</h2>
+  <form>
+    <ion-item>
+      <ion-label floating>DNI</ion-label>
+      <ion-input [formControl]="loginForm.controls['dni']" type="text"></ion-input>
+    </ion-item>    
+    <ion-item>
+      <ion-label floating>Usuario</ion-label>
+      <ion-input [formControl]="loginForm.controls['nombreUsuario']" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Contraseña</ion-label>
+      <ion-input [formControl]="loginForm.controls['clave']" type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Re ingresar Contraseña</ion-label>
+      <ion-input [formControl]="loginForm.controls['reClave']" type="password"></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button round block (click)="onSingin()" [disabled]="!loginForm.valid">Finalizar Registro</button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
