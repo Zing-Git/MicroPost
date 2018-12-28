@@ -76,14 +76,6 @@ export class ConfiguracionInicialPage {
     this.navCtrl.pop();
   }
 
-  launchLocationPage() {
-    /*let modal = this.modalCtrl.create(LocationSelectPage);
-    modal.onDidDismiss((location) => {
-       console.log(location);
-    });
-    modal.present();   
-*/
-  }
 
   showSelection() {
 

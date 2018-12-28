@@ -48,7 +48,7 @@ export class InvitacionProveedorModalPage {
       console.log('respuesta del proveedor');
       console.log(invitaciones);
       invitaciones.forEach(x => {
-        if (x.comercio._id === this.idComercio) {
+        if (x._id === this.idComercio) {
           this.existe = true;
 
         }

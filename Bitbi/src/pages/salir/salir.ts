@@ -50,6 +50,8 @@ export class SalirPage {
     ENV.PROVEEDOR_ID = ' ';
   
     ENV.PEDIDOS = ' ';
+    ENV.CARRITO = ' ';
+    
   }
 
 }

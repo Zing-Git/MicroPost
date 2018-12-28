@@ -92,38 +92,6 @@ export class MensajeroPage {
           //this.pedido.comentario = 'Gracias'
         }
 
-
-        //const loader = this.loadingCtrl.create({
-        //content: "Procesando Información, aguarde unos segundos, Gracias..."
-        //});
-        //loader.present();
-        /*this.comercioService.postPedidoProveedor(this.pedido).subscribe(result => {
-          
-          if (typeof result != 'undefined') {
-            if (result.ok) {
-              Swal({
-                showCancelButton: false,
-                confirmButtonText: 'Ok!',
-                confirmButtonColor: '#488aff',
-                title: 'Felicidades',
-                text: 'Tu pedido fue enviado.',
-                type: 'success'
-              })
-              //this.navCtrl.setRoot(ListaProveedoresPage);
-              this.viewCtrl.dismiss();
-              loader.dismiss();
-            } else {
-
-              Swal(
-                'Advertencia',
-                result.message,
-                'error'
-              )
-              loader.dismiss();
-            }
-          }
-        })*/
-        //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
         // https://sweetalert2.github.io/#handling-dismissals
       }
 

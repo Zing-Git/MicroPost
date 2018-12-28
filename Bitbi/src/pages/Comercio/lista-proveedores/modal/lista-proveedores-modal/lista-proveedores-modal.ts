@@ -103,7 +103,7 @@ export class ListaProveedoresModalPage {
         this.existe = false;
       } else {
         invitaciones.forEach(x => {
-          if (x.comercio._id === this.idComercio) {
+          if (x._id === this.idComercio) {
             this.existe = true;
 
           }
@@ -157,59 +157,6 @@ export class ListaProveedoresModalPage {
     })
 
   }
-  /*cargarProveedor(proveedor: any) {
-    Swal({
-      title: 'Confirme el proveedor ',
-      text: proveedor.entidad.razonSocial + ' le permitirá adquirir productos del rubro: ' + proveedor.entidad.actividadPrincipal,
-      type: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Si, ENVIAR!',
-      confirmButtonColor: '#488aff',
-      cancelButtonColor: '#488aff',
-      reverseButtons: true,
-      cancelButtonText: 'Cancelar'
-    }).then((result1) => {
-      if (result1.value) {
-        this.realizarPeticion(proveedor);
-      }
-
-    })
-
-  }
-
-  realizarPeticion(proveedor: any) {
-    this.text = 'Te invito a formar parte de mi red, gracias.'
-    const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos..."
-
-    });
-    loader.present();
-    this.proveedorService.postEnviarInvitacion(proveedor._id, this.idComercio, this.text).subscribe(result => {
-      if (result.ok === true) {
-
-        Swal({
-
-          title: 'Felicidades ya cumpliste!',
-          text: 'Debes esperar a que el proveedor te agregue a la red de comercios. Te informaremos cuando eso ocurra.',
-          type: 'success',
-          showCancelButton: false,
-          confirmButtonText: 'Si, Aceptar!',
-          confirmButtonColor: '#488aff'
-        })
-        loader.dismiss();
-        //this.navCtrl.setRoot(ListaProveedoresModalPage);
-        //this.navCtrl.popToRoot();
-
-      } else {
-        loader.dismiss();
-        Swal(
-          'Error!',
-          'Se produjo un error al enviar la peticion ',
-          'error'
-        );
-      }
-    });
-  }*/
 
   doRefresh(refresher?: any) { //"?" in typescript means the parameter is optional
 

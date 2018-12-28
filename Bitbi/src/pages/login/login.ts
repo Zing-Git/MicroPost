@@ -48,29 +48,7 @@ export class LoginPage {
     public modalCtrl: ModalController) {
 
     this.getVersionNumber();
-    /*if (ENV.NEWLOGIN !== ' ') {
-      this.newLogin = JSON.parse(ENV.NEWLOGIN);
-
-      this.getLoginStorage(this.newLogin.nombreUsuario, this.newLogin.clave)
-    }
-
-    this.storage.get('yoSoy').then((val) => {
-      if (val != ' ') {
-        if (val != null) {
-          this.storage.get('usuarioLogin').then((logeo) => {
-            if (logeo != ' ') {
-              if (logeo != null) {
-                console.log(val);
-                console.log(logeo);
-                let newLogin = JSON.parse(logeo);
-                this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave, newLogin.tipo);
-              }
-            }
-            //this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave)
-          });
-        }
-      }
-    });*/
+    
     this.storage.get('usuarioLogin').then((logeo) => {
       if (logeo != ' ') {
         if (logeo != null) {
@@ -156,44 +134,7 @@ export class LoginPage {
     }
     //loader.dismiss();
   }
-  /*getLoginStorage(usuario: string, clave: string) {
-    this.newLogin.nombreUsuario = usuario;
-    this.newLogin.clave = clave;
-
-    const loader = this.loadingCtrl.create({
-      content: "Cargando datos, espere unos segundos, Gracias..."
-    });
-    loader.present();
-
-    this.login.getLogin(this.newLogin).subscribe(result => {
-      this.usuarioLogin = result['usuario'];
-      this.datosComercio = result['comercioDB'];
-      this.datosComercio.forEach(element => {
-        this.idComercio = element._id;
-        ENV.NOMBRE_COMERCIO = element.entidad.razonSocial;
-        ENV.RUBRO_COMERCIO = element.entidad.actividadPrincipal;
-
-      });
-
-      this.event.publish('creado', ENV.NOMBRE_COMERCIO, ENV.RUBRO_COMERCIO);
-
-      if (this.idComercio != undefined) {
-        this.almacenarValoresImportantes();
-
-        this.navCtrl.setRoot(ListaPedidoComercioPage, { animate: true });
-        loader.dismiss();
-      } else {
-
-        Swal('Atención', 'Usted no es Cliente, ingrese con credenciales validas', 'error');
-        loader.dismiss();
-      }
-
-    })
-
-
-
-  }*/
-
+  
   getLogin() {
 
     //this.auxiliar.presentLoading();
@@ -255,12 +196,6 @@ export class LoginPage {
               Swal('Atención', 'Ocurrio un problema inesperado codigo: ' + err, 'error')
               loader.dismiss();
             });    //cierro promesa de proveedor
-
-
-          /*Swal('Atención', 'Vuelva a ingresar las credenciales', 'error');
-          this.navCtrl.setRoot(LoginPage, { animate: true });
-          this.navCtrl.popToRoot();
-          loader.dismiss();*/
 
         } else {
 
@@ -356,37 +291,6 @@ export class LoginPage {
   registroPageSelector() {
     const modal = this.modalCtrl.create(LoginSelectorPage);
     modal.present();
-    /*
-    const stringMio = ' <p> Estas por registrarte como <strong>COMERCIO</strong>, '+
-                            'podrás ver todos los proveedores de Bitbi '+
-                            'para que hagas pedidos al mejor precio</p>'
-    Swal({
-      title: 'Registro',
-      html: stringMio,
-      imageUrl: '../../assets/imgs/icono_comercio.png',
-      imageWidth: 80,
-      imageHeight: 80,
-      imageAlt: 'Custom image',
-      showCancelButton: true,
-      showCloseButton: true,
-      animation: true,
-      footer: '<img style="border-radius: 4px; width: 30%; height: 50%" src="../../assets/icon/camion.ico"> "<a href="#" click="goProveedorPage();" return false;">Quiero vender en Bitbi</a>"',
-      confirmButtonText: 'Continuar!',
-      confirmButtonColor: '#488aff',
-      cancelButtonColor: '#488aff',
-
-      reverseButtons: true,
-      cancelButtonText: '<img style="border-radius: 4px; width: 30%; height: 50%" src="../../assets/icon/camion.ico"> "<a href="#" click="goProveedorPage();" return false;">Quiero vender en Bitbi</a>"'
-    }).then(result => {
-      if (result.value) {
-        this.navCtrl.push(AltaClientePage);
-      }else{
-        let modal = this.modalCtrl.create(RegistroPage);
-        modal.present();
-      }
-    })
-
-    */
   }
 
   goProveedorPage(){
@@ -422,29 +326,8 @@ export class LoginPage {
     console.log(ENV.TOKEN);
   }
 
-  almacenarValoresImportantes() {
-    /*this.storage.set('id', this.usuarioLogin._id);
-    this.storage.set('token', this.usuarioLogin.token);
-    this.storage.set('idComercio', this.idComercio);
-  
-    this.storage.set('comercio', JSON.stringify(this.datosComercio));*/
-
-
-
-
-    /*this.storage.get('token').then((val) => {
-      console.log('Your id is', val);
-    });*/
-
-  }
-
   limpiarValoresPorDefecto() {
-    /*this.storage.set('id', ' ');
-    this.storage.set('token', ' ');
-    this.storage.set('idComercio', ' ');
-  
-    this.storage.set('comercio', ' ');
-  */
+    
     ENV.NOMBRE_USUARIO = ' ';
     ENV.ID_USUARIO = ' ';
     ENV.COMERCIO_ID = ' ';
@@ -495,7 +378,5 @@ export class LoginPage {
       }
     })
   }
-
-
 
 }

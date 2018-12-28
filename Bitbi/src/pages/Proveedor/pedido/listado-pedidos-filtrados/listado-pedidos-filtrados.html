@@ -61,7 +61,7 @@
               <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
               <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
                 item.comercio.entidad.domicilio.barrio}}</p>
-              <!--<button ion-button small item-end >Ver</button>-->
+              <p text-wrap><strong> Comentario </strong> {{item.comentario}}</p>
               <p><strong> Fecha de Solicitud</strong> {{item.detallePedido[0].fechaAlta | date: 'dd/MM/yyyy'}}</p>
               <p><strong> Total </strong> $ {{item.totalPedido }}</p>
             </ion-item>
