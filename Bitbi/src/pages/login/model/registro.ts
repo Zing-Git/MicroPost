@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LoginPage } from './../login';
 
  
 @IonicPage()
@@ -14,7 +15,7 @@ export class RegistroPage{
   credencialesForm: FormGroup;
   
     urlCall: string;
-    constructor(private formBuilder: FormBuilder){
+    constructor(private formBuilder: FormBuilder, public navCtrl: NavController){
 
       this.credencialesForm = this.formBuilder.group({
         proveedor: ['', Validators.required],
@@ -47,5 +48,9 @@ window.open(this.urlCall);
   
     }
 
+    volver() {
+      this.navCtrl.setRoot(LoginPage);
+      this.navCtrl.popToRoot();
+    }
     
 }

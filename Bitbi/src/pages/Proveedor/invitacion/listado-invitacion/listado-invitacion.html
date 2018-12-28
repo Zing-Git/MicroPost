@@ -1,28 +1,28 @@
 <ion-header>
 
-    <ion-grid >
-        <ion-row>
-          <ion-col col-10>
-    
-              <ion-navbar>
-                  <button ion-button menuToggle class="tituloTotal">
-                    <ion-icon name="menu"></ion-icon>
-                  </button>
-                  <ion-title>Invitaciones</ion-title>
-                </ion-navbar>
-          </ion-col>
-    
-          
-          <ion-col col-2>
-            <div class="center_vertically" (click)='doRefresh()'>
-              <i class="fas fa-sync-alt fa-2x"></i>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+
+        <ion-navbar>
+          <button ion-button menuToggle class="tituloTotal">
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Invitaciones</ion-title>
+        </ion-navbar>
+      </ion-col>
 
 
-  
+      <ion-col col-2>
+        <div class="center_vertically" (click)='doRefresh()'>
+          <i class="fas fa-sync-alt fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
 </ion-header>
 
 <ion-content padding class="noContent" *ngIf="!estado">
@@ -34,11 +34,11 @@
 
 <ion-content padding *ngIf="estado" class="tituloTotal">
 
-    <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
-          refreshingText="Refrescando...">
-        </ion-refresher-content>
-      </ion-refresher>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <div padding>
     <ion-segment [(ngModel)]="inicial">
@@ -51,6 +51,9 @@
       <ion-segment-button value="rechazado" [class.hide]="estadoRechazado" class="segment-button">
         <strong>Rechazados</strong>
       </ion-segment-button>
+      <ion-segment-button value="proveedor" [class.hide]="estadoProveedor" class="segment-button">
+        <strong>Proveedores</strong>
+      </ion-segment-button>
     </ion-segment>
   </div>
 
@@ -59,131 +62,102 @@
 
     <form *ngSwitchCase="'pendiente'" [class.hide]="estadoPendiente">
 
-        <div class="tituloTotal">
-            <ion-scroll scrollY="true" >
-              <ion-list *ngFor="let item of invitacionesPendientes">
-                <ion-item >
-                    
-                        <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-                        <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
-                        <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-                        <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
-                        <ion-grid>
-                          <ion-row>
-                            <ion-col text-center> <button ion-button round (click)='rechazar(item)'>
-                            Rechazar
-                          </button></ion-col>
-                            <ion-col text-center> <button ion-button round (click)="aceptar(item)" item-end>
-                            Aceptar
-                          </button> </ion-col>
-                          </ion-row>
-                        </ion-grid>>
-
-                         
-                </ion-item>
-    
-              </ion-list>
-            </ion-scroll>
-          </div>
-     
-        <!--<ion-scroll style="height:400px" scrollY="true">
+      <div class="nuevo-div">
+        <ion-scroll scrollY="true">
           <ion-list *ngFor="let item of invitacionesPendientes">
-            <div>
-              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-              <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
-              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-              <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
+            <ion-item>
+
+              <p><strong> Comercio </strong> {{item.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.entidad.domicilio.localidad + ', ' +
+                item.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.entidad.cuit}}</p>
               <ion-item>
-                <button ion-button round (click)='rechazar(item)'>
+                <button ion-button round (click)='rechazar(item)' style="width:100px;">
                   Rechazar
                 </button>
-                <button ion-button round (click)="aceptar(item)" item-end>
+                <button ion-button round (click)="aceptar(item)" item-end style="width:100px;">
                   Aceptar
                 </button>
-
               </ion-item>
 
-
-            </div>
+            </ion-item>
 
           </ion-list>
-        </ion-scroll>-->
-
-      
+        </ion-scroll>
+      </div>
     </form>
 
     <form *ngSwitchCase="'aceptado'" [class.hide]="estadoAceptado">
 
-        <div class="tituloTotal">
-            <ion-scroll scrollY="true" >
-                <ion-list *ngFor="let item of invitacionesAceptadas">
-                <ion-item >
-                    <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-                    <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
-                    <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-                    <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
-                </ion-item>
-    
-              </ion-list>
-            </ion-scroll>
-          </div>
-
-       <!-- <ion-scroll style="height:400px" scrollY="true">
+      <div class="nuevo-div">
+        <ion-scroll scrollY="true">
           <ion-list *ngFor="let item of invitacionesAceptadas">
             <ion-item>
-
-              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-              <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
-              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-              <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
-
-              <hr>
+              <p><strong> Comercio </strong> {{item.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.entidad.domicilio.localidad + ', ' +
+                item.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.entidad.cuit}}</p>
             </ion-item>
 
           </ion-list>
-        </ion-scroll>-->
+        </ion-scroll>
+      </div>
 
-      
     </form>
 
 
     <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado">
 
-        <div class="tituloTotal">
-            <ion-scroll scrollY="true" >
-                <ion-list *ngFor="let item of invitacionesRechazadas">
-                <ion-item >
-                   
-                        <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-                        <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
-                        <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-                        <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
-                        
-                </ion-item>
-    
-              </ion-list>
-            </ion-scroll>
-          </div>
-
-       <!-- <ion-scroll style="height:400px" scrollY="true">
+      <div class="nuevo-div">
+        <ion-scroll scrollY="true">
           <ion-list *ngFor="let item of invitacionesRechazadas">
-            <div>
-              <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-              <p><strong> Actividad</strong> {{item.comercio.entidad.actividadPrincipal}}</p>
-              <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-              <p><strong> Cuit</strong> {{item.comercio.entidad.cuit}}</p>
-              <hr>
-            </div>
+            <ion-item>
+
+              <p><strong> Comercio </strong> {{item.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.entidad.domicilio.localidad + ', ' +
+                item.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.entidad.cuit}}</p>
+
+            </ion-item>
 
           </ion-list>
-        </ion-scroll>-->
-
-      
+        </ion-scroll>
+      </div>
 
     </form>
 
+    <form *ngSwitchCase="'proveedor'" [class.hide]="estadoProveedor">
+
+      <div class="nuevo-div">
+        <ion-scroll scrollY="true">
+          <ion-list *ngFor="let item of invitacionProveedor">
+            <ion-item>
+
+              <p><strong> Comercio </strong> {{item.entidad.razonSocial}}</p>
+              <p><strong> Actividad</strong> {{item.entidad.actividadPrincipal}}</p>
+              <p><strong> Direccion </strong> {{item.entidad.domicilio.localidad + ', ' +
+                item.entidad.domicilio.barrio}}</p>
+              <p><strong> Cuit</strong> {{item.entidad.cuit}}</p>
+              <ion-item>
+                <button ion-button round (click)='rechazar(item)' style="width:100px;">
+                  Rechazar
+                </button>
+                <button ion-button round (click)="aceptar(item)" item-end style="width:100px;">
+                  Aceptar
+                </button>
+              </ion-item>
+
+            </ion-item>
+
+          </ion-list>
+        </ion-scroll>
+      </div>
+    </form>
 
   </div>
- 
+
 
 </ion-content>

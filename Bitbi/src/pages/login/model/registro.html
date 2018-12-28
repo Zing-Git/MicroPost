@@ -1,11 +1,34 @@
 <ion-header>
-  <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>Registro Proveedor</ion-title>
-  </ion-navbar>
- 
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2>
+        <div class="center_vertically" (click)="volver()">
+          <i class="fas fa-angle-double-left fa-2x"></i>
+        </div>
+      </ion-col>
+
+      <ion-col col-4>
+        <div class="center_vertically">
+          <!-- <strong> Total</strong> <br>$ {{total | number:'1.2-2'}} -->
+        </div>
+
+      </ion-col>
+      <ion-col colo-4 text-center>
+        <div class="center_vertically">
+          <!--<ion-icon name="cart" item-start></ion-icon> {{contadorCarrito}}-->
+          <!-- <img src='../../../../assets/icon/carrito.ico'> {{contador}} -->
+        </div>
+
+      </ion-col>
+      <ion-col col-2>
+        <!-- <div class="center_vertically" (click)='pedirProducto()'>
+          <img src='../../../../assets/icon/ENVIAR.png'>
+
+        </div> -->
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-header>
 
 <ion-content>

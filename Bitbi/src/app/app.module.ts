@@ -69,7 +69,10 @@ import { Camera } from '@ionic-native/camera';
 import { DatePipe } from '@angular/common';
 import { MensajeroPage } from '../pages/mensajero/mensajero';
 import { RegistroPage } from '../pages/login/model/registro';
+import { LoginSelectorPage } from './../pages/login/login-selector/login-selector';
+import { InvitacionModalPage } from '../pages/Proveedor/invitacion/invitacion-modal/invitacion-modal';
 
+import { MisClientesPage } from './../pages/Proveedor/mis-clientes/mis-clientes';
 
 @NgModule({
   declarations: [
@@ -103,10 +106,15 @@ import { RegistroPage } from '../pages/login/model/registro';
     ListadoInvitacionPage,
     CrearPublicidadPage,
     MensajeroPage,
-    RegistroPage
+    RegistroPage,
+    LoginSelectorPage,
+    InvitacionModalPage,
+    MisClientesPage
   ],
   imports: [
   
+
+
 
   BrowserModule,
     HttpClientModule,
@@ -142,7 +150,11 @@ import { RegistroPage } from '../pages/login/model/registro';
     ListadoInvitacionPage,
     CrearPublicidadPage,
     MensajeroPage,
-    RegistroPage
+    RegistroPage,
+
+    LoginSelectorPage,
+    InvitacionModalPage,
+    MisClientesPage
     
   ],
   providers: [

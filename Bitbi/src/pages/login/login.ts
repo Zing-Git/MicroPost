@@ -12,6 +12,7 @@ import { ListaPedidoComercioPage } from '../Comercio/pedidosComercio/lista-pedid
 import { AppVersion } from '@ionic-native/app-version';
 import { ListadoPedidosFiltradosPage } from '../Proveedor/pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
 import { RegistroPage } from './model/registro';
+import { LoginSelectorPage } from './login-selector/login-selector';
 
 
 @Component({
@@ -91,7 +92,7 @@ export class LoginPage {
     this.newLogin.clave = clave;
     this.newLogin.tipo = tipo;
     console.log(this.newLogin);
-    
+
     const loader = this.loadingCtrl.create({
       content: "Cargando datos, espere unos segundos, Gracias...",
       duration: 15000
@@ -301,25 +302,23 @@ export class LoginPage {
   }
 
   async goRegistroPage() {
-    //console.log('aqui');
 
-    //const modal = this.modalCtrl.create(RegistroPage);
-    //modal.present();
     const { value: tipo } = await Swal({
-      title: 'Seleccione Comercio o Proveedor',
-      input: 'select',
-      
+      title: 'Registrarme como',
+      input: 'radio',
+
       inputOptions: {
         'comercio': 'Comercio',
         'proveedor': 'Proveedor'
       },
-     
+      
       confirmButtonColor: '#488aff',
       confirmButtonClass: 'btn btn-success',
-      confirmButtonText: 'Seleccion',
+      confirmButtonText: 'Continuar',
       cancelButtonColor: '#488aff',
       reverseButtons: true,
-      showCancelButton: true,
+      showCloseButton: true,
+      showCancelButton: false,
       animation: true,
       customClass: 'animated tada',
       inputValidator: (value) => {
@@ -341,74 +340,61 @@ export class LoginPage {
           break;
         }
         case 'proveedor': {
-          //this.navCtrl.push(RegistroPage);
           let modal = this.modalCtrl.create(RegistroPage);
-
           modal.present();
-
-          /*modal.onDidDismiss((location) => {
-            console.log(location);
-            if (location) {
-              let api: string = 'https://wa.me/'; //https://api.whatsapp.com/send?phone=
-              let miMensaje = location.split(' ').join('%20')
-              let urlCall = api + '5493886001968' + '/?text=' + miMensaje;
-
-              Swal({
-                showCancelButton: false,
-                html:'<a class="item" href="urlCall" > Clic Aquí para abrir whatsapp </a>',
-              
-                confirmButtonText: 'Ok, para volver!',
-                confirmButtonColor: '#488aff',
-                title: 'Mensaje creado',
-                //text: 'El Mensaje es: ' + location,
-                type: 'success'
-              })
-
-              let modal = this.modalCtrl.create(LinkWPage, { data: urlCall });
-
-              modal.present();
-            }
-          })*/
           break;
-          /*Swal({
-            title: '<strong>No te preocupes!</strong>',
-            type: 'info',
-            html:
-              'Mandanos un mensaje o llamanos a ' +
-              '<a href="tel:+5493886001968" class="button button-positive">este número 388-6001968</a> ' +
-              ', te preguntaremos datos de tu comercio.',
-            showCloseButton: true,
-            showCancelButton: false,
-            focusConfirm: false,
-            confirmButtonText:
-              '<i class="fa fa-thumbs-up"></i> Entendido!'
-      
-          })
-          break;
-        }
-        default: {
-          //loader.dismiss();
-          break;
-        }
-      }*/
         }
       }
-      // Swal('You selected: ' + tipo)
+
     }
   }
 
-  ionViewDidLoad() {
-
+   ionViewDidLoad() {
+    
   }
 
-  /*doRefresh(refresher: Refresher) {
-    setTimeout(() => {
-      console.log("Termino el refhresh");
-      this.newLogin = new LoginModel();
-      refresher.complete();
-    }, 1500);
-  }*/
+  registroPageSelector() {
+    const modal = this.modalCtrl.create(LoginSelectorPage);
+    modal.present();
+    /*
+    const stringMio = ' <p> Estas por registrarte como <strong>COMERCIO</strong>, '+
+                            'podrás ver todos los proveedores de Bitbi '+
+                            'para que hagas pedidos al mejor precio</p>'
+    Swal({
+      title: 'Registro',
+      html: stringMio,
+      imageUrl: '../../assets/imgs/icono_comercio.png',
+      imageWidth: 80,
+      imageHeight: 80,
+      imageAlt: 'Custom image',
+      showCancelButton: true,
+      showCloseButton: true,
+      animation: true,
+      footer: '<img style="border-radius: 4px; width: 30%; height: 50%" src="../../assets/icon/camion.ico"> "<a href="#" click="goProveedorPage();" return false;">Quiero vender en Bitbi</a>"',
+      confirmButtonText: 'Continuar!',
+      confirmButtonColor: '#488aff',
+      cancelButtonColor: '#488aff',
 
+      reverseButtons: true,
+      cancelButtonText: '<img style="border-radius: 4px; width: 30%; height: 50%" src="../../assets/icon/camion.ico"> "<a href="#" click="goProveedorPage();" return false;">Quiero vender en Bitbi</a>"'
+    }).then(result => {
+      if (result.value) {
+        this.navCtrl.push(AltaClientePage);
+      }else{
+        let modal = this.modalCtrl.create(RegistroPage);
+        modal.present();
+      }
+    })
+
+    */
+  }
+
+  goProveedorPage(){
+    console.log('click');
+    Swal.close();
+    let modal = this.modalCtrl.create(RegistroPage);
+    modal.present();
+  }
   presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'Atencion',
@@ -433,7 +419,7 @@ export class LoginPage {
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
     ENV.ID_USUARIO = this.usuarioLogin._id;
     ENV.APIKEY = JSON.stringify(this.usuarioLogin);
-    console.log(ENV.APIKEY);
+    console.log(ENV.TOKEN);
   }
 
   almacenarValoresImportantes() {
@@ -502,7 +488,9 @@ export class LoginPage {
     const appNumber = await this.appVersion.getVersionNumber();
     this.auxiliar.getVersionFromServer().subscribe(result => {
       const appNumberServer = result['versiones'];
-      if (appNumber !== appNumberServer.versionAndroidComercio) {
+      if (+appNumber >= +appNumberServer.versionAndroidComercio){
+        
+      }else {
         Swal('Actualizar Aplicación Bitbi Comercio', 'Su version de aplicacion es ' + appNumber + ', nueva versión ' + appNumberServer.versionAndroidComercio, 'info');
       }
     })

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import Swal from 'sweetalert2';
 import { PedidoProvider } from '../../../../providers/pedido/pedido';
+import { envirotment as ENV } from '../../../../environments/environments';
 
 @IonicPage()
 @Component({
@@ -21,8 +22,10 @@ export class DetallePedidoProveedorPage {
   idPedido: string;
   encabezado: any;
   nombreProveedor: string;
-  celularProveedor: string;
+  celularProveedor: any;
   urlCall: string;
+  aceptado: boolean = false;
+  mensajeRechazo: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,10 +37,15 @@ export class DetallePedidoProveedorPage {
     public appCtrl: App) {
 
     this.pedido = navParams.get('data');
-      console.log(this.pedido);
-      this.nombreProveedor = this.pedido.proveedor.entidad.razonSocial;
-      this.celularProveedor = this.pedido.comercio.contactos[0].codigoPais +this.pedido.comercio.contactos[0].codigoArea + this.pedido.comercio.contactos[0].numeroCelular;
-      console.log(this.celularProveedor);
+    console.log(this.pedido.comercio.contactos.length);
+    this.nombreProveedor = this.pedido.proveedor.entidad.razonSocial;
+    if (this.pedido.comercio.contactos.length < 1) {
+      //this.celularProveedor = '0'
+    } else {
+      this.celularProveedor = this.pedido.comercio.contactos[0].codigoPais + this.pedido.comercio.contactos[0].codigoArea + this.pedido.comercio.contactos[0].numeroCelular;
+    }
+
+    console.log(this.celularProveedor);
     if (this.pedido != undefined) {
       this.encabezado = new Array();
 
@@ -90,28 +98,50 @@ export class DetallePedidoProveedorPage {
     this.viewCtrl.dismiss(this.pedido);
   }
 
-
-  rechazar(): void {
-    //this.checkStatus = true;
-
+  
+  rechazar() {
     Swal({
-
-      text: 'Quiere rechazar el Pedido?',
+      title: 'Quiere rechazar el Pedido?',
       type: 'question',
-      showCancelButton: true,
-      cancelButtonText: 'Volver',
-      confirmButtonText: 'Si, RECHAZAR!',
+      input: 'textarea',
+      inputPlaceholder: 'quiere enviar un mensaje? escriba aqui...',
       confirmButtonColor: '#488aff',
+      confirmButtonClass: 'btn btn-success',
+      confirmButtonText: 'Si, RECHAZAR!',
+      cancelButtonText: 'Volver',
       cancelButtonColor: '#488aff',
-      reverseButtons: true
+      reverseButtons: true,
+      showCancelButton: true,
+      animation: true,
+      customClass: 'animated tada',
+      inputValidator: (result) => {
+        return new Promise((resolve) => {
+          let respuesta: string = 'No contamos con la cantidad necesaria para cumplir con el pedido';
+          console.log(result);
+          if (result) {
+            this.aceptado = true;
+            ENV.MENSAJE_RECHAZO = result;
+            resolve();
 
-    }).then((result) => {
-      if (result.value) {
+          } else {
+            this.aceptado = false;
+            ENV.MENSAJE_RECHAZO = respuesta;
+            resolve()
+          }
+
+
+        });
+      }
+    }).then(resultado => {
+      if (resultado) {
+
         const loader = this.loadingCtrl.create({
           content: "Actualizando Información, aguarde unos segundos, Gracias..."
         });
+
         loader.present();
-        this.pedidoServices.postRechazarPedido(this.pedido.idPedido).subscribe(result => {
+        console.log(ENV.MENSAJE_RECHAZO);
+        this.pedidoServices.postRechazarPedido(this.pedido.idPedido, ENV.MENSAJE_RECHAZO).subscribe(result => {
 
           if (typeof result != 'undefined') {
 
@@ -122,6 +152,7 @@ export class DetallePedidoProveedorPage {
                 'success'
               );
               this.pedido.estadoPedido = 'RECHAZADO';
+              this.mensajeRechazo =ENV.MENSAJE_RECHAZO;
               this.viewCtrl.dismiss(this.pedido);
               loader.dismiss();
             } else {
@@ -141,19 +172,64 @@ export class DetallePedidoProveedorPage {
             loader.dismiss();
           }
         })
-        //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
-        // https://sweetalert2.github.io/#handling-dismissals
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+      } else if (resultado.dismiss === Swal.DismissReason.cancel) {
 
         /* Swal(
            'Canelado',
-           'Se cancelo el proceso, volviendo a la página',
-           'info'
+           'Todo Ok, Gracias',
+           'error'
          )*/
 
-        this.viewCtrl.dismiss(this.pedido);
+        //this.viewCtrl.dismiss(this.pedido);
       }
     })
+
+
+
+  }
+
+  enviarRechazo() {
+
+    const loader = this.loadingCtrl.create({
+      content: "Actualizando Información, aguarde unos segundos, Gracias..."
+    });
+
+    loader.present();
+    console.log(ENV.MENSAJE_RECHAZO);
+    this.pedidoServices.postRechazarPedido(this.pedido.idPedido, ENV.MENSAJE_RECHAZO).subscribe(result => {
+
+      if (typeof result != 'undefined') {
+
+        if (result.ok) {
+          Swal(
+            'Procesado',
+            result.message,
+            'success'
+          );
+          this.pedido.estadoPedido = 'RECHAZADO';
+          this.viewCtrl.dismiss(this.pedido);
+          loader.dismiss();
+        } else {
+          Swal(
+            'Advertencia',
+            result.message,
+            'error'
+          )
+          loader.dismiss();
+        }
+      } else {
+        Swal(
+          'Advertencia',
+          'Ocurrio un problema, vuelva a Intentar!',
+          'error'
+        )
+        loader.dismiss();
+      }
+    })
+    //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+    // https://sweetalert2.github.io/#handling-dismissals
+
   }
 
   aceptar(): void {
@@ -249,7 +325,7 @@ export class DetallePedidoProveedorPage {
     })
 
     if (mensaje) {
-      let info = this.nombreProveedor +' - '+ mensaje;
+      let info = this.nombreProveedor + ' - ' + mensaje;
       let api: string = 'https://wa.me/'; //https://api.whatsapp.com/send?phone=
       let miMensaje = info.split(' ').join('%20')
       this.urlCall = api + this.celularProveedor + '/?text=' + miMensaje;

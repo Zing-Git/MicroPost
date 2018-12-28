@@ -77,9 +77,9 @@ export class AltaDomicilioPage {
     loader.present();
 
     this.auxiliar.postGetCombos().subscribe(result => { 
-         
+         console.log(result);
       this.provincias = result['respuesta'].provincias;       
-      
+      this.provinciaName = this.provincias[0].provincia
     });
 
     loader.dismiss();
@@ -94,10 +94,14 @@ export class AltaDomicilioPage {
 
   onProvinciaChange(ctxt: string): void {
     let prov = this.provincias.filter(item => item.iso_31662 === ctxt); 
-    prov.forEach(element =>{
+    console.log(prov);
+    if(prov.length > 0){
+      prov.forEach(element =>{
       this.localidades = element.localidad
     });
     this.provinciaName = prov[0].provincia;
+    }
+    
     
   }
 

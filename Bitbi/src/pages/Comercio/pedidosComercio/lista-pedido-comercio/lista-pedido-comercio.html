@@ -105,10 +105,11 @@
               <p text-wrap><strong> Proveedor </strong> {{item.proveedor.entidad.razonSocial}}</p>
               <p text-wrap><strong> Rubro </strong> {{item.proveedor.entidad.actividadPrincipal}}</p>
               <p><strong> Fecha Entrega Estimada</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
+              <p *ngIf="item.comentarioCancelado" text-wrap><strong> Motivo: </strong> {{item.comentarioCancelado}}</p>
               <!--<h3><strong> Fecha de Solicitud </strong> {{item.fechaAlta | date: 'dd/MM/yyyy'}}</h3>
                 <h4><strong> Hora Entrega </strong> {{item.fechaEntrega | date: 'hh:mm'}}</h4>-->
               <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-              
+             
   
             </ion-item>
   

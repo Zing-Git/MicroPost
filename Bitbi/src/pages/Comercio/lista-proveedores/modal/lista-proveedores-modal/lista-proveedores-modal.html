@@ -48,7 +48,7 @@
   </ion-scroll>
 </div>-->
 
-<div class="nuevo-div">
+<div class="nuevo-div" *ngIf="proveedores">
   <ion-scroll scrollY="true">
     <ion-list *ngFor="let proveedor of proveedores; let i=index">
       <ion-item class="nuevo-ion-item" (click)="realizarInvitacion(proveedor)">

@@ -30,10 +30,11 @@ export class PedidoProvider {
     return this.http.post<any>(this.urlAceptarPedido, parametros, cudOptions);
   }
 
-  postRechazarPedido(idPedido: string): Observable<any> {
+  postRechazarPedido(idPedido: string, mensaje: string): Observable<any> {
     //const newSession = Object.assign({}, idPedido);
     const parametros = {
-      idPedido: idPedido
+      idPedido: idPedido,
+      comentario: mensaje
     }
     return this.http.post<any>(this.urlRechazarPedido, parametros, cudOptions);
   }

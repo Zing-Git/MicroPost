@@ -14,6 +14,7 @@ export class AltaContactosPage {
 
   credencialesForm: FormGroup;
   clienteViewModel: any;
+  //clienteViewModel: Comercio = new Comercio();
 
   //variables
   tipoContacto: string;
@@ -34,10 +35,10 @@ export class AltaContactosPage {
 
     this.credencialesForm = this.formBuilder.group({
       email: ['', Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
-      codigoPaisCelular: [''],
-      codigoAreaCelular: [''],
-      numeroCelular: [''],
-      codigoPaisFijo: [''],
+      codigoPaisCelular: ['+549'],
+      codigoAreaCelular: ['', Validators.required],
+      numeroCelular: ['', Validators.required],
+      codigoPaisFijo: ['+549'],
       codigoAreaFijo: [''],
       numeroFijo: ['']
     });
@@ -50,30 +51,34 @@ export class AltaContactosPage {
   onSingin() {
 
     this.clienteViewModel.contactos = new Array();
-    if (this.credencialesForm.controls['email'].value != ' ') {
+    console.log(this.credencialesForm.controls['email'].value);
+    if (this.credencialesForm.controls['email'].value.toString()  != ' ') {
 
-      this.clienteViewModel.contactos.push(
-        "Email",
-        this.credencialesForm.controls['email'].value
+      this.clienteViewModel.contactos.push({
+        tipoContacto: "Email",
+        email: this.credencialesForm.controls['email'].value
+      }
       )
     }
-    if (this.credencialesForm.controls['numeroCelular'].value != ' ') {
+    if (this.credencialesForm.controls['numeroCelular'].value.toString() != ' ') {
 
-      this.clienteViewModel.contactos.push(
-        "Telefono Celular",
-        this.credencialesForm.controls['codigoPaisCelular'].value,
-        this.credencialesForm.controls['codigoAreaCelular'].value,
-        this.credencialesForm.controls['numeroCelular'].value
+      this.clienteViewModel.contactos.push({
+        tipoContacto: "Telefono Celular",
+        codigoPais: this.credencialesForm.controls['codigoPaisCelular'].value,
+        codigoArea: this.credencialesForm.controls['codigoAreaCelular'].value,
+        numeroCelular: this.credencialesForm.controls['numeroCelular'].value
+      }
       )
     }
 
     if (this.credencialesForm.controls['numeroFijo'].value != ' ') {
 
-      this.clienteViewModel.contactos.push(
-        "Telefono Fijo",
-        this.credencialesForm.controls['codigoPaisFijo'].value,
-        this.credencialesForm.controls['codigoAreaFijo'].value,
-        this.credencialesForm.controls['numeroFijo'].value
+      this.clienteViewModel.contactos.push({
+        tipoContacto: "Telefono Fijo",
+        codigoPais: this.credencialesForm.controls['codigoPaisFijo'].value,
+        codigoArea: this.credencialesForm.controls['codigoAreaFijo'].value,
+        numeroCelular: this.credencialesForm.controls['numeroFijo'].value
+      }
       )
     }
     console.log(this.clienteViewModel);

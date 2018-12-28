@@ -8,6 +8,7 @@ import { Comercio } from '../../../../modelo/comercio';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { Entidad } from '../../../../modelo/entidad';
 import { AltaDomicilioPage } from '../alta-domicilio/alta-domicilio';
+import { LoginPage } from '../../../login/login';
 
 @IonicPage()
 @Component({
@@ -40,7 +41,7 @@ export class AltaClientePage {
 
 
     this.credencialesForm = this.formBuilder.group({
-      cuil: ['', Validators.required],
+      cuil: [''],
       razonSocial: ['', Validators.required],
       actividadPrincipal: [this.itemActividadSelected],
       tipoPersoneria: [this.itemPersoneriaSelected, Validators.required],
@@ -56,18 +57,23 @@ export class AltaClientePage {
 
   onSingin() {
 
+    var cuil: string = 'Sin Cuil';
     if (this.value == 1) {
       this.actividadPrincipalName = this.credencialesForm.controls['actividadPrincipalOtro'].value;
     }
 
+    console.log( this.credencialesForm.controls['cuil'].value);
+    if(this.credencialesForm.controls['cuil'].value){ 
+      cuil = this.credencialesForm.controls['cuil'].value;
+    }
     this.clienteViewModel.entidad = new
       Entidad(
-        this.credencialesForm.controls['cuil'].value,
+        cuil,
         this.credencialesForm.controls['razonSocial'].value,
         this.actividadPrincipalName,
         this.tipoPersoneriaName
       );
-
+        console.log(this.clienteViewModel);
     this.navCtrl.push(AltaDomicilioPage,
       { data: this.clienteViewModel });
   }
@@ -112,4 +118,9 @@ export class AltaClientePage {
 
   }
 
+  volver(): void {
+    this.navCtrl.setRoot(LoginPage);
+    this.navCtrl.popToRoot();
+  }
+  
 }

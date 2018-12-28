@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Mis Clientes</ion-title>
+        </ion-navbar>
+      </ion-col>
+
+
+      <ion-col col-2>
+        <div class="center_vertically" (click)='doRefresh()'>
+          <i class="fas fa-sync-alt fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+
+<ion-content padding class="noContent" *ngIf="!estado">
+    <div>
+      <p>Lo sentimos, no tienes Comercios, para obtener Comercios tienes que
+        informar a tus puntos de ventas que te agreguen como proveedor en Bitbi</p>
+    </div>
+  </ion-content>
+
+<ion-content padding *ngIf="estado">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh" >
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <p class="tituloTotal"> <strong>Comercios<br></strong></p>
+
+  <div padding>
+    <ion-row >
+      <ion-searchbar placeholder="Buscar" animated (ionInput)="buscar($event)"></ion-searchbar>
+    </ion-row>
+  </div>
+
+  <div class="nuevo-div">
+    <ion-scroll scrollY="true">
+      <ion-list *ngFor="let comercio of comercios; let i=index">
+        <ion-item class="nuevo-ion-item">
+          <ion-avatar item-start>
+            <img src='../../../../assets/imgs/icono_comercio.png'>
+          </ion-avatar>
+          
+          <h3 text-wrap> {{comercio.entidad.razonSocial}} - ( <strong> {{comercio.alias}}</strong> )</h3>
+          
+          <p text-wrap> {{comercio.entidad.domicilio.localidad + " - " + comercio.entidad.domicilio.barrio + " - " + comercio.entidad.domicilio.calle}}</p>
+         
+          <h3 *ngIf="comercio.contactos.length === 3"><a href='tel:{{comercio.contactos[1].codigoPais + comercio.contactos[1].codigoArea + comercio.contactos[1].numeroCelular}}' class="button button-positive"> cel: {{comercio.contactos[1].codigoPais + comercio.contactos[1].codigoArea + comercio.contactos[1].numeroCelular}}</a></h3>
+          
+          <h3 *ngIf="comercio.contactos.length === 3 && comercio.contactos[2].numeroCelular !== ''"> <a href='tel:{{comercio.contactos[2].codigoPais + comercio.contactos[2].codigoArea + comercio.contactos[2].numeroCelular}}' class="button button-positive">Tel {{comercio.contactos[2].codigoPais + comercio.contactos[2].codigoArea + comercio.contactos[2].numeroCelular}}</a></h3>
+          <ion-avatar item-end *ngIf="comercio.contactos.length === 3">
+            <img src='../../../assets/imgs/ws.png' (click)="callWhatsapp(comercio.contactos[1].codigoPais + comercio.contactos[1].codigoArea + comercio.contactos[1].numeroCelular)">
+          </ion-avatar>
+        </ion-item>
+
+      </ion-list>
+    </ion-scroll>
+  </div>
+</ion-content>

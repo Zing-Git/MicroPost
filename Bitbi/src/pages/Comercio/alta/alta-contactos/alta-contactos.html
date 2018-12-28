@@ -42,41 +42,41 @@
     <ion-card-title>
       <h3>Teléfono Celular</h3>
     </ion-card-title>
-    <ion-item>
+   <!-- <ion-item>
         <ion-label floating>Código Pais</ion-label>
       <ion-input [formControl]="credencialesForm.controls['codigoPaisCelular']" type="text" placeholder="+549" class="floating-with-placeholder"></ion-input>
-    </ion-item>
+    </ion-item>-->
     <ion-item>
         <ion-label floating>Código Área</ion-label>
-      <ion-input [formControl]="credencialesForm.controls['codigoAreaCelular']" type="text" placeholder="388" class="floating-with-placeholder"></ion-input>
+      <ion-input [formControl]="credencialesForm.controls['codigoAreaCelular']" type="number" placeholder="388" class="floating-with-placeholder"></ion-input>
     </ion-item>
      <ion-item >
-        <ion-label floating>Celular</ion-label>
-      <ion-input [formControl]="credencialesForm.controls['numeroCelular']" type="text" class="floating-with-placeholder"></ion-input>
+        <ion-label floating>Número</ion-label>
+      <ion-input [formControl]="credencialesForm.controls['numeroCelular']" type="number" class="floating-with-placeholder"></ion-input>
     </ion-item>
   </ion-card>
   <ion-card>
       <ion-card-title>
         <h3>Teléfono fijo</h3>
       </ion-card-title>
-      <ion-item>
+      <!--<ion-item>
           <ion-label floating>Código Pais</ion-label>
           <ion-input [formControl]="credencialesForm.controls['codigoPaisFijo']" type="text" placeholder="+549" class="floating-with-placeholder"></ion-input>
-      </ion-item>
+      </ion-item>-->
       <ion-item>
           <ion-label floating>Código Área</ion-label>
-          <ion-input [formControl]="credencialesForm.controls['codigoAreaFijo']" type="text" placeholder="388" class="floating-with-placeholder"></ion-input>
+          <ion-input [formControl]="credencialesForm.controls['codigoAreaFijo']" type="number" placeholder="388" class="floating-with-placeholder"></ion-input>
       </ion-item>
        <ion-item >
-          <ion-label floating>Celular</ion-label>
-          <ion-input [formControl]="credencialesForm.controls['numeroFijo']" type="text" class="floating-with-placeholder"></ion-input>
+          <ion-label floating>Número</ion-label>
+          <ion-input [formControl]="credencialesForm.controls['numeroFijo']" type="number" class="floating-with-placeholder"></ion-input>
       </ion-item>
     </ion-card>
    
 
     <ion-row>
       <ion-col text-center>
-        <button ion-button round block (click)="onSingin()">Siguiente</button>
+        <button ion-button round block (click)="onSingin()" [disabled]="!credencialesForm.valid">Siguiente</button>
       </ion-col>
     </ion-row>
   </form>

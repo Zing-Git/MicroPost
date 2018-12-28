@@ -31,7 +31,8 @@ export class AltaLoginPage {
     public loadingCtrl: LoadingController) {
 
     this.clienteViewModel = navParams.get('data');
-
+    console.log('estoy en alta login');
+    console.log(this.clienteViewModel);
     this.loginForm = this.formBuilder.group({
       dni: ['', Validators.required],
       nombreUsuario: ['', Validators.required],
@@ -60,10 +61,10 @@ export class AltaLoginPage {
         this.loginForm.controls['nombreUsuario'].value,
         this.loginForm.controls['clave'].value
       );
-
-
+      
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
+      
       this.clienteViewModel.usuarios = usuarios;
       this.guardarCliente();
 
@@ -82,6 +83,7 @@ export class AltaLoginPage {
 
   guardarCliente() {
     this.comercioService.postComercio(this.clienteViewModel).subscribe(result => {
+      console.log(result);
       if (result['ok'] !== true) {
         Swal('Atención', 'Ocurrio un problema, compruebe que los datos ingresados estan correctos', 'warning')
       } else {

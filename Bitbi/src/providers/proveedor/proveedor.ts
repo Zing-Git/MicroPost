@@ -24,6 +24,8 @@ export class ProveedorProvider {
   private urlGetInvitacion = this.urlBase + '/invitacion/consultar_pendientes/';
   private urlPostAceptarRechazar = this.urlBase + '/invitacion/aceptar_rechazar/';
   private urlGetPedidosProveedor = this.urlBase + '/pedido/listar_pedidos_proveedor/';
+  private urlGetTodosLosAlias = this.urlBase + '/alias/listar_alias/';
+  private urlGetTodosLosComercios = this.urlBase + '/proveedor/consultar_comercios_de_proveedor/';
   
   data: any;
   constructor(public http: HttpClient) {
@@ -96,10 +98,12 @@ export class ProveedorProvider {
     return this.http.get<any[]>(url, cudOptions);
   }
 
-  postAceptarRechazar(idInvitacion: any, aceptado: boolean): Observable<any>{
+  postAceptarRechazar(idInvitacion: any, aceptado: boolean, alias: string): Observable<any>{
+    console.log(alias,idInvitacion,aceptado);
     const parametros = {
       idInvitacion: idInvitacion,
-      aceptada: aceptado
+      aceptada: aceptado,
+      alias: alias
     }
     
     return this.http.post<any>(this.urlPostAceptarRechazar, parametros,cudOptions);
@@ -108,6 +112,19 @@ export class ProveedorProvider {
   getPedidosProveedor(idProveedor: string): Observable<any[]> {  
     
     let url= this.urlGetPedidosProveedor + '?idProveedor=' + idProveedor;
+    
+    return this.http.get<any[]>(url, cudOptions);
+  }
+
+  getTodosLosAlias(idProveedor: string): Observable<any[]> {  
+    
+    let url= this.urlGetTodosLosAlias + '?idProveedor=' + idProveedor; //?idProveedor
+    
+    return this.http.get<any[]>(url, cudOptions);
+  }
+
+  getTodosLosComercios(idProveedor: string): Observable<any[]>{
+    let url= this.urlGetTodosLosComercios + '?idProveedor=' + idProveedor; //?idProveedor
     
     return this.http.get<any[]>(url, cudOptions);
   }

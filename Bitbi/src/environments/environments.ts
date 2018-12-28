@@ -18,5 +18,8 @@ export var envirotment = {
     NEWLOGIN: ' ',
     NOMBRE_PROVEEDOR: ' ',
     RUBRO_PROVEEDOR: ' ',
-    IDPUSH: ' '
+    IDPUSH: ' ',
+    MENSAJE_RECHAZO:' ',
+    handleNotificationReceived: ' ',
+    handleNotificationOpened: ' '
 }

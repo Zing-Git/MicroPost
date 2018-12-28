@@ -136,7 +136,13 @@ export class CrearPublicidadPage {
   }
 
 
+getData(){
 
+let handleNotificationReceived= JSON.parse(ENV.handleNotificationReceived);
+let handleNotificationOpened= JSON.parse(ENV.handleNotificationOpened);
+  Swal('handle Notification Received', handleNotificationReceived, 'success');
+  Swal('handle Notification Opened', handleNotificationOpened, 'success');
+}
 
 
 }

@@ -22,7 +22,7 @@
   </ion-grid>
 </ion-header>
 
-<ion-content padding class="nuevo-div">
+<ion-content class="nuevo-div">
 
   <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -44,133 +44,67 @@
     </ion-segment>
   </div>
 
+  <div padding>
+    <ion-row *ngIf="!pedidoHabilitado">
+      <ion-searchbar placeholder="Buscar" animated (ionInput)="buscar($event)"></ion-searchbar>
+    </ion-row>
+  </div>
 
-  <ion-row *ngIf="!pedidoHabilitado">
-    <ion-searchbar placeholder="Buscar" animated (ionInput)="buscar($event)"></ion-searchbar>
-  </ion-row>
+  <div [ngSwitch]="inicial" *ngIf="!pedidoHabilitado" >
 
-
-  <div [ngSwitch]="inicial" *ngIf="!pedidoHabilitado">
-
-    <form *ngSwitchCase="'informado'" [class.hide]="estadoInformado">
-
+    <form *ngSwitchCase="'informado'" [class.hide]="estadoInformado" padding>
       <div class="nuevo-div">
         <ion-scroll scrollY="true">
           <ion-list *ngFor="let item of pedidosInformados">
-            <ion-item>
+            <ion-item (click)='verDetalle(item)'>
 
               <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
               <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
                 item.comercio.entidad.domicilio.barrio}}</p>
-              <button ion-button small item-end (click)='verDetalle(item)'>Ver</button>
+              <!--<button ion-button small item-end >Ver</button>-->
               <p><strong> Fecha de Solicitud</strong> {{item.detallePedido[0].fechaAlta | date: 'dd/MM/yyyy'}}</p>
-              <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-
-
+              <p><strong> Total </strong> $ {{item.totalPedido }}</p>
             </ion-item>
 
           </ion-list>
         </ion-scroll>
       </div>
-      <!--<ion-scroll style="height:400px" scrollY="true">
-        <ion-list *ngFor="let item of pedidosInformados">
-          <ion-item (click)='verDetalle(item)'>
-
-
-            <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' + item.comercio.entidad.domicilio.barrio}}</p>
-            <p><strong> Fecha de Solicitud</strong> {{item.detallePedido[0].fechaAlta | date: 'dd/MM/yyyy'}}</p>
-            <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-            <hr>
-          </ion-item>
-
-        </ion-list>
-      </ion-scroll>
-    
-      <button color="secondary" ion-button small (click)="callWhatsapp()">
-                <ion-icon name="logo-whatsapp"></ion-icon> whatsapp
-              </button>-->
-
-
     </form>
 
-
-    <form *ngSwitchCase="'aprobado'" [class.hide]="estadoAceptado">
-
-
+    <form *ngSwitchCase="'aprobado'" [class.hide]="estadoAceptado" padding>
       <div class="nuevo-div">
         <ion-scroll scrollY="true">
           <ion-list *ngFor="let item of pedidosAceptados">
-            <ion-item>
+            <ion-item (click)='verDetalle(item)'>
               <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
               <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
                 item.comercio.entidad.domicilio.barrio}}</p>
-              <button ion-button small item-end (click)='verDetalle(item)'>Ver</button>
+              <!--<button ion-button small item-end >Ver</button>-->
               <p><strong> Entrega estimada </strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
-              <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-
-            
+              <p><strong> Total </strong> $ {{item.totalPedido }}</p>
             </ion-item>
-
           </ion-list>
         </ion-scroll>
       </div>
-      <!--<ion-scroll style="height:400px" scrollY="true">
-        <ion-list *ngFor="let item of pedidosAceptados">
-          <ion-item (click)='verDetalle(item)'>
-
-            <button ion-button small item-end (click)='verDetalle(item)'>
-                <ion-icon name="eye"> Ver</ion-icon>
-              </button>
-
-            <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
-              item.comercio.entidad.domicilio.barrio}}</p>
-            <p><strong> Entrega estimada </strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
-            <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-            <hr>
-          </ion-item>
-
-        </ion-list>
-      </ion-scroll>-->
-
-
-
     </form>
 
-    <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado">
+    <form *ngSwitchCase="'rechazado'" [class.hide]="estadoRechazado" padding>
 
       <div class="nuevo-div">
         <ion-scroll scrollY="true">
           <ion-list *ngFor="let item of pedidosRechazados">
-            <ion-item>
+            <ion-item (click)='verDetalle(item)'>
               <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
               <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
                 item.comercio.entidad.domicilio.barrio}}</p>
-              <button ion-button small item-end (click)='verDetalle(item)'>Ver</button>
+              <!--<button ion-button small item-end (click)='verDetalle(item)'>Ver</button>-->
               <p><strong> Entrega estimada</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
-              <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-
+              <p *ngIf="item.comentarioCancelado" text-wrap><strong> Motivo: </strong> {{item.comentarioCancelado}}</p>
+              <p><strong> Total </strong> $ {{item.totalPedido }}</p>
             </ion-item>
-
           </ion-list>
         </ion-scroll>
       </div>
-      <!--<ion-scroll style="height:400px" scrollY="true">
-        <ion-list *ngFor="let item of pedidosRechazados">
-          <ion-item (click)='verDetalle(item)'>
-
-            <p><strong> Comercio </strong> {{item.comercio.entidad.razonSocial}}</p>
-            <p><strong> Direccion </strong> {{item.comercio.entidad.domicilio.localidad + ', ' +
-              item.comercio.entidad.domicilio.barrio}}</p>
-            <p><strong> Entrega estimada</strong> {{item.fechaEntrega | date: 'dd/MM/yyyy'}}</p>
-            <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
-            <hr>
-          </ion-item>
-
-        </ion-list>
-      </ion-scroll>-->
-
     </form>
 
 

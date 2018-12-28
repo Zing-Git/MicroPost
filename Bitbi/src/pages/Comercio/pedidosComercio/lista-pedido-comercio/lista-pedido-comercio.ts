@@ -54,11 +54,11 @@ export class ListaPedidoComercioPage {
     public loadingCtrl: LoadingController,
     public auxiliar: AuxiliarProvider) {
 
-    const loader = this.loadingCtrl.create({
+    /*const loader = this.loadingCtrl.create({
       content: "Cargando pedidos, espere unos segundos...",
       duration: 2000
     });
-    loader.present();
+    loader.present();*/ 
 
     this.obtenerDatosImportantes();
   }
@@ -80,7 +80,7 @@ export class ListaPedidoComercioPage {
     this.idComercio = ENV.COMERCIO_ID;
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
-
+      console.log(result);
       if (result['pedidos_array'] != undefined) {
         this.estado = false;
         ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
@@ -135,7 +135,7 @@ export class ListaPedidoComercioPage {
 
     this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
     console.log(this.pedidos);
-    //this.condition();
+    
     this.pedidos.forEach(x => {
 
       switch (x.estadoPedido) {

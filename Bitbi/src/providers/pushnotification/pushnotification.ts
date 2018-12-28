@@ -21,14 +21,16 @@ export class PushnotificationProvider {
       this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
 
-      this.oneSignal.handleNotificationReceived().subscribe(() => {
+      this.oneSignal.handleNotificationReceived().subscribe((result) => {
         // do something when notification is received
         console.log('Notificacion recibida');
+       //ENV.handleNotificationReceived = JSON.stringify(result);
       });
 
-      this.oneSignal.handleNotificationOpened().subscribe(() => {
+      this.oneSignal.handleNotificationOpened().subscribe((result) => {
         // do something when a notification is opened
         console.log('Notificacion abierta');
+        //ENV.handleNotificationOpened = JSON.stringify(result);
       });
 
       this.oneSignal.endInit();
@@ -45,7 +47,11 @@ export class PushnotificationProvider {
       ENV.IDPUSH = respuesta.userId;
     });
     return ENV.IDPUSH;
-  }
+  }  
 
+  async getDataFromPush(): Promise<any>{
+   return await this.oneSignal.handleNotificationOpened(); 
+  }
+  
 }
 

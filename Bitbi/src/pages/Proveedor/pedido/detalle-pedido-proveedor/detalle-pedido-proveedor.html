@@ -20,10 +20,8 @@
     
           </ion-col>
           <ion-col col-2>
-            <div >
+            <div *ngIf="celularProveedor">
             
-
-
               <button color="secondary" ion-button small (click)="callWhatsapp()">
                 <ion-icon name="logo-whatsapp"></ion-icon>
               </button>
@@ -59,7 +57,7 @@
               <h3 text-wrap>{{item.direccion}}</h3>
             
               <h2> <strong>Monto Total</strong></h2>
-              <h3>{{item.montoTotal}}</h3>
+              <h3>{{item.montoTotal  }}</h3>
             
               <h2> <strong>Fecha de Entrega</strong></h2>
               <h3 >{{item.fechaEntrega  | date: 'dd/MM/yyyy'}}</h3>
@@ -77,8 +75,8 @@
                 <ion-item >
                     <p><strong> {{item.unidadMedida + ' de ' +item.producto.nombreProducto + ' x ' +item.cantidadPedido + ' Und.'}}</strong></p>
        
-                    <p><strong> Precio unitario $ </strong>{{item.producto.precioProveedor}} </p>
-                    <p><strong> Sub total $ </strong> {{item.cantidadPedido * item.producto.precioProveedor}}</p>
+                    <p><strong> Precio unitario $ </strong>{{item.producto.precioProveedor  | currency}} </p>
+                    <p><strong> Sub total </strong> {{item.cantidadPedido * item.producto.precioProveedor  | currency}}</p>
     
                 </ion-item>
     

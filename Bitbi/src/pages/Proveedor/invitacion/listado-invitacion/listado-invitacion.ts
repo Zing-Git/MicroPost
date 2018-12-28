@@ -5,6 +5,7 @@ import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
+import { InvitacionModalPage } from './../invitacion-modal/invitacion-modal';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class ListadoInvitacionPage {
   estadoAceptado: boolean = true;
   estadoRechazado: boolean = true;
   estadoPendiente: boolean = true;
+  estadoProveedor: boolean = true;
   estado: boolean = true;
 
   pedidos: any;
@@ -31,9 +33,12 @@ export class ListadoInvitacionPage {
   invitacionesAceptadas: any[] = new Array();
   invitacionesRechazadas: any[] = new Array();
   invitacionesPendientes: any[] = new Array();
+  invitacionProveedor: any[] = new Array();
 
   direciones: any;
   permitirRefresh: boolean = false;
+  alias: string;
+  aceptado: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -49,6 +54,8 @@ export class ListadoInvitacionPage {
   }
 
   obtenerDatosImportantes() {
+    ENV.INVITACIONES = ' ';
+    this.invitaciones = new Array();
 
     this.idProveedor = ENV.PROVEEDOR_ID;
 
@@ -59,18 +66,19 @@ export class ListadoInvitacionPage {
     loader.present();
     this.proveedorServices.getInvitaciones(this.idProveedor).subscribe(data => {
       console.log(data['invitaciones']);
+      console.log(data);
       if (data['invitaciones'] != undefined) {
         ENV.INVITACIONES = JSON.stringify(data['invitaciones']);
         this.estado = true;
         this.cargarCombos();
-        
+
       }
       else {
-       this.estado = false;
+        this.estado = false;
       }
 
     });
-loader.dismiss();
+    loader.dismiss();
 
   }
 
@@ -78,34 +86,49 @@ loader.dismiss();
     this.invitacionesAceptadas = new Array();
     this.invitacionesRechazadas = new Array();
     this.invitacionesPendientes = new Array();
+    this.invitacionProveedor = new Array();
+
     this.estadoAceptado = true;
     this.estadoPendiente = true;
     this.estadoRechazado = true;
+    this.estadoPendiente = true;
 
     this.invitaciones = this.auxiliar.crearArray(JSON.parse(ENV.INVITACIONES));
 
     this.invitaciones.forEach(x => {
-
-      if (x.pendienteDeRevision == true) {
-        this.estadoPendiente = false;
-        this.invitacionesPendientes.push(x);
-      } else {
-        if (x.aceptada == true) {
-          this.estadoAceptado = false;
-          this.invitacionesAceptadas.push(x);
+      if (!x.esProveedor) {
+        if (x.pendienteDeRevision == true) {
+          this.estadoPendiente = false;
+          this.invitacionesPendientes.push(x);
         } else {
-          this.estadoRechazado = false;
-          this.invitacionesRechazadas.push(x);
+          if (x.aceptada == true) {
+            this.estadoAceptado = false;
+            if (this.inicial != 'pendiente') {
+              this.inicial = 'aceptado';
+            }
+            this.invitacionesAceptadas.push(x);
+          } else {
+            if (this.inicial != 'pendiente') {
+              this.inicial = 'rechazado';
+            }
+            this.estadoRechazado = false;
+            this.invitacionesRechazadas.push(x);
+          }
         }
+      } else {
+        this.inicial = 'proveedor';
+        this.estadoProveedor = false;
+        this.invitacionProveedor.push(x);
       }
+
     })
   }
 
-  doRefresh(refresher?:any) { //"?" in typescript means the parameter is optional
+  doRefresh(refresher?: any) { //"?" in typescript means the parameter is optional
 
-      this.obtenerDatosImportantes();
-      refresher && refresher.complete();//make sure refresher is truthy before calling complete
-   
+    this.obtenerDatosImportantes();
+    refresher && refresher.complete();//make sure refresher is truthy before calling complete
+
   }
 
   ionViewDidLoad() {
@@ -113,109 +136,21 @@ loader.dismiss();
   }
 
   aceptar(invitacion: any) {
+    const modal = this.modalCtrl.create(InvitacionModalPage, { data: invitacion, data1: 'aceptado' });
+    modal.present();
 
-
-    Swal({
-
-      text: 'Desea Aceptar Invitacion?',
-      type: 'question',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si, ACEPTAR!',
-      confirmButtonColor: '#488aff',
-      cancelButtonColor: '#488aff',
-      reverseButtons: true
-
-    }).then((result) => {
-
-      if (result.value) {
-        const loader = this.loadingCtrl.create({
-          content: "Procesando Información, aguarde unos segundos, Gracias..."
-        });
-        loader.present();
-        this.proveedorServices.postAceptarRechazar(invitacion._id, true).subscribe(result => {
-
-          if (typeof result != 'undefined') {
-            if (result.ok) {
-              Swal({
-                title: 'Felicidades',
-                text: 'Acabas de agregar un comercio más a tu red de puntos de venta. Bitbi te ayuda a crecer',
-                type: 'success',
-                showCancelButton: false,
-                confirmButtonText: 'GRACIAS!',
-                confirmButtonColor: '#488aff'
-              }
-
-              );
-
-            
-              loader.dismiss();
-            } else {
-              Swal(
-                'Advertencia',
-                result.message,
-                'error'
-              )
-              loader.dismiss();
-            }
-          }
-        })
-
-        this.actualizarInvitacion(invitacion._id, true);
-      }
-
-    })
+    modal.onDidDismiss((location) => {
+      this.obtenerDatosImportantes();
+    });
   }
 
   rechazar(invitacion: any) {
+    const modal = this.modalCtrl.create(InvitacionModalPage, { data: invitacion, data1: 'rechazado' });
+    modal.present();
 
-
-    Swal({
-
-      text: 'Desea Rechazar Invitacion?',
-      type: 'question',
-      showCancelButton: true,
-      cancelButtonText: 'Volver',
-      confirmButtonText: 'Si, RECHAZAR!',
-      confirmButtonColor: '#488aff',
-      cancelButtonColor: '#488aff',
-      reverseButtons: true
-
-    }).then((result) => {
-
-
-      if (result.value) {
-        const loader = this.loadingCtrl.create({
-          content: "Procesando Información, aguarde unos segundos, Gracias..."
-        });
-        loader.present();
-        this.proveedorServices.postAceptarRechazar(invitacion._id, false).subscribe(result => {
-          if (typeof result != 'undefined') {
-
-            if (result.ok) {
-              Swal(
-                'Realizado!',
-                result.message,
-                'success'
-              );              
-                loader.dismiss();
-            } else {
-              Swal(
-                'Advertencia',
-                result.message,
-                'error'
-              )
-              loader.dismiss();
-            }
-          }
-        })
-
-
-        this.actualizarInvitacion(invitacion._id, false);
-      }
-
-
-    })
+    modal.onDidDismiss((location) => {
+      this.obtenerDatosImportantes();
+    });
   }
 
   actualizarInvitacion(idInvitacion, value): void {

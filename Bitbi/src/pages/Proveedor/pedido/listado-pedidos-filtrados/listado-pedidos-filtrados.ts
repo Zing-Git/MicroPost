@@ -15,7 +15,7 @@ import { DetallePedidoProveedorPage } from '../detalle-pedido-proveedor/detalle-
 export class ListadoPedidosFiltradosPage {
 
   pedido: any;
-  inicial: string = 'informado';
+  inicial: string;
   pedidoForm: FormGroup;
   cantidadProductos: number = 0;
 
@@ -34,8 +34,8 @@ export class ListadoPedidosFiltradosPage {
 
   pedidoHabilitado: boolean = true;
   permitirRefresh: boolean = false;
-  
- 
+
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -115,6 +115,7 @@ export class ListadoPedidosFiltradosPage {
 
   actualizarPedido(miPedido: any): void {
 
+    this.obtenerDatosImportantes();
     this.pedidos.forEach(x => {
       if (x.idPedido === miPedido.idPedido) {
         x.estadoPedido = miPedido.estadoPedido;
@@ -169,19 +170,27 @@ export class ListadoPedidosFiltradosPage {
         this.pedidoHabilitado = false;
         switch (x.estadoPedido) {
           case "RECHAZADO": {
+            if (this.inicial != 'informado') {
+              if (this.inicial != 'aprobado') {
+                this.inicial = 'rechazado';
+              }
 
+            }
             this.estadoRechazado = false;
             this.pedidosRechazados.push(x);
 
             break;
           }
           case "PEDIDO SOLICITADO": {
+            this.inicial = 'informado';
             this.estadoInformado = false;
             this.pedidosInformados.push(x);
             break;
           }
           case "ACEPTADO": {
-
+            if (this.inicial != 'informado') {
+              this.inicial = 'aprobado';
+            }
             this.estadoAceptado = false;
             this.pedidosAceptados.push(x);
             break;
@@ -196,7 +205,7 @@ export class ListadoPedidosFiltradosPage {
     })
 
     //this.obtenerCantidadPedidos()
-    
+    console.log(this.pedidosRechazados);
   }
 
   /*obtenerCantidadPedidos(){
