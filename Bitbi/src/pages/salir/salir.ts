@@ -5,6 +5,7 @@ import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { LoginProvider } from '../../providers/login/login';
 import Swal from 'sweetalert2';
+import { LoginModel } from '../../modelo/login';
 
 @IonicPage()
 @Component({
@@ -25,16 +26,22 @@ export class SalirPage {
 
   limpiarValoresPorDefecto() {
     var miUsuario = JSON.parse(ENV.APIKEY);
+    var minewLogin = new LoginModel();
+    //newLogin.nombreUsuario, newLogin.clave, newLogin.tipo
+    minewLogin.nombreUsuario = ' ';
+    minewLogin.clave = ' ';
+    minewLogin.tipo = ' ';
    //console.log(miUsuario);
     this.login.logout(miUsuario.token).subscribe(result => {
       if (result['error'] === 0) {
         Swal('Felicidades', 'Gracias por usar Bitbi', 'success');
         console.log(result);
+       
       } else {
         Swal('error', result.message, 'warning');
       }
     })
-    this.storage.set('usuarioLogin', ' ');
+    
     //this.storage.set('yoSoy', ' ');
     ENV.NEWLOGIN = ' ';
     ENV.NOMBRE_USUARIO = ' ';
@@ -51,7 +58,14 @@ export class SalirPage {
   
     ENV.PEDIDOS = ' ';
     ENV.CARRITO = ' ';
-    
+    this.storage.set('usuarioLogin', ' ');
+        
+    this.storage.get('usuarioLogin').then((logeo) => {
+      console.log(logeo)
+     
+      
+      //this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave)
+    });
   }
 
 }

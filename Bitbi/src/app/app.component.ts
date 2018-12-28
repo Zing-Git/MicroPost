@@ -70,7 +70,7 @@ export class MyApp {
       this.event.subscribe('creado', (comercio, rubro, yoSoy) => {
         this.nombre = comercio;
         this.rubro = (!!rubro) ? rubro.charAt(0).toUpperCase() + rubro.substr(1).toLowerCase() : '';
-        
+
         /*switch (yoSoy) {
           case 'comercio': {
             this.crearMenuComercio();
@@ -87,9 +87,9 @@ export class MyApp {
         }
         */
         //this.yoSoy = yoSoy;
-this.control(yoSoy);
+        this.control(yoSoy);
       })
-      
+
       ENV.CARRITO = JSON.stringify(this.version);
 
     });
