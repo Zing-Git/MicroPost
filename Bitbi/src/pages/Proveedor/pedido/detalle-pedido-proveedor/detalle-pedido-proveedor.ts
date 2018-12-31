@@ -116,7 +116,7 @@ export class DetallePedidoProveedorPage {
       customClass: 'animated tada',
       inputValidator: (result) => {
         return new Promise((resolve) => {
-          let respuesta: string = 'No contamos con la cantidad necesaria para cumplir con el pedido';
+          let respuesta: string = 'Estimado cliente, lamentamos informarle que en este momento no podemos cumplir el pedido, repita el pedido en otro momento.';
           console.log(result);
           if (result) {
             this.aceptado = true;

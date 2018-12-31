@@ -66,8 +66,9 @@ export class AltaProveedorLoginPage {
 
           loader.dismiss();
           Swal('Felicidades!!', 'Ahora puede ingresar con usuario y clave al sistema..', 'success')
-          this.navCtrl.push(LoginPage);
-          
+          //this.navCtrl.push(LoginPage);
+          this.navCtrl.setRoot(LoginPage, { animate: true });
+              this.navCtrl.popToRoot();
         } else {
 
           loader.dismiss();

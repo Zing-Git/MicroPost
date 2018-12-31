@@ -88,7 +88,9 @@ export class AltaLoginPage {
         Swal('Atención', 'Ocurrio un problema, compruebe que los datos ingresados estan correctos', 'warning')
       } else {
         Swal('Felicidades', 'Ya puede ingresar con sus credenciales', 'success')
-        this.navCtrl.push(LoginPage);
+        //this.navCtrl.push(LoginPage);
+        this.navCtrl.setRoot(LoginPage, { animate: true });
+              this.navCtrl.popToRoot();
       }
     }, err => {
       alert('Hubo un problema al crear Comercio' + err);
