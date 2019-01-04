@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
 //import { Comercio } from '../../../modelo/comercio';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AltaLoginPage } from '../alta-login/alta-login';
@@ -29,7 +29,8 @@ export class AltaContactosPage {
   constructor(public navParams: NavParams,
     public viewCtrl: ViewController,
     public navCtrl: NavController,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    private event: Events) {
 
     this.clienteViewModel = navParams.get('data');
 
@@ -42,6 +43,11 @@ export class AltaContactosPage {
       codigoAreaFijo: [''],
       numeroFijo: ['']
     });
+
+    this.event.subscribe('volverAContacto', () => {
+      this.event.publish('volverADomicilio', 'login');
+      this.navCtrl.pop();
+    });
   }
 
   ionViewDidLoad() {
@@ -52,7 +58,7 @@ export class AltaContactosPage {
 
     this.clienteViewModel.contactos = new Array();
     console.log(this.credencialesForm.controls['email'].value);
-    if (this.credencialesForm.controls['email'].value.toString()  != ' ') {
+    if (this.credencialesForm.controls['email'].value.toString() != ' ') {
 
       this.clienteViewModel.contactos.push({
         tipoContacto: "Email",

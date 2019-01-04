@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Provincia } from '../../../../modelo/provincia';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
@@ -29,7 +29,8 @@ export class AltaDomicilioPage {
               public navParams: NavParams,
               private formBuilder: FormBuilder,
             private auxiliar: AuxiliarProvider,
-            public loadingCtrl: LoadingController) {
+            public loadingCtrl: LoadingController,
+            private event: Events) {
              
     this.clienteViewModel = navParams.get('data');
    
@@ -42,6 +43,10 @@ export class AltaDomicilioPage {
       codigoPostal:['']
     });
     
+    this.event.subscribe('volverADomicilio', () => {
+      this.event.publish('volverACliente', 'login');
+      this.navCtrl.pop();
+    });
     
   }
 

@@ -68,6 +68,7 @@ export class MyApp {
       loader.present();
 
       this.event.subscribe('creado', (comercio, rubro, yoSoy) => {
+        console.log('ESTOY EN EVENTO CREADO:---> ' + yoSoy);
         this.nombre = comercio;
         this.rubro = (!!rubro) ? rubro.charAt(0).toUpperCase() + rubro.substr(1).toLowerCase() : '';
 
@@ -92,6 +93,9 @@ export class MyApp {
 
       ENV.CARRITO = JSON.stringify(this.version);
 
+      this.event.subscribe('user:changed', (user, time) => {
+        this.nav.setRoot(LoginPage);
+   });
     });
 
 
@@ -103,7 +107,9 @@ export class MyApp {
 
   crearMenuComercio() {
 
-    this.pages = new Array<{ title: string, component: any, src: any, badge: number }>();
+    console.log('estoy en crear menu Comercio');
+    
+    //this.pages = new Array<{ title: string, component: any, src: any, badge: number }>();
     // this.nombre = this.auxiliarServices.getNombreComercio();
     //this.rubro= this.auxiliarServices.getRubroComercio();
 
@@ -117,7 +123,7 @@ export class MyApp {
 
       { title: 'Salir', component: SalirPage, src: '', badge: '' }
     ];
-
+    console.log(this.pages);
 
   }
 
@@ -127,8 +133,8 @@ export class MyApp {
     //this.rubro = this.auxiliarServices.getRubroProveedor();
     //this.pages.length = 0;
     console.log('estoy en crear menu Proveedor');
-    console.log(this.pages);
-    this.pages = new Array<{ title: string, component: any, src: any, badge: any }>();
+    
+    //this.pages = new Array<{ title: string, component: any, src: any, badge: any }>();
 
     this.pages = [
       { title: 'Pedidos de Clientes', component: ListadoPedidosFiltradosPage, src: '', badge: '' },
@@ -139,11 +145,8 @@ export class MyApp {
       { title: 'Mensajero', component: MensajeroPage, src: '',badge:'' },*/
       { title: 'Salir', component: SalirPage, src: '', badge: '' }
     ];
-
-    /*this.event.subscribe('creado', (proveedor, rubro) => {
-      this.nombre = proveedor;
-      this.rubro = (!!rubro) ? rubro.charAt(0).toUpperCase() + rubro.substr(1).toLowerCase() : '';
-    })*/
+    console.log(this.pages);
+    
   }
 
   control(yoSoy: string) {

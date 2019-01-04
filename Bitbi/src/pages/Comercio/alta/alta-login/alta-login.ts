@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController, NavController, ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController, NavController, ModalController, LoadingController, App, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../../../../modelo/usuario';
 import { Persona } from '../../../../modelo/persona';
 
-import { LoginPage } from '../../../login/login';
+//import { LoginPage } from '../../../login/login';
 import { Comercio } from '../../../../modelo/comercio';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
 import Swal from 'sweetalert2';
+import { MyApp } from './../../../../app/app.component';
+import { HomePage } from './../../../home/home';
+import { LoginPage } from './../../../login/login';
 
 @IonicPage()
 @Component({
@@ -28,7 +31,9 @@ export class AltaLoginPage {
     private comercioService: ComercioProvider,
     public navCtrl: NavController,
     public modalCtrl: ModalController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public appCtrl: App,
+    private event: Events ) {
 
     this.clienteViewModel = navParams.get('data');
     console.log('estoy en alta login');
@@ -61,10 +66,10 @@ export class AltaLoginPage {
         this.loginForm.controls['nombreUsuario'].value,
         this.loginForm.controls['clave'].value
       );
-      
+
       let usuarios = new Array<Usuario>();
       usuarios.push(usuario);
-      
+
       this.clienteViewModel.usuarios = usuarios;
       this.guardarCliente();
 
@@ -88,12 +93,15 @@ export class AltaLoginPage {
         Swal('Atención', 'Ocurrio un problema, compruebe que los datos ingresados estan correctos', 'warning')
       } else {
         Swal('Felicidades', 'Ya puede ingresar con sus credenciales', 'success')
-        //this.navCtrl.push(LoginPage);
-        this.navCtrl.setRoot(LoginPage, { animate: true });
-              this.navCtrl.popToRoot();
+        //this.navCtrl.setRoot(LoginPage, { animate: true });
+        //this.navCtrl.popToRoot();
+        //this.navCtrl.push(LoginPage, {})
+        this.event.publish('volverAContacto', 'login');
+        this.navCtrl.pop();
+
       }
     }, err => {
-      alert('Hubo un problema al crear Comercio' + err);
+      alert('Hubo un problema al crear Comercio');
     });
   }
 

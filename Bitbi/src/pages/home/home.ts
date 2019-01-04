@@ -7,6 +7,7 @@ import { ListaPedidoComercioPage } from '../pedidosComercio/lista-pedido-comerci
 import { Storage } from '@ionic/storage';
 import Swal from 'sweetalert2';
 import { envirotment as ENV } from '../../environments/environments';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -17,11 +18,11 @@ export class HomePage {
   comentario: string;
   pedidos: any = new Array();
 
-  constructor(public navCtrl: NavController,
-    public navParams: NavParams, storage: Storage) {
+  constructor(public navCtrl: NavController ) {
 
-    this.comentario = JSON.parse(ENV.CARRITO);
-   Swal(this.comentario,this.comentario,'success');
+      navCtrl.push(LoginPage);
+    //this.comentario = JSON.parse(ENV.CARRITO);
+   //Swal(this.comentario,this.comentario,'success');
   }
 
  /* goPageProveedores(){

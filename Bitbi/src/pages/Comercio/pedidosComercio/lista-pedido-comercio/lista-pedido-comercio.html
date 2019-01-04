@@ -59,7 +59,7 @@
               <p text-wrap><strong> Proveedor </strong> {{item.proveedor.entidad.razonSocial}}</p>
             <p text-wrap><strong> Rubro </strong> {{item.proveedor.entidad.actividadPrincipal}}</p>
             <p><strong> Fecha de Solicitud </strong> {{item.detallePedido[0].fechaAlta | date: 'dd/MM/yyyy'}}</p>
-            <!--<h4><strong> Hora Entrega </strong> {{item.fechaEntrega | date: 'hh:mm'}}</h4>-->
+            <p><strong> Hora de Solicitud </strong> {{item.detallePedido[0].fechaAlta | date: 'hh:mm'}}</p>
             <p><strong> Total </strong> $ {{item.totalPedido | number:'1.2-2'}}</p>
             </ion-item>
   

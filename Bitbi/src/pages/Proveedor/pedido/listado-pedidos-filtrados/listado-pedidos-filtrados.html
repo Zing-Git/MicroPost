@@ -63,6 +63,7 @@
                 item.comercio.entidad.domicilio.barrio}}</p>
               <p text-wrap><strong> Comentario </strong> {{item.comentario}}</p>
               <p><strong> Fecha de Solicitud</strong> {{item.detallePedido[0].fechaAlta | date: 'dd/MM/yyyy'}}</p>
+              <p><strong> Hora de Solicitud </strong> {{item.detallePedido[0].fechaAlta | date: 'hh:mm'}}</p>
               <p><strong> Total </strong> $ {{item.totalPedido }}</p>
             </ion-item>
 

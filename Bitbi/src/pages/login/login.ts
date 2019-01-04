@@ -146,7 +146,7 @@ export class LoginPage {
     loader.present();
 
     if ((typeof this.newLogin.nombreUsuario != 'undefined' && this.newLogin.nombreUsuario != ' ') && (typeof this.newLogin.clave != 'undefined' && this.newLogin.clave != ' ')) {
-
+console.log(this.newLogin);
       //1_ Trabajo con login de comercio
       this.login.getLoginComercio(this.newLogin).subscribe(result => {
         console.log(result);
@@ -178,6 +178,7 @@ export class LoginPage {
                 ENV.PROVEEDOR_ID = this.idProveedor;
 
                 this.almacenarLogin('proveedor');
+                console.log('ME VOY AL EVENTO CREADO');
                 this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR, 'proveedor');
 
                 console.log('me voy a pedidos filtrados');

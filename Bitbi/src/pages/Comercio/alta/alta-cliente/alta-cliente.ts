@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Provincia } from '../../../../modelo/provincia';
 import { ActividadesPrincipalesComercio } from '../../../../modelo/actividadesPrincipalesComercio';
@@ -35,7 +35,8 @@ export class AltaClientePage {
     private formBuilder: FormBuilder,
     public navCtrl: NavController,
     private auxiliar: AuxiliarProvider,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    private event: Events) {
 
     this.cargarControlesCombos();
 
@@ -48,6 +49,10 @@ export class AltaClientePage {
       actividadPrincipalOtro: ['']
     });
 
+    this.event.subscribe('volverACliente', () => {
+      this.event.publish('volverALogin', 'login');
+      this.navCtrl.pop();
+    });
   }
 
   ionViewDidLoad() {
@@ -57,7 +62,9 @@ export class AltaClientePage {
 
   onSingin() {
 
-    var cuil: string = 'Sin Cuil';
+    let fecha = new Date();
+        fecha.setDate(fecha.getDate() + 1);
+    var cuil: string = 'Sin Cuil - ' + fecha.toISOString();
     if (this.value == 1) {
       this.actividadPrincipalName = this.credencialesForm.controls['actividadPrincipalOtro'].value;
     }

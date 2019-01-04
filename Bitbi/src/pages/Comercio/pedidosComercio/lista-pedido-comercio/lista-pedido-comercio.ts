@@ -32,7 +32,7 @@ export class ListaPedidoComercioPage {
   colorEstado: any;
 
   //  aqui inician las variables que vamos a usar
-  inicial: string = 'solicitado';
+  inicial: string;
   estadoAceptado: boolean = true;
   estadoRechazado: boolean = true;
   estadoSolicitado: boolean = true;
@@ -58,7 +58,7 @@ export class ListaPedidoComercioPage {
       content: "Cargando pedidos, espere unos segundos...",
       duration: 2000
     });
-    loader.present();*/ 
+    loader.present();*/
 
     this.obtenerDatosImportantes();
   }
@@ -135,12 +135,18 @@ export class ListaPedidoComercioPage {
 
     this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
     console.log(this.pedidos);
-    
+
     this.pedidos.forEach(x => {
 
       switch (x.estadoPedido) {
         case "RECHAZADO": {
           //x.color = "#f8f8f8";
+          if (this.inicial != 'solicitado') {
+
+            if (this.inicial != 'aceptado') {
+              this.inicial = 'rechazado';
+            }
+          }
           this.estadoRechazado = false;
           this.pedidosRechazados.push(x);
 
@@ -151,6 +157,7 @@ export class ListaPedidoComercioPage {
 
           //}
           //x.color = "#2662F7";
+          this.inicial = 'solicitado';
           this.estadoSolicitado = false;
           this.pedidosSolicitados.push(x);
 
@@ -158,6 +165,9 @@ export class ListaPedidoComercioPage {
         }
         case "ACEPTADO": {
           //x.color = "#FD4B4B";
+          if (this.inicial != 'solicitado') {
+            this.inicial = 'aceptado';
+          }
           this.estadoAceptado = false;
           this.pedidosAceptados.push(x);
 
