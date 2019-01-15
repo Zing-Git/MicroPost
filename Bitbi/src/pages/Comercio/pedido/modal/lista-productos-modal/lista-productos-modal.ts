@@ -55,12 +55,7 @@ export class ListaProductosModalPage {
     public events: Events
   ) {
 
-    //this.nombrecomercio = ENV.NOMBRE_COMERCIO;
-    const loader = this.loadingCtrl.create({
-      content: "Por favor Espere unos segundos...",
-      duration: 3000
-    });
-    loader.present();
+    
 
     this.proveedor = navParams.get('data');
     this.pedido = new Pedido();
@@ -71,19 +66,31 @@ export class ListaProductosModalPage {
 
   cargarListaProductos() {
 
+    //this.nombrecomercio = ENV.NOMBRE_COMERCIO;
+    const loader = this.loadingCtrl.create({
+      content: "Por favor Espere unos segundos...",
+      duration: 15000
+    });
+    loader.present();
+
     this.isEnabledSubCategoria = false;
     this.showListProducto = false;
 
     this.proveedorService.postGetProductosPorIdProveedor(this.proveedor._id).subscribe(result => {
+      console.log(result);
       this.productosViewModel = result['productos'];
-      if (typeof this.productosViewModel === 'undefined') {
+      if (this.productosViewModel.length < 1) {
         Swal(
-          'Advertencia',
-          'El proveedor no tiene productos)',
-          'error'
-        )
+          'Atención',
+          'El proveedor no tiene productos',
+          'info'
+        );
+
+         loader.dismiss();
+        this.volver();         
       } else {
         this.iniciarArrays();
+        loader.dismiss();
       }
     });
 

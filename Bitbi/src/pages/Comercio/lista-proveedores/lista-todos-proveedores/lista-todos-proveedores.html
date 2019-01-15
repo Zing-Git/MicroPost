@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10>
+
+        <ion-navbar>
+          <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          <ion-title>Proveedores</ion-title>
+        </ion-navbar>
+      </ion-col>
+
+
+      <ion-col col-2>
+        <div class="center_vertically" (click)='doRefresh()'>
+          <i class="fas fa-sync-alt fa-2x"></i>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="permitirRefresh">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <p class="tituloTotal"> <strong>Agregar nuevo Proveedor a tu red<br></strong></p>
+
+
+  <!--<div class="nuevo-div">
+    <ion-scroll scrollY="true">
+    <ion-list>
+      <ion-item *ngFor="let proveedor of proveedores; let i=index">
+        <ion-item (click)="realizarInvitacion(proveedor)">
+          <ion-avatar item-start>
+            <i class="fas fa-truck-moving fa-3x"></i>
+          </ion-avatar>
+          <h2 text-wrap>{{proveedor.entidad.razonSocial}}</h2>
+        </ion-item>
+      </ion-item>
+    </ion-list>
+  </ion-scroll>
+</div>-->
+
+<div class="nuevo-div" *ngIf="proveedores">
+  <ion-scroll scrollY="true">
+    <ion-list *ngFor="let proveedor of proveedores; let i=index">
+      <ion-item class="nuevo-ion-item" (click)="realizarInvitacion(proveedor)">
+        <ion-avatar item-start>
+          <img src='../../../../assets/icon/camion.ico'>
+        </ion-avatar>
+        <h2 text-wrap><strong>{{proveedor.entidad.razonSocial}}</strong></h2>
+        <h3 text-wrap>{{proveedor.entidad.actividadPrincipal}}</h3>
+      </ion-item>
+
+    </ion-list>
+  </ion-scroll>
+</div>
+</ion-content>

@@ -52,10 +52,12 @@ export class ListaPublicidadPage {
 
     this.idComercio = ENV.COMERCIO_ID;
     this.proveedorService.postGetProveedoresDeComercio(this.idComercio).subscribe(resultP => {
+
       this.auxiliar.getPublcidades().subscribe(resultA => {
-        if (resultA['ok'] == true && resultP['ok'] == true) {
+        
+        if (resultA['ok'] == true && resultP == true) {
           this.publicidades = resultA['publicaciones'];
-          this.proveedoresViewModel = resultP['proveedores'];
+          this.proveedoresViewModel = JSON.parse(ENV.PROVEEDORES);
 
           this.publicidad = false;
 

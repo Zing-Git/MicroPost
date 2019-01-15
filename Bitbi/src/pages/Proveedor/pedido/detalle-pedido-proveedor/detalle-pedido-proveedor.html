@@ -20,7 +20,7 @@
     
           </ion-col>
           <ion-col col-2>
-            <div *ngIf="celularProveedor">
+            <div *ngIf="celularComercio">
             
               <button color="secondary" ion-button small (click)="callWhatsapp()">
                 <ion-icon name="logo-whatsapp"></ion-icon>
@@ -37,7 +37,7 @@
   <div padding>
     <ion-segment [(ngModel)]="inicial">
       <ion-segment-button value="encabezado" class="segment-button">
-        <strong>Mi Pedido</strong>
+        <strong>Datos de Comercio</strong>
       </ion-segment-button>
       <ion-segment-button value="detalle" class="segment-button">
         <strong>Detalle Pedido</strong>
@@ -53,7 +53,7 @@
               <h2> <strong>Comercio</strong></h2>
               <h3>{{item.nombreComercio}}</h3>
             
-              <h2> <strong>Direccion</strong></h2>
+              <h2> <strong>Dirección</strong></h2>
               <h3 text-wrap>{{item.direccion}}</h3>
             
               <h2> <strong>Monto Total</strong></h2>
@@ -83,18 +83,7 @@
               </ion-list>
             </ion-scroll>
           </div>
-     <!--<ion-scroll  scrollY="true">
-
-        <ion-list *ngFor="let item of ">
-          <ion-item>
-            <p><strong> {{item.unidadMedida + ' de ' +item.producto.nombreProducto + ' x ' +item.cantidadPedido + ' Und.'}}</strong></p>
-       
-            <p><strong> Precio unitario $ </strong>{{item.producto.precioProveedor}} </p>
-            <p><strong> Sub total $ </strong> {{item.cantidadPedido * item.producto.precioProveedor}}</p>
-            
-          </ion-item>
-        </ion-list>
-      </ion-scroll>--> 
+    
     </form>
 
   </div>

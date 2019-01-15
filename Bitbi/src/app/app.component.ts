@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 
-import { ListaProveedoresModalPage } from '../pages/Comercio/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import { ListaProveedoresPage } from '../pages/Comercio/pedido/lista-proveedores';
 import { ListaPedidoComercioPage } from '../pages/Comercio/pedidosComercio/lista-pedido-comercio/lista-pedido-comercio';
 import { ListaPublicidadPage } from '../pages/Comercio/publicidad/lista-publicidad/lista-publicidad';
@@ -116,7 +115,7 @@ export class MyApp {
     this.pages = [
       { title: 'Mis Pedidos', component: ListaPedidoComercioPage, src: '', badge: '' },
       { title: 'Nuevo Pedido', component: ListaProveedoresPage, src: '', badge: '' },
-      { title: 'Proveedores', component: ListaProveedoresModalPage, src: '', badge: '' },
+      //{ title: 'Proveedores', component: ListaTodosProveedoresPage, src: '', badge: '' },
       { title: 'Ofertas', component: ListaPublicidadPage, src: '', badge: '' },        //../assets/imgs/hotSale.png
       //{ title: 'Configuracion', component: ConfiguracionInicialPage, src:'' },
       //{ title: 'Ayuda', component: AyudaPage, src: '',badge:'' },

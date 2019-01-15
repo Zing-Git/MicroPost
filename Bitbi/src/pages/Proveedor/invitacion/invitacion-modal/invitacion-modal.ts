@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
-import { envirotment as ENV } from '../../../../environments/environments';
 import Swal from 'sweetalert2';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
-import { TiposPersoneria } from './../../../../modelo/tiposPersoneria';
 
 @IonicPage()
 @Component({

@@ -39,8 +39,14 @@
              
               <p class="tituloTotal" text-wrap ><strong>Elija productos de <br> {{nombreProveedor}}.</strong></p>
        
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-searchbar  placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
     
-    <ion-searchbar placeholder="Buscar" animated (ionInput)="buscarCateSubCat($event)"></ion-searchbar>
     <ion-grid>
       <ion-row>
         <ion-col col-4>

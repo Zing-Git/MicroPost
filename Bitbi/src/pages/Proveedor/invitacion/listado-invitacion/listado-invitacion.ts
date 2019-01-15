@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
 import { ProveedorProvider } from '../../../../providers/proveedor/proveedor';
 import { envirotment as ENV } from '../../../../environments/environments';
-import Swal from 'sweetalert2';
+
 import { InvitacionModalPage } from './../invitacion-modal/invitacion-modal';
 
 @IonicPage()

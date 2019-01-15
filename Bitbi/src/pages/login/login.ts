@@ -13,6 +13,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { ListadoPedidosFiltradosPage } from '../Proveedor/pedido/listado-pedidos-filtrados/listado-pedidos-filtrados';
 import { RegistroPage } from './model/registro';
 import { LoginSelectorPage } from './login-selector/login-selector';
+import { ListaProveedoresPage } from '../Comercio/pedido/lista-proveedores';
 
 
 @Component({
@@ -220,7 +221,7 @@ console.log(this.newLogin);
             this.almacenarLogin('comercio');
             this.event.publish('creado', ENV.NOMBRE_COMERCIO, ENV.RUBRO_COMERCIO, 'comercio');
 
-            this.navCtrl.setRoot(ListaPedidoComercioPage, { animate: true });
+            this.navCtrl.setRoot(ListaProveedoresPage, { animate: true });
             this.navCtrl.popToRoot();
             loader.dismiss();
           } else { }

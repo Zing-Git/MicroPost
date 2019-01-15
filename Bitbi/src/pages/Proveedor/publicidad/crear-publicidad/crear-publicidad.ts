@@ -74,6 +74,8 @@ export class CrearPublicidadPage {
     this.esValido = false;
 
     loader.dismiss();
+    //Swal('Imagen base 64',this.base64Image,'success');
+    //this.descripcion = this.base64Image;
   }
 
   tomarDeGaleria() {

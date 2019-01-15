@@ -8,9 +8,11 @@ import { Storage } from '@ionic/storage';
 import { ConfiguracionInicialPage } from '../configuracion-inicial/configuracion-inicial';
 import { envirotment as ENV } from '../../../environments/environments';
 import { ListaProductosModalPage } from './modal/lista-productos-modal/lista-productos-modal';
-import { ListaProveedoresModalPage } from '../lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
 import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { LoginProvider } from '../../../providers/login/login';
+import { ListaTodosProveedoresPage } from './../lista-proveedores/lista-todos-proveedores/lista-todos-proveedores';
+import { ProveedorProvider } from './../../../providers/proveedor/proveedor';
+import swal from 'sweetalert2';
 
 @IonicPage()
 @Component({
@@ -34,7 +36,8 @@ export class ListaProveedoresPage {
     public events: Events,
     public auxiliarServices: AuxiliarProvider,
     private login: LoginProvider,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    private proveedorServices : ProveedorProvider) {
 
       this.cargarDatosComercio();
 
@@ -47,22 +50,34 @@ export class ListaProveedoresPage {
       duration : 15000
     });
     loader.present();
-
-    this.newLogin = JSON.parse(ENV.NEWLOGIN);
-
-    this.proveedoresViewModel = new Array();
-
-    this.login.getLoginComercio(this.newLogin).subscribe(result => {
-
-      this.datosComercio = result['comercioDB'];
-
-      this.datosComercio.forEach(x => {
-        this.proveedoresViewModel = x.proveedores;
-      });
-      this.proveedores = this.auxiliarServices.removeDuplicates(this.proveedoresViewModel, "_id");
-
-
+    console.log('id de comercio:   ' +ENV.COMERCIO_ID);
+    this.proveedorServices.postGetProveedoresFrecuentes(ENV.COMERCIO_ID).subscribe(result =>{
+        
+      if (result) {
+        
+        this.proveedores = JSON.parse(ENV.PROVEEDORES);
+        console.log(this.proveedores);
+        
+      } else {
+        swal('Alerta', this.proveedores, 'error');
+      }
     })
+    //this.newLogin = JSON.parse(ENV.NEWLOGIN);
+
+    //this.proveedoresViewModel = new Array();
+
+    //this.login.getLoginComercio(this.newLogin).subscribe(result => {
+
+     // this.datosComercio = result['comercioDB'];
+
+      //.datosComercio.forEach(x => {
+        //this.proveedoresViewModel = x.proveedores;
+      //});
+      //this.proveedores = this.auxiliarServices.removeDuplicates
+      //        (this.proveedoresViewModel, "_id");
+
+
+    //})
 
     /*this.storage.get('usuarioLogin').then((val) => {
       if (val != ' ') {
@@ -133,7 +148,7 @@ export class ListaProveedoresPage {
   }
 
   mostrarProveedoresModal() {
-    const modal = this.modalCtrl.create(ListaProveedoresModalPage);
+    const modal = this.modalCtrl.create(ListaTodosProveedoresPage);
     modal.present();
   }
 

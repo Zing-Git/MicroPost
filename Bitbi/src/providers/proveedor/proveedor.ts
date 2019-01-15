@@ -5,6 +5,7 @@ import { envirotment as ENV} from '../../environments/environments';
 import  'rxjs/add/operator/catch';
 import  'rxjs/add/operator/map';
 import { Proveedor } from '../../modelo/proveedor';
+import { retry } from 'rxjs/operators';
 
 const cudOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -14,7 +15,8 @@ const cudOptions = {
 export class ProveedorProvider {
 
   private urlBase = ENV.BASE_URL;
-  private urlPostGetProveedoresDeRed = this.urlBase + '/proveedor/listar_todos/';
+  private urlPostGetProveedores = this.urlBase + '/proveedor/listar_todos/';
+  private urlPostGetProveedoresFrecuentes = this.urlBase + '/proveedor/listar_todos_/';  //nuevo si se va a utilizar
   private urlPostGetProveedoresDeComercio =  this.urlBase + '/proveedor/listar_todos/';
   private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
   private urlGetProductosPorIdProveedor = this.urlBase + '/proveedor/obtener_productos/';
@@ -33,13 +35,72 @@ export class ProveedorProvider {
   }
 
   //lista TODOS los proveedores 
-  postGetProveedorDeRed(): Observable<any[]> {    
-    return this.http.post<any[]>(this.urlPostGetProveedoresDeRed, cudOptions);
+  postGetProveedores(): Observable<any> {    
+    //return this.http.post<any[]>(this.urlPostGetProveedoresDeRed, cudOptions);
+
+    return this.http.post<any[]>(this.urlPostGetProveedores, cudOptions).pipe(
+      retry(2)
+    ).map(result => {
+      if (result['ok']) {
+        if (result['proveedores']) {
+          ENV.PROVEEDORES = '';  //inicializo siempre
+          ENV.PROVEEDORES = JSON.stringify(result['proveedores']);  //luego asigno y retorno true
+          //localStorage.setItem('pedidosProveedor', JSON.stringify(result['pedidos_array']));
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    });
+
   }
 
-  postGetProveedoresDeComercio(idComercio: string):Observable<any[]>{
+  postGetProveedoresDeComercio(idComercio: string):Observable<any>{
     const url= this.urlPostGetProveedoresDeComercio + '?idComercio=' + idComercio;
-    return this.http.get<any[]>(url, cudOptions);
+    //return this.http.get<any[]>(url, cudOptions);
+
+    return this.http.get<any[]>(url, cudOptions).pipe(
+      retry(2)
+    ).map(result => {
+      
+      if (result['ok']) {
+        if (result['proveedores']) {
+          ENV.PROVEEDORES = '';  //inicializo siempre
+          ENV.PROVEEDORES = JSON.stringify(result['proveedores']);  //luego asigno y retorno true
+          
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    });
+  }
+
+  postGetProveedoresFrecuentes(idComercio: string):Observable<any>{
+    const comercio = Object.assign({}, idComercio);
+    //const url= this.urlPostGetProveedoresFrecuentes + '?idComercio=' + idComercio;
+   
+    return this.http.post<any[]>(this.urlPostGetProveedoresFrecuentes, comercio,  cudOptions).pipe(
+      retry(2)
+    ).map(result => {
+      
+      if (result['ok']) {
+        if (result['proveedores']) {
+          ENV.PROVEEDORES = '';  //inicializo siempre
+          ENV.PROVEEDORES = JSON.stringify(result['proveedores']);  //luego asigno y retorno true
+          
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    });
   }
 
   postEnviarInvitacion(proveedor: string, comercio: string, texto: string): Observable<any>{
@@ -58,29 +119,6 @@ export class ProveedorProvider {
     return this.http.get<any>(url, cudOptions);
   }
 
-  load(idProveedor: string): any {
-    let url= this.postGetProductosPorIdProveedor + '?idProveedor=' + idProveedor;
-    
-    if (this.data) {
-      // already loaded data
-      return Promise.resolve(this.data);
-    }
-  
-    // don't have the data yet
-    return new Promise(resolve => {
-      // We're using Angular HTTP provider to request the data,
-      // then on the response, it'll map the JSON data to a parsed JS object.
-      // Next, we process the data and resolve the promise with the new data.
-      this.http.get<any>(url, cudOptions)
-      .map(rsp => rsp)
-        .subscribe(element => {
-          // we've got back the raw data, now generate the core schedule data
-          // and save the data for later reference
-          this.data = element;
-          resolve(this.data);
-        });
-    });
-  }
 
   getEstadoProveedor(idProveedor: string): Observable<any[]>{
     const url = this.urlGetInvitacionPendiente + '?idProveedor=' + idProveedor; 
@@ -109,11 +147,28 @@ export class ProveedorProvider {
     return this.http.post<any>(this.urlPostAceptarRechazar, parametros,cudOptions);
   }
 
-  getPedidosProveedor(idProveedor: string): Observable<any[]> {  
+  getPedidosProveedor(idProveedor: string): Observable<any> {  
     
     let url= this.urlGetPedidosProveedor + '?idProveedor=' + idProveedor;
     
-    return this.http.get<any[]>(url, cudOptions);
+    //return this.http.get<any[]>(url, cudOptions);
+
+    return this.http.get<any[]>(url, cudOptions).pipe(
+      retry(2)
+    ).map(result => {
+      if (result['ok']) {
+        if (result['pedidos_array']) {  // ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
+          ENV.PEDIDOS = '';  //inicializo siempre
+          ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);  //luego asigno y retorno true
+          //localStorage.setItem('pedidosProveedor', JSON.stringify(result['pedidos_array']));
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    });
   }
 
   getTodosLosAlias(idProveedor: string): Observable<any[]> {  

@@ -8,8 +8,7 @@
                 </button>
                 <ion-title></ion-title>
               </ion-navbar>            
-        </ion-col>
-  
+        </ion-col>       
         
         <ion-col col-2>
           <div class="center_vertically" (click)='doRefresh()'>
@@ -29,18 +28,10 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <p class="tituloTotal"><strong>Seleccione un Proveedor </strong></p>
-
+  <p class="tituloTotal" text-wrap><strong>Para realizar pedido seleccione un Proveedor </strong></p>
 
   <br>
-  <!--  <ion-item>
-    
-   <ion-select type="text"  (ionChange)="mostrarProductosModal($event)" class="custom-control custom-select custom-control-inline form-control-sm w-100" interface="popover">
-        <ion-option *ngFor="let fProv of proveedoresViewModel" [value]="fProv.entidad._id" >{{fProv.entidad.razonSocial}}</ion-option>
-    </ion-select>
-    </ion-item>-->
-
-
+ 
   <ion-item>
     <h3 text-center>
 

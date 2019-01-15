@@ -21,11 +21,21 @@ export class DetallePedidoProveedorPage {
   checkRechazar: boolean = false;
   idPedido: string;
   encabezado: any;
+
   nombreProveedor: string;
-  celularProveedor: any;
+
+  nombreComercio: string;
+  celularComercio: any;
+  //celularComercio: any;
+  direccionComercio: string;
+  actividadComercio: string;
+  cuitComercio: string;
+
   urlCall: string;
   aceptado: boolean = false;
   mensajeRechazo: string;
+
+  alias: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,15 +47,23 @@ export class DetallePedidoProveedorPage {
     public appCtrl: App) {
 
     this.pedido = navParams.get('data');
-    console.log(this.pedido.comercio.contactos.length);
+    console.log(this.pedido);
+
     this.nombreProveedor = this.pedido.proveedor.entidad.razonSocial;
+    this.nombreComercio = this.pedido.comercio.entidad.razonSocial;
+
+    this.actividadComercio = this.pedido.proveedor.entidad.actividadPrincipal;
+    this.direccionComercio = this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )';
+    this.cuitComercio = this.pedido.proveedor.entidad.cuit;
+
+
     if (this.pedido.comercio.contactos.length < 1) {
       //this.celularProveedor = '0'
     } else {
-      this.celularProveedor = this.pedido.comercio.contactos[0].codigoPais + this.pedido.comercio.contactos[0].codigoArea + this.pedido.comercio.contactos[0].numeroCelular;
+      this.celularComercio = this.pedido.comercio.contactos[0].codigoPais + this.pedido.comercio.contactos[0].codigoArea + this.pedido.comercio.contactos[0].numeroCelular;
     }
 
-    console.log(this.celularProveedor);
+
     if (this.pedido != undefined) {
       this.encabezado = new Array();
 
@@ -54,12 +72,12 @@ export class DetallePedidoProveedorPage {
       })
 
       this.encabezado.push({
-        nombreComercio: this.pedido.comercio.entidad.razonSocial,
+        nombreComercio: this.nombreComercio,
         tipoEntrega: this.pedido.tipoEntrega,
         montoTotal: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido),
         fechaEntrega: this.pedido.fechaEntrega,
         cantidadProducto: this.cantidadProductos,
-        direccion: this.pedido.comercio.entidad.domicilio.calle + 'Nº ' + this.pedido.comercio.entidad.domicilio.numeroCasa + ', ' + this.pedido.comercio.entidad.domicilio.barrio + ' - ' + this.pedido.comercio.entidad.domicilio.localidad + ' ( ' + this.pedido.comercio.entidad.domicilio.provincia + ' )'
+        direccion: this.direccionComercio
       })
 
       if (this.pedido.estadoPedido === 'PEDIDO INFORMADO') {
@@ -98,7 +116,7 @@ export class DetallePedidoProveedorPage {
     this.viewCtrl.dismiss(this.pedido);
   }
 
-  
+
   rechazar() {
     Swal({
       title: 'Quiere rechazar el Pedido?',
@@ -136,12 +154,13 @@ export class DetallePedidoProveedorPage {
       if (resultado) {
 
         const loader = this.loadingCtrl.create({
-          content: "Actualizando Información, aguarde unos segundos, Gracias..."
+          content: "Actualizando Información, aguarde unos segundos, Gracias...",
+          duration: 15000
         });
 
         loader.present();
         console.log(ENV.MENSAJE_RECHAZO);
-        this.pedidoServices.postRechazarPedido(this.pedido.idPedido, ENV.MENSAJE_RECHAZO).subscribe(result => {
+        this.pedidoServices.postRechazarPedido(this.pedido.idPedido, ENV.MENSAJE_RECHAZO,this.alias).subscribe(result => {
 
           if (typeof result != 'undefined') {
 
@@ -152,7 +171,7 @@ export class DetallePedidoProveedorPage {
                 'success'
               );
               this.pedido.estadoPedido = 'RECHAZADO';
-              this.mensajeRechazo =ENV.MENSAJE_RECHAZO;
+              this.mensajeRechazo = ENV.MENSAJE_RECHAZO;
               this.viewCtrl.dismiss(this.pedido);
               loader.dismiss();
             } else {
@@ -174,7 +193,7 @@ export class DetallePedidoProveedorPage {
         })
 
       } else if (resultado.dismiss === Swal.DismissReason.cancel) {
-
+      
         /* Swal(
            'Canelado',
            'Todo Ok, Gracias',
@@ -197,7 +216,7 @@ export class DetallePedidoProveedorPage {
 
     loader.present();
     console.log(ENV.MENSAJE_RECHAZO);
-    this.pedidoServices.postRechazarPedido(this.pedido.idPedido, ENV.MENSAJE_RECHAZO).subscribe(result => {
+    this.pedidoServices.postRechazarPedido(this.pedido.idPedido, ENV.MENSAJE_RECHAZO,this.alias).subscribe(result => {
 
       if (typeof result != 'undefined') {
 
@@ -233,68 +252,154 @@ export class DetallePedidoProveedorPage {
   }
 
   aceptar(): void {
-    Swal({
+    let textoTitle = 'Quieres Aceptar el Pedido? Este comercio es nuevo en tu Red';
+    if (this.pedido.comercioPerteneceARedProveedor) {
+      textoTitle = 'Quieres Aceptar el Pedido?';
 
-      text: 'Quieres Aceptar el Pedido?',
-      type: 'question',
-      showCancelButton: true,
-      cancelButtonText: 'Volver',
-      confirmButtonText: 'Si, ACEPTAR!',
-      confirmButtonColor: '#488aff',
-      cancelButtonColor: '#488aff',
-      reverseButtons: true
+      Swal({
 
-    }).then((result) => {
-      if (result.value) {
-        const loader = this.loadingCtrl.create({
-          content: "Procesando Información, aguarde unos segundos, Gracias..."
-        });
-        loader.present();
-        this.pedidoServices.postAceptarPedido(this.pedido.idPedido).subscribe(result => {
+        text: textoTitle,  //comercioPerteneceARedProveedor
+        type: 'question',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'ACEPTAR!',
+        confirmButtonColor: '#488aff',
+        cancelButtonColor: '#488aff',
+        reverseButtons: true,
+        animation: true,
+        customClass: 'animated tada',
 
-          if (typeof result != 'undefined') {
-            if (result.ok) {
-              Swal(
-                'Felicidades',
-                result.message,
-                'success'
-              );
+      }).then((result) => {
+        if (result.value) {
+          const loader = this.loadingCtrl.create({
+            content: "Procesando Información, aguarde unos segundos, Gracias...",
+            duration: 15000
+          });
+          loader.present();
+          this.pedidoServices.postAceptarPedido(this.pedido.idPedido, '').subscribe(result => {
 
-              this.pedido.estadoPedido = 'ACEPTADO';
-              this.viewCtrl.dismiss(this.pedido);
-              loader.dismiss();
-              //this.appCtrl.getRootNav().push(ListadoPedidosFiltradosPage);
-              //this.viewCtrl.dismiss();
+            if (typeof result != 'undefined') {
+              if (result.ok) {
+                Swal(
+                  'Felicidades',
+                  result.message,
+                  'success'
+                );
+
+                this.pedido.estadoPedido = 'ACEPTADO';
+                this.viewCtrl.dismiss(this.pedido);
+                loader.dismiss();
+                //this.appCtrl.getRootNav().push(ListadoPedidosFiltradosPage);
+                //this.viewCtrl.dismiss();
+              } else {
+                Swal(
+                  'Advertencia',
+                  'Ocurrio un problema, vuelva a Intentar!',
+                  'error'
+                )
+                loader.dismiss();
+              }
             } else {
               Swal(
                 'Advertencia',
-                result.message,
+                'Ocurrio un problema, vuelva a Intentar!',
                 'error'
               )
               loader.dismiss();
             }
-          } else {
-            Swal(
-              'Advertencia',
-              'Ocurrio un problema, vuelva a Intentar!',
-              'error'
-            )
-            loader.dismiss();
-          }
-        })
-        //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
-        // https://sweetalert2.github.io/#handling-dismissals
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
+          })
+          //this.navCtrl.push(AltaLoginPage, { data: this.clienteViewModel});
+          // https://sweetalert2.github.io/#handling-dismissals
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+         // this.viewCtrl.dismiss(this.pedido);    PROBAR
+        }
+      })
 
-        /* Swal(
-           'Canelado',
-           'Todo Ok, Gracias',
-           'error'
-         )*/
+    } else {
+      let textoBody = '<strong><p style="font-size: 8px;">Comercio: </p></strong> ' + this.nombreComercio + '.<br/>' +
+        '<strong><p style="font-size: 8px;">Actividad: </p></strong> ' + this.actividadComercio + '.<br/>' +
+        '<strong><p style="font-size: 8px;">Dirección: </p></strong> ' + this.direccionComercio + '.<br/>' +
+        '<strong><p style="font-size: 8px;">CUIT: </p></strong> ' + this.cuitComercio + '.<br/>' +
+        '<strong><p style="font-size: 8px;">Telefono: </p></strong> ' + this.celularComercio + '.<br/>' +
+        '.<br/> queres ponerle un "alias" para identificarlo? .</p></strong>';
 
-        this.viewCtrl.dismiss(this.pedido);
-      }
-    })
+      Swal({
+        title: textoTitle,
+        html: textoBody,
+
+        type: 'question',
+        input: 'text',
+        inputPlaceholder: 'ingrese alias...',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'ACEPTAR!',
+        confirmButtonColor: '#488aff',
+        cancelButtonColor: '#488aff',
+        reverseButtons: true,
+        animation: true,
+        customClass: 'animated tada',
+        inputValidator: (result) => {
+          return new Promise((resolve) => {
+
+            console.log(result);
+            if (result) {
+              this.aceptado = true;
+              this.alias = result;
+              resolve();
+
+            } else {
+              this.aceptado = false;
+              this.alias = null;
+              resolve()
+            }
+
+
+          });
+        }
+      }).then(resultado => {
+        console.log(resultado);
+        if (resultado && resultado.dismiss !== Swal.DismissReason.cancel) {
+          const loader = this.loadingCtrl.create({
+            content: "Procesando Información, aguarde unos segundos, Gracias...",
+            duration: 15000
+          });
+          loader.present();
+
+          this.pedidoServices.postAceptarPedido(this.pedido.idPedido, this.alias).subscribe(result => {
+
+            if (typeof result != 'undefined') {
+              if (result.ok) {
+                Swal({
+                  title: 'Felicidades, Pedido Aceptado',
+                  text: 'Acabas de agregar un comercio más a tu red de puntos de venta. Bitbi te ayuda a crecer',
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonText: 'GRACIAS!',
+                  confirmButtonColor: '#488aff'
+                });
+
+                this.pedido.estadoPedido = 'ACEPTADO';
+                this.viewCtrl.dismiss(this.pedido);
+                loader.dismiss();
+
+              } else {
+                Swal(
+                  'Advertencia',
+                  result.message,
+                  'error'
+                );
+
+                loader.dismiss();
+              }
+            }
+          })
+        } else if (resultado.dismiss === Swal.DismissReason.cancel) {
+          //this.viewCtrl.dismiss(this.pedido); //volver   PROBAR
+        }
+
+      })
+    }
+
   }
 
   async callWhatsapp() {
@@ -328,7 +433,7 @@ export class DetallePedidoProveedorPage {
       let info = this.nombreProveedor + ' - ' + mensaje;
       let api: string = 'https://wa.me/'; //https://api.whatsapp.com/send?phone=
       let miMensaje = info.split(' ').join('%20')
-      this.urlCall = api + this.celularProveedor + '/?text=' + miMensaje;
+      this.urlCall = api + this.celularComercio + '/?text=' + miMensaje;
       window.open(this.urlCall);
 
     }

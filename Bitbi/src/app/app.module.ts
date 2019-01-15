@@ -17,7 +17,7 @@ import { LoginProvider } from '../providers/login/login';
 import { AltaClientePage } from '../pages/Comercio/alta/alta-cliente/alta-cliente';
 import { ComercioProvider } from '../providers/comercio/comercio';
 import { ListaProveedoresPage } from '../pages/Comercio/pedido/lista-proveedores';
-import { ListaProveedoresModalPage } from '../pages/Comercio/lista-proveedores/modal/lista-proveedores-modal/lista-proveedores-modal';
+
 
 import { ConfiguracionInicialPage } from '../pages/Comercio/configuracion-inicial/configuracion-inicial';
 
@@ -73,13 +73,14 @@ import { LoginSelectorPage } from './../pages/login/login-selector/login-selecto
 import { InvitacionModalPage } from '../pages/Proveedor/invitacion/invitacion-modal/invitacion-modal';
 
 import { MisClientesPage } from './../pages/Proveedor/mis-clientes/mis-clientes';
+import { ListaTodosProveedoresPage } from '../pages/Comercio/lista-proveedores/lista-todos-proveedores/lista-todos-proveedores';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPage,
-    ListaProveedoresModalPage,
+    ListaTodosProveedoresPage,
     AltaDomicilioPage,
     AltaLoginPage,
     AltaClientePage, 
@@ -112,11 +113,7 @@ import { MisClientesPage } from './../pages/Proveedor/mis-clientes/mis-clientes'
     MisClientesPage
   ],
   imports: [
-  
-
-
-
-  BrowserModule,
+    BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -126,7 +123,7 @@ import { MisClientesPage } from './../pages/Proveedor/mis-clientes/mis-clientes'
     MyApp,
     HomePage,
     LoginPage,
-    ListaProveedoresModalPage,
+    ListaTodosProveedoresPage,
     AltaDomicilioPage,
     AltaLoginPage,
     AltaClientePage,

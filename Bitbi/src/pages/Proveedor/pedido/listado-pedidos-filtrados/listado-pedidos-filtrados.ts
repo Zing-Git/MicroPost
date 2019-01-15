@@ -47,32 +47,30 @@ export class ListadoPedidosFiltradosPage {
     public viewCtrl: ViewController,
     public appCtrl: App,
     public zone: NgZone) {
-    console.log('entro a pedidos');
+    
     this.obtenerDatosImportantes();
 
   }
 
   obtenerDatosImportantes() {
-    ENV.PEDIDOS = ' ';
+    //ENV.PEDIDOS = ' ';
     this.idProveedor = ENV.PROVEEDOR_ID;
-    console.log(ENV.PROVEEDOR_ID);
+    
     const loader = this.loadingCtrl.create({
-      content: "Por favor Espere, cargando pedidos..."
+      content: "Por favor Espere, cargando pedidos...",
+      duration: 15000
 
     });
     loader.present();
 
-    this.proveedorServices.getPedidosProveedor(this.idProveedor).subscribe(result => {
-      if (result['pedidos_array'] === undefined) {
-
-        this.pedidoHabilitado = true;
+    this.proveedorServices.getPedidosProveedor(this.idProveedor).subscribe(result => {     
+      if (result) {
+        this.cargarCombos();        
       } else {
-        ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
-        console.log(result);
-        this.cargarCombos();
-
+        this.pedidoHabilitado = true;
       }
-    })
+
+    });
 
     loader.dismiss();
   }
@@ -81,7 +79,7 @@ export class ListadoPedidosFiltradosPage {
 
   }
   ionWillEnter() {
-    console.log('estoy en ion will enter');
+    
     this.obtenerDatosImportantes();
   }
 
@@ -204,23 +202,6 @@ export class ListadoPedidosFiltradosPage {
       }
     })
 
-    //this.obtenerCantidadPedidos()
-    console.log(this.pedidosRechazados);
   }
 
-  /*obtenerCantidadPedidos(){
-    this.storage.get('usuarioLogin').then((logeo) => {
-      if (logeo != ' ') {
-        if (logeo != null) {
-          console.log(logeo);
-          let newLogin = JSON.parse(logeo);
-          if(newLogin.cantidadPedidos < this.pedidosInformados.length){
-            newLogin.cantidadPedidos = this.pedidosInformados.length;
-            this.storage.set('usuarioLogin', JSON.stringify(this.newLogin));
-          }
-        }
-      }
-      //this.getLoginStorage(newLogin.nombreUsuario, newLogin.clave)
-    });
-  }*/
 }
