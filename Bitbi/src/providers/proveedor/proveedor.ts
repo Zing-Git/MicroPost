@@ -19,7 +19,7 @@ export class ProveedorProvider {
   private urlPostGetProveedoresFrecuentes = this.urlBase + '/proveedor/listar_todos_/';  //nuevo si se va a utilizar
   private urlPostGetProveedoresDeComercio =  this.urlBase + '/proveedor/listar_todos/';
   private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
-  private urlGetProductosPorIdProveedor = this.urlBase + '/proveedor/obtener_productos/';
+  private urlGetProductosPorIdProveedor = this.urlBase + '/producto/obtener_productos/'; // '/proveedor/obtener_productos/';
   private urlGetInvitacionPendiente = this.urlBase + '/invitacion/consultar_pendientes/';
   private urlPostProveedor = this.urlBase + '/proveedor/nuevo/';
 

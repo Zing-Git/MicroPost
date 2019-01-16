@@ -8,6 +8,7 @@ import { ProductoProvider } from '../../../../providers/producto/producto';
 import { Storage } from '@ionic/storage';
 import { DetallePedidoComercioPage } from '../modal/detalle-pedido-comercio/detalle-pedido-comercio';
 import { AuxiliarProvider } from '../../../../providers/auxiliar/auxiliar';
+import { ListaProveedoresPage } from '../../pedido/lista-proveedores';
 
 
 @IonicPage()
@@ -76,8 +77,10 @@ export class ListaPedidoComercioPage {
       duration: 15000
     });
     loader.present();
-
+    console.log('ID DE PEDIDO');
+    
     this.idComercio = ENV.COMERCIO_ID;
+    console.log(this.idComercio);
     this.datosComercio = JSON.parse(ENV.COMERCIO_LOGIN);
     this.comercioServices.getPedidoAProveedor(this.idComercio).subscribe((result: PedidoComercio[]) => {
       console.log(result);
@@ -196,5 +199,10 @@ export class ListaPedidoComercioPage {
     }*/
 
     return true;
+  }
+
+  irPedido(){
+    this.navCtrl.setRoot(ListaProveedoresPage, { animate: true });
+            this.navCtrl.popToRoot();
   }
 }

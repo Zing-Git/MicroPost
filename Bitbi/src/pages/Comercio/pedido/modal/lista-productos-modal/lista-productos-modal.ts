@@ -232,7 +232,8 @@ export class ListaProductosModalPage {
         if (location.cantidad > 0) {
 
           this.productosPedidos = JSON.parse(ENV.PEDIDO);   //primero obtengo lista de productos
-
+          console.log('RETORNA DE CREAR UN ITEM');
+          console.log(location);
           nuevoProducto = location;                         //segundo agrego el nuevo producto
           this.productosPedidos.push({
             _id: nuevoProducto._id,
@@ -354,7 +355,8 @@ export class ListaProductosModalPage {
       modal.present();
 
       modal.onDidDismiss((location) => {   //aqui vienen los productos
-
+        console.log('VOLVIENDO');
+        console.log(location);
         if (location != null) {
           this.pedido.productos = location;
 

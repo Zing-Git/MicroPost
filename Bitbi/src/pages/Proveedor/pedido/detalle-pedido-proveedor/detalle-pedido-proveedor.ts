@@ -77,7 +77,8 @@ export class DetallePedidoProveedorPage {
         montoTotal: '$ ' + auxiliar.twoDecimals(this.pedido.totalPedido),
         fechaEntrega: this.pedido.fechaEntrega,
         cantidadProducto: this.cantidadProductos,
-        direccion: this.direccionComercio
+        direccion: this.direccionComercio,
+        celular: this.celularComercio
       })
 
       if (this.pedido.estadoPedido === 'PEDIDO INFORMADO') {
@@ -316,12 +317,12 @@ export class DetallePedidoProveedorPage {
       })
 
     } else {
-      let textoBody = '<strong><p style="font-size: 8px;">Comercio: </p></strong> ' + this.nombreComercio + '.<br/>' +
-        '<strong><p style="font-size: 8px;">Actividad: </p></strong> ' + this.actividadComercio + '.<br/>' +
-        '<strong><p style="font-size: 8px;">Dirección: </p></strong> ' + this.direccionComercio + '.<br/>' +
-        '<strong><p style="font-size: 8px;">CUIT: </p></strong> ' + this.cuitComercio + '.<br/>' +
-        '<strong><p style="font-size: 8px;">Telefono: </p></strong> ' + this.celularComercio + '.<br/>' +
-        '.<br/> queres ponerle un "alias" para identificarlo? .</p></strong>';
+      let textoBody = '<p style="font-size: 8px;">Comercio:  ' + this.nombreComercio + '</p>.<br/>' +
+        '<p style="font-size: 8px;">Actividad:  ' + this.actividadComercio + '</p>.<br/>' +
+        '<p style="font-size: 8px;">Dirección:  ' + this.direccionComercio + '</p>.<br/>' +
+        '<p style="font-size: 8px;">CUIT:  ' + this.cuitComercio + '</p>.<br/>' +
+        '<p style="font-size: 8px;">Telefono:  ' + this.celularComercio + '</p>.<br/>' +
+        '.<br/> queres ponerle un "alias" para identificarlo? .</p>';
 
       Swal({
         title: textoTitle,
@@ -366,7 +367,7 @@ export class DetallePedidoProveedorPage {
           loader.present();
 
           this.pedidoServices.postAceptarPedido(this.pedido.idPedido, this.alias).subscribe(result => {
-
+            console.log(result);
             if (typeof result != 'undefined') {
               if (result.ok) {
                 Swal({

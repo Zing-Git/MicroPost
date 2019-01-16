@@ -4,6 +4,7 @@ import { Pedido } from '../../../../../modelo/pedido';
 import { FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ComercioProvider } from '../../../../../providers/comercio/comercio';
+import { envirotment as ENV } from '../../../../../environments/environments';
 
 /**
  * Generated class for the CarritoModalPage page.
@@ -25,28 +26,29 @@ export class CarritoModalPage {
   fechaMinima: Date = new Date();
   comentario: string = '.';
   productosViewModel: any[];
-  arrayProductosviewModel: any[] = new Array();
+  arrayProductosviewModel: any[] ;
   visualItem: boolean = false;
   total: number = 0;
-  contador : number;
+  contador: number;
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     private viewCtrl: ViewController,
     private comercioService: ComercioProvider,
     private loadingCtrl: LoadingController) {
 
+      this.arrayProductosviewModel =  new Array();
     this.pedido = navParams.get('data');   //JSON.parse(ENV.CARRITO);
-      this.contador = 0;
+    this.contador = 0;
     this.pedido.productos.forEach(element => {
       let subtotal = element.cantidad * element.precioProveedor;
       this.total = this.total + subtotal;
-      this.contador +=1;
+      this.contador += 1;
     });
 
     this.fechaMinima.setDate(this.fechaMinima.getDate() + 1);
     this.fechaEntrega = this.fechaMinima.toISOString();
-    console.log(this.pedido);
+    //console.log(this.pedido);
   }
 
   sacarProducto(prod: any) {
@@ -60,7 +62,7 @@ export class CarritoModalPage {
     this.pedido.productos.forEach(element => {
       let subtotal = element.cantidad * element.precioProveedor;
       this.total = this.total + subtotal;
-      this.contador +=1;
+      this.contador += 1;
     });
 
   }
@@ -75,10 +77,12 @@ export class CarritoModalPage {
   }
 
   pedirProducto() {
+    //1_ recordar los productos por las dudas  en ENV.PEDIDO
+    ENV.PEDIDO = '';
 
     if (this.pedido.productos.length > 0) {
-
-      this.pedido.productos.forEach(x => {                   //tercero elaboro el pedido para enviar
+      ENV.PEDIDO = JSON.stringify(this.pedido.productos);
+      this.pedido.productos.forEach(x => {                   //2_ elaboro el pedido para enviar
         this.arrayProductosviewModel.push({
           _id: x._id,
           cantidad: x.cantidad,
@@ -86,7 +90,7 @@ export class CarritoModalPage {
         })
       })
 
-      this.pedido.productos = this.arrayProductosviewModel;
+      this.pedido.productos = this.arrayProductosviewModel;   //3_ reemplazo los productos porque eso es todo lo que me pide
       if (this.fechaEntrega === ' ') {
         let fecha = new Date();
         fecha.setDate(fecha.getDate() + 1);
@@ -94,12 +98,13 @@ export class CarritoModalPage {
       }
 
       this.pedido.fechaEntrega = this.fechaEntrega;
-
+      console.log('PEDIDO ELABORADO');
+      console.log(this.pedido);
 
       Swal({
         title: 'Pedido Listo!',
-        html: '<strong><p style="font-size: 12px;">El pedido llegará a tu proveedor.<br/> Si queres agregá un comentario.</p></strong>',
-       
+        html: '<strong><p style="font-size: 12px; text-align: center !important">El pedido llegará a tu proveedor.<br/> Si queres agregá un comentario.</p></strong>',
+
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
         confirmButtonText: 'Enviar!',
@@ -107,13 +112,16 @@ export class CarritoModalPage {
         cancelButtonColor: '#488aff',
         reverseButtons: true,
         inputValue: this.comentario,
-        input: 'text'
+        input: 'textarea' 
 
       }).then((result) => {
         if (result.dismiss === Swal.DismissReason.cancel) {
 
-          Swal('Cancelado', 'Pedido Cancelado, siga cargando su carrito', 'error')
-          this.viewCtrl.dismiss(this.pedido);
+          Swal('Cancelado', 'Pedido Cancelado, siga cargando su carrito', 'error');
+          //al cancelar debo devolver los productos recordados en ENV.PEDIDO
+          this.pedido.productos = JSON.parse(ENV.PEDIDO);
+          this.viewCtrl.dismiss(this.pedido.productos);
+          //this.volver();
 
         } else {
           if (result.value) {
@@ -131,7 +139,8 @@ export class CarritoModalPage {
           });
           loader.present();
           this.comercioService.postPedidoProveedor(this.pedido).subscribe(result => {
-            
+            console.log('RESPUESTA DE PEDIDO');
+            console.log(result);
             if (typeof result != 'undefined') {
               if (result.ok) {
                 Swal({
@@ -163,7 +172,7 @@ export class CarritoModalPage {
       })
 
     } else {
-      
+
     }
   }
 

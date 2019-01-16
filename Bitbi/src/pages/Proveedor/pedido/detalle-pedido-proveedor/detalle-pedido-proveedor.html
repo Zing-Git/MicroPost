@@ -61,6 +61,9 @@
             
               <h2> <strong>Fecha de Entrega</strong></h2>
               <h3 >{{item.fechaEntrega  | date: 'dd/MM/yyyy'}}</h3>
+
+              <h2 *ngIf="item.celular"> <strong>Celular</strong></h2>
+              <h3 *ngIf="item.celular" text-wrap>{{item.celular}}</h3>
             </ion-item>
 
       </ion-list>
