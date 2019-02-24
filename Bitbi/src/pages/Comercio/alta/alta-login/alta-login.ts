@@ -8,9 +8,7 @@ import { Persona } from '../../../../modelo/persona';
 import { Comercio } from '../../../../modelo/comercio';
 import { ComercioProvider } from '../../../../providers/comercio/comercio';
 import Swal from 'sweetalert2';
-import { MyApp } from './../../../../app/app.component';
-import { HomePage } from './../../../home/home';
-import { LoginPage } from './../../../login/login';
+
 
 @IonicPage()
 @Component({

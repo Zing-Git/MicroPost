@@ -15,8 +15,8 @@ const cudOptions = {
 export class ComercioProvider {
   private urlBase = ENV.BASE_URL;
   private urlPostComercio = this.urlBase + '/comercio/nuevo/';
-  private urlConsultaPedidoComercio = this.urlBase + '/pedido/listar_pedidos_comercio/';
-  private urlPostPedidoProveedor = this.urlBase + '/pedido/nuevo/';
+  private urlConsultaPedidoComercio = this.urlBase + '/pedido/listar_pedidos_comercio_v2_stock/';  // '/pedido/listar_pedidos_comercio/';
+  private urlPostPedidoProveedor = this.urlBase + '/pedido/nuevo_v3_stock/';  // '/pedido/nuevo/'; viejo
   
   constructor(public http: HttpClient) {}
 

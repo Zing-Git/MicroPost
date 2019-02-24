@@ -12,7 +12,7 @@ import { AuxiliarProvider } from '../../../providers/auxiliar/auxiliar';
 import { LoginProvider } from '../../../providers/login/login';
 import { ListaTodosProveedoresPage } from './../lista-proveedores/lista-todos-proveedores/lista-todos-proveedores';
 import { ProveedorProvider } from './../../../providers/proveedor/proveedor';
-import swal from 'sweetalert2';
+
 
 @IonicPage()
 @Component({
@@ -52,14 +52,14 @@ export class ListaProveedoresPage {
     loader.present();
     console.log('id de comercio:   ' +ENV.COMERCIO_ID);
     this.proveedorServices.postGetProveedoresFrecuentes(ENV.COMERCIO_ID).subscribe(result =>{
-        
+        console.log(ENV.PROVEEDORES);
       if (result) {
         
         this.proveedores = JSON.parse(ENV.PROVEEDORES);
         console.log(this.proveedores);
         
       } else {
-        swal('Alerta', this.proveedores, 'error');
+        Swal('Alerta', "Cuidado", 'error');
       }
     })
     //this.newLogin = JSON.parse(ENV.NEWLOGIN);

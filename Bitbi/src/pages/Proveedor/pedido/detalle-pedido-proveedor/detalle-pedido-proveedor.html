@@ -76,10 +76,10 @@
             <ion-scroll scrollY="true" >
               <ion-list *ngFor="let item of pedido.detallePedido">
                 <ion-item >
-                    <p><strong> {{item.unidadMedida + ' de ' +item.producto.nombreProducto + ' x ' +item.cantidadPedido + ' Und.'}}</strong></p>
+                    <p><strong> {{item.unidadMedida + ' de ' +item.producto_.nombreProducto + ' x ' +item.cantidadPedido + ' Und.'}}</strong></p>
        
-                    <p><strong> Precio unitario $ </strong>{{item.producto.precioProveedor  | currency}} </p>
-                    <p><strong> Sub total </strong> {{item.cantidadPedido * item.producto.precioProveedor  | currency}}</p>
+                    <p><strong> Precio unitario $ </strong>{{item.producto_.precioProveedor  | currency}} </p>
+                    <p><strong> Sub total </strong> {{item.cantidadPedido * item.producto_.precioProveedor  | currency}}</p>
     
                 </ion-item>
     

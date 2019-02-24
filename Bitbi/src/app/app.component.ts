@@ -38,18 +38,27 @@ export class MyApp {
 
   constructor(platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen,
+    public splashScreen: SplashScreen,
     private event: Events,
     appVersion: AppVersion,
     private pushNotificationService: PushnotificationProvider,
     public auxiliar: AuxiliarProvider,
     private loadingCtrl: LoadingController) {
 
+    
+
     platform.ready().then(() => {
+      const loader = this.loadingCtrl.create({
+        content: "Iniciando la Aplicacion, gracias por esperar...",
+        duration: 4000
+      });
+      loader.present();
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
-      splashScreen.hide();
+      //splashScreen.hide();
+      this.hideSplashScreen();
 
       this.pushNotificationService.init_notifications();
       this.pushNotificationService.obtener_idPushUnico();
@@ -60,33 +69,11 @@ export class MyApp {
 
       //this.control();
 
-      const loader = this.loadingCtrl.create({
-        content: "Iniciando la Aplicacion, gracias por esperar...",
-        duration: 3000
-      });
-      loader.present();
-
       this.event.subscribe('creado', (comercio, rubro, yoSoy) => {
         console.log('ESTOY EN EVENTO CREADO:---> ' + yoSoy);
         this.nombre = comercio;
         this.rubro = (!!rubro) ? rubro.charAt(0).toUpperCase() + rubro.substr(1).toLowerCase() : '';
 
-        /*switch (yoSoy) {
-          case 'comercio': {
-            this.crearMenuComercio();
-            break;
-          }
-          case 'proveedor': {
-            this.crearMenuProveedor();
-            break;
-          }
-          default: {
-            this.pages = new Array<{ title: string, component: any, src: any, badge: any }>();
-            break;
-          }
-        }
-        */
-        //this.yoSoy = yoSoy;
         this.control(yoSoy);
       })
 
@@ -94,23 +81,26 @@ export class MyApp {
 
       this.event.subscribe('user:changed', (user, time) => {
         this.nav.setRoot(LoginPage);
-   });
+      });
     });
 
 
   }
+
+  hideSplashScreen() {
+    if (this.splashScreen) {
+      setTimeout(() => {
+        this.splashScreen.hide();
+      }, 5000);
+    }
+  }
+
 
   openPage(page) {
     this.nav.setRoot(page.component);
   }
 
   crearMenuComercio() {
-
-    console.log('estoy en crear menu Comercio');
-    
-    //this.pages = new Array<{ title: string, component: any, src: any, badge: number }>();
-    // this.nombre = this.auxiliarServices.getNombreComercio();
-    //this.rubro= this.auxiliarServices.getRubroComercio();
 
     this.pages = [
       { title: 'Mis Pedidos', component: ListaPedidoComercioPage, src: '', badge: '' },
@@ -132,26 +122,22 @@ export class MyApp {
     //this.rubro = this.auxiliarServices.getRubroProveedor();
     //this.pages.length = 0;
     console.log('estoy en crear menu Proveedor');
-    
+
     //this.pages = new Array<{ title: string, component: any, src: any, badge: any }>();
 
     this.pages = [
       { title: 'Pedidos de Clientes', component: ListadoPedidosFiltradosPage, src: '', badge: '' },
-      { title: 'Invitaciones', component: ListadoInvitacionPage, src: '', badge: '' },
+      //{ title: 'Invitaciones', component: ListadoInvitacionPage, src: '', badge: '' },
       { title: 'Publicidad', component: CrearPublicidadPage, src: '', badge: '' },
       { title: 'Mis Clientes', component: MisClientesPage, src: '', badge: '' },
       /*{ title: 'Configuracion', component: ConfiguracionInicialPage },
       { title: 'Mensajero', component: MensajeroPage, src: '',badge:'' },*/
       { title: 'Salir', component: SalirPage, src: '', badge: '' }
     ];
-    console.log(this.pages);
-    
+
   }
 
   control(yoSoy: string) {
-
-    //inicialiso el push
-
 
     switch (yoSoy) {
       case 'comercio': {

@@ -16,7 +16,7 @@ export class ProveedorProvider {
 
   private urlBase = ENV.BASE_URL;
   private urlPostGetProveedores = this.urlBase + '/proveedor/listar_todos/';
-  private urlPostGetProveedoresFrecuentes = this.urlBase + '/proveedor/listar_todos_/';  //nuevo si se va a utilizar
+  private urlPostGetProveedoresFrecuentes = this.urlBase + '/proveedor/consultar_proveedores_frecuentes/';  //nuevo si se va a utilizar
   private urlPostGetProveedoresDeComercio =  this.urlBase + '/proveedor/listar_todos/';
   private urlPostEnviarInvitacion = this.urlBase + '/invitacion/nueva/';
   private urlGetProductosPorIdProveedor = this.urlBase + '/producto/obtener_productos/'; // '/proveedor/obtener_productos/';
@@ -25,7 +25,7 @@ export class ProveedorProvider {
 
   private urlGetInvitacion = this.urlBase + '/invitacion/consultar_pendientes/';
   private urlPostAceptarRechazar = this.urlBase + '/invitacion/aceptar_rechazar/';
-  private urlGetPedidosProveedor = this.urlBase + '/pedido/listar_pedidos_proveedor/';
+  private urlGetPedidosProveedor = this.urlBase + '/pedido/listar_pedidos_proveedor_v2_stock/';  // '/pedido/listar_pedidos_proveedor/';  viejo
   private urlGetTodosLosAlias = this.urlBase + '/alias/listar_alias/';
   private urlGetTodosLosComercios = this.urlBase + '/proveedor/consultar_comercios_de_proveedor/';
   
@@ -87,8 +87,8 @@ export class ProveedorProvider {
     return this.http.post<any[]>(this.urlPostGetProveedoresFrecuentes, comercio,  cudOptions).pipe(
       retry(2)
     ).map(result => {
-      
-      if (result['ok']) {
+      console.log(result);
+      if (result['ok']===1) {
         if (result['proveedores']) {
           ENV.PROVEEDORES = '';  //inicializo siempre
           ENV.PROVEEDORES = JSON.stringify(result['proveedores']);  //luego asigno y retorno true
@@ -156,6 +156,7 @@ export class ProveedorProvider {
     return this.http.get<any[]>(url, cudOptions).pipe(
       retry(2)
     ).map(result => {
+      console.log(result);
       if (result['ok']) {
         if (result['pedidos_array']) {  // ENV.PEDIDOS = JSON.stringify(result['pedidos_array']);
           ENV.PEDIDOS = '';  //inicializo siempre

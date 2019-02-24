@@ -42,11 +42,7 @@ export class MisClientesPage {
       if (result['ok']) {
         this.estado = true;
         this.comercios = result['comercios'];
-        this.comercios.forEach(x => {
-          if (x.contactos.length === 3) {
-            console.log(x.contactos[1]);
-          }
-        })
+        
       } else {
         this.estado = false;
       }
@@ -108,7 +104,7 @@ export class MisClientesPage {
     if (val && val.trim() != '') {
       if (this.comercios.length > 0) {
         this.comercios = this.comercios.filter((x) => {
-          return (x.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
+          return (x.comercio.entidad.razonSocial.toLowerCase().indexOf(val.toLowerCase()) > -1)
         })
       }
      

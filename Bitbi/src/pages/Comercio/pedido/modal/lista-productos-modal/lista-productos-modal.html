@@ -82,9 +82,10 @@
         <ion-list *ngFor="let item of arrayProductos;">
           <ion-item class="nuevo-ion-item">
             <ion-avatar item-end>
-              <button ion-button small (click)='seleccionarProducto(item)'>
+              <button ion-button small (click)='seleccionarProducto(item)' *ngIf="item.stock > 0">
                 <ion-icon name="cart"></ion-icon>
               </button>
+              <img class="noStock" src='../../../../assets/imgs/noStock.png'  *ngIf="item.stock < 0 || item.stock === 0" >
             </ion-avatar>
 
             <h2 text-wrap>{{item.nombreProducto}}</h2>

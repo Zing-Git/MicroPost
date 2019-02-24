@@ -5,7 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { LoginPage } from "../pages/login/login";
 import { AuxiliarProvider } from '../providers/auxiliar/auxiliar';
 import { AltaDomicilioPage } from '../pages/Comercio/alta/alta-domicilio/alta-domicilio';
@@ -78,7 +77,6 @@ import { ListaTodosProveedoresPage } from '../pages/Comercio/lista-proveedores/l
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     LoginPage,
     ListaTodosProveedoresPage,
     AltaDomicilioPage,
@@ -121,7 +119,6 @@ import { ListaTodosProveedoresPage } from '../pages/Comercio/lista-proveedores/l
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     LoginPage,
     ListaTodosProveedoresPage,
     AltaDomicilioPage,

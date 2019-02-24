@@ -150,12 +150,11 @@ export class LoginPage {
 console.log(this.newLogin);
       //1_ Trabajo con login de comercio
       this.login.getLoginComercio(this.newLogin).subscribe(result => {
-        console.log(result);
-
+        
         if (result['ok'] != true) {
 
           this.login.getLoginProveedor(this.newLogin).subscribe(resultProveedor => {
-            console.log(resultProveedor);
+            
             if (resultProveedor['ok'] != true) {
               Swal('Atención', 'Vuelva a ingresar las credenciales', 'error');
 
@@ -163,11 +162,11 @@ console.log(this.newLogin);
               this.navCtrl.popToRoot();
               loader.dismiss();
             } else {
-              console.log(resultProveedor);
+              
               this.usuarioLogin = resultProveedor['usuario'];
 
               this.datosProveedor = resultProveedor['proveedorDB'];
-              console.log(this.datosProveedor.length)
+              
               if (this.datosProveedor.length > 0) {
 
                 this.datosProveedor.forEach(element => {
@@ -178,11 +177,9 @@ console.log(this.newLogin);
                 });
                 ENV.PROVEEDOR_ID = this.idProveedor;
 
-                this.almacenarLogin('proveedor');
-                console.log('ME VOY AL EVENTO CREADO');
+                this.almacenarLogin('proveedor');               
                 this.event.publish('creado', ENV.NOMBRE_PROVEEDOR, ENV.RUBRO_PROVEEDOR, 'proveedor');
-
-                console.log('me voy a pedidos filtrados');
+                
                 this.navCtrl.setRoot(ListadoPedidosFiltradosPage, {
                   animate: true
                 });
@@ -202,18 +199,21 @@ console.log(this.newLogin);
         } else {
 
           this.usuarioLogin = result['usuario'];
+          
+          this.idComercio = this.usuarioLogin._id;
+          ENV.COMERCIO_ID = this.idComercio;
 
           this.datosComercio = result['comercioDB'];
           //si es >0 => es un comerciante
           if (this.datosComercio.length > 0) {
-            //this.usuarioLogin = result['usuario'];
+            
 
             this.datosComercio.forEach(element => {
 
-              this.idComercio = element._id;
+              
               ENV.NOMBRE_COMERCIO = element.entidad.razonSocial;
               ENV.RUBRO_COMERCIO = element.entidad.actividadPrincipal;
-              ENV.COMERCIO_ID = this.idComercio;
+             
             });
 
             ENV.COMERCIO_LOGIN = JSON.stringify(this.datosComercio);
@@ -296,24 +296,13 @@ console.log(this.newLogin);
   }
 
   goProveedorPage(){
-    console.log('click');
+    
     Swal.close();
     let modal = this.modalCtrl.create(RegistroPage);
     modal.present();
   }
-  presentAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Atencion',
-      subTitle: 'Ingreso mal las credenciales',
-      buttons: [{
-        text: 'Ok',
-        handler: () => {
-          location.reload();
-        }
-      }]
-    });
-    alert.present();
-  }
+  
+  
 
   public almacenarLogin(tipo: string): void {
 
@@ -325,7 +314,7 @@ console.log(this.newLogin);
     ENV.NOMBRE_USUARIO = this.newLogin.nombreUsuario;
     ENV.ID_USUARIO = this.usuarioLogin._id;
     ENV.APIKEY = JSON.stringify(this.usuarioLogin);
-    console.log(ENV.TOKEN);
+    
   }
 
   limpiarValoresPorDefecto() {

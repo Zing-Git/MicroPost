@@ -53,7 +53,8 @@ export class ListadoPedidosFiltradosPage {
   }
 
   obtenerDatosImportantes() {
-    //ENV.PEDIDOS = ' ';
+    console.log('id de proveedor');
+    console.log(ENV.PROVEEDOR_ID);
     this.idProveedor = ENV.PROVEEDOR_ID;
     
     const loader = this.loadingCtrl.create({
@@ -162,6 +163,7 @@ export class ListadoPedidosFiltradosPage {
     this.pedidos = new Array();
 
     this.pedidos = this.auxiliar.crearArray(JSON.parse(ENV.PEDIDOS));
+    console.log(this.pedidos);
     this.pedidos.forEach(x => {
 
       if (x.comercio != null) {

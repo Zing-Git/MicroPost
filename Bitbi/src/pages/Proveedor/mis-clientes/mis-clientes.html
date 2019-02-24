@@ -51,18 +51,18 @@
         <ion-item class="nuevo-ion-item">
           <ion-avatar item-start>
             <img src='../../../../assets/imgs/icono_comercio.png'>
+          </ion-avatar>          
+            <h3 text-wrap> {{comercio.comercio.entidad.razonSocial}} - ( <strong> {{comercio.comercio.alias === null ? '-' : comercio.comercio.alias}}</strong> )</h3>
+          
+            <p text-wrap> {{comercio.comercio.entidad.domicilio.localidad + " - " + comercio.comercio.entidad.domicilio.barrio + " - " + comercio.comercio.entidad.domicilio.calle}}</p>
+           
+           <h3 *ngIf="comercio.comercio.contactos.length === 3"><a href='tel:{{comercio.comercio.contactos[1].codigoPais + comercio.comercio.contactos[1].codigoArea + comercio.comercio.contactos[1].numeroCelular}}' class="button button-positive"> cel: {{comercio.comercio.contactos[1].codigoPais + comercio.comercio.contactos[1].codigoArea + comercio.comercio.contactos[1].numeroCelular}}</a></h3>
+          
+          <h3 *ngIf="comercio.comercio.contactos.length === 3 && comercio.comercio.contactos[2].numeroCelular !== ''"> <a href='tel:{{comercio.comercio.contactos[2].codigoPais + comercio.comercio.contactos[2].codigoArea + comercio.comercio.contactos[2].numeroCelular}}' class="button button-positive">Tel {{comercio.comercio.contactos[2].codigoPais + comercio.comercio.contactos[2].codigoArea + comercio.comercio.contactos[2].numeroCelular}}</a></h3>
+          <ion-avatar item-end *ngIf="comercio.comercio.contactos.length === 3">
+            <img src='../../../assets/imgs/ws.png' (click)="callWhatsapp(comercio.comercio.contactos[1].codigoPais + comercio.comercio.contactos[1].codigoArea + comercio.comercio.contactos[1].numeroCelular)">
           </ion-avatar>
-          
-          <h3 text-wrap> {{comercio.entidad.razonSocial}} - ( <strong> {{comercio.alias}}</strong> )</h3>
-          
-          <p text-wrap> {{comercio.entidad.domicilio.localidad + " - " + comercio.entidad.domicilio.barrio + " - " + comercio.entidad.domicilio.calle}}</p>
          
-          <h3 *ngIf="comercio.contactos.length === 3"><a href='tel:{{comercio.contactos[1].codigoPais + comercio.contactos[1].codigoArea + comercio.contactos[1].numeroCelular}}' class="button button-positive"> cel: {{comercio.contactos[1].codigoPais + comercio.contactos[1].codigoArea + comercio.contactos[1].numeroCelular}}</a></h3>
-          
-          <h3 *ngIf="comercio.contactos.length === 3 && comercio.contactos[2].numeroCelular !== ''"> <a href='tel:{{comercio.contactos[2].codigoPais + comercio.contactos[2].codigoArea + comercio.contactos[2].numeroCelular}}' class="button button-positive">Tel {{comercio.contactos[2].codigoPais + comercio.contactos[2].codigoArea + comercio.contactos[2].numeroCelular}}</a></h3>
-          <ion-avatar item-end *ngIf="comercio.contactos.length === 3">
-            <img src='../../../assets/imgs/ws.png' (click)="callWhatsapp(comercio.contactos[1].codigoPais + comercio.contactos[1].codigoArea + comercio.contactos[1].numeroCelular)">
-          </ion-avatar>
         </ion-item>
 
       </ion-list>
